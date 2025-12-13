@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM Documentation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/markdown.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/" style="text-decoration: none;">
+                    <span class="logo">SAM</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="/#features">Features</a>
+                <a href="/#quickstart">Quick Start</a>
+                <a href="/#documentation">Documentation</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM" class="btn-download" target="_blank">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="markdown-container">
+        <div class="container">
+            <div id="markdown-content" class="markdown-body">
+                Loading...
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Andrew Wyatt (Fewtarius). Licensed under CC BY-NC 4.0.</p>
+            <div class="footer-links">
+                <a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a>
+                <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">License</a>
+                <a href="/">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Configure mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#00d4ff',
+                primaryTextColor: '#ffffff',
+                primaryBorderColor: '#0099cc',
+                lineColor: '#00d4ff',
+                secondaryColor: '#0a0e1a',
+                tertiaryColor: '#141822',
+                background: '#0a0e1a',
+                mainBkg: '#141822',
+                secondBkg: '#0a0e1a',
+                textColor: '#ffffff',
+                fontSize: '16px'
+            }
+        });
+
+        // Get markdown file from URL parameter
+        const params = new URLSearchParams(window.location.search);
+        const mdFile = params.get('file') || 'README.md';
+        
+        // Configure marked
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            headerIds: true,
+            mangle: false,
+            pedantic: false,
+            smartLists: true,
+            smartypants: false
+        });
+
+        // Load and render markdown
+        async function loadMarkdown() {
+            try {
+                const response = await fetch(mdFile);
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${mdFile}`);
+                }
+                
+                let markdown = await response.text();
+                
+                // Extract and protect mermaid code blocks
+                const mermaidBlocks = [];
+                markdown = markdown.replace(/```mermaid\n([\s\S]*?)```/g, (match, code) => {
+                    const id = `mermaid-${mermaidBlocks.length}`;
+                    // Clean up mermaid code: replace literal \n in text with <br/>
+                    let cleanCode = code.trim();
+                    // Fix node labels with \n by replacing with <br/>
+                    cleanCode = cleanCode.replace(/\[([^\]]*?)\\n([^\]]*?)\]/g, '[$1<br/>$2]');
+                    mermaidBlocks.push({ id, code: cleanCode });
+                    return `<div class="mermaid-placeholder" data-id="${id}"></div>`;
+                });
+                
+                // Parse markdown
+                const html = marked.parse(markdown);
+                const clean = DOMPurify.sanitize(html, {
+                    ADD_TAGS: ['div'],
+                    ADD_ATTR: ['class', 'data-id']
+                });
+                
+                document.getElementById('markdown-content').innerHTML = clean;
+                
+                // Render mermaid diagrams
+                for (const block of mermaidBlocks) {
+                    const placeholder = document.querySelector(`[data-id="${block.id}"]`);
+                    if (placeholder) {
+                        try {
+                            const { svg } = await mermaid.render(block.id, block.code);
+                            placeholder.innerHTML = svg;
+                            placeholder.classList.add('mermaid-diagram');
+                        } catch (error) {
+                            console.error('Mermaid rendering error:', error);
+                            placeholder.innerHTML = `<pre class="mermaid-error">Error rendering diagram:\n${error.message}</pre>`;
+                        }
+                    }
+                }
+                
+                // Update page title
+                const firstHeading = document.querySelector('h1');
+                if (firstHeading) {
+                    document.title = firstHeading.textContent + ' - SAM Documentation';
+                }
+                
+                // Make internal .md links work with viewer
+                document.querySelectorAll('a[href$=".md"]').forEach(link => {
+                    const href = link.getAttribute('href');
+                    if (!href.startsWith('http')) {
+                        // Handle relative paths
+                        const currentDir = mdFile.substring(0, mdFile.lastIndexOf('/') + 1);
+                        let newPath;
+                        
+                        if (href.startsWith('../')) {
+                            // Go up one directory
+                            const parentDir = currentDir.substring(0, currentDir.lastIndexOf('/', currentDir.length - 2) + 1);
+                            newPath = parentDir + href.substring(3);
+                        } else if (href.startsWith('./')) {
+                            // Same directory
+                            newPath = currentDir + href.substring(2);
+                        } else if (href.startsWith('/')) {
+                            // Absolute path from root
+                            newPath = href.substring(1);
+                        } else {
+                            // Relative to current directory
+                            newPath = currentDir + href;
+                        }
+                        
+                        // Clean up path (remove double slashes, resolve ../)
+                        newPath = newPath.replace(/\/+/g, '/');
+                        
+                        link.setAttribute('href', `/viewer.html?file=${newPath}`);
+                    }
+                });
+                
+            } catch (error) {
+                document.getElementById('markdown-content').innerHTML = `
+                    <div class="error-message">
+                        <h2>Error Loading Documentation</h2>
+                        <p>${error.message}</p>
+                        <p><a href="/">Return to Home</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        loadMarkdown();
+    </script>
+</body>
+</html>

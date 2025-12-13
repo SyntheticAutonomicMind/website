@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SAM (Synthetic Autonomic Mind) - A powerful AI-powered assistant for macOS with advanced MCP tools, local model support, and intelligent workflows.">
+    <meta name="keywords" content="SAM, AI assistant, macOS, MCP tools, local models, image generation, subagents">
+    <meta name="author" content="Andrew Wyatt (Fewtarius)">
+    <title>SAM - Synthetic Autonomic Mind | AI-Powered macOS Assistant</title>
+    <link rel="stylesheet" href="css/styles.css?v=4">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">SAM</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#features">Features</a>
+                <a href="#quickstart">Quick Start</a>
+                <a href="#documentation">Documentation</a>
+                <a href="#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Meet SAM</h1>
+                <p class="hero-subtitle">The AI That Works <em>With</em> You, Not Just <em>For</em> You</p>
+                <p class="hero-description">
+                    <strong>An AI assistant that actually gets work done.</strong> SAM reads your codebase, understands your documents, 
+                    runs commands, generates images, and completes complex projects instead of just talking about them.
+                    <br><br>
+                    A native macOS app built for privacy, and built for you. 
+                    Review documentation, generate images, write programs, or just have a conversation.
+                    Say "Hey SAM" to go hands-free, or type naturally.
+                    <strong>Your data stays on your Mac. Always.</strong>
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn btn-primary" target="_blank">
+                        Download Free for macOS
+                    </a>
+                    <a href="viewer.html?file=docs/end-user/getting-started.md" class="btn btn-secondary">
+                        See What SAM Can Do
+                    </a>
+                </div>
+                <p class="platform-note">macOS 14.0+ | 100% Free & Open Source | Your Data Stays on Your Mac</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="capabilities">
+        <div class="container">
+            <h2 class="section-title">AI That Actually Gets Things Done</h2>
+            <p class="section-subtitle">From simple questions to complex projects, SAM is ready to help.</p>
+            
+            <div class="capabilities-grid">
+                <div class="capability">
+                    <h3>🧠 Intelligent Memory</h3>
+                    <ul>
+                        <li>Store and recall important information within conversations</li>
+                        <li>Semantic search finds what you need, even without exact keywords</li>
+                        <li>Link conversations with <strong>Shared Topics</strong> for persistent memory</li>
+                        <li>Import documents once, search them across sessions</li>
+                    </ul>
+                </div>
+                <div class="capability">
+                    <h3>📚 Documents Become Knowledge</h3>
+                    <ul>
+                        <li>Import PDFs, Word docs, text files, and code</li>
+                        <li>Ask questions about any part of your documents</li>
+                        <li>Search semantically to find by meaning, not just keywords</li>
+                        <li>Cross-reference multiple documents in one conversation</li>
+                    </ul>
+                </div>
+                <div class="capability">
+                    <h3>🤖 Autonomous Agents</h3>
+                    <ul>
+                        <li><strong>Subagents</strong> handle complex tasks in parallel</li>
+                        <li>One agent for backend, one for frontend, one for testing</li>
+                        <li>Up to 300 iterations per task with no babysitting required</li>
+                        <li>Sequential thinking with transparent reasoning</li>
+                    </ul>
+                </div>
+                <div class="capability">
+                    <h3>💻 15 Powerful Tools Built-In</h3>
+                    <ul>
+                        <li>Read, write, search, and refactor code across your project</li>
+                        <li>Execute terminal commands with persistent sessions</li>
+                        <li>Web research with professional SerpAPI integration</li>
+                        <li>Git operations, build tasks, and more</li>
+                    </ul>
+                </div>
+                <div class="capability">
+                    <h3>🎨 Generate Stunning Images</h3>
+                    <ul>
+                        <li>Stable Diffusion runs <em>entirely on your Mac</em></li>
+                        <li>Browse and download thousands of community models</li>
+                        <li>Direct SD Mode: skip the LLM, generate instantly</li>
+                        <li>Full control over steps, guidance, and schedulers</li>
+                    </ul>
+                </div>
+                <div class="capability">
+                    <h3>🔐 Privacy-First Architecture</h3>
+                    <ul>
+                        <li><strong>Your data never leaves your Mac.</strong></li>
+                        <li>Run completely offline with local MLX/GGUF models</li>
+                        <li>7 providers: OpenAI, Anthropic, Copilot, DeepSeek, + more</li>
+                        <li>22 personalities, or create your own</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section id="quickstart" class="quickstart">
+        <div class="container">
+            <h2 class="section-title">From Download to Productive in 5 Minutes</h2>
+            <div class="quickstart-content">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Download & Launch</h3>
+                        <p>Grab SAM from GitHub, drag to Applications, and you're ready. No installer, no account creation, no telemetry.</p>
+                        <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn btn-primary" target="_blank">Download Now</a>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Pick Your Power Source</h3>
+                        <p>Connect to OpenAI, GitHub Copilot, Anthropic, or download local models that run entirely on your Mac. Mix and match since SAM supports them all.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Start Building</h3>
+                        <p>Import your codebase. Drop in your docs. Ask SAM to refactor a function, research a topic, or build an entire feature. Watch it work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="documentation" class="documentation">
+        <div class="container">
+            <h2 class="section-title">Documentation</h2>
+            <p class="section-subtitle">Organized by audience - find what you need quickly</p>
+            
+            <h3 class="docs-category">For End Users</h3>
+            <div class="docs-grid">
+                <a href="viewer.html?file=docs/end-user/getting-started.md" class="doc-card">
+                    <h3>📚 Getting Started</h3>
+                    <p>Installation, setup, and your first conversation with SAM.</p>
+                </a>
+                <a href="viewer.html?file=docs/end-user/features-overview.md" class="doc-card">
+                    <h3>✨ Features Overview</h3>
+                    <p>Discover all SAM features with real-world examples.</p>
+                </a>
+                <a href="viewer.html?file=docs/end-user/memory-and-rag.md" class="doc-card">
+                    <h3>🧠 Memory & RAG</h3>
+                    <p>Master SAM's contextual memory and document understanding.</p>
+                </a>
+                <a href="viewer.html?file=docs/end-user/shared-topics.md" class="doc-card">
+                    <h3>🔄 Shared Topics</h3>
+                    <p>Multi-conversation collaboration workflows explained.</p>
+                </a>
+                <a href="viewer.html?file=docs/end-user/use-cases.md" class="doc-card">
+                    <h3>💡 Use Cases</h3>
+                    <p>Real-world scenarios showing how SAM solves problems.</p>
+                </a>
+            </div>
+            
+            <h3 class="docs-category">For Power Users</h3>
+            <div class="docs-grid">
+                <a href="viewer.html?file=docs/power-user/configuration.md" class="doc-card">
+                    <h3>⚙️ Configuration</h3>
+                    <p>Complete reference for all SAM settings and preferences.</p>
+                </a>
+                <a href="viewer.html?file=docs/power-user/tools-reference.md" class="doc-card">
+                    <h3>🛠️ Tools Reference</h3>
+                    <p>All 15 MCP tools documented with examples.</p>
+                </a>
+                <a href="viewer.html?file=docs/power-user/advanced-workflows.md" class="doc-card">
+                    <h3>🚀 Advanced Workflows</h3>
+                    <p>Subagents, automation, and complex project patterns.</p>
+                </a>
+                <a href="viewer.html?file=docs/power-user/troubleshooting.md" class="doc-card">
+                    <h3>🔧 Troubleshooting</h3>
+                    <p>Solutions to common issues and FAQs.</p>
+                </a>
+            </div>
+            
+            <h3 class="docs-category">For Developers</h3>
+            <div class="docs-grid">
+                <a href="viewer.html?file=docs/developer/developers-guide.md" class="doc-card">
+                    <h3>📖 Developers Guide</h3>
+                    <p>Complete guide for SAM developers and contributors.</p>
+                </a>
+                <a href="viewer.html?file=docs/developer/the-unbroken-method.md" class="doc-card">
+                    <h3>🎯 The Unbroken Method</h3>
+                    <p>AI collaboration methodology developed for SAM.</p>
+                </a>
+                <a href="viewer.html?file=docs/developer/architecture.md" class="doc-card">
+                    <h3>🏗️ Architecture</h3>
+                    <p>System design, components, and implementation details.</p>
+                </a>
+                <a href="viewer.html?file=docs/developer/api-reference.md" class="doc-card">
+                    <h3>🔌 API Reference</h3>
+                    <p>OpenAI-compatible REST API documentation.</p>
+                </a>
+                <a href="viewer.html?file=docs/developer/contributing.md" class="doc-card">
+                    <h3>🤝 Contributing</h3>
+                    <p>How to contribute code, docs, or report issues.</p>
+                </a>
+                <a href="viewer.html?file=docs/developer/building.md" class="doc-card">
+                    <h3>🔨 Building</h3>
+                    <p>Build SAM from source with development setup.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="community">
+        <div class="container">
+            <h2 class="section-title">Community & Support</h2>
+            <div class="community-grid">
+                <a href="https://github.com/SyntheticAutonomicMind/SAM" class="community-card" target="_blank">
+                    <div class="community-icon">📦</div>
+                    <h3>GitHub</h3>
+                    <p>Browse source code, report issues, and contribute to development.</p>
+                </a>
+                <a href="https://www.patreon.com/fewtarius" class="community-card" target="_blank">
+                    <div class="community-icon">💝</div>
+                    <h3>Support Development</h3>
+                    <p>Support ongoing development through Patreon.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-brand">Synthetic Autonomic Mind (SAM)</p>
+            <p>&copy; 2025 Andrew Wyatt (Fewtarius). Licensed under CC BY-NC 4.0.</p>
+            <div class="footer-links">
+                <a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a>
+                <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">License</a>
+                <a href="viewer.html?file=docs/README.md">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
