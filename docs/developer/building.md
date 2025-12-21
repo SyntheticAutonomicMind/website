@@ -36,8 +36,8 @@ Let's get SAM built and running.
 Ensure Xcode (including Command Line Tools), Homebrew, and required build tools are installed, then run:
 
 ```bash
-cd /path/to/SAM
-git submodule update --init --recursive
+git clone https://github.com/SyntheticAutonomicMind/SAM.git --recursive
+cd SAM
 make build-debug
 ```
 
@@ -51,7 +51,7 @@ make build-debug
 
 ## Prerequisites (tools)
 
-Install these tools if you haven't already. You mentioned you already installed `cmake`, `ccache`, and Xcode. Good. The rest below are commonly required.
+Install these tools if you haven't already.
 
 Using Homebrew (recommended):
 
@@ -69,7 +69,7 @@ Notes:
 
 ## Xcode / Command Line Tools
 
-If CMake complains about missing C/C++ compilers (the error you encountered), it's usually because the Xcode Command Line Tools aren't fully installed or `xcode-select` is not pointing to the right developer directory.
+If CMake complains about missing C/C++ compilers, it's usually because the Xcode Command Line Tools aren't fully installed or `xcode-select` is not pointing to the right developer directory.
 
 Run these commands to install/verify and accept the license:
 
@@ -93,30 +93,39 @@ clang++ --version
 
 If `clang` is missing after installing Xcode CLT, restart your terminal session and re-run `clang --version`.
 
+## Metal Toolchain
+
+The Metal toolchain is required for building SAM's graphics and compute components.
+
+Install the Metal toolchain:
+
+```bash
+xcodebuild -downloadComponent "MetalToolchain"
+```
+
+This downloads and installs Apple's Metal development tools. The download is handled by Xcode and may take a few minutes depending on your internet connection.
+
+**Troubleshooting:**
+- If the command fails, ensure you've opened Xcode at least once and accepted the license
+- The download requires an active internet connection
+- On some systems, you may need to restart Xcode after installation
+
 ## Git submodules
 
-The project depends on `external/llama.cpp` (and possibly other externals). Initialize submodules before building:
+The project depends on `external/llama.cpp` (and possibly other externals).
 
+**Option 1: Clone with submodules (recommended):**
+```bash
+git clone https://github.com/SyntheticAutonomicMind/SAM.git --recursive
+cd SAM
+```
+
+**Option 2: Initialize submodules after cloning:**
 ```bash
 git submodule update --init --recursive
 ```
 
 If the submodule update fails behind a proxy, ensure your Git credentials and proxy settings are correct.
-
-## Swift toolchain and SPM
-
-SAM uses Swift Package Manager (SPM). Ensure your Xcode installation includes a Swift toolchain compatible with `swift-tools-version: 5.9`.
-
-Check Swift version:
-
-```bash
-swift --version
-```
-
-Resolve Swift packages before building if you want to pre-fetch dependencies:
-
-```bash
-swift package resolve
 ```
 
 You can also run `swift build` or `swift test` to exercise Swift targets directly.
