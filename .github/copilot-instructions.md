@@ -996,7 +996,7 @@ This website documentation is licensed under **Creative Commons Attribution-NonC
 
 ## DEPLOYMENT
 
-Website: **https://syntheticautonomicmind.org**
+Website: **https://www.syntheticautonomicmind.org**
 Repository: `git@github.com:SyntheticAutonomicMind/website.git`
 
 Deployment process:

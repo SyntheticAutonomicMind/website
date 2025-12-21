@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -28,6 +29,17 @@
             </div>
         </div>
     </nav>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search documentation..." autocomplete="off">
+                <button id="searchButton" aria-label="Search">🔍</button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+        </div>
+    </div>
 
     <!-- Content -->
     <div class="markdown-container">
@@ -51,6 +63,220 @@
     </footer>
 
     <script>
+        // Search functionality
+        let searchIndex;
+        let documentsData = [];
+
+        // List of all documentation files
+        const docFiles = [
+            'docs/README.md',
+            'docs/end-user/getting-started.md',
+            'docs/end-user/features-overview.md',
+            'docs/end-user/memory-and-rag.md',
+            'docs/end-user/shared-topics.md',
+            'docs/end-user/use-cases.md',
+            'docs/power-user/configuration.md',
+            'docs/power-user/tools-reference.md',
+            'docs/power-user/advanced-workflows.md',
+            'docs/power-user/troubleshooting.md',
+            'docs/developer/developers-guide.md',
+            'docs/developer/the-unbroken-method.md',
+            'docs/developer/architecture.md',
+            'docs/developer/api-reference.md',
+            'docs/developer/contributing.md',
+            'docs/developer/building.md',
+            'docs/developer/templates/index.md',
+            'docs/developer/templates/quick-start-prompt.md',
+            'docs/developer/templates/full-collaboration-prompt.md',
+            'docs/developer/templates/handoff-templates.md',
+            'docs/developer/templates/anti-pattern-template.md',
+            'docs/developer/templates/collaboration-tool.md'
+        ];
+
+        // Build search index
+        async function buildSearchIndex() {
+            try {
+                for (const file of docFiles) {
+                    const response = await fetch('/' + file);
+                    if (response.ok) {
+                        const content = await response.text();
+                        
+                        // Extract title from first h1
+                        const titleMatch = content.match(/^#\s+(.+)$/m);
+                        const title = titleMatch ? titleMatch[1] : file.split('/').pop().replace('.md', '');
+                        
+                        // Get category from path
+                        const pathParts = file.split('/');
+                        const category = pathParts.length > 2 ? pathParts[1] : 'general';
+                        
+                        // Add the full document
+                        documentsData.push({
+                            id: file,
+                            title: title,
+                            content: content,
+                            category: category,
+                            path: file,
+                            anchor: ''
+                        });
+
+                        // Also index individual sections (h2, h3)
+                        const sectionRegex = /^(#{2,3})\s+(.+)$/gm;
+                        let match;
+                        while ((match = sectionRegex.exec(content)) !== null) {
+                            const sectionTitle = match[2];
+                            const level = match[1].length;
+                            
+                            // Get context around the section (next 200 chars)
+                            const startPos = match.index + match[0].length;
+                            const sectionContent = content.substring(startPos, startPos + 200);
+                            
+                            // Create anchor from section title
+                            const anchor = sectionTitle.toLowerCase()
+                                .replace(/[^\w\s-]/g, '')
+                                .replace(/\s+/g, '-');
+                            
+                            documentsData.push({
+                                id: `${file}#${anchor}`,
+                                title: `${sectionTitle} (${title})`,
+                                content: sectionContent,
+                                category: category,
+                                path: file,
+                                anchor: anchor,
+                                section: sectionTitle
+                            });
+                        }
+                    }
+                }
+
+                // Create lunr index
+                searchIndex = lunr(function() {
+                    this.ref('id');
+                    this.field('title', { boost: 10 });
+                    this.field('content');
+                    this.field('category', { boost: 5 });
+
+                    documentsData.forEach(doc => {
+                        this.add(doc);
+                    });
+                });
+
+                console.log('Search index built with', documentsData.length, 'documents');
+            } catch (error) {
+                console.error('Error building search index:', error);
+            }
+        }
+
+        // Perform search
+        function performSearch(query) {
+            if (!searchIndex || !query || query.length < 2) {
+                document.getElementById('searchResults').innerHTML = '';
+                document.getElementById('searchResults').style.display = 'none';
+                return;
+            }
+
+            try {
+                const results = searchIndex.search(query + '~1'); // Fuzzy search
+                const resultsContainer = document.getElementById('searchResults');
+                
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = '<div class="no-results">No results found</div>';
+                    resultsContainer.style.display = 'block';
+                    return;
+                }
+
+                let html = '<div class="search-results-list">';
+                results.slice(0, 10).forEach(result => {
+                    const doc = documentsData.find(d => d.id === result.ref);
+                    if (doc) {
+                        // Find context snippet
+                        const lowerContent = doc.content.toLowerCase();
+                        const lowerQuery = query.toLowerCase();
+                        const index = lowerContent.indexOf(lowerQuery);
+                        let snippet = '';
+                        
+                        if (index !== -1) {
+                            const start = Math.max(0, index - 60);
+                            const end = Math.min(doc.content.length, index + query.length + 60);
+                            snippet = doc.content.substring(start, end);
+                            if (start > 0) snippet = '...' + snippet;
+                            if (end < doc.content.length) snippet = snippet + '...';
+                            
+                            // Highlight query
+                            const regex = new RegExp('(' + query + ')', 'gi');
+                            snippet = snippet.replace(regex, '<mark>$1</mark>');
+                        } else {
+                            // Show first part of content
+                            snippet = doc.content.substring(0, 120) + '...';
+                        }
+
+                        // Clean markdown from snippet
+                        snippet = snippet.replace(/[#*`]/g, '').trim();
+
+                        // Build URL with anchor if section
+                        const url = doc.anchor 
+                            ? `/viewer.html?file=${doc.path}#${doc.anchor}`
+                            : `/viewer.html?file=${doc.path}`;
+
+                        // Display title
+                        const displayTitle = doc.section 
+                            ? `<span class="section-marker">§</span> ${doc.section}`
+                            : doc.title;
+
+                        html += `
+                            <a href="${url}" class="search-result-item">
+                                <div class="search-result-title">${displayTitle}</div>
+                                <div class="search-result-category">${doc.category}</div>
+                                <div class="search-result-snippet">${snippet}</div>
+                            </a>
+                        `;
+                    }
+                });
+                html += '</div>';
+                
+                resultsContainer.innerHTML = html;
+                resultsContainer.style.display = 'block';
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        }
+
+        // Initialize search
+        document.addEventListener('DOMContentLoaded', () => {
+            buildSearchIndex();
+
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+
+            // Search on input
+            let searchTimeout;
+            searchInput.addEventListener('input', (e) => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    performSearch(e.target.value);
+                }, 300);
+            });
+
+            // Search on button click
+            searchButton.addEventListener('click', () => {
+                performSearch(searchInput.value);
+            });
+
+            // Search on Enter key
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+
+            // Close results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchResults.contains(e.target) && !searchInput.contains(e.target) && !searchButton.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        });
+
         // Configure mermaid
         mermaid.initialize({
             startOnLoad: false,
@@ -135,6 +361,18 @@
                 const firstHeading = document.querySelector('h1');
                 if (firstHeading) {
                     document.title = firstHeading.textContent + ' - SAM Documentation';
+                }
+                
+                // Scroll to anchor if present in URL
+                const hash = window.location.hash;
+                if (hash) {
+                    setTimeout(() => {
+                        const targetId = hash.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 100);
                 }
                 
                 // Make internal .md links work with viewer

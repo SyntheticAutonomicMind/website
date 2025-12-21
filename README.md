@@ -2,7 +2,7 @@
 
 Official documentation website for SAM (Synthetic Autonomic Mind) - a conversational AI with memory, RAG, and autonomous workflow capabilities.
 
-**Live Site**: https://syntheticautonomicmind.org
+**Live Site**: https://www.syntheticautonomicmind.org
 
 ---
 
@@ -196,14 +196,14 @@ Full legal text: https://creativecommons.org/licenses/by-nc/4.0/legalcode
 
 ## Deployment
 
-The website is automatically deployed to **syntheticautonomicmind.org** when changes are pushed to the `main` branch.
+The website is automatically deployed to **www.syntheticautonomicmind.org** when changes are pushed to the `main` branch.
 
 ### Deployment Process
 
 1. Commit changes to `main`
 2. CI/CD pipeline triggered
 3. Site deployed within 2-3 minutes
-4. Changes live at https://syntheticautonomicmind.org
+4. Changes live at https://www.syntheticautonomicmind.org
 
 ---
 
@@ -211,7 +211,7 @@ The website is automatically deployed to **syntheticautonomicmind.org** when cha
 
 - **SAM Project**: https://github.com/SyntheticAutonomicMind/SAM
 - **Website Issues**: https://github.com/SyntheticAutonomicMind/website/issues
-- **Documentation**: Available at https://syntheticautonomicmind.org
+- **Documentation**: Available at https://www.syntheticautonomicmind.org
 
 ---
 
