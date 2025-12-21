@@ -130,10 +130,13 @@
                             const startPos = match.index + match[0].length;
                             const sectionContent = content.substring(startPos, startPos + 200);
                             
-                            // Create anchor from section title
+                            // Create anchor from section title matching marked.js behavior
+                            // marked.js: lowercase, replace spaces with hyphens, remove special chars
                             const anchor = sectionTitle.toLowerCase()
-                                .replace(/[^\w\s-]/g, '')
-                                .replace(/\s+/g, '-');
+                                .trim()
+                                .replace(/[^\w\s-]/g, '')  // Remove special chars except spaces and hyphens
+                                .replace(/\s+/g, '-')       // Replace spaces with hyphens
+                                .replace(/-+/g, '-');       // Replace multiple hyphens with single
                             
                             documentsData.push({
                                 id: `${file}#${anchor}`,
@@ -213,9 +216,12 @@
                         snippet = snippet.replace(/[#*`]/g, '').trim();
 
                         // Build URL with anchor if section
-                        const url = doc.anchor 
-                            ? `/viewer.html?file=${doc.path}#${doc.anchor}`
-                            : `/viewer.html?file=${doc.path}`;
+                        let url;
+                        if (doc.anchor) {
+                            url = `/viewer.html?file=${doc.path}#${doc.anchor}`;
+                        } else {
+                            url = `/viewer.html?file=${doc.path}`;
+                        }
 
                         // Display title
                         const displayTitle = doc.section 
@@ -223,7 +229,7 @@
                             : doc.title;
 
                         html += `
-                            <a href="${url}" class="search-result-item">
+                            <a href="${url}" class="search-result-item" data-file="${doc.path}" data-anchor="${doc.anchor || ''}">
                                 <div class="search-result-title">${displayTitle}</div>
                                 <div class="search-result-category">${doc.category}</div>
                                 <div class="search-result-snippet">${snippet}</div>
@@ -363,16 +369,36 @@
                     document.title = firstHeading.textContent + ' - SAM Documentation';
                 }
                 
-                // Scroll to anchor if present in URL
+                // Scroll to anchor if present in URL (after all rendering is complete)
                 const hash = window.location.hash;
                 if (hash) {
-                    setTimeout(() => {
-                        const targetId = hash.substring(1);
+                    const targetId = hash.substring(1);
+                    console.log('Attempting to scroll to:', targetId);
+                    
+                    // Try multiple times with increasing delays to ensure content is rendered
+                    const scrollToTarget = () => {
                         const targetElement = document.getElementById(targetId);
                         if (targetElement) {
-                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            console.log('Found target element, scrolling...');
+                            // Scroll with offset for navbar
+                            const yOffset = -100; // Offset for fixed navbar + search bar
+                            const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                            window.scrollTo({ top: y, behavior: 'smooth' });
+                            return true;
                         }
-                    }, 100);
+                        return false;
+                    };
+                    
+                    // Try immediately
+                    if (!scrollToTarget()) {
+                        // Try again after short delay
+                        setTimeout(() => {
+                            if (!scrollToTarget()) {
+                                // Final attempt after longer delay
+                                setTimeout(scrollToTarget, 500);
+                            }
+                        }, 200);
+                    }
                 }
                 
                 // Make internal .md links work with viewer
