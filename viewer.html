@@ -347,6 +347,20 @@
                 });
                 
                 document.getElementById('markdown-content').innerHTML = clean;
+
+                // Ensure headings have stable id attributes for anchor navigation
+                const slugify = (text) => text
+                    .toLowerCase()
+                    .trim()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-');
+                document.querySelectorAll('#markdown-content h1, #markdown-content h2, #markdown-content h3, #markdown-content h4, #markdown-content h5, #markdown-content h6')
+                    .forEach(h => {
+                        if (!h.id || h.id.length === 0) {
+                            h.id = slugify(h.textContent);
+                        }
+                    });
                 
                 // Render mermaid diagrams
                 for (const block of mermaidBlocks) {
@@ -401,34 +415,81 @@
                     }
                 }
                 
-                // Make internal .md links work with viewer
-                document.querySelectorAll('a[href$=".md"]').forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (!href.startsWith('http')) {
-                        // Handle relative paths
-                        const currentDir = mdFile.substring(0, mdFile.lastIndexOf('/') + 1);
-                        let newPath;
-                        
-                        if (href.startsWith('../')) {
-                            // Go up one directory
-                            const parentDir = currentDir.substring(0, currentDir.lastIndexOf('/', currentDir.length - 2) + 1);
-                            newPath = parentDir + href.substring(3);
-                        } else if (href.startsWith('./')) {
-                            // Same directory
-                            newPath = currentDir + href.substring(2);
-                        } else if (href.startsWith('/')) {
-                            // Absolute path from root
-                            newPath = href.substring(1);
-                        } else {
-                            // Relative to current directory
-                            newPath = currentDir + href;
-                        }
-                        
-                        // Clean up path (remove double slashes, resolve ../)
-                        newPath = newPath.replace(/\/+/g, '/');
-                        
-                        link.setAttribute('href', `/viewer.html?file=${newPath}`);
+                // Make internal .md links (with optional #anchor) work with viewer
+                document.querySelectorAll('a[href*=".md"]').forEach(link => {
+                    const rawHref = link.getAttribute('href');
+                    if (!rawHref || rawHref.startsWith('http')) return;
+
+                    // Split href into path and optional hash
+                    const [hrefPath, hrefHash] = rawHref.split('#');
+
+                    // Handle relative paths against the current markdown file's directory
+                    const currentDir = mdFile.substring(0, mdFile.lastIndexOf('/') + 1);
+                    let newPath;
+
+                    if (hrefPath.startsWith('../')) {
+                        // Go up one directory
+                        const parentDir = currentDir.substring(0, currentDir.lastIndexOf('/', currentDir.length - 2) + 1);
+                        newPath = parentDir + hrefPath.substring(3);
+                    } else if (hrefPath.startsWith('./')) {
+                        // Same directory
+                        newPath = currentDir + hrefPath.substring(2);
+                    } else if (hrefPath.startsWith('/')) {
+                        // Absolute path from root
+                        newPath = hrefPath.substring(1);
+                    } else {
+                        // Relative to current directory
+                        newPath = currentDir + hrefPath;
                     }
+
+                    // Clean up path (remove double slashes)
+                        newPath = newPath.replace(/\/+/g, '/');
+
+                    // Preserve anchor, if present
+                    const newHref = hrefHash
+                        ? `/viewer.html?file=${newPath}#${hrefHash}`
+                        : `/viewer.html?file=${newPath}`;
+
+                    link.setAttribute('href', newHref);
+                });
+
+                // Handle in-page #anchor clicks with offset (fixed navbar)
+                const scrollToAnchorWithOffset = (anchorId) => {
+                    if (!anchorId) return false;
+                    // Try exact match
+                    let targetElement = document.getElementById(anchorId);
+                    // Fallback: collapse multiple hyphens to single (common slug difference)
+                    if (!targetElement) {
+                        const collapsed = anchorId.replace(/-+/g, '-');
+                        if (collapsed !== anchorId) {
+                            targetElement = document.getElementById(collapsed);
+                        }
+                    }
+                    if (!targetElement) return false;
+                    const yOffset = -100; // Offset for fixed navbar + search bar
+                    const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                    return true;
+                };
+
+                // Click handler for anchors within rendered content
+                const anchorClickHandler = (e) => {
+                    const a = e.target.closest('a[href^="#"]');
+                    if (!a) return;
+                    const anchorId = decodeURIComponent(a.getAttribute('href').substring(1));
+                    if (scrollToAnchorWithOffset(anchorId)) {
+                        e.preventDefault();
+                        // Update hash without full page reload
+                        history.pushState(null, '', `#${anchorId}`);
+                    }
+                };
+                document.getElementById('markdown-content').addEventListener('click', anchorClickHandler);
+                document.addEventListener('click', anchorClickHandler);
+
+                // Respond to hash changes triggered programmatically or by browser
+                window.addEventListener('hashchange', () => {
+                    const anchorId = window.location.hash.substring(1);
+                    scrollToAnchorWithOffset(anchorId);
                 });
                 
             } catch (error) {
