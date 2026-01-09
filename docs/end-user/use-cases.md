@@ -44,7 +44,7 @@ graph LR
     style C fill:#00ff88,color:#000
 ```
 
-1. Go to **Preferences → API Endpoints**
+1. Go to **Preferences → Remote Providers**
 2. Add your OpenAI, Anthropic, or GitHub Copilot credentials
 3. Create a new conversation
 4. Enable **Tools** toggle

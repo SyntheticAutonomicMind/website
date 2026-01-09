@@ -43,8 +43,9 @@ SAM works with multiple AI providers, giving you flexibility and choice:
 - **OpenAI**: GPT-4, GPT-4-turbo, O1/O3 reasoning models
 - **GitHub Copilot**: GPT-4, Claude 3.5 Sonnet, o1-preview (secure Device Flow auth)
 - **Anthropic**: Claude 3.5 Sonnet, Claude 4, Claude 4.5 Sonnet
+- **Google Gemini**: Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash Thinking Experimental
 - **DeepSeek**: DeepSeek models for cost-effective inference
-- **Custom**: Connect to any OpenAI-compatible API (Gemini, Grok, Ollama, etc.)
+- **Custom**: Connect to any OpenAI-compatible API (Grok, Ollama, etc.)
 
 **Local Models:**
 - **MLX** (Apple Silicon): Near-native speed with Metal acceleration, per-conversation KV cache for 10x faster switching
@@ -58,7 +59,7 @@ SAM works with multiple AI providers, giving you flexibility and choice:
 - GitHub Copilot uses secure Device Flow authentication (no manual key entry)
 
 **How to Configure Providers**:
-1. Go to **SAM → Preferences → API Endpoints**
+1. Go to **SAM → Preferences → Remote Providers**
 2. Click **Add Provider** button
 3. Select provider type from the dropdown
 4. Enter your API key (or click **Use GitHub Authentication** for GitHub Copilot)
@@ -152,6 +153,62 @@ SAM provides powerful conversation organization features to help you manage your
 - **Reasoning enabled by default** for new conversations
 - Sidebar opens expanded by default for better visibility
 - Tooltips on Model, Prompt, and Personality labels
+
+---
+
+### Session Intelligence
+
+Track your conversation's resource usage and monitor autonomous agent workflows in real time with Session Intelligence.
+
+**What Session Intelligence Shows:**
+
+- **Tokens Used**: Total tokens consumed in the current conversation
+- **Cost Estimate**: Estimated cost in USD based on provider pricing
+- **Iterations**: Number of autonomous workflow cycles executed
+- **Tools Called**: Count of tool invocations during agent execution
+- **Active Provider**: Which AI provider is handling the conversation
+
+**How to Access:**
+
+1. Look for the Session Intelligence icon in the conversation toolbar
+2. Click to expand the panel and view detailed metrics
+3. Metrics update in real time as the conversation progresses
+
+**Use Cases:**
+
+**Budget Awareness**
+```
+Monitor costs as you work with cloud providers
+See exactly how much each conversation costs
+Compare costs across different models
+```
+
+**Workflow Monitoring**
+```
+Track autonomous agent progress
+See iteration counts during multi-step tasks
+Understand how many tools were invoked
+```
+
+**Performance Insights**
+```
+Compare token usage across different models
+Identify conversations consuming excessive resources
+Optimize prompts based on token metrics
+```
+
+**Provider Visibility**
+```
+Confirm which provider is handling your request
+Useful when switching between multiple providers
+Verify correct model/provider selection
+```
+
+**Benefits:**
+- Complete transparency into AI usage and costs
+- Real-time feedback during autonomous workflows
+- Helps optimize prompts and model selection
+- Essential for multi-step agent tasks
 
 ---
 

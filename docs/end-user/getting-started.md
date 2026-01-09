@@ -41,7 +41,8 @@ Before installing SAM, ensure you have:
 - [OpenAI API key](https://platform.openai.com/api-keys) - GPT-4, GPT-3.5-turbo, and more
 - [GitHub Copilot subscription](https://github.com/features/copilot) - GitHub Copilot integration
 - Anthropic Claude API key - Claude models
-- Google AI API key - Gemini models
+- Google Gemini API key - Gemini models
+- DeepSeek API key - DeepSeek models
 
 **For local models (optional)**:
 - Apple Silicon Mac (M1/M2/M3/M4) - MLX models
@@ -120,14 +121,14 @@ For complete build instructions, see [Building from Source](../developer/buildin
 
 ## First Launch & Setup
 
-When you launch SAM for the first time, you'll go through a quick setup process.
+When you launch SAM for the first time, you'll be greeted by the **Onboarding Wizard** that helps you get set up in minutes.
 
 ### Grant Permissions
 
 SAM will request the following permissions:
 
 **Network Access**
-- Required to connect to AI providers (OpenAI, Copilot, etc.)
+- Required to connect to AI providers (OpenAI, Copilot, Gemini, etc.)
 - Click "Allow" when prompted
 
 **File Access** (optional, on first file operation)
@@ -139,37 +140,41 @@ SAM will request the following permissions:
 - City-level accuracy only (privacy-focused)
 - Can be configured later in Preferences
 
-### Welcome Screen
+### Onboarding Wizard
 
-On first launch, you'll see options to:
+The wizard appears automatically when SAM has no configured models or providers. It guides you through two setup paths:
 
-1. **Start with Cloud Provider** (Recommended for beginners)
-   - Requires API key
-   - Fast setup, latest models
-   - Best for trying SAM quickly
+**Path 1: Use Cloud AI** (Recommended for quick start)
+- Connect to services like OpenAI, Claude, Google Gemini, or GitHub Copilot
+- Most powerful models available
+- Quick setup with minimal downloads
+- Requires API key (or GitHub authentication for Copilot)
 
-2. **Download Local Model**
-   - No API keys needed
-   - Works offline
-   - Slower but private
-   - Best for privacy-conscious users
+**Path 2: Download Local Model** (Best for privacy)
+- Run AI models privately on your Mac
+- 100% private and offline operation
+- No API costs or usage limits
+- Apple Silicon optimized (MLX) or works on any Mac (GGUF)
 
-3. **Take a Tour**
-   - Quick overview of SAM's features
-   - Recommended for first-time users
+**What the wizard does:**
+- **Smart Recommendations**: Suggests models based on your Mac's RAM (8GB → Qwen3-4B, 16GB → Qwen3-8B, 32GB+ → larger models)
+- **Direct Downloads**: Download local models from HuggingFace with progress tracking
+- **Provider Setup**: Opens preferences for cloud provider configuration
+- **Automatic Completion**: Closes automatically when configuration is complete
 
 ### Choose Your Path
 
 **Quick Start: Cloud Provider**
 - Fast to set up
-- Access to latest models (GPT-4, etc.)
+- Access to latest models (GPT-4, Claude, Gemini, etc.)
 - Requires API key from provider
 - → Continue to [Configuring AI Providers](#configuring-ai-providers)
 
 **Privacy-First: Local Model**
 - No API keys needed
 - Works completely offline
-- Takes longer to download models
+- RAM-based model recommendations
+- Direct downloads with progress indicators
 - → See [Using Local Models](#using-local-models) below
 
 ---
@@ -271,7 +276,7 @@ To use cloud AI providers, you need to configure API keys.
 
 **Step 2: Add to SAM**
 1. Open SAM Preferences (press ⌘, or choose SAM → Preferences)
-2. Click **API Endpoints** tab
+2. Click **Remote Providers** tab
 3. Click **Add Provider** button
 4. Select **OpenAI** from the provider type dropdown
 5. Paste your API key
@@ -292,7 +297,7 @@ GitHub Copilot uses **Device Flow authentication** - no API keys to copy/paste!
 
 **Step 2: Authenticate in SAM**
 1. Open SAM Preferences (⌘,)
-2. Click **API Endpoints** tab
+2. Click **Remote Providers** tab
 3. Click **Add Provider** button, then select **GitHub Copilot**
 4. Click **Authenticate with GitHub**
 5. SAM displays a **user code** (e.g., "ABCD-1234")
@@ -307,96 +312,118 @@ GitHub Copilot uses **Device Flow authentication** - no API keys to copy/paste!
 
 **Note**: Tokens refresh automatically - no need to re-authenticate frequently.
 
-### Other Providers
+**Other Providers**
 
 **Anthropic Claude**:
 1. Get API key from [console.anthropic.com](https://console.anthropic.com)
-2. Go to Preferences → **API Endpoints** → click **Add Provider**
+2. Go to Preferences → **Remote Providers** → click **Add Provider**
 3. Select **Anthropic**, paste key, and click **Save Provider**
+
+**Google Gemini**:
+1. Get API key from [ai.google.dev](https://ai.google.dev)
+2. Go to Preferences → **Remote Providers** → click **Add Provider**
+3. Select **Google Gemini**, paste key, and click **Save Provider**
+4. Available models: Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash Thinking Experimental
 
 **DeepSeek**:
 1. Get API key from [platform.deepseek.com](https://platform.deepseek.com)
-2. Go to Preferences → **API Endpoints** → click **Add Provider**
+2. Go to Preferences → **Remote Providers** → click **Add Provider**
 3. Select **DeepSeek**, paste key, and click **Save Provider**
 
-**Google AI / Grok**:
+**Custom (Grok, Ollama, etc.)**:
 1. Get API key from provider
-2. Go to Preferences → **API Endpoints** → click **Add Provider**
+2. Go to Preferences → **Remote Providers** → click **Add Provider**
 3. Select **Custom** (OpenAI-compatible endpoint), configure base URL and key
 
 ---
 
 ## Using Local Models
 
-For complete privacy and offline operation, use local models.
+For complete privacy and offline operation, use local models. SAM provides a comprehensive interface for managing local models.
 
-### MLX Models (Apple Silicon Macs Only)
+### Local Models Preferences
 
-**Requirement**: M1, M2, M3, or M4 Mac. MLX models won't work on Intel Macs.
+Open **SAM → Preferences → Local Models** to access the 3-tab interface:
 
-**Step 1: Create Model Directory**
+**Installed Models Tab**
+- View all downloaded models (GGUF, MLX, Stable Diffusion)
+- Filter by type: All, GGUF, MLX, or Stable Diffusion
+- Sort by name, size, or date added
+- See model details: size, type, context window
+- Remove models you no longer need
+
+**Download Tab**
+- Search up to 100 models from HuggingFace
+- Filter by type: All, GGUF, MLX, SD, Q4, Q5, Q8
+- See context window requirements (SAM recommends 16k+ for full tool support)
+- Click **Download** to install directly with progress tracking
+- Models automatically appear in Installed tab when complete
+
+**Settings Tab**
+- View storage location and disk usage
+- Configure model optimization settings
+- Quick access to model directories
+
+### Downloading Models via SAM (Recommended)
+
+**Step 1: Open Local Models Preferences**
+1. Go to **SAM → Preferences → Local Models**
+2. Click the **Download** tab
+
+**Step 2: Search for Models**
+- Search by name (e.g., "Qwen2.5-Coder", "Llama-3", "Mistral")
+- Or browse by filter: All Models, GGUF, MLX, Stable Diffusion, Q4/Q5/Q8
+- Up to 100 results displayed per search
+
+**Step 3: Check Context Window**
+- Look for models with 16k+ context window
+- Models with less than 16k will have tools automatically disabled
+- Context window shown in model details
+
+**Step 4: Download**
+- Click **Download** button next to the model
+- Progress bar shows download status
+- Model appears in **Installed** tab when complete
+
+**Step 5: Use the Model**
+- Select your model from the model dropdown in any conversation
+- MLX models show as "MLX: Model Name"
+- GGUF models show as "GGUF: Model Name"
+
+### Manual Model Installation
+
+If you prefer to download models manually:
+
+**MLX Models (Apple Silicon Only)**
 ```bash
-mkdir -p ~/mlx-models
-```
+# Create directory
+mkdir -p ~/Library/Caches/sam/models/
 
-**Step 2: Download Models**
-Popular MLX models from Hugging Face:
-- [mlx-community/Qwen2.5-7B-Instruct-8bit](https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit)
-- [mlx-community/Mistral-7B-Instruct-v0.3-8bit](https://huggingface.co/mlx-community/Mistral-7B-Instruct-v0.3-8bit)
-
-Clone with git:
-```bash
-cd ~/mlx-models
+# Download from HuggingFace
+cd ~/Library/Caches/sam/models/
 git lfs install
 git clone https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
 ```
 
-**Step 3: Use in SAM**
-1. Open SAM Preferences → **Local Models**
-2. SAM automatically detects models in `~/Library/Caches/sam/models/`
-3. Your downloaded model will appear in the **Installed Models** list
-
-**Step 4: Use the Model**
-- Select your MLX model from the model dropdown in the chat
-- Models show as "MLX: Model Name"
-
-**Alternative: Download via SAM**
-1. Open Preferences → **Local Models**
-2. Search for models in the **Download Models** section
-3. Click **Download** to install directly
-
-### GGUF Models (All Macs)
-
-**Step 1: Create Model Directory**
+**GGUF Models (All Macs)**
 ```bash
-mkdir -p ~/gguf-models
-```
+# Create directory
+mkdir -p ~/Library/Caches/sam/models/
 
-**Step 2: Download Models**
-Popular GGUF models:
-- [TheBloke models on Hugging Face](https://huggingface.co/TheBloke)
-- Recommended: Q4_K_M or Q5_K_M quantization (good quality/size balance)
-
-Example:
-```bash
-cd ~/gguf-models
-# Download a model (example)
+# Download model file
+cd ~/Library/Caches/sam/models/
 wget https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
 ```
 
-**Step 3: Use in SAM**
-1. Open SAM Preferences → **Local Models**
-2. SAM automatically detects GGUF models in `~/Library/Caches/sam/models/`
-3. Your model will appear in the **Installed Models** list
+**Model Recommendations by RAM:**
+- **8GB RAM**: Qwen3-4B, small 4-bit quantized models
+- **16GB RAM**: Qwen3-8B, Mistral-7B Q4/Q5
+- **32GB+ RAM**: Qwen3-14B, Llama-3-13B, larger models
 
-**Step 4: Use the Model**
-- Select your GGUF model from the model dropdown in the chat
-- Models show as "GGUF: Model Name"
-
-**Alternative: Download via SAM**
-1. Open Preferences → **Local Models**
-2. Search for GGUF models in the **Download Models** section
-3. Filter by **GGUF** and click **Download**
+**Quantization Guide:**
+- **Q4_K_M**: Good balance of quality and size (recommended for most users)
+- **Q5_K_M**: Better quality, larger size
+- **Q8**: Highest quality, largest size (close to original model performance)
 
 ---
 

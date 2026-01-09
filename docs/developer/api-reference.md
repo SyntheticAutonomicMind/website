@@ -256,6 +256,26 @@ List available mini prompts.
 
 ---
 
+### GET /api/topics
+
+List shared topics for cross-conversation collaboration.
+
+**Response**:
+```json
+{
+  "topics": [
+    {
+      "id": "project-alpha",
+      "name": "Project Alpha",
+      "created_at": "2026-01-05T10:30:00Z",
+      "conversation_count": 3
+    }
+  ]
+}
+```
+
+---
+
 ### POST /api/models/download
 
 Download Stable Diffusion model.
@@ -280,6 +300,78 @@ Retrieve large persisted tool results (>16KB auto-persist).
 
 **Query Parameters**:
 - `resultId` (string): Tool result ID
+
+---
+
+### GET /debug/mcp/tools
+
+List all MCP tools with complete schemas (for debugging).
+
+**Response**:
+```json
+{
+  "tools": [
+    {
+      "name": "file_operations",
+      "description": "File operations: read, search, write, and manage workspace files",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "operation": {"type": "string", "enum": ["read_file", "list_dir", ...]},
+          "filePath": {"type": "string"}
+        }
+      }
+    }
+  ]
+}
+```
+
+---
+
+### POST /debug/mcp/execute
+
+Execute an MCP tool directly (bypassing AI, for testing).
+
+**Request Body**:
+```json
+{
+  "tool": "file_operations",
+  "arguments": {
+    "operation": "read_file",
+    "filePath": "/path/to/file.txt",
+    "startLine": 1,
+    "endLine": 10
+  }
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "result": "File content here...",
+  "execution_time_ms": 45
+}
+```
+
+---
+
+### GET /debug/tools/available
+
+Get tool registry status and availability.
+
+**Response**:
+```json
+{
+  "total_tools": 16,
+  "enabled_tools": 12,
+  "disabled_tools": 4,
+  "tools": [
+    {"name": "file_operations", "enabled": true, "operation_count": 16},
+    {"name": "terminal_operations", "enabled": false, "operation_count": 11}
+  ]
+}
+```
 
 ---
 

@@ -23,7 +23,7 @@ This comprehensive guide covers every setting, preference, and configuration opt
 
 1. [General Settings](#general-settings)
 2. [Location Settings](#location-settings)
-3. [API Configuration](#api-configuration)
+3. [Remote Providers](#remote-providers)
 4. [Local Models](#local-models)
 5. [Personalities](#personalities)
 6. [Shared Topics](#shared-topics)
@@ -103,13 +103,13 @@ SAM can incorporate location context for more relevant responses.
 
 ---
 
-## API Endpoints
+## Remote Providers
 
 ### OpenAI
 
 **Setup**:
 1. Get API key from [platform.openai.com](https://platform.openai.com/api-keys)
-2. In SAM: Preferences → **API Endpoints** → click **Add Provider**
+2. In SAM: Preferences → **Remote Providers** → click **Add Provider**
 3. Select **OpenAI** from the provider type dropdown
 4. Paste your key (starts with `sk-`)
 5. Click **Test** to verify the connection (optional)
@@ -132,7 +132,7 @@ SAM can incorporate location context for more relevant responses.
 
 **Setup (Device Flow Authentication)**:
 1. Subscribe at [github.com/features/copilot](https://github.com/features/copilot)
-2. In SAM: Preferences → **API Endpoints** → click **Add Provider**
+2. In SAM: Preferences → **Remote Providers** → click **Add Provider**
 3. Select **GitHub Copilot** from the provider type dropdown
 4. Click **Authenticate with GitHub**
 5. SAM displays a **user code** and opens GitHub in your browser
@@ -161,7 +161,7 @@ SAM can incorporate location context for more relevant responses.
 
 **Setup**:
 1. Get API key from [console.anthropic.com](https://console.anthropic.com)
-2. Preferences → **API Endpoints** → click **Add Provider**
+2. Preferences → **Remote Providers** → click **Add Provider**
 3. Select **Anthropic** from dropdown
 4. Paste key (starts with `sk-ant-`)
 5. Click **Save Provider**
@@ -176,26 +176,110 @@ SAM can incorporate location context for more relevant responses.
 
 **Setup**:
 1. Get API key from [platform.deepseek.com](https://platform.deepseek.com)
-2. Preferences → **API Endpoints** → click **Add Provider**
+2. Preferences → **Remote Providers** → click **Add Provider**
 3. Select **DeepSeek** from dropdown
 4. Paste key
 5. Click **Save Provider**
 
-### Google AI / Grok (via Custom Provider)
+### Google Gemini
+
+**Setup**:
+1. Get API key from [ai.google.dev](https://ai.google.dev)
+2. Preferences → **Remote Providers** → click **Add Provider**
+3. Select **Google Gemini** from dropdown
+4. Paste API key
+5. Click **Save Provider**
+
+**Available Models**:
+- Gemini 1.5 Pro (up to 2M token context)
+- Gemini 1.5 Flash
+- Gemini 2.0 Flash Thinking Experimental
+
+**Features**:
+- Function calling with automatic tool filtering
+- Vision support for image analysis
+- Extended context windows
+- Thinking models with enhanced reasoning
+
+### Custom Provider (Grok, Ollama, etc.)
 
 **Setup**:
 1. Get API key from your provider
-2. Preferences → **API Endpoints** → click **Add Provider**
+2. Preferences → **Remote Providers** → click **Add Provider**
 3. Select **Custom** from dropdown
 4. Configure the OpenAI-compatible endpoint URL
 5. Paste API key
 6. Click **Save Provider**
 
-**Note**: Gemini and Grok work via the Custom provider option using OpenAI-compatible API endpoints.
+**Note**: Custom provider works with any OpenAI-compatible API endpoint, including Grok, Ollama, and other self-hosted services.
 
 ---
 
 ## Local Models
+
+SAM provides a comprehensive 3-tab interface for managing local models. Access it via **SAM → Preferences → Local Models**.
+
+### Local Models Interface Overview
+
+The Local Models preferences are organized into three tabs for better workflow:
+
+**Installed Models Tab**
+- View all downloaded models (GGUF, MLX, Stable Diffusion)
+- Filter by type: All, GGUF, MLX, or Stable Diffusion
+- Sort by name, size, or date added
+- See model details including size, type, and context window
+- Remove models you no longer need
+
+**Download Tab**
+- Search up to 100 models from HuggingFace
+- Filter by type: All, GGUF, MLX, SD, Q4, Q5, Q8
+- See context window requirements (16k+ recommended for full tool support)
+- Direct download with progress tracking
+- Models automatically appear in Installed tab when complete
+
+**Settings Tab**
+- View storage location and disk usage
+- Configure model optimization settings
+- Quick access to model directories
+
+### Downloading Models (Recommended Method)
+
+**Step 1: Open Download Tab**
+1. SAM → Preferences → Local Models
+2. Click the **Download** tab
+
+**Step 2: Search for Models**
+- Enter search terms (e.g., "Qwen2.5-Coder", "Llama-3", "Mistral")
+- Or browse using filters
+
+**Step 3: Apply Filters**
+Choose from filter dropdown:
+- **All Models**: Shows GGUF, MLX, and Stable Diffusion together
+- **GGUF**: llama.cpp compatible models (works on all Macs)
+- **MLX**: Metal-optimized models (Apple Silicon only)
+- **Stable Diffusion**: Image generation models
+- **Q4**: 4-bit quantized models (smaller size)
+- **Q5**: 5-bit quantized models (balanced)
+- **Q8**: 8-bit quantized models (highest quality)
+
+**Step 4: Check Context Window**
+- Look for the context window specification in model details
+- **SAM recommends 16k+ context window** for full tool support
+- Models with less than 16k will have tools automatically disabled
+- Context window shown clearly in search results
+
+**Step 5: Download**
+- Click **Download** button next to desired model
+- Progress bar shows download status
+- Multiple files downloaded automatically
+- Model appears in **Installed** tab when complete
+
+**Step 6: Use the Model**
+- Go to any conversation
+- Click the model dropdown
+- Select your newly downloaded model
+- MLX models display as "MLX: Model Name"
+- GGUF models display as "GGUF: Model Name"
 
 ### MLX Models (Apple Silicon)
 
@@ -204,28 +288,34 @@ SAM can incorporate location context for more relevant responses.
 - macOS 14.0+
 - Metal-capable GPU
 
-**Setup via SAM** (Recommended):
-1. Open SAM Preferences → **Local Models**
-2. Use the **Download Models** search to find models on HuggingFace
-3. Filter by **MLX** to show compatible models
-4. Click **Download** to install
-5. Model appears in **Installed Models** when complete
+**Downloading via SAM** (see Download Tab section above) is the recommended method.
 
-**Manual Setup**:
-1. Download models from Hugging Face
-2. Place in `~/Library/Caches/sam/models/`
-3. SAM automatically detects and indexes models
-4. Models appear in the model dropdown
+**Manual Installation** (optional):
+```bash
+# Models are stored in:
+~/Library/Caches/sam/models/
+
+# To manually add a model:
+cd ~/Library/Caches/sam/models/
+git lfs install
+git clone https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
+```
 
 **Recommended Models**:
-- `mlx-community/Qwen2.5-7B-Instruct-8bit`
-- `mlx-community/Mistral-7B-Instruct-v0.3-8bit`
-- `mlx-community/Meta-Llama-3-8B-Instruct-8bit`
+- `mlx-community/Qwen2.5-7B-Instruct-8bit` (16k context)
+- `mlx-community/Mistral-7B-Instruct-v0.3-8bit` (32k context)
+- `mlx-community/Meta-Llama-3-8B-Instruct-8bit` (8k context)
 
 **Performance**:
-- Near-native speed with Metal
+- Near-native speed with Metal acceleration
+- Per-conversation KV cache for 10x faster model switching
 - 8-bit: Best quality/size balance
 - 4-bit: Faster, more memory efficient
+
+**RAM Recommendations**:
+- **8GB RAM**: 4B parameter models (Qwen3-4B)
+- **16GB RAM**: 7-8B parameter models (Qwen2.5-7B, Mistral-7B)
+- **32GB+ RAM**: 14B+ parameter models (Qwen3-14B, larger models)
 
 ### GGUF Models (All Macs)
 
@@ -233,27 +323,26 @@ SAM can incorporate location context for more relevant responses.
 - Any Mac (Intel or Apple Silicon)
 - macOS 14.0+
 
-**Setup via SAM** (Recommended):
-1. Open SAM Preferences → **Local Models**
-2. Search for models in **Download Models** section
-3. Filter by **GGUF** to show compatible models
-4. Click **Download** to install
-5. Model appears in **Installed Models** when complete
+**Downloading via SAM** (see Download Tab section above) is the recommended method.
 
-**Manual Setup**:
-1. Download .gguf files from Hugging Face
-2. Place in `~/Library/Caches/sam/models/`
-3. SAM automatically detects and indexes .gguf files
-4. Models appear in the model dropdown
+**Manual Installation** (optional):
+```bash
+# Models are stored in:
+~/Library/Caches/sam/models/
+
+# To manually add a .gguf file:
+cd ~/Library/Caches/sam/models/
+wget https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+```
 
 **Recommended Sources**:
 - [TheBloke on Hugging Face](https://huggingface.co/TheBloke)
 
 **Quantization Levels**:
-- Q2: Smallest, lowest quality
-- Q4_K_M: Good balance (recommended)
-- Q5_K_M: Better quality, larger
-- Q8: Best quality, largest
+- **Q2**: Smallest size, lowest quality (not recommended)
+- **Q4_K_M**: Good balance of quality and size (recommended for most users)
+- **Q5_K_M**: Better quality, larger size
+- **Q8**: Best quality, closest to original model performance
 
 ### Stable Diffusion Models
 
