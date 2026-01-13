@@ -33,9 +33,10 @@ Let's explore how SAM's components work together to create an intelligent, capab
 2. [Core Components](#core-components)
 3. [Memory & Intelligence Layer](#memory--intelligence-layer)
 4. [Tool System Architecture](#tool-system-architecture)
-5. [API Server Architecture](#api-server-architecture)
-6. [Data Flow](#data-flow)
-7. [Technology Stack](#technology-stack)
+5. [LoRA Training System](#lora-training-system)
+6. [API Server Architecture](#api-server-architecture)
+7. [Data Flow](#data-flow)
+8. [Technology Stack](#technology-stack)
 
 ---
 
@@ -605,6 +606,489 @@ MemoryManager.storeMemory()
     ↓
 Indexed and searchable
 ```
+
+---
+
+## LoRA Training System
+
+SAM includes a complete LoRA (Low-Rank Adaptation) training system for fine-tuning local MLX models on custom data.
+
+### Training Architecture
+
+**Components:**
+
+```mermaid
+graph TB
+    subgraph "Swift Layer"
+        UI[TrainingPreferencesPane<br/>User Interface]
+        Service[MLXTrainingService<br/>Training Orchestration]
+        Exporter[TrainingDataExporter<br/>Data Preparation]
+        AdapterMgr[AdapterManager<br/>Storage & I/O]
+    end
+    
+    subgraph "Python Layer"
+        Script[train_lora.py<br/>MLX Training Script]
+        MLX[mlx-lm Library<br/>LoRA Implementation]
+    end
+    
+    subgraph "Data Processing"
+        ChatTemplate[ChatTemplateEngine<br/>Format Conversion]
+        PIIDetector[PIIDetector<br/>Privacy Protection]
+        DocChunker[DocumentChunker<br/>Content Splitting]
+    end
+    
+    subgraph "Storage"
+        JSONL[(Training Data<br/>JSONL Format)]
+        Adapters[(Adapter Files<br/>SafeTensors)]
+    end
+    
+    subgraph "Provider Integration"
+        EndpointMgr[EndpointManager<br/>Adapter Registration]
+        MLXProvider[MLXProvider<br/>LoRA Inference]
+    end
+    
+    UI --> Service
+    UI --> Exporter
+    Service --> Script
+    Script --> MLX
+    Exporter --> ChatTemplate
+    Exporter --> PIIDetector
+    Exporter --> DocChunker
+    Exporter --> JSONL
+    Script --> Adapters
+    AdapterMgr --> Adapters
+    EndpointMgr --> AdapterMgr
+    MLXProvider --> Adapters
+    
+    style UI fill:#00d4ff,color:#000
+    style Service fill:#141822,color:#fff
+    style Script fill:#00ff88,color:#000
+    style MLX fill:#00ff88,color:#000
+```
+
+### Training Pipeline
+
+**Phase 1: Data Preparation (Swift)**
+
+1. **Export Sources:**
+   - Conversations exported from chat interface
+   - Documents imported and chunked
+   - Both produce JSONL training data
+
+2. **Data Processing:**
+   ```swift
+   // TrainingDataExporter.swift
+   public func exportConversation(
+       conversationId: UUID,
+       template: ChatTemplate,
+       enablePIIDetection: Bool
+   ) -> TrainingDataset
+   ```
+   
+3. **PII Detection (if enabled):**
+   ```swift
+   // PIIDetector.swift (Actor-based)
+   let detected = await piiDetector.detectPII(in: text)
+   let sanitized = await piiDetector.stripPII(from: text)
+   ```
+   
+   Detects and redacts 9 PII types:
+   - Personal names (NaturalLanguage framework)
+   - Organizations, places (NaturalLanguage framework)
+   - Email addresses, phone numbers (regex patterns)
+   - Credit cards, SSNs, IPs, URLs (regex patterns)
+
+4. **Chat Template Formatting:**
+   ```swift
+   // ChatTemplateEngine.swift (Actor-based)
+   let formatted = await chatEngine.format(
+       userMessage: userText,
+       assistantMessage: assistantText,
+       template: .llama3,  // or .mistral, .qwen, .gemma, .phi, .custom
+       systemPrompt: systemPrompt
+   )
+   ```
+   
+   Supported templates:
+   - Llama 3/4: `<|begin_of_text|><|start_header_id|>...`
+   - Mistral: `<s>[INST] ... [/INST] ...</s>`
+   - Qwen 2.5: `<|im_start|>user\n...<|im_end|>`
+   - Gemma 2/3: `<start_of_turn>user\n...<end_of_turn>`
+   - Phi 3: `<|user|>\n...<|end|>`
+   - Custom: Generic markdown format
+
+5. **Document Chunking:**
+   ```swift
+   // DocumentChunker.swift
+   public func chunkDocument(
+       content: String,
+       strategy: ChunkingStrategy,
+       maxTokens: Int
+   ) -> [String]
+   ```
+   
+   Three strategies:
+   - **Semantic**: Natural paragraph boundaries
+   - **Fixed Size**: Uniform token-sized chunks with overlap
+   - **Page Aware**: Respect PDF page boundaries
+
+**Phase 2: Training Invocation (Swift → Python)**
+
+```swift
+// MLXTrainingService.swift
+public func startTraining(
+    dataPath: String,
+    modelPath: String,
+    adapterName: String,
+    rank: Int,
+    learningRate: Double,
+    epochs: Int,
+    batchSize: Int
+) async throws
+```
+
+1. **Parameter Validation:**
+   - Verify model path exists
+   - Check training data format
+   - Validate parameter ranges
+
+2. **Python Process Spawn:**
+   ```swift
+   let python = pythonEnvironment.pythonExecutable
+   let script = Bundle.main.path(forResource: "train_lora", ofType: "py")
+   
+   process.arguments = [
+       script,
+       "--model", modelPath,
+       "--data", dataPath,
+       "--rank", String(rank),
+       "--learning-rate", String(learningRate),
+       "--num-epochs", String(epochs),
+       "--batch-size", String(batchSize)
+   ]
+   
+   process.launch()
+   ```
+
+3. **Progress Monitoring:**
+   - Reads Python stdout for progress updates
+   - Parses JSON-formatted training metrics
+   - Updates UI with epoch, step, loss values
+
+**Phase 3: Training Execution (Python)**
+
+```python
+# scripts/train_lora.py
+
+import mlx.core as mx
+from mlx_lm import load, lora
+
+# Load base model
+model, tokenizer = load(model_path)
+
+# Configure LoRA
+lora_config = {
+    "rank": rank,
+    "alpha": alpha,
+    "dropout": 0.0,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"]
+}
+
+# Train
+model = lora.train(
+    model=model,
+    tokenizer=tokenizer,
+    data=training_data,
+    config=lora_config,
+    learning_rate=learning_rate,
+    num_epochs=num_epochs,
+    batch_size=batch_size
+)
+
+# Save adapter
+adapter_path = output_dir / "adapters.safetensors"
+mx.savez(adapter_path, **lora_params)
+```
+
+**Training Loop:**
+```python
+for epoch in range(num_epochs):
+    for batch in data_loader:
+        # Forward pass
+        logits = model(batch["input_ids"])
+        
+        # Compute loss
+        loss = cross_entropy(logits, batch["labels"])
+        
+        # Backward pass (gradient computation)
+        loss.backward()
+        
+        # Update LoRA weights only
+        optimizer.step()
+        
+        # Report progress
+        print(json.dumps({
+            "epoch": epoch,
+            "step": step,
+            "loss": float(loss)
+        }))
+```
+
+**Phase 4: Adapter Storage (Swift)**
+
+```swift
+// AdapterManager.swift (Actor-based)
+public func saveAdapter(_ adapter: LoRAAdapter) async throws {
+    let adapterDir = adaptersDirectory
+        .appendingPathComponent(adapter.id)
+    
+    // Create directory structure
+    try FileManager.default.createDirectory(at: adapterDir)
+    
+    // Save metadata
+    let metadata = AdapterMetadata(
+        name: adapter.name,
+        baseModel: adapter.baseModelName,
+        trainingDataset: adapter.trainingDataset,
+        createdAt: Date(),
+        finalLoss: adapter.finalLoss,
+        rank: adapter.rank,
+        learningRate: adapter.learningRate,
+        epochs: adapter.epochs,
+        trainingSteps: adapter.trainingSteps
+    )
+    
+    let metadataPath = adapterDir.appendingPathComponent("metadata.json")
+    try JSONEncoder().encode(metadata).write(to: metadataPath)
+    
+    // Adapter weights saved by Python script:
+    // - adapters.safetensors (LoRA weights)
+    // - adapter_config.json (MLX configuration)
+}
+```
+
+**Storage Structure:**
+```
+~/Library/Application Support/SAM/adapters/
+├── {adapter-uuid-1}/
+│   ├── adapters.safetensors      # LoRA weights (20-50MB typical)
+│   ├── adapter_config.json        # MLX LoRA config
+│   └── metadata.json              # Training metadata
+├── {adapter-uuid-2}/
+│   └── ...
+```
+
+**Phase 5: Provider Registration (Swift)**
+
+```swift
+// EndpointManager.swift
+private func scanForAdapters() {
+    let adapters = adapterManager.loadAllAdapters()
+    
+    for adapter in adapters {
+        // Create LoRA provider for this adapter
+        let provider = MLXProvider(
+            modelPath: adapter.baseModelPath,
+            adapterPath: adapter.adapterPath,
+            modelName: "lora/\(adapter.name)"
+        )
+        
+        // Register with model manager
+        modelManager.registerProvider(provider)
+    }
+}
+```
+
+**Adapter Discovery:**
+- Scans `~/Library/Application Support/SAM/adapters/` on startup
+- Reads metadata.json for each adapter
+- Creates MLXProvider instances with adapter configuration
+- Adapters appear in model picker with `lora/` prefix
+
+### Inference with LoRA Adapters
+
+**Adapter Loading:**
+
+```swift
+// MLXProvider.swift
+public func loadModel() async throws {
+    // Load base model
+    let baseModel = try await MLX.load(modelPath: basePath)
+    
+    // Load LoRA adapter if specified
+    if let adapterPath = adapterPath {
+        let adapter = try await MLX.loadLoRA(path: adapterPath)
+        
+        // Apply LoRA to base model
+        model = baseModel.applyLoRA(adapter)
+    } else {
+        model = baseModel
+    }
+}
+```
+
+**LoRA Application:**
+```swift
+// AppleMLXAdapter.swift
+private func applyLoRAWeights(
+    baseModel: MLXModel,
+    adapterPath: String
+) throws -> MLXModel {
+    // Load adapter weights
+    let weights = loadSafetensors(path: adapterPath)
+    
+    // For each attention layer
+    for layer in baseModel.layers {
+        if let loraA = weights["layer.\(layer.id).q_proj.lora_a"],
+           let loraB = weights["layer.\(layer.id).q_proj.lora_b"] {
+            // W' = W + (B × A) × scale
+            let delta = loraB.matmul(loraA).multiply(scale)
+            layer.q_proj.weight = layer.q_proj.weight.add(delta)
+        }
+        // Repeat for k_proj, v_proj, o_proj
+    }
+    
+    return baseModel
+}
+```
+
+**Inference Flow:**
+1. User selects `lora/AdapterName` in model picker
+2. MLXProvider loads base model + adapter
+3. LoRA weights applied to attention layers
+4. Model runs inference with adapted weights
+5. Minimal overhead (LoRA is efficient)
+
+### Training Data Models
+
+**Core Data Structures:**
+
+```swift
+// TrainingDataModels.swift
+
+public struct TrainingExample: Codable, Sendable {
+    public let userMessage: String
+    public let assistantMessage: String
+    public let systemPrompt: String?
+}
+
+public struct JSONLEntry: Codable, Sendable {
+    public struct Message: Codable {
+        public let role: String  // "system", "user", "assistant"
+        public let content: String
+    }
+    
+    public let messages: [Message]
+}
+
+public struct ExportOptions: Sendable {
+    public enum ChunkingStrategy: String, CaseIterable, Sendable {
+        case semantic = "Semantic (Paragraphs)"
+        case fixedSize = "Fixed Size"
+        case pageAware = "Page Aware (PDFs)"
+    }
+    
+    public let chunkingStrategy: ChunkingStrategy
+    public let maxChunkTokens: Int
+    public let enablePIIDetection: Bool
+    public let template: ChatTemplate
+}
+
+public struct ExportStatistics: Sendable {
+    public let totalExamples: Int
+    public let totalTokens: Int
+    public let averageTokensPerExample: Int
+    public let piiEntitiesRedacted: [PIIEntity: Int]
+    public let outputFileSize: Int
+}
+```
+
+### Training Parameters
+
+**Configurable via UI:**
+
+| Parameter | Type | Range | Default | Purpose |
+|-----------|------|-------|---------|---------|
+| **Rank** | Int | 4-128 | 8 | LoRA adapter capacity |
+| **Alpha** | Double | - | 16 | LoRA scaling factor (fixed) |
+| **Learning Rate** | Double | 0.00001-0.01 | 0.0001 | Training step size |
+| **Epochs** | Int | 1-50 | 3 | Training passes |
+| **Batch Size** | Int | 1-32 | 4 | Examples per step |
+
+**Target Layers (Fixed):**
+- `q_proj` (Query projection)
+- `k_proj` (Key projection)
+- `v_proj` (Value projection)
+- `o_proj` (Output projection)
+
+### Technology Integration
+
+**Swift Components:**
+- Swift 6 strict concurrency (Actor-based services)
+- Combine for reactive progress updates
+- FileManager for adapter I/O
+- UserDefaults for training settings
+- SwiftUI for training UI
+
+**Python Components:**
+- **mlx-lm**: MLX LoRA training library
+- **mlx.core**: Apple MLX framework
+- **safetensors**: Efficient weight storage
+- **tokenizers**: HuggingFace tokenizer library
+
+**Python Environment:**
+- Bundled with SAM (no user installation)
+- Located in `Contents/Resources/python-environment/`
+- Includes all dependencies (mlx, mlx-lm, safetensors)
+
+### Performance Characteristics
+
+**Training Speed:**
+- Rank 8, 3 epochs, 100 examples: ~5-10 minutes (M1/M2/M3)
+- Rank 32, 10 epochs, 500 examples: ~30-60 minutes (M1/M2/M3)
+- Scales with model size, dataset size, parameters
+
+**Memory Usage:**
+- Base model loaded into unified memory
+- Optimizer state (2x model size during training)
+- Recommend 16GB+ RAM for 7B models
+
+**Adapter File Sizes:**
+- Rank 8: ~15-25MB
+- Rank 16: ~30-60MB
+- Rank 32: ~60-120MB
+- Rank 64: ~120-250MB
+- Rank 128: ~250-500MB
+
+**Inference Overhead:**
+- LoRA application: <100ms (one-time at model load)
+- Per-token latency: <1% increase vs base model
+- Memory overhead: Adapter size + base model
+
+### Error Handling
+
+**Training Failures:**
+- Invalid JSONL format detection
+- Model compatibility validation
+- Out-of-memory graceful failure
+- Training interruption handling
+- Automatic cleanup on failure
+
+**Adapter Loading:**
+- Missing adapter files detection
+- Incompatible base model detection
+- Corrupted weight file handling
+- Graceful fallback to base model
+
+### Future Enhancements
+
+**Potential Additions:**
+- Multi-adapter merging
+- Adapter quantization
+- Training resume from checkpoint
+- Hyperparameter auto-tuning
+- Validation set early stopping
+- GGUF model support (llama.cpp LoRA)
 
 ---
 

@@ -21,10 +21,15 @@ This guide shows practical scenarios where SAM helps. Each example includes step
    - [Academic Research](#academic-research)
    - [Content Creation](#content-creation)
 6. [Diagram Generation](#diagram-generation)
-7. [Business Analysis](#business-analysis)
+7. [LoRA Model Fine-Tuning](#lora-model-fine-tuning)
+   - [Customer Support Bot](#customer-support-bot)
+   - [Domain Expert Specialization](#domain-expert-specialization)
+   - [Writing Style Adaptation](#writing-style-adaptation)
+   - [Code Style Assistant](#code-style-assistant)
+8. [Business Analysis](#business-analysis)
    - [Customer Analysis](#customer-analysis)
    - [Competitive Research](#competitive-research)
-8. [Choosing the Right Model](#choosing-the-right-model)
+9. [Choosing the Right Model](#choosing-the-right-model)
 
 ---
 
@@ -715,6 +720,266 @@ SAM: Updated:
 2. **Name your elements**: "boxes for Frontend, Backend, Database" gives clearer results
 3. **Iterate**: Ask SAM to add, remove, or restyle elements
 4. **Request different types**: Try "show this as a sequence diagram instead"
+
+---
+
+## LoRA Model Fine-Tuning
+
+### Customer Support Bot
+
+**The situation:** You want to train a model on your product documentation to answer customer questions accurately.
+
+**Why LoRA:** Train the model to understand your product terminology, common questions, and company voice without sending data to cloud providers.
+
+**Setup:**
+
+1. **Prerequisites**:
+   - Local MLX model installed (e.g., Qwen 2.5 7B)
+   - Product documentation or FAQ documents
+   - macOS with Apple Silicon
+
+2. **Export Training Data**:
+   - Go to SAM → Documents
+   - Import your product documentation
+   - Click **Export for Training**
+   - Choose **Semantic (Paragraphs)** chunking
+   - Enable PII redaction
+   - Save JSONL file
+
+3. **Configure Training**:
+   - Go to Preferences → Model Training
+   - Click **Train LoRA Adapter** tab
+   - Choose JSONL file
+   - Select base model (Qwen 2.5 7B)
+   - Name: "Customer Support Bot"
+   - Parameters:
+     - Rank: 16 (good capacity for product info)
+     - Epochs: 5
+     - Batch Size: 4
+     - Learning Rate: 0.0001 (default)
+
+4. **Train**:
+   - Click **Start Training**
+   - Wait for completion (15-30 minutes typical)
+   - Watch loss decrease (should reach ~1.5-2.0)
+
+**Using the Adapter**:
+
+1. Create new conversation
+2. Select `lora/Customer Support Bot` in model picker
+3. Ask customer questions
+4. Compare responses to base model
+
+**Example Results**:
+
+```
+You: What is our warranty coverage?
+
+Base model: I don't have specific information about your warranty.
+
+Trained adapter: We provide a comprehensive 5-year warranty covering 
+manufacturing defects. For warranty claims, contact support@company.com 
+with your order number and photos of the defect. We'll arrange free 
+return shipping and process replacement within 5 business days.
+```
+
+**Benefits**:
+- Accurate, company-specific responses
+- No hallucination of features
+- Consistent brand voice
+- Complete privacy (local training and inference)
+
+---
+
+### Domain Expert Specialization
+
+**The situation:** You need a specialized assistant in a technical field (medical, legal, engineering).
+
+**Why LoRA:** Train the model on domain-specific textbooks, papers, and terminology to create an expert assistant.
+
+**Example: Medical Terminology Assistant**
+
+**Setup:**
+
+1. **Collect Training Data**:
+   - Medical textbooks (PDFs)
+   - Clinical guidelines
+   - Medical terminology references
+   - Case studies (with PII removed)
+
+2. **Export Documents**:
+   - Import all documents to SAM
+   - Export with **Page Aware (PDFs)** chunking
+   - Enable FULL PII redaction (critical for medical data)
+   - Save JSONL file
+
+3. **Configure Training**:
+   - Base Model: Llama 3.1 8B or Qwen 2.5 7B
+   - Name: "Medical Terminology Assistant"
+   - Parameters:
+     - Rank: 32 (higher for complex medical reasoning)
+     - Epochs: 10
+     - Batch Size: 2 (slower, more thorough)
+     - Learning Rate: 0.00005 (lower for stability)
+
+4. **Train and Validate**:
+   - Start training (may take 1-2 hours)
+   - Test with medical terminology questions
+   - Compare accuracy to base model
+
+**Example Results**:
+
+```
+You: Explain the pathophysiology of myocardial infarction
+
+Base model: [Generic explanation]
+
+Trained adapter: Myocardial infarction occurs when coronary artery 
+occlusion (typically from plaque rupture and thrombus formation) 
+results in ischemia to myocardial tissue. The affected region 
+undergoes necrosis within 20-40 minutes without reperfusion. 
+The infarction progresses in a wave-front pattern from endocardium 
+to epicardium...
+```
+
+**⚠️ Important**: For educational/research purposes only. Never use for actual medical diagnosis.
+
+---
+
+### Writing Style Adaptation
+
+**The situation:** You want the model to write in a specific style or voice.
+
+**Why LoRA:** Train on examples of the desired writing style so the model consistently produces content matching that voice.
+
+**Example: Company Brand Voice**
+
+**Setup:**
+
+1. **Gather Style Examples**:
+   - Approved marketing copy
+   - Blog posts
+   - Email templates
+   - Social media content
+   - Company communication guidelines
+
+2. **Create Training Examples**:
+   - Format as question-answer pairs:
+   ```jsonl
+   {"messages": [{"role": "user", "content": "Write a product announcement for our new feature"}, {"role": "assistant", "content": "[Example in your brand voice]"}]}
+   ```
+   - Include 50-100 examples covering different content types
+
+3. **Configure Training**:
+   - Base Model: Qwen 2.5 3B (smaller model fine for style)
+   - Name: "Brand Voice - Marketing"
+   - Parameters:
+     - Rank: 8 (style doesn't need huge capacity)
+     - Epochs: 5
+     - Batch Size: 8
+     - Learning Rate: 0.0001
+
+4. **Test Style Consistency**:
+   - Generate multiple pieces of content
+   - Verify tone, vocabulary, formatting match brand guidelines
+
+**Example Results**:
+
+```
+You: Write a product update email about our new dashboard feature
+
+Base model: [Generic corporate tone]
+
+Trained adapter: Hey there! 👋
+
+We're excited to share something we've been working on just for you. 
+Your new dashboard is here, and it's going to change how you work.
+
+What's new? Everything you need, right where you need it. No more 
+clicking through menus or hunting for data. It's all there, beautifully 
+organized and ready to go.
+
+[Continues in consistent brand voice...]
+```
+
+**Use Cases**:
+- Marketing content generation
+- Email drafting
+- Blog posts
+- Social media content
+- Internal communications
+
+---
+
+### Code Style Assistant
+
+**The situation:** You want code suggestions that match your team's coding standards.
+
+**Why LoRA:** Train on your codebase so suggestions follow your architecture patterns, naming conventions, and style guide.
+
+**Setup:**
+
+1. **Export Code Examples**:
+   - Export well-written code files from your project
+   - Include code review comments showing corrections
+   - Include documentation of standards
+   - Use **Fixed Size** chunking for consistent context
+
+2. **Create Training Examples**:
+   - Format as "implement feature X" → "code following your standards"
+   - Include examples of common patterns
+   - 100-200 examples recommended
+
+3. **Configure Training**:
+   - Base Model: Qwen 2.5 Coder 7B or Llama 3.1 8B
+   - Name: "Team Code Style - Python FastAPI"
+   - Parameters:
+     - Rank: 16
+     - Epochs: 5
+     - Batch Size: 4
+     - Learning Rate: 0.0001
+
+4. **Validate Code Quality**:
+   - Test with real feature requests
+   - Verify code follows team standards
+   - Check naming conventions, error handling, documentation
+
+**Example Results**:
+
+```
+You: Implement a user authentication endpoint
+
+Base model: [Generic code structure]
+
+Trained adapter:
+@router.post("/auth/login", response_model=AuthResponse)
+async def authenticate_user(
+    credentials: LoginCredentials,
+    db: Database = Depends(get_database),
+    logger: Logger = Depends(get_logger)
+) -> AuthResponse:
+    """
+    Authenticate user and return JWT token.
+    
+    Args:
+        credentials: User login credentials
+        db: Database connection
+        logger: Application logger
+        
+    Returns:
+        AuthResponse with JWT token and user info
+        
+    Raises:
+        HTTPException: If credentials invalid
+    """
+    # [Follows team's error handling, logging, and structure patterns]
+```
+
+**Benefits**:
+- Consistent code style across team
+- Follows architecture patterns
+- Includes proper error handling
+- Matches documentation standards
 
 ---
 

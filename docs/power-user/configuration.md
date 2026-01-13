@@ -25,11 +25,12 @@ This comprehensive guide covers every setting, preference, and configuration opt
 2. [Location Settings](#location-settings)
 3. [Remote Providers](#remote-providers)
 4. [Local Models](#local-models)
-5. [Personalities](#personalities)
-6. [Shared Topics](#shared-topics)
-7. [Conversation Settings](#conversation-settings)
-8. [Advanced Parameters](#advanced-parameters)
-9. [System Prompts](#system-prompts)
+5. [Model Training](#model-training)
+6. [Personalities](#personalities)
+7. [Shared Topics](#shared-topics)
+8. [Conversation Settings](#conversation-settings)
+9. [Advanced Parameters](#advanced-parameters)
+10. [System Prompts](#system-prompts)
 
 ---
 
@@ -489,6 +490,162 @@ Discover and manage LoRA (Low-Rank Adaptation) models for fine-tuning image gene
 3. SAM automatically resolves paths and applies LoRAs during generation
 
 **Tip**: Use the `list_loras` operation in the `image_generation` tool to see all available LoRAs with their compatibility info and trigger words.
+
+---
+
+## Model Training
+
+SAM lets you train custom LoRA (Low-Rank Adaptation) adapters to fine-tune local MLX models on your own data.
+
+**Access**: SAM → Preferences (⌘,) → Model Training
+
+### Training Tab
+
+**Training Data Selection**:
+- Click **Choose JSONL File...** to select training data
+- Displays selected filename
+- File must be in JSONL format with conversation messages
+
+**Base Model Selection**:
+- Dropdown shows all installed MLX models
+- Displays model family and type for selected model
+- Only MLX models support LoRA training (GGUF not supported)
+
+**Adapter Name**:
+- Text field to name your adapter
+- This name appears in the model picker after training
+- Use descriptive names (e.g., "Customer Support Bot", "Medical Assistant")
+
+**Training Parameters**:
+
+| Parameter | Range | Default | Description |
+|-----------|-------|---------|-------------|
+| **Rank** | 4-128 | 8 | Adapter capacity (higher = more capacity, larger files) |
+| **Learning Rate** | 0.00001-0.01 | 0.0001 | How fast the model learns |
+| **Epochs** | 1-50 | 3 | Number of training passes through data |
+| **Batch Size** | 1-32 | 4 | Examples processed simultaneously |
+
+**Training Progress**:
+- Real-time progress bar showing completion percentage
+- Current epoch and step counters
+- Live loss metric (should decrease during training)
+- **Cancel Training** button to stop early
+
+**Start Training**:
+- Click **Start Training** to begin
+- Training runs in background (SAM remains usable)
+- Completion notification when done
+- Adapter automatically registered and available in model picker
+
+### LoRA Adapters Tab
+
+View and manage all trained adapters:
+
+**Adapter List Shows**:
+- Adapter ID (unique identifier)
+- Training dataset filename
+- Creation date and time
+- Final training loss
+- Training parameters (epochs, steps, learning rate)
+
+**Adapter Actions**:
+- **Load in Chat**: Opens new conversation with adapter selected
+- **Delete**: Permanently removes adapter from disk
+
+**Adapter Metadata**:
+Each adapter stores complete training information for reference and comparison.
+
+### Training Data Export
+
+**From Conversations**:
+1. In chat interface, click conversation menu (three dots)
+2. Select **Export as Training Data**
+3. Configure options:
+   - PII redaction settings
+   - Chat template selection
+4. Save JSONL file
+
+**From Documents**:
+1. Go to SAM → Documents
+2. Select one or more documents
+3. Click **Export for Training**
+4. Choose chunking strategy:
+   - **Semantic (Paragraphs)**: Natural paragraph breaks
+   - **Fixed Size**: Uniform chunk sizes
+   - **Page Aware (PDFs)**: Respect page boundaries
+5. Configure PII detection if needed
+6. Save JSONL file
+
+**PII Detection Settings**:
+
+Nine entity types automatically detected and redacted:
+- Personal names
+- Organization names
+- Place names
+- Email addresses
+- Phone numbers
+- Credit card numbers
+- Social security numbers
+- IP addresses
+- URLs
+
+Enable PII redaction to protect sensitive information in training data.
+
+**Chat Template Selection**:
+
+Choose template matching your base model:
+- **Llama 3/4**: For Llama models
+- **Mistral**: For Mistral/Mixtral models
+- **Qwen 2.5**: For Qwen models
+- **Gemma 2/3**: For Gemma models
+- **Phi 3**: For Phi models
+- **Custom**: Generic markdown format
+
+### Adapter Storage
+
+**Location**: `~/Library/Application Support/SAM/adapters/`
+
+**Structure**:
+```
+adapters/
+├── {adapter-uuid-1}/
+│   ├── adapters.safetensors
+│   ├── adapter_config.json
+│   └── metadata.json
+├── {adapter-uuid-2}/
+│   └── ...
+```
+
+**Metadata Stored**:
+- Adapter name
+- Base model used
+- Training dataset filename
+- Creation timestamp
+- Final training loss
+- Training parameters (rank, epochs, learning rate, batch size)
+- Training steps completed
+
+### Using Trained Adapters
+
+**In Model Picker**:
+- Adapters appear prefixed with "lora/"
+- Example: `lora/Customer Support Bot`
+- Select like any other model
+- Adapter loads with base model automatically
+
+**Performance**:
+- Minimal inference overhead (LoRA is efficient)
+- Fast loading (adapters are small, typically 20-50MB)
+- Can switch between adapters quickly
+
+**Best Practices**:
+- Test adapters with various prompts before deployment
+- Compare adapter performance to base model
+- Keep training data for future iterations
+- Use descriptive names for easy identification
+- Monitor training loss for quality assessment
+
+**See Also**: [LoRA Training Guide](../end-user/lora-training.md) for complete training workflows and examples.
 
 ---
 

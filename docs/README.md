@@ -50,11 +50,17 @@ Run multiple specialized agents in parallel, work on long-running projects with 
 - Handle large documents without "context too long" errors
 - Older context archived and searchable with `recall_history`
 
-🛠️ **Consolidated Tools, Infinite Possibilities**
+🛠️ **Built-In Tools**
 - File operations, terminal execution, web research
 - Professional SerpAPI integration: Google, Bing, Amazon, Scholar, and more
 - Git operations, build tasks, document import
 - Local image generation with Stable Diffusion
+
+🎓 **Train Your Own Models**
+- Fine-tune local models on your own data using LoRA
+- Export conversations and documents as training data
+- PII detection automatically protects sensitive information
+- Create specialized assistants for any domain
 
 🔐 **Privacy Is Not Optional**
 - **Your data never leaves your Mac.** Ever.
@@ -72,6 +78,7 @@ New to SAM? Start here to get up and running quickly.
 
 - **[Getting Started](end-user/getting-started.md)** - Installation and your first conversation
 - **[Features Overview](end-user/features-overview.md)** - What SAM can do for you
+- **[LoRA Training](end-user/lora-training.md)** - Fine-tune models on your own data
 - **[Memory & RAG Guide](end-user/memory-and-rag.md)** - Understanding SAM's memory system
 - **[Shared Topics Guide](end-user/shared-topics.md)** - Multi-conversation collaboration
 - **[Use Cases](end-user/use-cases.md)** - Real-world scenarios showing SAM's value

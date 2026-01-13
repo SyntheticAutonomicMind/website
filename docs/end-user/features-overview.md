@@ -19,17 +19,18 @@ This guide shows you everything SAM can do, with real examples you can try today
 1. [Core Features](#core-features)
 2. [Voice Input and Output](#voice-input-and-output)
 3. [Personality System](#personality-system)
-4. [Memory & Intelligence](#memory--intelligence)
-5. [Context Archive & Recall](#context-archive--recall)
-6. [Document Understanding](#document-understanding)
-7. [Multi-Conversation Collaboration](#multi-conversation-collaboration)
-8. [Autonomous Workflows](#autonomous-workflows)
-9. [File & Code Operations](#file--code-operations)
-10. [Web Research](#web-research)
-11. [Terminal Integration](#terminal-integration)
-12. [Image Generation](#image-generation)
-13. [Location Awareness](#location-awareness)
-14. [API & Integration](#api--integration)
+4. [LoRA Model Training](#lora-model-training)
+5. [Memory & Intelligence](#memory--intelligence)
+6. [Context Archive & Recall](#context-archive--recall)
+7. [Document Understanding](#document-understanding)
+8. [Multi-Conversation Collaboration](#multi-conversation-collaboration)
+9. [Autonomous Workflows](#autonomous-workflows)
+10. [File & Code Operations](#file--code-operations)
+11. [Web Research](#web-research)
+12. [Terminal Integration](#terminal-integration)
+13. [Image Generation](#image-generation)
+14. [Location Awareness](#location-awareness)
+15. [API & Integration](#api--integration)
 
 ---
 
@@ -374,6 +375,94 @@ Every message you send includes this context, so SAM knows your preferences with
 - Use different prompts for different project types
 - Disable prompts that aren't relevant to current conversation
 - Update prompts as your context changes
+
+---
+
+## LoRA Model Training
+
+**Fine-tune local AI models on your own data for specialized knowledge and behavior.**
+
+SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize local MLX models on specific topics, writing styles, or knowledge domains. Instead of retraining an entire model, LoRA adds small adapter layers that modify the model's behavior using minimal data and compute.
+
+### What You Can Do
+
+- **Customer Support**: Train a model on your product documentation
+- **Domain Expert**: Create specialists in medical, legal, or technical fields
+- **Writing Style**: Adapt models to match your brand voice or writing style
+- **Knowledge Base**: Build assistants for your company or project
+
+### How It Works
+
+1. **Prepare Training Data**: Export conversations or documents as JSONL training data
+2. **Configure Training**: Select base model, set parameters (rank, epochs, batch size)
+3. **Train Adapter**: SAM trains the adapter using MLX on your Mac
+4. **Use in Chat**: Trained adapters appear in the model picker like any other model
+
+### Key Features
+
+**Training Data Export**
+- Export conversations directly from chat interface
+- Export documents with intelligent chunking strategies
+- Automatic PII detection and redaction
+- Support for multiple chat templates (Llama, Qwen, Mistral, Gemma, Phi, Custom)
+
+**Privacy Protection**
+SAM can detect and redact personally identifiable information before training:
+- Personal names, organizations, places
+- Email addresses, phone numbers
+- Credit card numbers, social security numbers
+- IP addresses, URLs
+
+**Document Chunking**
+Choose the best strategy for your content:
+- **Semantic (Paragraphs)**: Natural paragraph breaks for readable chunks
+- **Fixed Size**: Uniform chunk sizes for consistent training
+- **Page Aware (PDFs)**: Respect page boundaries in PDF documents
+
+**Training Parameters**
+- **Rank** (4-128): Adapter capacity (higher = more capacity, larger files)
+- **Learning Rate**: How fast the model learns
+- **Epochs** (1-50): Number of training passes through data
+- **Batch Size** (1-32): Examples processed simultaneously
+
+**Real-Time Monitoring**
+- Track training progress with live metrics
+- Watch loss decrease as model learns
+- View current epoch, step, and loss values
+- Cancel training anytime if needed
+
+### LoRA vs RAG
+
+**Use LoRA when:**
+- You want the model to internalize knowledge permanently
+- You need consistent writing style or behavior
+- You have structured training examples
+- You want fast inference without retrieval overhead
+
+**Use RAG when:**
+- Information changes frequently
+- You need source attribution
+- You have large reference libraries
+- You want immediate updates without retraining
+
+**Best approach**: Combine LoRA + RAG for specialized behavior with current information.
+
+### Getting Started
+
+**Requirements:**
+- macOS with Apple Silicon (for MLX models)
+- Local MLX model installed
+- Training data in JSONL format
+
+**Quick Start:**
+1. Go to **SAM → Preferences → Model Training**
+2. Export some conversations or documents as training data
+3. Click **Train LoRA Adapter** tab
+4. Select your training data and base model
+5. Click **Start Training**
+6. Use the trained adapter in chat via the model picker
+
+**Learn More**: See the complete [LoRA Training Guide](lora-training.md) for detailed instructions, examples, and troubleshooting.
 
 ---
 

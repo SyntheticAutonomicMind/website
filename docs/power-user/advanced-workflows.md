@@ -24,10 +24,11 @@ SAM isn't limited to single conversations. With subagents, shared topics, and MC
 
 1. [Subagent Workflows](#subagent-workflows)
 2. [Multi-Conversation Patterns](#multi-conversation-patterns)
-3. [Complex Project Templates](#complex-project-templates)
-4. [Automation & Scripting](#automation--scripting)
-5. [Performance Optimization](#performance-optimization)
-6. [Advanced Tool Usage](#advanced-tool-usage)
+3. [LoRA Training Workflows](#lora-training-workflows)
+4. [Complex Project Templates](#complex-project-templates)
+5. [Automation & Scripting](#automation--scripting)
+6. [Performance Optimization](#performance-optimization)
+7. [Advanced Tool Usage](#advanced-tool-usage)
 
 ---
 
@@ -189,6 +190,413 @@ Implementation:
 2. Implements improvements
 3. Cycle repeats
 ```
+
+---
+
+## LoRA Training Workflows
+
+### Advanced Training Strategies
+
+Fine-tune local models with precision using advanced training techniques and parameter optimization.
+
+**Requirements:**
+- Local MLX model installed
+- Training data in JSONL format
+- macOS with Apple Silicon
+
+### Parameter Tuning Guide
+
+**Rank (4-128)**
+
+Controls adapter capacity and file size:
+
+| Rank | Use Case | File Size | Training Time |
+|------|----------|-----------|---------------|
+| 4-8 | Writing style, simple patterns | ~15-25MB | Fastest |
+| 16-32 | Domain knowledge, terminology | ~30-60MB | Moderate |
+| 64-128 | Complex reasoning, large datasets | ~100MB+ | Slower |
+
+**Recommendations:**
+- Start with rank 8, increase if model doesn't learn patterns
+- Higher rank = more capacity but risk of overfitting
+- Use lower rank for small datasets (<100 examples)
+- Use higher rank for complex domains (medical, legal, technical)
+
+**Learning Rate**
+
+How fast the model learns:
+
+| Rate | Use Case | Risk |
+|------|----------|------|
+| 0.00001-0.00005 | Fine-tuning pre-trained adapters | Slow progress |
+| 0.0001 | **Default - most cases** | Balanced |
+| 0.0005-0.001 | Quick experiments, small datasets | Instability |
+
+**Recommendations:**
+- Use default (0.0001) unless you have specific reasons
+- Increase if loss plateaus early
+- Decrease if loss becomes erratic or increases
+- Monitor loss carefully when adjusting
+
+**Epochs (1-50)**
+
+Number of training passes through data:
+
+| Epochs | Use Case | Risk |
+|--------|----------|------|
+| 1-3 | Quick experiments | Underfitting |
+| 5-10 | **Most datasets** | Balanced |
+| 15-30 | Large, diverse datasets | Some overfitting |
+| 40-50 | Specialized, must memorize | High overfitting |
+
+**Recommendations:**
+- Start with 5 epochs
+- Watch loss - stop when it plateaus
+- More epochs needed for larger datasets
+- Fewer epochs for small datasets to prevent memorization
+
+**Batch Size (1-32)**
+
+Examples processed simultaneously:
+
+| Size | Memory | Speed | Use Case |
+|------|--------|-------|----------|
+| 1-2 | Low | Slower | Large models, limited RAM |
+| 4-8 | Medium | **Balanced** | Most cases |
+| 16-32 | High | Faster | Small models, ample RAM |
+
+**Recommendations:**
+- Start with 4
+- Increase for faster training if you have RAM
+- Decrease if you get out-of-memory errors
+- Higher batch size can improve stability
+
+### Training Data Best Practices
+
+**Quality Over Quantity**
+
+50 high-quality examples beat 500 mediocre ones:
+
+✅ **Good Training Example:**
+```jsonl
+{"messages": [{"role": "user", "content": "What is our return policy for defective items?"}, {"role": "assistant", "content": "For defective items, we offer full refunds within 90 days of purchase. Contact support@company.com with your order number and photos of the defect. We'll arrange free return shipping and process your refund within 5 business days."}]}
+```
+
+❌ **Poor Training Example:**
+```jsonl
+{"messages": [{"role": "user", "content": "returns?"}, {"role": "assistant", "content": "yes"}]}
+```
+
+**Diversity and Coverage**
+
+Cover different aspects of your domain:
+
+**Example: Customer Support Bot**
+```
+✅ Include examples for:
+- Product questions (features, specs, compatibility)
+- Pricing and billing
+- Shipping and delivery
+- Returns and refunds
+- Technical support
+- Account management
+```
+
+**Consistent Formatting**
+
+Use the same chat template throughout:
+
+```bash
+# Choose ONE template for all examples:
+- Llama 3/4: For Llama models
+- Qwen 2.5: For Qwen models
+- Mistral: For Mistral/Mixtral models
+- Gemma 2/3: For Gemma models
+- Phi 3: For Phi models
+- Custom: Generic markdown format
+```
+
+**PII Protection**
+
+Enable redaction to keep sensitive data out:
+
+**PII Types Detected:**
+- Personal names
+- Organization names  
+- Place names
+- Email addresses
+- Phone numbers
+- Credit card numbers
+- Social security numbers
+- IP addresses
+- URLs
+
+**Recommendation:** Always enable PII redaction unless training on purely public data.
+
+### Document Chunking Strategies
+
+Choose the right strategy for your content type:
+
+**Semantic (Paragraphs)**
+
+Best for: Articles, documentation, books
+
+**How it works:**
+- Splits on natural paragraph boundaries
+- Preserves context and readability
+- Variable chunk sizes
+
+**When to use:**
+- Well-structured documents
+- Natural topic boundaries
+- Readable, flowing text
+
+**Fixed Size**
+
+Best for: Consistent training, mixed content
+
+**How it works:**
+- Creates uniform token-sized chunks
+- Overlap between chunks for context
+- Predictable sizes
+
+**When to use:**
+- Mixed document types
+- Need consistent chunk sizes
+- Technical documentation with irregular formatting
+
+**Page Aware (PDFs)**
+
+Best for: PDF documents with page structure
+
+**How it works:**
+- Respects page boundaries
+- Keeps page content together
+- Useful for cited material
+
+**When to use:**
+- PDF documents with clear page structure
+- Legal documents (cite by page)
+- Academic papers
+- Reports with page references
+
+### Multi-Adapter Management
+
+**Organizing Adapters**
+
+Use descriptive names:
+```
+✅ Good names:
+- "Customer Support - Products"
+- "Medical Terminology - Cardiology"
+- "Code Style - Python FastAPI"
+- "Legal Writing - Contract Review"
+
+❌ Poor names:
+- "Adapter1"
+- "test"
+- "new_adapter_v2"
+```
+
+**Adapter Versioning**
+
+Track versions in adapter names:
+```
+"Customer Support v1.0"  → Initial training
+"Customer Support v1.1"  → Added FAQ data
+"Customer Support v2.0"  → Complete retrain with new guidelines
+```
+
+**When to Retrain vs Create New**
+
+**Retrain same adapter when:**
+- Fixing mistakes in training data
+- Adjusting parameters (rank, epochs)
+- Adding more examples to existing domain
+
+**Create new adapter when:**
+- Different domain or use case
+- Testing different approaches
+- Experimental parameters
+- Backup before major changes
+
+**Comparing Adapter Performance**
+
+**Method 1: Same Prompts**
+```
+Test prompt: "What is our warranty coverage?"
+
+Base model: Generic response
+Adapter v1: Company-specific, missing details
+Adapter v2: Complete, accurate, on-brand
+```
+
+**Method 2: Loss Metrics**
+```
+Lower final loss = Better learning
+Adapter A: Loss 1.85 ✅
+Adapter B: Loss 2.42 ⚠️
+```
+
+**Method 3: Use Case Testing**
+```
+Create 10 test questions from your domain
+Run through base model + each adapter
+Score accuracy and style
+```
+
+### Advanced Training Workflows
+
+**Iterative Refinement**
+
+1. **Initial Training** (Rank 8, Epochs 5, 50 examples)
+   - Train baseline adapter
+   - Test with real prompts
+   - Identify weaknesses
+
+2. **Data Augmentation** (Add 50 examples targeting gaps)
+   - Add examples for weak areas
+   - Retrain with same parameters
+
+3. **Parameter Optimization** (Rank 16, Epochs 10)
+   - Increase capacity for better learning
+   - Monitor loss for overfitting
+
+4. **Final Validation** (Test suite)
+   - Run comprehensive test suite
+   - Compare to base model and previous versions
+   - Deploy best-performing adapter
+
+**Combining LoRA + RAG**
+
+The hybrid approach for maximum effectiveness:
+
+**Use Case: Medical Assistant**
+
+**LoRA Adapter:**
+- Trains on medical terminology
+- Learns diagnostic reasoning patterns
+- Internalizes treatment protocols
+- Consistent medical writing style
+
+**RAG (Memory/Documents):**
+- Current research papers
+- Drug databases (updated frequently)
+- Patient guidelines
+- Clinical trial results
+
+**Result:** Fast, specialized medical reasoning with access to current information.
+
+**Implementation:**
+```
+1. Train LoRA on medical textbooks and guidelines
+2. Import current research papers as documents
+3. Enable vector RAG in conversation
+4. Select LoRA adapter in model picker
+5. Ask medical questions
+
+→ Model uses LoRA for reasoning + RAG for current facts
+```
+
+**Other Hybrid Use Cases:**
+
+**Code Assistant:**
+- LoRA: Team's coding style, architecture patterns
+- RAG: API documentation, library references
+
+**Customer Support:**
+- LoRA: Company voice, common responses, workflow
+- RAG: Current product specs, pricing, inventory
+
+**Legal Research:**
+- LoRA: Legal reasoning, citation format, writing style
+- RAG: Case law database, recent rulings, statutes
+
+### Troubleshooting Training Issues
+
+**Symptom: Loss not decreasing**
+
+**Diagnosis:**
+```
+Check training logs:
+- Loss starts high (~3-5)
+- Loss stays flat or increases
+- No improvement after multiple epochs
+```
+
+**Solutions:**
+1. Increase learning rate (0.0001 → 0.0005)
+2. Increase epochs (5 → 10)
+3. Increase rank (8 → 16)
+4. Check data quality (remove duplicates, errors)
+5. Add more diverse examples
+
+**Symptom: Loss erratic/increasing**
+
+**Diagnosis:**
+```
+Loss jumps around wildly
+Loss increases instead of decreasing
+Training unstable
+```
+
+**Solutions:**
+1. Decrease learning rate (0.0001 → 0.00005)
+2. Reduce batch size (8 → 4)
+3. Check for corrupted data
+4. Use smaller rank
+
+**Symptom: Adapter memorizes verbatim**
+
+**Diagnosis:**
+```
+Adapter repeats training examples exactly
+No generalization to similar questions
+Overfitting
+```
+
+**Solutions:**
+1. Add more diverse examples
+2. Reduce epochs (10 → 5)
+3. Reduce rank (32 → 16)
+4. Check for duplicate/near-duplicate examples
+
+**Symptom: Out of memory**
+
+**Diagnosis:**
+```
+Training crashes
+"Out of memory" error
+System becomes unresponsive
+```
+
+**Solutions:**
+1. Reduce batch size (4 → 2 or 1)
+2. Use smaller base model (7B → 3B)
+3. Close other memory-intensive apps
+4. Reduce rank (16 → 8)
+
+### Best Practices Summary
+
+**Do:**
+✅ Start with conservative parameters (rank 8, epochs 5, LR 0.0001)  
+✅ Validate data quality before training  
+✅ Enable PII redaction for sensitive data  
+✅ Test incrementally (small → larger datasets)  
+✅ Compare adapters with same test prompts  
+✅ Use descriptive adapter names with versions  
+✅ Combine LoRA + RAG for best results  
+✅ Monitor loss during training  
+
+**Don't:**
+❌ Train on low-quality or error-filled data  
+❌ Use too high learning rate (causes instability)  
+❌ Mix different chat templates in same dataset  
+❌ Skip PII redaction for personal data  
+❌ Expect perfect results from tiny datasets  
+❌ Train when RAG would work better  
+❌ Ignore loss metrics  
+❌ Delete adapters without testing first  
 
 ---
 
