@@ -1107,7 +1107,6 @@ public struct ExportStatistics: Sendable {
 ### Storage
 - **SQLite**: Conversation and memory storage
 - **FileManager**: Workspace file operations
-- **Keychain**: Secure API key storage
 
 ### AI Integration
 - **OpenAI SDK**: GPT-4, GPT-3.5-turbo
@@ -1185,9 +1184,8 @@ public func executeAutonomousWorkflow(...) async throws -> String {
 - Path normalization prevents `../` attacks
 
 **API Keys**:
-- Stored in macOS Keychain
 - Never logged or transmitted (except to provider)
-- Encrypted at rest
+- User-managed configuration
 
 **HTTPS Enforcement**:
 - All web operations require HTTPS

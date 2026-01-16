@@ -278,7 +278,7 @@ SAM follows these core principles:
                  │
 ┌────────────────▼────────────────────┐
 │      Infrastructure Layer           │
-│  (Database, Network, Keychain)      │
+│  (Database, Network)                │
 └─────────────────────────────────────┘
 ```
 

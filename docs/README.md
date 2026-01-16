@@ -66,7 +66,7 @@ Run multiple specialized agents in parallel, work on long-running projects with 
 - **Your data never leaves your Mac.** Ever.
 - Run completely offline with local MLX/GGUF models
 - 7 providers: OpenAI, Anthropic, GitHub Copilot, DeepSeek, Local MLX, Local GGUF, Custom
-- API keys secured in macOS Keychain
+- API keys configured directly in preferences
 - Zero telemetry, zero tracking, zero compromise
 
 ---
@@ -313,7 +313,7 @@ For those interested in the technical implementation:
 - **Tool System**: 15 consolidated MCP tools with operation routing
 - **API Server**: OpenAI-compatible REST API with SSE streaming
 - **Local Inference**: MLX (Metal acceleration) and llama.cpp integration
-- **Security**: Working directory authorization, keychain integration, HTTPS enforcement
+- **Security**: Working directory authorization, HTTPS enforcement
 
 See [Architecture](developer/architecture.md) for detailed technical information.
 

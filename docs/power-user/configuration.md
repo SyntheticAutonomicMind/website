@@ -938,9 +938,8 @@ Focus on clean, maintainable code following PEP 8.
 ## Security Settings
 
 **API Keys**:
-- Stored securely in macOS Keychain
 - Never logged or transmitted (except to the provider's API)
-- View or edit in Preferences
+- Configured directly in Preferences
 
 **Working Directory Authorization**:
 - **Inside working directory**: Auto-approved operations
