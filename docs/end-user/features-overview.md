@@ -384,27 +384,39 @@ Every message you send includes this context, so SAM knows your preferences with
 
 SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize local MLX models on specific topics, writing styles, or knowledge domains. Instead of retraining an entire model, LoRA adds small adapter layers that modify the model's behavior using minimal data and compute.
 
+**Status**: Production-ready for MLX models on Apple Silicon. GGUF training support is planned for a future release.
+
 ### What You Can Do
 
-- **Customer Support**: Train a model on your product documentation
+- **Customer Support**: Train a model on your product documentation and support tickets
 - **Domain Expert**: Create specialists in medical, legal, or technical fields
 - **Writing Style**: Adapt models to match your brand voice or writing style
-- **Knowledge Base**: Build assistants for your company or project
+- **Knowledge Base**: Build assistants trained on your company wiki or project documentation
+- **Code Assistant**: Train on your codebase for context-aware development help
 
 ### How It Works
 
 1. **Prepare Training Data**: Export conversations or documents as JSONL training data
-2. **Configure Training**: Select base model, set parameters (rank, epochs, batch size)
-3. **Train Adapter**: SAM trains the adapter using MLX on your Mac
-4. **Use in Chat**: Trained adapters appear in the model picker like any other model
+2. **Configure Training**: Select base MLX model, set parameters (rank, alpha, learning rate, epochs)
+3. **Train Adapter**: SAM trains the adapter using MLX's Python training script on your Mac
+4. **Automatic Integration**: Trained adapters appear immediately in the model picker
+5. **Use in Chat**: Select your custom adapter like any other model
 
 ### Key Features
+
+**Complete Training UI**
+- Full training configuration interface in Preferences → Model Training
+- Real-time progress tracking with loss visualization
+- Live metrics: current epoch, step, loss values
+- Cancel training anytime without losing progress
+- Training log viewer for debugging
 
 **Training Data Export**
 - Export conversations directly from chat interface
 - Export documents with intelligent chunking strategies
-- Automatic PII detection and redaction
+- Automatic PII detection and redaction (optional)
 - Support for multiple chat templates (Llama, Qwen, Mistral, Gemma, Phi, Custom)
+- Flexible chunking: paragraph, sentence, or token-based
 
 **Privacy Protection**
 SAM can detect and redact personally identifiable information before training:
@@ -412,24 +424,71 @@ SAM can detect and redact personally identifiable information before training:
 - Email addresses, phone numbers
 - Credit card numbers, social security numbers
 - IP addresses, URLs
+- Configurable on/off per export
 
-**Document Chunking**
+**Document Chunking Strategies**
 Choose the best strategy for your content:
 - **Semantic (Paragraphs)**: Natural paragraph breaks for readable chunks
-- **Fixed Size**: Uniform chunk sizes for consistent training
+- **Sentence-Based**: Split on sentence boundaries
+- **Token-Based**: Fixed token counts with overlap
 - **Page Aware (PDFs)**: Respect page boundaries in PDF documents
 
 **Training Parameters**
-- **Rank** (4-128): Adapter capacity (higher = more capacity, larger files)
-- **Learning Rate**: How fast the model learns
-- **Epochs** (1-50): Number of training passes through data
-- **Batch Size** (1-32): Examples processed simultaneously
+
+**LoRA Configuration:**
+- **Rank (r)**: 4-64 (adapter capacity, higher = more expressive but larger files)
+- **Alpha**: 8-128 (scaling factor, typically 2x rank)
+- **Target Layers**: Customize which attention layers to adapt
+
+**Training Settings:**
+- **Learning Rate**: 1e-6 to 1e-3 (how fast the model learns)
+- **Epochs**: 1-1000 (number of passes through training data)
+- **Batch Size**: 1-32 (examples processed simultaneously)
+- **Gradient Accumulation**: For effective larger batches on limited memory
 
 **Real-Time Monitoring**
-- Track training progress with live metrics
-- Watch loss decrease as model learns
-- View current epoch, step, and loss values
-- Cancel training anytime if needed
+- Live training progress with percentage complete
+- Loss curve visualization (watch loss decrease as model learns)
+- Current epoch, step, and loss values updated in real-time
+- Estimated time remaining
+- Logs show detailed training statistics
+
+**Adapter Management**
+- Trained adapters stored in `~/Library/Application Support/SAM/adapters/`
+- Automatic hot reload - new adapters appear immediately without restart
+- Friendly names in model picker (base model + adapter name)
+- Delete or rename adapters from Finder
+- Split model support for large base models (>5GB)
+
+### MLX Training (Available Now)
+
+**Requirements:**
+- macOS with Apple Silicon (M1, M2, M3, M4 chips)
+- Local MLX model installed (Qwen, Llama, Mistral, etc.)
+- Training data in JSONL format
+- Sufficient disk space for adapter files
+
+**Performance:**
+- Training uses Metal acceleration via MLX
+- Speed depends on model size and available RAM
+- Typically completes in minutes to hours
+- Can continue using SAM during training
+
+**How to Train:**
+1. Go to **SAM → Preferences → Model Training**
+2. Click **Export Training Data** to create JSONL from conversations or documents
+3. Select **Train LoRA Adapter** tab
+4. Choose your base MLX model
+5. Configure training parameters (or use defaults)
+6. Click **Start Training**
+7. Monitor progress in real-time
+8. When complete, find your adapter in the model picker
+
+### GGUF Training (Planned)
+
+Support for training LoRA adapters for GGUF models (llama.cpp) is planned for a future release. The implementation will use Hugging Face Transformers for training and llama.cpp for inference with the adapter.
+
+**Status**: Architecture designed, not yet implemented. Stay tuned for updates.
 
 ### LoRA vs RAG
 
@@ -438,31 +497,52 @@ Choose the best strategy for your content:
 - You need consistent writing style or behavior
 - You have structured training examples
 - You want fast inference without retrieval overhead
+- Your knowledge is stable and doesn't change frequently
 
 **Use RAG when:**
-- Information changes frequently
-- You need source attribution
-- You have large reference libraries
+- Information changes frequently and needs updates
+- You need source attribution and citations
+- You have large reference libraries (hundreds of documents)
 - You want immediate updates without retraining
+- You need to combine information from multiple sources
 
-**Best approach**: Combine LoRA + RAG for specialized behavior with current information.
+**Best approach**: Combine LoRA + RAG for specialized behavior with current information. Train a LoRA adapter for domain expertise and communication style, then use RAG for up-to-date facts and references.
 
-### Getting Started
+### Practical Examples
 
-**Requirements:**
-- macOS with Apple Silicon (for MLX models)
-- Local MLX model installed
-- Training data in JSONL format
+**Customer Support Bot**
+```
+1. Export support ticket conversations as training data
+2. Train LoRA on ticket resolution patterns and product knowledge
+3. Use RAG for current documentation and FAQs
+4. Result: Agent that speaks like your support team with access to latest info
+```
 
-**Quick Start:**
-1. Go to **SAM → Preferences → Model Training**
-2. Export some conversations or documents as training data
-3. Click **Train LoRA Adapter** tab
-4. Select your training data and base model
-5. Click **Start Training**
-6. Use the trained adapter in chat via the model picker
+**Code Assistant**
+```
+1. Export coding conversations and examples from your project
+2. Train LoRA on your codebase patterns and conventions
+3. Use RAG for project documentation and code search
+4. Result: Assistant that understands your project's idioms and architecture
+```
 
-**Learn More**: See the complete [LoRA Training Guide](lora-training.md) for detailed instructions, examples, and troubleshooting.
+**Writing Assistant**
+```
+1. Export examples of your writing style from past conversations
+2. Train LoRA to match your voice and tone
+3. Use RAG for research and factual content
+4. Result: Assistant that writes like you with access to reference materials
+```
+
+### Troubleshooting
+
+**Common Issues:**
+- **Training fails immediately**: Check that your training data is valid JSONL format
+- **Out of memory**: Reduce batch size or use gradient accumulation
+- **Loss not decreasing**: Try adjusting learning rate (lower if loss explodes, higher if learning too slow)
+- **Adapter doesn't appear**: Check `~/Library/Application Support/SAM/adapters/` for adapter files
+
+**Learn More**: See the complete [LoRA Training Guide](lora-training.md) for detailed instructions, parameter tuning, best practices, and advanced techniques.
 
 ---
 
@@ -1307,6 +1387,113 @@ curl -X POST http://localhost:8080/api/chat/completions \
 - **CORS**: Configurable for web access
 
 See [API Reference](../developer/api-reference.md) for complete documentation.
+
+---
+
+## Remote Access with SAM Web
+
+**Access SAM from your iPad, iPhone, or any device with a browser.**
+
+SAM Web lets you chat with SAM from anywhere on your network. All of SAM's backend features are available through the chat interface - image generation, file operations, terminal commands, memory, and more. You're controlling SAM remotely, so everything happens on your Mac.
+
+### What is SAM Web?
+
+SAM Web is a browser-based interface that connects to SAM's API. When you're on your iPad or another device, you can have full conversations with SAM and access all its capabilities.
+
+**What works:**
+- Full chat with streaming responses
+- All conversation features (system prompts, personalities, mini-prompts, shared topics, folders)
+- All AI models and providers you've configured in SAM
+- All of SAM's tools: image generation, file operations, terminal, web research, memory/RAG, and more
+- Model parameter configuration
+
+**What's missing:**
+- Document upload directly from browser (may be available in a future release)
+
+**Important:** SAM Web requires SAM running on your Mac with API server enabled. When you ask SAM to generate an image or edit a file, it happens on your Mac - SAM Web is just the remote control.
+
+### Getting Started
+
+**Requirements:**
+1. SAM installed and running on your Mac
+2. API server enabled in SAM Preferences → API Server
+3. API token from SAM Preferences → API Server
+4. Network access to your Mac (same Wi-Fi network recommended)
+5. Modern web browser (Safari, Chrome, Firefox)
+
+**Quick Setup:**
+1. Clone SAM Web repository: `git clone https://github.com/SyntheticAutonomicMind/SAM-web.git`
+2. Start a web server: `python3 -m http.server 8000` (from SAM-web directory)
+3. Open `http://localhost:8000` (same device) or `http://YOUR_MAC_IP:8000` (other devices)
+4. Enter your API token from SAM Preferences
+5. Click **Connect to SAM**
+6. Start chatting
+
+### Use Cases
+
+**iPad Access:**
+- Chat with SAM while reading on your iPad
+- Quick questions without switching to your Mac
+- Touch-optimized interface for tablets
+
+**Multi-Device Workflow:**
+- Access SAM from any device on your network
+- Continue conversations from different locations
+- Share SAM access with other devices
+
+**Remote Work:**
+- Connect from other computers on your network
+- Use VPN for secure remote access (advanced)
+- Access SAM while away from your primary Mac
+
+### Features Comparison
+
+**Key Concept:** SAM Web is a remote interface to SAM on your Mac. All work happens on your Mac - you're controlling SAM remotely.
+
+| Feature | Native SAM App | SAM Web |
+|---------|---------------|---------|
+| Chat interface | ✅ Full | ✅ Full |
+| Conversations | ✅ Full management | ✅ Full management |
+| Mini-prompts | ✅ Full management | ✅ Full management |
+| Model selection | ✅ All providers | ✅ All configured providers |
+| System prompts | ✅ Full selection | ✅ Full selection |
+| Personalities | ✅ Full selection | ✅ Full selection |
+| Shared topics | ✅ Full management | ✅ Full management |
+| Folders | ✅ Organize conversations | ✅ Organize conversations |
+| Image generation | ✅ Full (images on Mac) | ✅ Full (images on Mac) |
+| File operations | ✅ Full (Mac file system) | ✅ Full (Mac file system) |
+| Terminal access | ✅ Full shell access | ✅ Full (Mac terminal) |
+| Memory/RAG | ✅ Full (via tools) | ✅ Full (via tools) |
+| Document upload | ✅ Drag and drop | ⏳ Planned |
+| Voice input/output | ✅ Full support | ⏳ Planned |
+| LoRA training | ✅ Complete UI | ❌ Not available |
+| Conversation export | ✅ JSON, MD, PDF, TXT | ❌ Not available |
+| Memory/RAG UI | ✅ Document management | ❌ Not available |
+| Offline mode | ✅ Local models | ❌ Requires network |
+
+**Legend:**
+- ✅ = Available
+- ⏳ = Planned for future release
+- ❌ = Not available
+- "(Mac)" = Works via SAM's tools, affects your Mac where SAM runs
+
+**Summary:** SAM Web provides full chat and configuration access. Features marked "(Mac)" work via SAM's tools but affect your Mac's file system, not the device you're browsing from. Missing: LoRA training UI, conversation export, document management UI.
+
+### Technical Details
+
+**Architecture:**
+- Pure HTML5, CSS3, JavaScript (no build step required)
+- Zero dependencies, all assets self-hosted
+- Server-Sent Events (SSE) for real-time streaming
+- Bearer token authentication
+- LocalStorage for settings persistence
+
+**Repository:**
+- Source code: [github.com/SyntheticAutonomicMind/SAM-web](https://github.com/SyntheticAutonomicMind/SAM-web)
+- License: GNU GPL v3.0 (same as SAM)
+- Contributions welcome
+
+**Learn More**: See the complete [SAM Web Guide](sam-web.md) for setup instructions, troubleshooting, and detailed feature documentation.
 
 ---
 

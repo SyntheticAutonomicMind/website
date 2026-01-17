@@ -78,6 +78,7 @@ New to SAM? Start here to get up and running quickly.
 
 - **[Getting Started](end-user/getting-started.md)** - Installation and your first conversation
 - **[Features Overview](end-user/features-overview.md)** - What SAM can do for you
+- **[SAM Web](end-user/sam-web.md)** - Access SAM from iPad, iPhone, or any browser
 - **[LoRA Training](end-user/lora-training.md)** - Fine-tune models on your own data
 - **[Memory & RAG Guide](end-user/memory-and-rag.md)** - Understanding SAM's memory system
 - **[Shared Topics Guide](end-user/shared-topics.md)** - Multi-conversation collaboration

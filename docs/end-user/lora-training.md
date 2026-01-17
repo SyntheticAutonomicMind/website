@@ -4,6 +4,10 @@
 
 SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize local MLX models on specific topics, writing styles, or knowledge domains. Instead of retraining an entire model, LoRA adds small adapter layers that modify the model's behavior using minimal data and compute.
 
+**Status:**
+- ✅ **MLX Models (Apple Silicon)**: Production-ready with complete training UI
+- 📋 **GGUF Models (llama.cpp)**: Planned for future release (architecture designed, not yet implemented)
+
 **What you can do:**
 - Train a customer support model on your product documentation
 - Create a domain expert in medical, legal, or technical fields
@@ -11,9 +15,9 @@ SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize lo
 - Build a knowledge base assistant for your company or project
 
 **Requirements:**
-- macOS with Apple Silicon (for MLX models)
-- Local MLX model installed
-- Training data in JSONL format
+- macOS with Apple Silicon (M1, M2, M3, M4 chips)
+- Local MLX model installed (Qwen, Llama, Mistral, etc.)
+- Training data in JSONL format (SAM can export this for you)
 
 ---
 

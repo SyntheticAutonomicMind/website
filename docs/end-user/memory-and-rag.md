@@ -348,6 +348,20 @@ graph LR
 - PDF (text extraction)
 - Word documents (.docx)
 - Text files (.txt, .md, .rtf)
+
+**Searchable Metadata** (New):
+SAM now stores searchable metadata with each document chunk, including:
+- **Filename**: The original document name
+- **File path**: Where the document was located
+- **Page numbers**: For PDF documents
+- **Chunk boundaries**: Paragraph or page-based
+
+This means you can ask questions like:
+- "What files mention authentication?"
+- "Which document discusses database configuration?"
+- "Show me all PDFs about machine learning"
+
+The metadata is searchable alongside document content, making it easier to find and reference specific documents in your knowledge base.
 - Code files (all languages)
 
 **What Happens During Import**:
