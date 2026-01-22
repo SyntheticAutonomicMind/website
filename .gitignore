@@ -86,3 +86,7 @@ out/
 
 # Agent session handoffs (development only, not for public release)
 project-docs/20*/
+
+# CLIO
+.clio/logs/
+.clio/sessions/
