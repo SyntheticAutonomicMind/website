@@ -91,6 +91,60 @@ sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
 sudo xcodebuild -license accept
 ```
 
+### Recommended Development Tools
+
+#### CLIO - Command Line Intelligence Orchestrator
+
+**CLIO is the recommended terminal AI assistant for SAM development.**
+
+CLIO is a terminal-based AI code assistant built by the SAM team specifically for developers who prefer command-line workflows. It's particularly valuable when working on SAM projects.
+
+**Why Use CLIO for SAM Development:**
+- Terminal-native interface complements SAM's GUI
+- Quick file operations, code reviews, and git workflows
+- Custom instructions support (`.clio/instructions.md`) enforces SAM coding standards automatically
+- Same privacy-first philosophy as SAM
+- Zero dependencies (just Perl 5.20+)
+- Perfect for remote development and SSH sessions
+
+**Quick Install:**
+```bash
+git clone https://github.com/SyntheticAutonomicMind/CLIO.git
+cd CLIO
+sudo ./install.sh
+```
+
+**Usage Examples:**
+```bash
+# Code review
+clio --new
+: Review the changes in Sources/UserInterface/ChatView.swift
+
+# Quick refactoring
+clio --resume
+: Refactor this function to use async/await properly
+
+# Git workflow
+: Show git status and create a commit for these changes
+```
+
+**For complete CLIO documentation:** See [CLIO Developer Guide](clio.md)
+
+#### Other Useful Tools
+
+**ccache** - Speeds up Swift compilation:
+```bash
+brew install ccache
+```
+
+**SwiftLint** - Code style enforcement:
+```bash
+brew install swiftlint
+```
+
+**SF Symbols** - Browse Apple's SF Symbols for UI icons:
+- Download from [Apple Developer](https://developer.apple.com/sf-symbols/)
+
 ---
 
 ## Building SAM

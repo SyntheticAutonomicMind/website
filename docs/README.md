@@ -83,6 +83,7 @@ New to SAM? Start here to get up and running quickly.
 - **[Memory & RAG Guide](end-user/memory-and-rag.md)** - Understanding SAM's memory system
 - **[Shared Topics Guide](end-user/shared-topics.md)** - Multi-conversation collaboration
 - **[Use Cases](end-user/use-cases.md)** - Real-world scenarios showing SAM's value
+- **[CLIO Quick Start](end-user/clio-quick-start.md)** - Terminal AI assistant companion to SAM
 
 ### For Power Users
 Ready to unlock SAM's full potential?
@@ -96,6 +97,7 @@ Ready to unlock SAM's full potential?
 Want to extend SAM or contribute to the project?
 
 - **[Developers Guide](developer/developers-guide.md)** - Complete guide for developers
+- **[CLIO Developer Guide](developer/clio.md)** - Terminal AI assistant for SAM development
 - **[The Unbroken Method](developer/the-unbroken-method.md)** - AI collaboration methodology
 - **[Architecture](developer/architecture.md)** - System design and components
 - **[API Reference](developer/api-reference.md)** - REST API documentation

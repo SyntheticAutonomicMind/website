@@ -79,6 +79,11 @@ Before contributing, ensure you have:
 - Familiarity with Swift and SwiftUI
 - Read the [Developer's Guide](developers-guide.md)
 
+**Recommended Tool:**
+- **[CLIO](clio.md)** - Terminal AI assistant for efficient development workflow
+  - Particularly helpful for code reviews, git operations, and quick iterations
+  - Install: `git clone https://github.com/SyntheticAutonomicMind/CLIO.git && cd CLIO && sudo ./install.sh`
+
 ### Fork and Clone
 
 ```bash

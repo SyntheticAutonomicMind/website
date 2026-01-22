@@ -43,6 +43,17 @@ make build-debug
 
 **If you hit the CMake compiler error** ("No CMAKE_C_COMPILER could be found"), follow the Xcode CLI steps below.
 
+**Recommended Development Tool:**
+
+Install **[CLIO](clio.md)** for efficient terminal-based development:
+```bash
+git clone https://github.com/SyntheticAutonomicMind/CLIO.git
+cd CLIO
+sudo ./install.sh
+```
+
+CLIO is a terminal AI assistant that complements SAM development with quick code operations, git workflows, and file management directly in your terminal.
+
 ## Platform Requirements
 
 - **macOS 14+** (project `Package.swift` targets macOS 14.0)
