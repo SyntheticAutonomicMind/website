@@ -84,9 +84,12 @@ dist/
 build/
 out/
 
-# Agent session handoffs (development only, not for public release)
+# CLIO AI Assistant
+ai-assisted/20*/
 project-docs/20*/
-
-# CLIO
+scratch/
 .clio/logs/
 .clio/sessions/
+.clio/memory/
+.clio/*.json
+

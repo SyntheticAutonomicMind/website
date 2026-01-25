@@ -500,14 +500,28 @@ docs/
 
 ---
 
-## Session Handoff Information
+## Session Handoff Procedures (MANDATORY)
 
-When sessions end, create comprehensive documentation in `project-docs/`:
+### CRITICAL: Session Handoff Directory Structure
 
-**Required documents:**
-1. **CONTINUATION_PROMPT.md** - What to do next
-2. **AGENT_PLAN.md** - Overall project strategy
-3. **Session summary** - What was accomplished
+When ending a session, **ALWAYS** create a properly structured handoff directory:
+
+```
+ai-assisted/YYYYMMDD/HHMM/
+├── CONTINUATION_PROMPT.md  [MANDATORY] - Next session's complete context
+├── AGENT_PLAN.md           [MANDATORY] - Remaining priorities & blockers
+├── CHANGELOG.md            [OPTIONAL]  - User-facing changes (if applicable)
+└── NOTES.md                [OPTIONAL]  - Additional technical notes
+```
+
+**NEVER COMMIT** `ai-assisted/` or `project-docs/` directories to git. Always verify before committing:
+
+```bash
+git status  # Ensure no handoff files staged
+git add -A
+git status  # Double-check
+git commit -m "message"
+```
 
 **Handoff should include:**
 - Current state of documentation
