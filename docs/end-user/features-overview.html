@@ -1,0 +1,1745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM Features Overview | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: SAM Features Overview">
+    <link rel="stylesheet" href="../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../#features">Features</a>
+                <a href="../../docs/README.html">Docs</a>
+                <a href="../../#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../../docs/README.html">Documentation</a> / Features Overview
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="sam-features-overview">SAM Features Overview</h1>
+<p><strong>The AI that works <em>with</em> you, not just <em>for</em> you.</strong></p>
+<p>Most AI assistants are conversation partners. SAM is a <strong>collaborator</strong>. It doesn't just answer questions. It reads your codebase, remembers your decisions, executes multi-step plans, and keeps everything private on your Mac.</p>
+<p><strong>Here's what that means in practice:</strong>
+- Ask about a decision you made two weeks ago, and SAM finds it
+- Drop a 200-page PDF and ask about chapter 7. SAM knows.
+- Say "refactor this authentication system" and SAM plans, implements, tests, and iterates
+- Work on a complex project where multiple specialized agents share context automatically</p>
+<p>This guide shows you everything SAM can do, with real examples you can try today.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#core-features">Core Features</a></li>
+<li><a href="#voice-input-and-output">Voice Input and Output</a></li>
+<li><a href="#personality-system">Personality System</a></li>
+<li><a href="#lora-model-training">LoRA Model Training</a></li>
+<li><a href="#memory--intelligence">Memory &amp; Intelligence</a></li>
+<li><a href="#context-archive--recall">Context Archive &amp; Recall</a></li>
+<li><a href="#document-understanding">Document Understanding</a></li>
+<li><a href="#multi-conversation-collaboration">Multi-Conversation Collaboration</a></li>
+<li><a href="#autonomous-workflows">Autonomous Workflows</a></li>
+<li><a href="#file--code-operations">File &amp; Code Operations</a></li>
+<li><a href="#web-research">Web Research</a></li>
+<li><a href="#terminal-integration">Terminal Integration</a></li>
+<li><a href="#image-generation">Image Generation</a></li>
+<li><a href="#location-awareness">Location Awareness</a></li>
+<li><a href="#api--integration">API &amp; Integration</a></li>
+</ol>
+<hr />
+<h2 id="core-features">Core Features</h2>
+<h3 id="multiple-ai-providers">Multiple AI Providers</h3>
+<p>SAM works with multiple AI providers, giving you flexibility and choice:</p>
+<p><strong>Cloud Providers:</strong>
+- <strong>OpenAI</strong>: GPT-4, GPT-4-turbo, O1/O3 reasoning models
+- <strong>GitHub Copilot</strong>: GPT-4, Claude 3.5 Sonnet, o1-preview (secure Device Flow auth)
+- <strong>Anthropic</strong>: Claude 3.5 Sonnet, Claude 4, Claude 4.5 Sonnet
+- <strong>Google Gemini</strong>: Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash Thinking Experimental
+- <strong>DeepSeek</strong>: DeepSeek models for cost-effective inference
+- <strong>Custom</strong>: Connect to any OpenAI-compatible API (Grok, Ollama, etc.)</p>
+<p><strong>Local Models:</strong>
+- <strong>MLX</strong> (Apple Silicon): Near-native speed with Metal acceleration, per-conversation KV cache for 10x faster switching
+- <strong>GGUF via llama.cpp</strong> (All Macs): Wide model compatibility with quantization support, state serialization for fast context restore</p>
+<p><strong>Benefits</strong>:
+- Switch between providers without restarting
+- Use local models for complete privacy
+- Fall back to different providers if one is unavailable
+- Compare responses from different models
+- GitHub Copilot uses secure Device Flow authentication (no manual key entry)</p>
+<p><strong>How to Configure Providers</strong>:
+1. Go to <strong>SAM → Preferences → Remote Providers</strong>
+2. Click <strong>Add Provider</strong> button
+3. Select provider type from the dropdown
+4. Enter your API key (or click <strong>Use GitHub Authentication</strong> for GitHub Copilot)
+5. Click <strong>Test Connection</strong> to verify
+6. Click <strong>Save Provider</strong></p>
+<p><strong>Switching Models in a Conversation</strong>:
+- Click the <strong>model picker</strong> in the conversation toolbar
+- Select any configured model
+- Change takes effect for the next message</p>
+<hr />
+<h3 id="voice-input-and-output">Voice Input and Output</h3>
+<p>Go hands-free with SAM's voice capabilities. Enable wake word detection and text-to-speech for natural conversations without touching your keyboard.</p>
+<p><strong>Wake Word ("Hey SAM")</strong></p>
+<p>When enabled, SAM listens for "Hey SAM" and starts voice input automatically.</p>
+<p><strong>How to Enable:</strong>
+1. Go to <strong>SAM → Preferences → Voice</strong>
+2. Toggle <strong>Enable Wake Word Detection</strong>
+3. Grant microphone permission when prompted
+4. Say "Hey SAM" followed by your request</p>
+<p><strong>Voice Input (Push-to-Talk)</strong></p>
+<p>Even without wake word detection, you can use voice input:
+- Press <strong>⌘K</strong> (or click the microphone button) to start recording
+- Speak your message
+- Recording stops automatically when you pause, or press ⌘K again
+- Your speech is transcribed and sent to SAM</p>
+<p><strong>Voice Output (Text-to-Speech)</strong></p>
+<p>Have SAM read responses aloud for a true conversational experience.</p>
+<p><strong>How to Enable:</strong>
+1. Go to <strong>SAM → Preferences → Sound</strong>
+2. Toggle <strong>Enable Text-to-Speech</strong>
+3. Select your preferred voice from the dropdown
+4. Adjust speech rate with the slider (0.5x - 1.5x)
+5. Click <strong>Test Voice</strong> to preview</p>
+<p><strong>Streaming TTS (New in December 2025)</strong></p>
+<p>SAM speaks sentences as they're generated - no waiting for the complete response:
+- Sentences are queued and spoken in order
+- Natural pauses between sentences
+- Stop button clears speech queue immediately</p>
+<p><strong>Sound Preferences:</strong>
+- <strong>Input Device</strong>: Select microphone for voice input
+- <strong>Output Device</strong>: Select speakers for TTS output
+- <strong>Voice Selection</strong>: Choose from available system voices (English voices shown)
+- <strong>Speech Rate</strong>: Adjust speaking speed (0.5x slow to 1.5x fast)</p>
+<p><strong>Tips:</strong>
+- Combine wake word + text-to-speech for completely hands-free operation
+- Great for cooking, exercising, or when your hands are busy
+- Works with all providers and models
+- Voice settings are per-conversation customizable</p>
+<hr />
+<h3 id="conversation-management">Conversation Management</h3>
+<p>SAM provides powerful conversation organization features to help you manage your work.</p>
+<p><strong>Sidebar Organization:</strong>
+- <strong>Collapsible Folders</strong>: Organize conversations into folders that expand/collapse
+- <strong>Conversation Filter</strong>: Type to instantly filter conversations by title
+- <strong>Pinned Conversations</strong>: Pin important conversations to prevent auto-cleanup
+- <strong>Uncategorized Section</strong>: Collapsible section for unfiled conversations</p>
+<p><strong>Draft Message Persistence (New):</strong>
+- Draft messages are automatically saved per conversation
+- Switch between conversations without losing your in-progress text
+- Drafts persist across app restarts
+- Stable Diffusion prompts also persist across restarts</p>
+<p><strong>Keyboard Shortcuts:</strong>
+- <strong>⌘↑</strong> / <strong>⌘↓</strong>: Scroll conversation up/down
+- <strong>⌘T</strong>: Toggle tools on/off
+- <strong>⌘K</strong>: Start voice input
+- <strong>Escape</strong>: Stop current generation</p>
+<p><strong>Conversation Settings:</strong>
+- <strong>Reasoning enabled by default</strong> for new conversations
+- Sidebar opens expanded by default for better visibility
+- Tooltips on Model, Prompt, and Personality labels</p>
+<hr />
+<h3 id="session-intelligence">Session Intelligence</h3>
+<p>Track your conversation's resource usage and monitor autonomous agent workflows in real time with Session Intelligence.</p>
+<p><strong>What Session Intelligence Shows:</strong></p>
+<ul>
+<li><strong>Tokens Used</strong>: Total tokens consumed in the current conversation</li>
+<li><strong>Cost Estimate</strong>: Estimated cost in USD based on provider pricing</li>
+<li><strong>Iterations</strong>: Number of autonomous workflow cycles executed</li>
+<li><strong>Tools Called</strong>: Count of tool invocations during agent execution</li>
+<li><strong>Active Provider</strong>: Which AI provider is handling the conversation</li>
+</ul>
+<p><strong>How to Access:</strong></p>
+<ol>
+<li>Look for the Session Intelligence icon in the conversation toolbar</li>
+<li>Click to expand the panel and view detailed metrics</li>
+<li>Metrics update in real time as the conversation progresses</li>
+</ol>
+<p><strong>Use Cases:</strong></p>
+<p><strong>Budget Awareness</strong></p>
+<div class="codehilite"><pre><span></span><code>Monitor costs as you work with cloud providers
+See exactly how much each conversation costs
+Compare costs across different models
+</code></pre></div>
+
+<p><strong>Workflow Monitoring</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">Track</span><span class="w"> </span><span class="n">autonomous</span><span class="w"> </span><span class="n">agent</span><span class="w"> </span><span class="n">progress</span>
+<span class="n">See</span><span class="w"> </span><span class="n">iteration</span><span class="w"> </span><span class="n">counts</span><span class="w"> </span><span class="n">during</span><span class="w"> </span><span class="n">multi</span><span class="o">-</span><span class="n">step</span><span class="w"> </span><span class="n">tasks</span>
+<span class="n">Understand</span><span class="w"> </span><span class="n">how</span><span class="w"> </span><span class="n">many</span><span class="w"> </span><span class="n">tools</span><span class="w"> </span><span class="n">were</span><span class="w"> </span><span class="n">invoked</span>
+</code></pre></div>
+
+<p><strong>Performance Insights</strong></p>
+<div class="codehilite"><pre><span></span><code>Compare token usage across different models
+Identify conversations consuming excessive resources
+Optimize prompts based on token metrics
+</code></pre></div>
+
+<p><strong>Provider Visibility</strong></p>
+<div class="codehilite"><pre><span></span><code>Confirm which provider is handling your request
+Useful when switching between multiple providers
+Verify correct model/provider selection
+</code></pre></div>
+
+<p><strong>Benefits:</strong>
+- Complete transparency into AI usage and costs
+- Real-time feedback during autonomous workflows
+- Helps optimize prompts and model selection
+- Essential for multi-step agent tasks</p>
+<hr />
+<h2 id="personality-system">Personality System</h2>
+<p>SAM includes a comprehensive personality system that lets you customize how the AI communicates and behaves. Choose from built-in personalities or create your own.</p>
+<h3 id="how-personalities-work">How Personalities Work</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">LR</span>
+<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">Select</span><span class="w"> </span><span class="n">Personality</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">SAM</span><span class="w"> </span><span class="n">adjusts</span><span class="w"> </span><span class="n">communication</span><span class="w"> </span><span class="n">style</span><span class="p">]</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">Same</span><span class="w"> </span><span class="n">capabilities</span><span class="p">,</span><span class="w"> </span><span class="n">different</span><span class="w"> </span><span class="n">approach</span><span class="p">]</span>
+
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mo">00</span><span class="n">d4ff</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="mo">000</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
+</code></pre></div>
+
+<p>Each personality combines:
+- <strong>Traits</strong>: Settings for tone, formality, verbosity, humor, and teaching style
+- <strong>Custom Instructions</strong>: Detailed behavior guidelines specific to that persona</p>
+<p>When you select a personality, SAM adjusts how it communicates and approaches problems. The personality is applied through the system prompt, so it affects all responses.</p>
+<h3 id="personality-gallery-22-built-in">Personality Gallery (22 Built-In)</h3>
+<h4 id="general-3">General (3)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Assistant</strong></td>
+<td>Balanced, helpful, professional</td>
+<td>Default for most tasks</td>
+</tr>
+<tr>
+<td><strong>Professional</strong></td>
+<td>Formal, concise, action-oriented</td>
+<td>Business communication</td>
+</tr>
+<tr>
+<td><strong>Coach</strong></td>
+<td>Motivational, encouraging</td>
+<td>Goal-setting, accountability</td>
+</tr>
+</tbody>
+</table>
+<h4 id="creative-writing-5">Creative &amp; Writing (5)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Muse</strong></td>
+<td>Brainstorming partner, sparks imagination</td>
+<td>Ideation, creative projects</td>
+</tr>
+<tr>
+<td><strong>Wordsmith</strong></td>
+<td>Encouraging writing assistant</td>
+<td>Drafts, prose, storytelling</td>
+</tr>
+<tr>
+<td><strong>Document Assistant</strong></td>
+<td>Document formatting and organization</td>
+<td>Reports, documentation</td>
+</tr>
+<tr>
+<td><strong>Image Architect</strong></td>
+<td>Transforms ideas into visual descriptions</td>
+<td>Image generation prompts</td>
+</tr>
+<tr>
+<td><strong>Artist</strong></td>
+<td>Creative soul with artistic appreciation</td>
+<td>Art direction, aesthetics</td>
+</tr>
+</tbody>
+</table>
+<h4 id="tech-4">Tech (4)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tech Buddy</strong></td>
+<td>Friendly tech support for all levels</td>
+<td>Non-technical users</td>
+</tr>
+<tr>
+<td><strong>Tinkerer</strong></td>
+<td>Hands-on problem solver</td>
+<td>Practical coding help</td>
+</tr>
+<tr>
+<td><strong>Crusty Coder</strong></td>
+<td>Battle-scarred veteran, strong opinions</td>
+<td>Experienced developers</td>
+</tr>
+<tr>
+<td><strong>BOFH</strong></td>
+<td>The legendary Bastard Operator From Hell</td>
+<td>IT humor, sysadmin tasks</td>
+</tr>
+</tbody>
+</table>
+<h4 id="productivity-1">Productivity (1)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Motivator</strong></td>
+<td>Productivity buddy, beats procrastination</td>
+<td>Task management, focus</td>
+</tr>
+</tbody>
+</table>
+<h4 id="domain-experts-6">Domain Experts (6)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Doctor</strong></td>
+<td>7-step clinical diagnostic methodology</td>
+<td>Health questions (with disclaimers)</td>
+</tr>
+<tr>
+<td><strong>Counsel</strong></td>
+<td>IRAC legal analysis framework</td>
+<td>Legal concepts (not legal advice)</td>
+</tr>
+<tr>
+<td><strong>Finance Coach</strong></td>
+<td>Financial literacy guide</td>
+<td>Budgeting, financial planning</td>
+</tr>
+<tr>
+<td><strong>Trader</strong></td>
+<td>Options trading analyst</td>
+<td>Trading concepts, analysis</td>
+</tr>
+<tr>
+<td><strong>Scientist</strong></td>
+<td>Research-focused analytical thinking</td>
+<td>Scientific questions, research</td>
+</tr>
+<tr>
+<td><strong>Philosopher</strong></td>
+<td>Deep thinking and conceptual exploration</td>
+<td>Ethics, meaning, big questions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fun-character-3">Fun &amp; Character (3)</h4>
+<table>
+<thead>
+<tr>
+<th>Personality</th>
+<th>Description</th>
+<th>Best For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comedian</strong></td>
+<td>Comedy toolkit with timing and techniques</td>
+<td>Entertainment, humor</td>
+</tr>
+<tr>
+<td><strong>Pirate</strong></td>
+<td>Arr! Nautical flair</td>
+<td>Fun conversations</td>
+</tr>
+<tr>
+<td><strong>Time Traveler</strong></td>
+<td>Historical perspectives across eras</td>
+<td>History, speculation</td>
+</tr>
+<tr>
+<td><strong>Jester</strong></td>
+<td>Playful trickster with clever wit</td>
+<td>Games, playfulness</td>
+</tr>
+</tbody>
+</table>
+<h3 id="selecting-a-personality">Selecting a Personality</h3>
+<p><strong>For a Single Conversation:</strong>
+Click the personality picker in the conversation header and choose from the list.</p>
+<p><strong>Set Your Default Personality:</strong>
+1. Go to <strong>SAM → Preferences → Personalities</strong>
+2. Find the <strong>"Default for New Conversations"</strong> dropdown at the top
+3. Select the personality you want as default
+4. All new conversations will use this personality</p>
+<h3 id="creating-custom-personalities">Creating Custom Personalities</h3>
+<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TD</span>
+<span class="w">    </span><span class="n">A</span><span class="o">[</span><span class="n">Go to Preferences → Personalities</span><span class="o">]</span><span class="w"> </span><span class="c1">--&gt; B[Click New Personality]</span>
+<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="c1">--&gt; C[Set name and traits]</span>
+<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="c1">--&gt; D[Add custom instructions]</span>
+<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="c1">--&gt; E[Save]</span>
+
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#00d4ff</span><span class="p">,</span><span class="nl">color</span><span class="p">:</span><span class="n">#000</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#141822</span><span class="p">,</span><span class="nl">color</span><span class="p">:</span><span class="n">#fff</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#141822</span><span class="p">,</span><span class="nl">color</span><span class="p">:</span><span class="n">#fff</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#141822</span><span class="p">,</span><span class="nl">color</span><span class="p">:</span><span class="n">#fff</span>
+<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="nl">fill</span><span class="p">:</span><span class="n">#00ff88</span><span class="p">,</span><span class="nl">color</span><span class="p">:</span><span class="n">#000</span>
+</code></pre></div>
+
+<ol>
+<li>Go to <strong>SAM → Preferences → Personalities</strong></li>
+<li>Click <strong>New Personality</strong> button</li>
+<li>Enter name and description</li>
+<li>Select trait settings:</li>
+<li><strong>Tone</strong>: Professional, friendly, enthusiastic, grumpy, sarcastic, empathetic, motivational</li>
+<li><strong>Formality</strong>: Formal, casual, relaxed</li>
+<li><strong>Verbosity</strong>: Concise, balanced, detailed, verbose</li>
+<li><strong>Humor</strong>: Serious, witty, comedic</li>
+<li><strong>Teaching Style</strong>: Direct, Socratic, story-based, technical, patient</li>
+<li>Add custom instructions (optional)</li>
+<li>Click <strong>Create Personality</strong></li>
+</ol>
+<p><strong>Custom Instructions Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>You are a senior Swift developer specializing in iOS and macOS apps.
+Always suggest modern Swift patterns and avoid deprecated APIs.
+Explain technical decisions with brief rationale.
+</code></pre></div>
+
+<h3 id="mini-prompts-contextual-information">Mini-Prompts: Contextual Information</h3>
+<p>Mini-prompts let you inject consistent context into conversations without repeating yourself. They're perfect for personal information, project details, preferences, or location-based context.</p>
+<p><strong>What They Do:</strong>
+- Add automatic context to every message
+- Toggle on/off per conversation
+- No need to repeat information
+- Lightweight and flexible</p>
+<p><strong>How to Use:</strong>
+1. Click <strong>Mini-Prompts</strong> button in toolbar
+2. Create prompts for common context:
+   - Personal details (name, role, preferences)
+   - Project information (tech stack, coding style)
+   - Location data (for weather, local search)
+3. Toggle prompts on/off for each conversation
+4. Context is automatically added to your messages</p>
+<p><strong>Example Mini-Prompt:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">I</span><span class="s1">&#39;m working on a SwiftUI macOS app. I prefer clean code with</span>
+<span class="n">descriptive</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">comprehensive</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">handling</span><span class="o">.</span>
+</code></pre></div>
+
+<p><strong>When Enabled:</strong>
+Every message you send includes this context, so SAM knows your preferences without you stating them each time.</p>
+<p><strong>Use Cases:</strong>
+- Project-specific details (frameworks, languages, constraints)
+- Personal coding style preferences
+- Location for weather/local queries
+- Role-specific context (student, professional, researcher)</p>
+<p><strong>Best Practices:</strong>
+- Keep mini-prompts focused and concise
+- Use different prompts for different project types
+- Disable prompts that aren't relevant to current conversation
+- Update prompts as your context changes</p>
+<hr />
+<h2 id="lora-model-training">LoRA Model Training</h2>
+<p><strong>Fine-tune local AI models on your own data for specialized knowledge and behavior.</strong></p>
+<p>SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize local MLX models on specific topics, writing styles, or knowledge domains. Instead of retraining an entire model, LoRA adds small adapter layers that modify the model's behavior using minimal data and compute.</p>
+<p><strong>Status</strong>: Production-ready for MLX models on Apple Silicon. GGUF training support is planned for a future release.</p>
+<h3 id="what-you-can-do">What You Can Do</h3>
+<ul>
+<li><strong>Customer Support</strong>: Train a model on your product documentation and support tickets</li>
+<li><strong>Domain Expert</strong>: Create specialists in medical, legal, or technical fields</li>
+<li><strong>Writing Style</strong>: Adapt models to match your brand voice or writing style</li>
+<li><strong>Knowledge Base</strong>: Build assistants trained on your company wiki or project documentation</li>
+<li><strong>Code Assistant</strong>: Train on your codebase for context-aware development help</li>
+</ul>
+<h3 id="how-it-works">How It Works</h3>
+<ol>
+<li><strong>Prepare Training Data</strong>: Export conversations or documents as JSONL training data</li>
+<li><strong>Configure Training</strong>: Select base MLX model, set parameters (rank, alpha, learning rate, epochs)</li>
+<li><strong>Train Adapter</strong>: SAM trains the adapter using MLX's Python training script on your Mac</li>
+<li><strong>Automatic Integration</strong>: Trained adapters appear immediately in the model picker</li>
+<li><strong>Use in Chat</strong>: Select your custom adapter like any other model</li>
+</ol>
+<h3 id="key-features">Key Features</h3>
+<p><strong>Complete Training UI</strong>
+- Full training configuration interface in Preferences → Model Training
+- Real-time progress tracking with loss visualization
+- Live metrics: current epoch, step, loss values
+- Cancel training anytime without losing progress
+- Training log viewer for debugging</p>
+<p><strong>Training Data Export</strong>
+- Export conversations directly from chat interface
+- Export documents with intelligent chunking strategies
+- Automatic PII detection and redaction (optional)
+- Support for multiple chat templates (Llama, Qwen, Mistral, Gemma, Phi, Custom)
+- Flexible chunking: paragraph, sentence, or token-based</p>
+<p><strong>Privacy Protection</strong>
+SAM can detect and redact personally identifiable information before training:
+- Personal names, organizations, places
+- Email addresses, phone numbers
+- Credit card numbers, social security numbers
+- IP addresses, URLs
+- Configurable on/off per export</p>
+<p><strong>Document Chunking Strategies</strong>
+Choose the best strategy for your content:
+- <strong>Semantic (Paragraphs)</strong>: Natural paragraph breaks for readable chunks
+- <strong>Sentence-Based</strong>: Split on sentence boundaries
+- <strong>Token-Based</strong>: Fixed token counts with overlap
+- <strong>Page Aware (PDFs)</strong>: Respect page boundaries in PDF documents</p>
+<p><strong>Training Parameters</strong></p>
+<p><strong>LoRA Configuration:</strong>
+- <strong>Rank (r)</strong>: 4-64 (adapter capacity, higher = more expressive but larger files)
+- <strong>Alpha</strong>: 8-128 (scaling factor, typically 2x rank)
+- <strong>Target Layers</strong>: Customize which attention layers to adapt</p>
+<p><strong>Training Settings:</strong>
+- <strong>Learning Rate</strong>: 1e-6 to 1e-3 (how fast the model learns)
+- <strong>Epochs</strong>: 1-1000 (number of passes through training data)
+- <strong>Batch Size</strong>: 1-32 (examples processed simultaneously)
+- <strong>Gradient Accumulation</strong>: For effective larger batches on limited memory</p>
+<p><strong>Real-Time Monitoring</strong>
+- Live training progress with percentage complete
+- Loss curve visualization (watch loss decrease as model learns)
+- Current epoch, step, and loss values updated in real-time
+- Estimated time remaining
+- Logs show detailed training statistics</p>
+<p><strong>Adapter Management</strong>
+- Trained adapters stored in <code>~/Library/Application Support/SAM/adapters/</code>
+- Automatic hot reload - new adapters appear immediately without restart
+- Friendly names in model picker (base model + adapter name)
+- Delete or rename adapters from Finder
+- Split model support for large base models (&gt;5GB)</p>
+<h3 id="mlx-training-available-now">MLX Training (Available Now)</h3>
+<p><strong>Requirements:</strong>
+- macOS with Apple Silicon (M1, M2, M3, M4 chips)
+- Local MLX model installed (Qwen, Llama, Mistral, etc.)
+- Training data in JSONL format
+- Sufficient disk space for adapter files</p>
+<p><strong>Performance:</strong>
+- Training uses Metal acceleration via MLX
+- Speed depends on model size and available RAM
+- Typically completes in minutes to hours
+- Can continue using SAM during training</p>
+<p><strong>How to Train:</strong>
+1. Go to <strong>SAM → Preferences → Model Training</strong>
+2. Click <strong>Export Training Data</strong> to create JSONL from conversations or documents
+3. Select <strong>Train LoRA Adapter</strong> tab
+4. Choose your base MLX model
+5. Configure training parameters (or use defaults)
+6. Click <strong>Start Training</strong>
+7. Monitor progress in real-time
+8. When complete, find your adapter in the model picker</p>
+<h3 id="gguf-training-planned">GGUF Training (Planned)</h3>
+<p>Support for training LoRA adapters for GGUF models (llama.cpp) is planned for a future release. The implementation will use Hugging Face Transformers for training and llama.cpp for inference with the adapter.</p>
+<p><strong>Status</strong>: Architecture designed, not yet implemented. Stay tuned for updates.</p>
+<h3 id="lora-vs-rag">LoRA vs RAG</h3>
+<p><strong>Use LoRA when:</strong>
+- You want the model to internalize knowledge permanently
+- You need consistent writing style or behavior
+- You have structured training examples
+- You want fast inference without retrieval overhead
+- Your knowledge is stable and doesn't change frequently</p>
+<p><strong>Use RAG when:</strong>
+- Information changes frequently and needs updates
+- You need source attribution and citations
+- You have large reference libraries (hundreds of documents)
+- You want immediate updates without retraining
+- You need to combine information from multiple sources</p>
+<p><strong>Best approach</strong>: Combine LoRA + RAG for specialized behavior with current information. Train a LoRA adapter for domain expertise and communication style, then use RAG for up-to-date facts and references.</p>
+<h3 id="practical-examples">Practical Examples</h3>
+<p><strong>Customer Support Bot</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">ticket</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">training</span><span class="w"> </span><span class="kd">data</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">on</span><span class="w"> </span><span class="n">ticket</span><span class="w"> </span><span class="n">resolution</span><span class="w"> </span><span class="n">patterns</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">knowledge</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">FAQs</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Agent</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">speaks</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">team</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="n">info</span>
+</code></pre></div>
+
+<p><strong>Code Assistant</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">coding</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">project</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">on</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">codebase</span><span class="w"> </span><span class="n">patterns</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">conventions</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">search</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Assistant</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">understands</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">project</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">idioms</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">architecture</span>
+</code></pre></div>
+
+<p><strong>Writing Assistant</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">writing</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">past</span><span class="w"> </span><span class="n">conversations</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">voice</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="kr">to</span><span class="n">ne</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">factual</span><span class="w"> </span><span class="kr">cont</span><span class="n">ent</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Assistant</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">writes</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">materials</span>
+</code></pre></div>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p><strong>Common Issues:</strong>
+- <strong>Training fails immediately</strong>: Check that your training data is valid JSONL format
+- <strong>Out of memory</strong>: Reduce batch size or use gradient accumulation
+- <strong>Loss not decreasing</strong>: Try adjusting learning rate (lower if loss explodes, higher if learning too slow)
+- <strong>Adapter doesn't appear</strong>: Check <code>~/Library/Application Support/SAM/adapters/</code> for adapter files</p>
+<p><strong>Learn More</strong>: See the complete <a href="lora-training.html">LoRA Training Guide</a> for detailed instructions, parameter tuning, best practices, and advanced techniques.</p>
+<hr />
+<h2 id="memory-intelligence">Memory &amp; Intelligence</h2>
+<p>SAM's memory system goes beyond simple conversation history. It understands context, remembers important information, and retrieves relevant details intelligently when you need them.</p>
+<h3 id="contextual-memory">Contextual Memory</h3>
+<p><strong>What It Is</strong>:
+- Storage of important information from conversations (via explicit memory_operations)
+- Semantic understanding using 512-dimensional vector embeddings (Apple NaturalLanguage)
+- Conversation-scoped or topic-scoped storage</p>
+<p><strong>How It Works</strong>:
+1. You or SAM explicitly stores information using memory operations
+2. Important information is extracted and processed
+3. Content is converted to 512-dimensional vectors
+4. Stored in database with metadata
+5. Retrieved automatically when relevant to future queries</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Remember</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">I</span><span class="s1">&#39;m working on a Python web app using Flask</span>
+<span class="s1">SAM: I&#39;</span><span class="n">ll</span><span class="w"> </span><span class="n">remember</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">you</span><span class="s1">&#39;re working on a Flask Python web application.</span>
+
+<span class="s1">[Later in conversation or different conversation in same topic]</span>
+
+<span class="s1">You: What framework am I using for my web app?</span>
+<span class="s1">SAM: You&#39;</span><span class="n">re</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">Flask</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">application</span><span class="o">.</span>
+</code></pre></div>
+
+<p><strong>Benefits</strong>:
+- No need to repeat information
+- SAM brings up relevant past context automatically
+- Works across long conversations
+- Persists beyond conversation lifecycle</p>
+<h3 id="conversation-vs-topic-scoping">Conversation vs Topic Scoping</h3>
+<p><strong>Conversation-Scoped</strong> (Default):
+- Each conversation has its own isolated memory
+- Privacy: Information stays within the conversation
+- Perfect for separate projects or unrelated topics</p>
+<p><strong>Topic-Scoped</strong> (Shared Topics):
+- Multiple conversations share the same memory
+- Perfect for complex projects with multiple aspects
+- Example: Frontend, backend, and testing conversations all access same information</p>
+<p><strong>How to Choose</strong>:
+- Use conversation scope for unrelated work
+- Use topic scope when multiple conversations work together on one project</p>
+<h3 id="vector-rag-retrieval-augmented-generation">Vector RAG (Retrieval-Augmented Generation)</h3>
+<p><strong>What It Is</strong>:
+SAM's advanced document understanding system that makes your imported files searchable and intelligent.</p>
+<p><strong>Capabilities</strong>:
+- <strong>Semantic Search</strong>: Not just keywords - understands meaning and context
+- <strong>Cross-Document</strong>: Search across all imported documents
+- <strong>Cross-Conversation</strong>: Find information from any conversation
+- <strong>Relevance Scoring</strong>: Results ranked by semantic similarity</p>
+<p><strong>How It Works</strong>:
+1. Import documents (PDFs, Word docs, code, images)
+2. Documents are split into manageable chunks
+3. Each chunk gets a vector embedding for semantic search
+4. Stored in vector database
+5. Queries use semantic similarity (cosine distance) to find relevant chunks
+6. Most relevant chunks retrieved and presented to you</p>
+<p><strong>Similarity Thresholds</strong>:
+- <strong>0.15-0.25</strong>: For document and RAG searches
+- <strong>0.3-0.5</strong>: For conversation memory searches
+- <strong>Lower threshold = More results</strong>: If you get no results, try lowering the threshold</p>
+<h3 id="yarn-context-processing">YaRN Context Processing</h3>
+<p><strong>What It Is</strong>:
+Dynamic context window management that lets SAM handle everything from quick chats to analyzing massive documents.</p>
+<p><strong>Context Window Profiles</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Profile</th>
+<th>Scaling</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default</td>
+<td>Low</td>
+<td>Regular conversations</td>
+</tr>
+<tr>
+<td>Extended</td>
+<td>Medium</td>
+<td>Long conversations</td>
+</tr>
+<tr>
+<td>Universal</td>
+<td>High</td>
+<td>Modern LLMs, large docs (DEFAULT)</td>
+</tr>
+<tr>
+<td>Mega</td>
+<td>Enterprise</td>
+<td>Massive documents and RAG</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Intelligent Compression</strong>:
+- Analyzes message importance
+- Preserves critical information
+- Compresses less important content
+- Uses semantic clustering
+- Maintains conversation coherence</p>
+<p><strong>When YaRN Activates</strong>:
+- Automatically when context exceeds base window
+- Compression triggered at 70% of max tokens
+- Transparent to user - just works</p>
+<p><strong>Benefits</strong>:
+- Never see "context too long" errors
+- Handle massive documents with ease
+- Long conversations preserve important context
+- Optimized automatically for each model's capabilities</p>
+<hr />
+<h2 id="context-archive-recall">Context Archive &amp; Recall</h2>
+<p>When YaRN compresses conversations to fit context limits, older messages don't disappear. They're archived for later retrieval.</p>
+<h3 id="how-it-works_1">How It Works</h3>
+<ol>
+<li><strong>Automatic Archiving</strong>: When context exceeds model limits, YaRN compresses older messages</li>
+<li><strong>Smart Preservation</strong>: Compressed messages are archived with summaries and key topics</li>
+<li><strong>SQLite Storage</strong>: Archives stored locally in efficient database format</li>
+<li><strong>On-Demand Recall</strong>: Use <code>recall_history</code> tool to search archived context</li>
+</ol>
+<h3 id="the-recall_history-tool">The recall_history Tool</h3>
+<p>SAM can search archived conversation history when you need context from earlier discussions:</p>
+<p><strong>Use Cases:</strong>
+- Reference earlier decisions in long conversations
+- Find information from hours or days ago
+- Search across ALL agents in a shared topic
+- Recover context that YaRN compressed</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nl">You</span><span class="p">:</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="n">we</span><span class="w"> </span><span class="n">decide</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">database</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="n">earlier</span><span class="o">?</span>
+
+<span class="nl">SAM</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Using</span><span class="w"> </span><span class="n">recall_history</span><span class="p">]</span>
+<span class="n">Found</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">archive</span><span class="w"> </span><span class="n">chunks</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">earlier</span><span class="w"> </span><span class="n">today</span><span class="p">.</span>
+
+<span class="n">Chunk</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="mi">10</span><span class="o">:</span><span class="mi">30-11</span><span class="o">:</span><span class="mi">15</span><span class="p">)</span><span class="o">:</span>
+<span class="nl">Summary</span><span class="p">:</span><span class="w"> </span><span class="n">Discussed</span><span class="w"> </span><span class="n">PostgreSQL</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="n">MongoDB</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">data</span><span class="p">.</span>
+<span class="nl">Decision</span><span class="p">:</span><span class="w"> </span><span class="n">Chose</span><span class="w"> </span><span class="n">PostgreSQL</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">relational</span><span class="w"> </span><span class="n">integrity</span><span class="p">.</span>
+
+<span class="n">Chunk</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="mi">11</span><span class="o">:</span><span class="mi">30-12</span><span class="o">:</span><span class="mo">00</span><span class="p">)</span><span class="o">:</span>
+<span class="nl">Summary</span><span class="p">:</span><span class="w"> </span><span class="n">Designed</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="n">tables</span><span class="p">.</span>
+<span class="n">Key</span><span class="w"> </span><span class="n">topics</span><span class="o">:</span><span class="w"> </span><span class="n">primary</span><span class="w"> </span><span class="n">keys</span><span class="p">,</span><span class="w"> </span><span class="n">foreign</span><span class="w"> </span><span class="n">keys</span><span class="p">,</span><span class="w"> </span><span class="n">indexes</span>
+</code></pre></div>
+
+<h3 id="topic-wide-search">Topic-Wide Search</h3>
+<p>When working in a shared topic with multiple agent conversations:
+- Search history from ALL agents in the topic
+- Find what other specialized agents discussed
+- Maintain continuity across agent handoffs</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">did</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">agent</span><span class="w"> </span><span class="n">implement</span><span class="o">?</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Using</span><span class="w"> </span><span class="n">recall_history</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">topic_id</span><span class="o">]</span>
+<span class="n">Found</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Backend</span><span class="w"> </span><span class="n">Agent</span><span class="w"> </span><span class="n">conversation</span><span class="o">:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Implemented</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">endpoints</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Created</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">registration</span><span class="w"> </span><span class="n">flow</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Added</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="n">hashing</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">bcrypt</span>
+</code></pre></div>
+
+<h3 id="memory-status-indicator">Memory Status Indicator</h3>
+<p>SAM shows when archived context is available:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">[</span><span class="n">Memory</span><span class="w"> </span><span class="n">Status</span><span class="p">]</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">archived</span><span class="w"> </span><span class="n">chunks</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mo">000</span><span class="w"> </span><span class="n">tokens</span><span class="p">)</span>
+<span class="n">Use</span><span class="w"> </span><span class="n">recall_history</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">earlier</span><span class="w"> </span><span class="n">context</span><span class="p">.</span>
+</code></pre></div>
+
+<hr />
+<h2 id="document-understanding">Document Understanding</h2>
+<h3 id="supported-formats">Supported Formats</h3>
+<p>SAM can import and understand multiple document formats:</p>
+<p><strong>Document Types</strong>:
+- <strong>PDF Files</strong>: Text extraction
+- <strong>Word Documents</strong>: .docx, .doc with formatting preservation
+- <strong>Text Files</strong>: .txt, .md, .rtf, and code files
+- <strong>Code Files</strong>: All programming languages</p>
+<p><strong>Import Methods</strong>:
+1. <strong>Drag &amp; Drop</strong>: Drag files into chat window
+2. <strong>File Browser</strong>: Use document import tool
+3. <strong>Bulk Import</strong>: Import entire directories</p>
+<h3 id="page-aware-chunking">Page-Aware Chunking</h3>
+<p><strong>What It Is</strong>:
+SAM preserves document structure when chunking for better accuracy.</p>
+<p><strong>Benefits</strong>:
+- Page boundaries respected
+- Section headings preserved
+- Context maintained across chunks
+- Accurate source references</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Import</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="mi">50</span><span class="o">-</span><span class="n">page</span><span class="w"> </span><span class="n">PDF</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">paper</span>
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Imported</span><span class="w"> </span><span class="s2">&quot;Research Paper.pdf&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="n">pages</span><span class="o">,</span><span class="w"> </span><span class="mi">127</span><span class="w"> </span><span class="n">chunks</span><span class="w"> </span><span class="n">created</span>
+
+<span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="mi">23</span><span class="w"> </span><span class="n">say</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">methodology</span><span class="o">?</span>
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">On</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="mi">23</span><span class="o">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">methodology</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">describes</span><span class="o">...</span><span class="w"> </span><span class="o">[</span><span class="n">accurate</span><span class="w"> </span><span class="n">retrieval</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">correct</span><span class="w"> </span><span class="n">page</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="cross-document-search">Cross-Document Search</h3>
+<p><strong>What It Is</strong>:
+Search and synthesize information across multiple imported documents.</p>
+<p><strong>Use Cases</strong>:
+- Research: Find themes across multiple papers
+- Coding: Search code patterns across files
+- Documentation: Find answers across user guides
+- Legal: Search across contracts and documents</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">imported</span><span class="w"> </span><span class="n">documents</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">authentication</span>
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Found</span><span class="w"> </span><span class="n">references</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">documents</span><span class="o">:</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="s2">&quot;Backend API.pdf&quot;</span><span class="w"> </span><span class="o">(</span><span class="n">page</span><span class="w"> </span><span class="mi">15</span><span class="o">):</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">implementation</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="s2">&quot;security-notes.md&quot;</span><span class="o">:</span><span class="w"> </span><span class="n">OAuth2</span><span class="w"> </span><span class="n">flow</span><span class="w"> </span><span class="n">description</span><span class="w">  </span>
+<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="s2">&quot;main.py&quot;</span><span class="o">:</span><span class="w"> </span><span class="n">Auth</span><span class="w"> </span><span class="n">middleware</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">45</span>
+</code></pre></div>
+
+<hr />
+<h2 id="multi-conversation-collaboration">Multi-Conversation Collaboration</h2>
+<h3 id="shared-topics">Shared Topics</h3>
+<p><strong>What They Are</strong>:
+Named workspaces where multiple conversations can collaborate on the same project.</p>
+<p><strong>Creating a Shared Topic</strong>:
+1. Go to <strong>SAM → Preferences → Shared Topics</strong>
+2. Under "Create New Topic", enter a topic name (e.g., "My Web App Project")
+3. Optionally add a description
+4. Click <strong>Create</strong> button</p>
+<p><strong>Using a Shared Topic in a Conversation</strong>:
+1. In the conversation toolbar, find the <strong>Shared Topic</strong> toggle
+2. Turn it <strong>On</strong> to enable cross-conversation memory
+3. Select your topic from the dropdown that appears
+4. All file operations now use the shared workspace</p>
+<p><strong>Note</strong>: The Shared Topic toggle appears in the toolbar alongside Tools, Terminal, and Workflow toggles.</p>
+<p><strong>What Gets Shared</strong>:
+- Files and folders
+- Memory and stored information
+- Terminal sessions</p>
+<p><strong>FYI - Storage Location</strong>:
+Topics create directories at <code>~/SAM/{topic-name}/</code>, but you don't need to manage them directly. SAM handles everything through the UI.</p>
+<p><strong>Real-World Scenario</strong>:</p>
+<p><strong>Goal</strong>: Build a web application</p>
+<p><strong>Setup</strong>:
+1. Create shared topic "My Web App"
+2. Create conversations:
+   - "Backend Development"
+   - "Frontend UI"
+   - "Testing &amp; QA"
+   - "Documentation"</p>
+<p><strong>Workflow</strong>:
+- <strong>Backend conversation</strong>: Creates API code in <code>~/SAM/My Web App/backend/</code>
+- <strong>Frontend conversation</strong>: Creates UI code in <code>~/SAM/My Web App/frontend/</code>, reads backend API definitions
+- <strong>Testing conversation</strong>: Accesses both backend and frontend code, writes tests
+- <strong>Documentation conversation</strong>: Reads all code, generates documentation</p>
+<p><strong>Benefits</strong>:
+- Each conversation specialized in its domain
+- All access same files and memory
+- No manual file copying
+- Persistent workspace across conversation lifecycle</p>
+<h3 id="effective-scope-pattern">Effective Scope Pattern</h3>
+<p><strong>What It Is</strong>:
+SAM's system for determining which workspace and memory to use for your work.</p>
+<p><strong>Logic</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">IF</span><span class="w"> </span><span class="ss">(</span><span class="nv">shared</span><span class="w"> </span><span class="nv">topic</span><span class="w"> </span><span class="nv">enabled</span><span class="w"> </span><span class="nv">AND</span><span class="w"> </span><span class="nv">topic</span><span class="w"> </span><span class="nv">selected</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">Workspace</span>:<span class="w"> </span><span class="o">~/</span><span class="nv">SAM</span><span class="o">/</span>{<span class="nv">topic</span><span class="o">-</span><span class="nv">name</span>}<span class="o">/</span>
+<span class="w">    </span><span class="nv">Memory</span>:<span class="w"> </span><span class="nv">Shared</span><span class="w"> </span><span class="nv">across</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">conversations</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">topic</span>
+<span class="k">ELSE</span>
+<span class="w">    </span><span class="nv">Workspace</span>:<span class="w"> </span><span class="o">~/</span><span class="nv">SAM</span><span class="o">/</span>{<span class="nv">conversation</span><span class="o">-</span><span class="nv">title</span>}<span class="o">/</span>
+<span class="w">    </span><span class="nv">Memory</span>:<span class="w"> </span><span class="nv">Isolated</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="nv">only</span>
+</code></pre></div>
+
+<p><strong>Applies To</strong>:
+- File operations (all read/write operations)
+- Memory operations (store/search)
+- Terminal sessions (working directory)
+- Document imports (storage location)</p>
+<hr />
+<h2 id="autonomous-workflows">Autonomous Workflows</h2>
+<h3 id="sequential-thinking">Sequential Thinking</h3>
+<p><strong>What It Is</strong>:
+SAM can plan, think through problems, and execute multi-step workflows autonomously.</p>
+<p><strong>Think Tool</strong>:
+- Explicit planning before action
+- Break down complex tasks
+- Analyze problems systematically
+- Transparent thought process</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Refactor</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">tokens</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Using</span><span class="w"> </span><span class="n">think</span><span class="w"> </span><span class="n">tool</span><span class="o">]</span>
+<span class="n">Let</span><span class="w"> </span><span class="n">me</span><span class="w"> </span><span class="n">plan</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">refactoring</span><span class="o">:</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Analyze</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">implementation</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Design</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">structure</span>
+<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Implement</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">generation</span><span class="o">/</span><span class="n">validation</span>
+<span class="mi">4</span><span class="o">.</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">existing</span><span class="w"> </span><span class="n">routes</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">JWT</span>
+<span class="mi">5</span><span class="o">.</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="n">token</span><span class="w"> </span><span class="n">refresh</span><span class="w"> </span><span class="n">mechanism</span>
+<span class="mi">6</span><span class="o">.</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">tests</span>
+
+<span class="o">[</span><span class="n">Proceeds</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">step</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="subagent-delegation">Subagent Delegation</h3>
+<p><strong>What It Is</strong>:
+SAM can spawn specialized sub-agents to handle different aspects of complex tasks.</p>
+<p><strong>How It Works</strong>:
+1. Main conversation identifies need for specialized work
+2. Spawns subagent with specific task
+3. Subagent has fresh iteration budget
+4. Subagent works independently
+5. Results returned to main conversation</p>
+<p><strong>Benefits</strong>:
+- <strong>Isolation</strong>: Each subagent has clean, focused context
+- <strong>Parallelism</strong>: Multiple subagents can work simultaneously
+- <strong>Fresh Thinking</strong>: New iteration budget for each complex subtask
+- <strong>Specialization</strong>: Each subagent focuses on one specific aspect</p>
+<p><strong>Use Cases</strong>:
+- <strong>Code Review</strong>: Spawn subagent to review security, another for performance
+- <strong>Research</strong>: Multiple subagents research different aspects
+- <strong>Testing</strong>: Dedicated subagent for comprehensive testing
+- <strong>Documentation</strong>: Specialized subagent for docs while main works on code</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Build</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">web</span><span class="w"> </span><span class="n">application</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">authentication</span><span class="o">,</span><span class="w"> </span><span class="n">database</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">API</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">I</span><span class="err">&#39;</span><span class="n">ll</span><span class="w"> </span><span class="n">delegate</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">specialized</span><span class="w"> </span><span class="n">subagents</span><span class="o">:</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Spawning</span><span class="w"> </span><span class="s2">&quot;Database Schema&quot;</span><span class="w"> </span><span class="n">subagent</span><span class="o">...</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Spawning</span><span class="w"> </span><span class="s2">&quot;Authentication System&quot;</span><span class="w"> </span><span class="n">subagent</span><span class="o">...</span>
+<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Spawning</span><span class="w"> </span><span class="s2">&quot;REST API&quot;</span><span class="w"> </span><span class="n">subagent</span><span class="o">...</span>
+
+<span class="o">[</span><span class="n">Each</span><span class="w"> </span><span class="n">subagent</span><span class="w"> </span><span class="n">works</span><span class="w"> </span><span class="n">independently</span><span class="o">,</span><span class="w"> </span><span class="n">reports</span><span class="w"> </span><span class="n">back</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">results</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="shared-topics-subagents">Shared Topics + Subagents</h3>
+<p><strong>Powerful Combination</strong>:
+Enable shared topic, then spawn subagents. All subagents work in the same shared workspace.</p>
+<p><strong>Example Workflow</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Full Stack App&quot;
+
+Main Conversation:
+├── Subagent: &quot;Backend API&quot; → works in ~/SAM/Full Stack App/backend/
+├── Subagent: &quot;Frontend React&quot; → works in ~/SAM/Full Stack App/frontend/
+├── Subagent: &quot;Database Schema&quot; → creates ~/SAM/Full Stack App/schema.sql
+└── Subagent: &quot;Integration Tests&quot; → reads all code, writes tests
+</code></pre></div>
+
+<p>All subagents access the same files and memory!</p>
+<h3 id="iteration-management">Iteration Management</h3>
+<p><strong>Default Limits</strong>:
+- Configurable iteration limits per conversation
+- Can be increased dynamically as needed</p>
+<p><strong>Dynamic Iteration Increase</strong>:
+SAM can request more iterations if needed:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">I</span><span class="err">&#39;</span><span class="n">m</span><span class="w"> </span><span class="n">approaching</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">iteration</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">still</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">refactor</span><span class="o">.</span>
+<span class="n">Requesting</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">increase</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">task</span><span class="w"> </span><span class="n">properly</span><span class="o">.</span>
+</code></pre></div>
+
+<p><strong>Requirements</strong>:
+- Must enable "Dynamic Iterations" in conversation settings
+- Must provide clear reason for increase
+- Must specify total needed (not additional)</p>
+<hr />
+<h2 id="file-code-operations">File &amp; Code Operations</h2>
+<h3 id="16-file-operations">16 File Operations</h3>
+<p>SAM has comprehensive file operation capabilities:</p>
+<p><strong>Read Operations</strong> (4):
+- <code>read_file</code>: Read file contents with optional line range
+- <code>list_dir</code>: List directory contents
+- <code>get_errors</code>: Get compilation/lint errors
+- <code>get_search_results</code>: Get workspace search results</p>
+<p><strong>Search Operations</strong> (5):
+- <code>file_search</code>: Find files by glob pattern (e.g., <code>**/*.py</code>)
+- <code>grep_search</code>: Regex content search
+- <code>semantic_search</code>: AI-powered code search
+- <code>list_usages</code>: Find symbol references
+- <code>search_index</code>: Search working directory index</p>
+<p><strong>Write Operations</strong> (7):
+- <code>create_file</code>: Create new files
+- <code>replace_string</code>: Replace exact text matches
+- <code>multi_replace_string</code>: Multiple replacements in one operation
+- <code>insert_edit</code>: Insert content at specific location
+- <code>rename_file</code>: Rename or move files
+- <code>delete_file</code>: Delete files
+- <code>apply_patch</code>: Apply unified diff patches</p>
+<h3 id="authorization-system">Authorization System</h3>
+<p><strong>Inside Working Directory</strong>: AUTO-APPROVED</p>
+<div class="codehilite"><pre><span></span><code>~/SAM/My Project/ ← Working directory
+├── src/           ← Auto-approved
+├── tests/         ← Auto-approved
+└── docs/          ← Auto-approved
+</code></pre></div>
+
+<p><strong>Outside Working Directory</strong>: REQUIRES AUTHORIZATION</p>
+<div class="codehilite"><pre><span></span><code>~/Documents/       ← Requires approval
+/etc/              ← Requires approval
+~/.ssh/            ← Requires approval
+</code></pre></div>
+
+<p><strong>Benefits</strong>:
+- <strong>Safety</strong>: Can't accidentally modify system files
+- <strong>Privacy</strong>: Explicit approval required for accessing personal files
+- <strong>Transparency</strong>: See exactly what SAM wants to do before it happens</p>
+<h3 id="semantic-code-search">Semantic Code Search</h3>
+<p><strong>What It Is</strong>:
+Natural language search across your codebase.</p>
+<p><strong>Example Queries</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Find</span><span class="w"> </span><span class="nv">functions</span><span class="w"> </span><span class="nv">that</span><span class="w"> </span><span class="nv">handle</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">authentication</span>
+<span class="nv">Locate</span><span class="w"> </span><span class="nv">where</span><span class="w"> </span><span class="nv">database</span><span class="w"> </span><span class="nv">connections</span><span class="w"> </span><span class="nv">are</span><span class="w"> </span><span class="nv">established</span>
+<span class="k">Show</span><span class="w"> </span><span class="nv">me</span><span class="w"> </span><span class="nv">error</span><span class="w"> </span><span class="nv">handling</span><span class="w"> </span><span class="nv">patterns</span>
+<span class="nv">Find</span><span class="w"> </span><span class="nv">API</span><span class="w"> </span><span class="nv">endpoint</span><span class="w"> </span><span class="nv">definitions</span>
+</code></pre></div>
+
+<p><strong>vs. Regular Search</strong>:
+- Regular: Matches exact text/patterns
+- Semantic: Understands intent and meaning</p>
+<hr />
+<h2 id="web-research">Web Research</h2>
+<h3 id="6-web-operations">6 Web Operations</h3>
+<p><strong>research</strong>: Comprehensive multi-source research + automatic memory storage
+<strong>retrieve</strong>: Access previously stored research from memory
+<strong>web_search</strong>: Quick web search for top results
+<strong>serpapi</strong>: Professional search via SerpAPI (Google, Bing, Amazon, etc.)
+<strong>scrape</strong>: Extract content from websites (JavaScript-enabled)
+<strong>fetch</strong>: Retrieve main content from webpage (faster, basic HTTP)</p>
+<h3 id="professional-search-serpapi">Professional Search (SerpAPI)</h3>
+<p>When enabled, SAM can use SerpAPI for professional-grade search:</p>
+<p><strong>Search Engines</strong>:
+- Google Search
+- Google AI Overviews
+- Bing
+- Amazon Products
+- eBay
+- Walmart
+- TripAdvisor
+- Yelp
+- Google Maps
+- Google Scholar</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="n">Amazon</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">best</span><span class="o">-</span><span class="n">rated</span><span class="w"> </span><span class="n">wireless</span><span class="w"> </span><span class="n">headphones</span><span class="w"> </span><span class="n">under</span><span class="w"> </span><span class="n">$200</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Uses</span><span class="w"> </span><span class="n">serpapi</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">engine</span><span class="o">=</span><span class="n">amazon</span><span class="o">]</span>
+<span class="n">Found</span><span class="w"> </span><span class="n">top</span><span class="o">-</span><span class="n">rated</span><span class="w"> </span><span class="n">headphones</span><span class="o">:</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Sony</span><span class="w"> </span><span class="n">WH</span><span class="o">-</span><span class="mi">1000</span><span class="n">XM5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">$199</span><span class="o">.</span><span class="mi">99</span><span class="w"> </span><span class="o">(</span><span class="mf">4.7</span><span class="o">/</span><span class="mi">5</span><span class="o">,</span><span class="w"> </span><span class="mi">12</span><span class="o">,</span><span class="mi">450</span><span class="w"> </span><span class="n">reviews</span><span class="o">)</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Bose</span><span class="w"> </span><span class="n">QuietComfort</span><span class="w"> </span><span class="mi">45</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">$179</span><span class="o">.</span><span class="mi">99</span><span class="w"> </span><span class="o">(</span><span class="mf">4.6</span><span class="o">/</span><span class="mi">5</span><span class="o">,</span><span class="w"> </span><span class="mi">8</span><span class="o">,</span><span class="mi">230</span><span class="w"> </span><span class="n">reviews</span><span class="o">)</span>
+<span class="o">...</span>
+</code></pre></div>
+
+<h3 id="web-scraping">Web Scraping</h3>
+<p><strong>WebKit Scraping</strong>:
+- Full JavaScript support
+- Renders pages like a real browser
+- Handles dynamic content
+- Extracts main article content</p>
+<p><strong>Use Cases</strong>:
+- Scrape documentation sites
+- Extract article content
+- Get structured data from web apps
+- Research product information</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Scrape</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">https</span><span class="o">://</span><span class="n">docs</span><span class="o">.</span><span class="na">python</span><span class="o">.</span><span class="na">org</span><span class="sr">/3/library/</span><span class="n">asyncio</span><span class="o">.</span><span class="na">html</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Scrapes</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">JavaScript</span><span class="w"> </span><span class="n">rendering</span><span class="o">]</span>
+<span class="n">Retrieved</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="s2">&quot;asyncio - Asynchronous I/O&quot;</span>
+<span class="o">[</span><span class="n">Provides</span><span class="w"> </span><span class="n">clean</span><span class="o">,</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="n">content</span><span class="o">]</span>
+</code></pre></div>
+
+<h3 id="research-workflow">Research Workflow</h3>
+<p><strong>Comprehensive Research</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Research</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="n">developments</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">safety</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">comprehensive</span><span class="w"> </span><span class="n">depth</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Uses</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">operation</span><span class="o">]</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Searching</span><span class="w"> </span><span class="n">multiple</span><span class="w"> </span><span class="n">sources</span><span class="o">...</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Scraping</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">articles</span><span class="o">...</span>
+<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Synthesizing</span><span class="w"> </span><span class="n">information</span><span class="o">...</span>
+<span class="mi">4</span><span class="o">.</span><span class="w"> </span><span class="n">Storing</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">future</span><span class="w"> </span><span class="n">reference</span><span class="o">...</span>
+
+<span class="o">[</span><span class="n">Provides</span><span class="w"> </span><span class="n">comprehensive</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">sources</span><span class="o">]</span>
+</code></pre></div>
+
+<p><strong>Retrieve Later</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: [In a new conversation or same one later]
+What did we learn about AI safety?
+
+SAM: [Uses retrieve operation]
+Retrieved research about AI safety from memory:
+[Pulls from previously stored research]
+</code></pre></div>
+
+<hr />
+<h2 id="terminal-integration">Terminal Integration</h2>
+<h3 id="11-terminal-operations">11 Terminal Operations</h3>
+<p><strong>Execution</strong>:
+- <code>run_command</code>: Execute shell commands
+- <code>get_output</code>: Get command output
+- <code>get_last_command</code>: Get last executed command</p>
+<p><strong>Session Management</strong>:
+- <code>create_session</code>: Create new terminal session
+- <code>attach_session</code>: Attach to existing session
+- <code>detach_session</code>: Detach from session
+- <code>switch_session</code>: Switch between sessions
+- <code>close_session</code>: Close terminal session
+- <code>list_sessions</code>: List all sessions</p>
+<p><strong>Interaction</strong>:
+- <code>send_input</code>: Send input to running command
+- <code>get_state</code>: Get terminal state</p>
+<h3 id="persistent-terminals">Persistent Terminals</h3>
+<p><strong>Per-Conversation Terminals</strong>:
+- Each conversation has dedicated terminal
+- History persists across app restarts
+- Working directory matches conversation/topic workspace</p>
+<p><strong>Visible Terminal Integration</strong>:
+- Toggle terminal panel in the UI
+- Watch commands execute in real-time
+- See output as it happens
+- Interactive command support</p>
+<p><strong>Note</strong>: Press <strong>⌘T</strong> to toggle tools on/off (including terminal access).</p>
+<p><strong>Example Workflow</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Run</span><span class="w"> </span><span class="n">my</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="n">tests</span>
+
+<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Executes</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">terminal</span><span class="o">]</span>
+<span class="n">$</span><span class="w"> </span><span class="n">pytest</span><span class="w"> </span><span class="n">tests</span><span class="o">/</span>
+<span class="o">======</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="n">starts</span><span class="w"> </span><span class="o">======</span>
+<span class="n">collected</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="n">items</span>
+
+<span class="n">tests</span><span class="o">/</span><span class="n">test_auth</span><span class="o">.</span><span class="na">py</span><span class="w"> </span><span class="o">........</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="mi">19</span><span class="o">%]</span>
+<span class="n">tests</span><span class="o">/</span><span class="n">test_api</span><span class="o">.</span><span class="na">py</span><span class="w"> </span><span class="o">.........</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="mi">40</span><span class="o">%]</span>
+<span class="o">...</span>
+<span class="o">======</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="n">passed</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">2.35</span><span class="n">s</span><span class="w"> </span><span class="o">======</span>
+
+<span class="n">Tests</span><span class="w"> </span><span class="n">passed</span><span class="o">!</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="n">successful</span><span class="o">.</span>
+</code></pre></div>
+
+<hr />
+<h2 id="image-generation">Image Generation</h2>
+<h3 id="getting-started-with-image-generation">Getting Started with Image Generation</h3>
+<p>SAM includes built-in AI image generation that runs entirely on your Mac. Generate images from text descriptions with just a few clicks.</p>
+<p><strong>Quick Start (3 Steps)</strong>:
+1. <strong>Install a Model</strong>: Go to <strong>Preferences → Image Generation → Model Browser</strong>
+2. <strong>Download</strong>: Find a model you like and download it (with optional CoreML conversion)
+3. <strong>Generate</strong>: Type your prompt in chat or ask SAM to generate an image</p>
+<h3 id="installing-image-models">Installing Image Models</h3>
+<p><strong>From the Model Browser</strong>:
+1. Open <strong>SAM → Preferences → Image Generation</strong>
+2. Choose <strong>HuggingFace</strong> or <strong>CivitAI</strong> tab
+3. Search by name, tags, or browse popular models
+4. Click <strong>Download</strong> on any model
+5. Optionally click <strong>Convert</strong> to optimize for your Mac (recommended for Apple Silicon)
+6. Model appears in your model picker automatically</p>
+<p><strong>Model Types</strong>:
+- <strong>SD 1.5</strong>: 512×512 images, fast, wide variety of styles
+- <strong>SD 2.x</strong>: 768×768 images, improved quality
+- <strong>SDXL</strong>: 1024×1024 images, highest quality (slower)</p>
+<p><strong>Tip</strong>: Start with SD 1.5 models since they're faster and have the most community options.</p>
+<h3 id="two-ways-to-generate-images">Two Ways to Generate Images</h3>
+<p><strong>LLM-Assisted Mode</strong> (Recommended for beginners):
+Just ask SAM naturally. It handles the technical details.</p>
+<div class="codehilite"><pre><span></span><code><span class="nl">You</span><span class="p">:</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">serene</span><span class="w"> </span><span class="n">mountain</span><span class="w"> </span><span class="n">landscape</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">sunset</span>
+
+<span class="nl">SAM</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Using</span><span class="w"> </span><span class="n">image_generation</span><span class="p">]</span>
+<span class="n">Generating</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">settings</span><span class="p">...</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Enhanced</span><span class="w"> </span><span class="n">prompt</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">lighting</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">quality</span><span class="w"> </span><span class="n">details</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Selected</span><span class="w"> </span><span class="n">appropriate</span><span class="w"> </span><span class="n">negative</span><span class="w"> </span><span class="n">prompts</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">displayed</span>
+</code></pre></div>
+
+<p><strong>Direct SD Mode</strong> (Fast and precise):
+1. Click the <strong>model picker</strong> in your conversation
+2. Select an SD model (look for models prefixed with "sd/")
+3. Type your exact prompt
+4. Press Enter and the image generates immediately</p>
+<p>The send button turns <strong>purple</strong> when in Direct SD Mode.</p>
+<p><strong>Benefits of Direct SD Mode</strong>:
+- <strong>Faster</strong>: Skips LLM processing entirely
+- <strong>Precise</strong>: Your exact words go to the image generator
+- <strong>Cost-effective</strong>: No API calls to cloud providers</p>
+<h3 id="model-lora-browsers">Model &amp; LoRA Browsers</h3>
+<p>Discover and download models and LoRAs directly in SAM through integrated browsers.</p>
+<p><strong>Model Browser</strong> (Preferences → Image Generation → Model Browser):
+- <strong>CivitAI Tab</strong>: Browse thousands of community Stable Diffusion models
+- <strong>HuggingFace Tab</strong>: Discover models from HuggingFace Hub
+- Search, filter, preview, and download with one click
+- Auto-convert to CoreML for Mac optimization</p>
+<p><strong>LoRA Browser</strong> (Preferences → Image Generation → LoRA Browser):
+- <strong>Library Tab</strong>: Manage your installed LoRAs
+- <strong>CivitAI Tab</strong>: Browse and download LoRAs from CivitAI
+- <strong>HuggingFace Tab</strong>: Discover LoRAs from HuggingFace Hub
+- Filter by base model (SD 1.5, SDXL, Z-Image, Flux)
+- View trigger words and compatibility info
+- Auto-load results when switching tabs</p>
+<p><strong>Using LoRAs</strong>:
+Just reference the LoRA filename in your image prompt. SAM automatically finds and applies it.</p>
+<p><strong>Tip</strong>: Ask SAM "list available LoRAs" to see all installed LoRAs with their trigger words.</p>
+<h3 id="alice-remote-generation">ALICE Remote Generation</h3>
+<p>Generate images on remote GPU servers using the ALICE protocol. Perfect for:
+- AMD GPU hardware (not supported locally on Mac)
+- Steam Deck or Linux servers
+- Offloading generation while working</p>
+<p><strong>Setup</strong>:
+1. Open <strong>Preferences → Stable Diffusion → Settings</strong>
+2. Enter your ALICE server URL (e.g., <code>http://192.168.1.100:8090/v1</code>)
+3. Click <strong>Test Connection</strong>
+4. Save and models will appear in picker with "ALICE" location</p>
+<p><strong>Benefits</strong>:
+- Use AMD or NVIDIA GPUs remotely
+- Keep Mac responsive during generation
+- Access server-side models without downloading</p>
+<h3 id="generation-tips">Generation Tips</h3>
+<p><strong>Write Better Prompts</strong>:
+- Be specific: "Serene mountain landscape at sunset" beats "mountains"
+- Add style: "watercolor painting of...", "photo-realistic...", "digital art of..."
+- Include details: lighting, mood, colors, composition
+- Use quality tags: "8k", "detailed", "masterpiece"</p>
+<p><strong>Adjust Settings</strong> (available in Preferences → Image Generation):
+- <strong>Steps</strong>: More steps = better quality, slower generation (default: 25)
+- <strong>Guidance Scale</strong>: Higher = stricter prompt adherence (default: 8.0)
+- <strong>Scheduler</strong>: Try DPM++ with Karras for best results</p>
+<hr />
+<h2 id="location-awareness">Location Awareness</h2>
+<p>SAM can incorporate location context into conversations, enabling more relevant and personalized responses.</p>
+<h3 id="two-location-modes">Two Location Modes</h3>
+<p><strong>General Location</strong> (Manual):
+- Enter your location manually in Preferences → General → Location
+- Example: "Austin, TX" or "London, UK"
+- No device permissions required
+- Perfect for privacy-conscious users</p>
+<p><strong>Precise Location</strong> (Automatic):
+- Toggle <strong>Use Precise Location</strong> in Preferences → General
+- Uses Core Location for automatic detection
+- City-level accuracy (not exact GPS coordinates)
+- Updates automatically when you travel
+- Requires location permission approval</p>
+<h3 id="privacy-first">Privacy First</h3>
+<p>Location data is handled with privacy as the top priority:
+- <strong>Local Only</strong>: Location never sent to external servers
+- <strong>City-Level</strong>: Precise location uses kilometer accuracy, not GPS coordinates
+- <strong>Opt-In</strong>: Empty by default, you choose if and when to share
+- <strong>UserDefaults Storage</strong>: Stored locally, never transmitted</p>
+<h3 id="how-location-helps">How Location Helps</h3>
+<p>When location is configured, SAM can provide:
+- <strong>Weather-appropriate suggestions</strong>: "It's winter in Chicago, dress warmly"
+- <strong>Local recommendations</strong>: Nearby restaurants, stores, services
+- <strong>Time-zone awareness</strong>: Meeting scheduling, deadlines
+- <strong>Regional context</strong>: Local regulations, customs, language variations</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="k">[With location set to &quot;Seattle, WA&quot;]</span>
+
+<span class="na">You</span><span class="o">:</span><span class="w"> </span><span class="s">What&#39;s good for lunch nearby?</span>
+
+<span class="na">SAM</span><span class="o">:</span><span class="w"> </span><span class="s">Since you&#39;re in Seattle, here are some popular options:</span>
+<span class="na">- Pike Place Chowder (seafood)</span>
+<span class="na">- Salumi (Italian deli)</span>
+<span class="na">- Din Tai Fung (dumplings)</span>
+<span class="na">Would you like me to search for specific cuisines?</span>
+</code></pre></div>
+
+<h3 id="configuration">Configuration</h3>
+<ol>
+<li><strong>General Location</strong>: Go to <strong>SAM → Preferences → General</strong>, find the <strong>Location</strong> section, and enter your location in the "General Location" field (e.g., "Austin, TX")</li>
+<li><strong>Precise Location</strong>: In the same section, toggle <strong>Use Precise Location</strong>. SAM will request location permission the first time.</li>
+</ol>
+<hr />
+<h2 id="api-integration">API &amp; Integration</h2>
+<h3 id="restful-api">RESTful API</h3>
+<p>SAM includes a built-in REST API compatible with OpenAI's format.</p>
+<p><strong>Endpoints</strong>:
+- <code>POST /api/chat/completions</code> - Chat completions
+- <code>POST /api/chat/autonomous</code> - Autonomous workflows
+- <code>GET /api/models</code> - List available models
+- <code>GET /v1/conversations</code> - List conversations
+- <code>POST /v1/conversations</code> - Create conversation</p>
+<p><strong>Streaming Support</strong>:
+All chat endpoints support Server-Sent Events (SSE) for real-time streaming.</p>
+<p><strong>Enhanced Response Metadata</strong>:
+SAM enriches API responses with a <code>sam_metadata</code> field containing:
+- <strong>Provider Info</strong>: Which provider fulfilled the request, local vs remote
+- <strong>Model Info</strong>: Context window size, capabilities (tools, vision, streaming)
+- <strong>Workflow Info</strong>: Iterations, tool calls, duration (for autonomous requests)
+- <strong>Cost Estimate</strong>: Estimated USD cost with per-1K token rates</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8080/api/chat/completions<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;model&quot;: &quot;gpt-4&quot;,</span>
+<span class="s1">    &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Hello!&quot;}],</span>
+<span class="s1">    &quot;stream&quot;: true</span>
+<span class="s1">  }&#39;</span>
+</code></pre></div>
+
+<p><strong>Use Cases</strong>:
+- Integrate SAM with other applications
+- Automate workflows via API
+- Build custom interfaces
+- Script complex operations
+- Monitor token usage and costs</p>
+<h3 id="configuration_1">Configuration</h3>
+<p><strong>API Server Settings</strong>:
+- <strong>Port</strong>: Default 8080 (configurable)
+- <strong>Authentication</strong>: Optional for localhost
+- <strong>CORS</strong>: Configurable for web access</p>
+<p>See <a href="../developer/api-reference.html">API Reference</a> for complete documentation.</p>
+<hr />
+<h2 id="remote-access-with-sam-web">Remote Access with SAM Web</h2>
+<p><strong>Access SAM from your iPad, iPhone, or any device with a browser.</strong></p>
+<p>SAM Web lets you chat with SAM from anywhere on your network. All of SAM's backend features are available through the chat interface - image generation, file operations, terminal commands, memory, and more. You're controlling SAM remotely, so everything happens on your Mac.</p>
+<h3 id="what-is-sam-web">What is SAM Web?</h3>
+<p>SAM Web is a browser-based interface that connects to SAM's API. When you're on your iPad or another device, you can have full conversations with SAM and access all its capabilities.</p>
+<p><strong>What works:</strong>
+- Full chat with streaming responses
+- All conversation features (system prompts, personalities, mini-prompts, shared topics, folders)
+- All AI models and providers you've configured in SAM
+- All of SAM's tools: image generation, file operations, terminal, web research, memory/RAG, and more
+- Model parameter configuration</p>
+<p><strong>What's missing:</strong>
+- Document upload directly from browser (may be available in a future release)</p>
+<p><strong>Important:</strong> SAM Web requires SAM running on your Mac with API server enabled. When you ask SAM to generate an image or edit a file, it happens on your Mac - SAM Web is just the remote control.</p>
+<h3 id="getting-started">Getting Started</h3>
+<p><strong>Requirements:</strong>
+1. SAM installed and running on your Mac
+2. API server enabled in SAM Preferences → API Server
+3. API token from SAM Preferences → API Server
+4. Network access to your Mac (same Wi-Fi network recommended)
+5. Modern web browser (Safari, Chrome, Firefox)</p>
+<p><strong>Quick Setup:</strong>
+1. Clone SAM Web repository: <code>git clone https://github.com/SyntheticAutonomicMind/SAM-web.git</code>
+2. Start a web server: <code>python3 -m http.server 8000</code> (from SAM-web directory)
+3. Open <code>http://localhost:8000</code> (same device) or <code>http://YOUR_MAC_IP:8000</code> (other devices)
+4. Enter your API token from SAM Preferences
+5. Click <strong>Connect to SAM</strong>
+6. Start chatting</p>
+<h3 id="use-cases">Use Cases</h3>
+<p><strong>iPad Access:</strong>
+- Chat with SAM while reading on your iPad
+- Quick questions without switching to your Mac
+- Touch-optimized interface for tablets</p>
+<p><strong>Multi-Device Workflow:</strong>
+- Access SAM from any device on your network
+- Continue conversations from different locations
+- Share SAM access with other devices</p>
+<p><strong>Remote Work:</strong>
+- Connect from other computers on your network
+- Use VPN for secure remote access (advanced)
+- Access SAM while away from your primary Mac</p>
+<h3 id="features-comparison">Features Comparison</h3>
+<p><strong>Key Concept:</strong> SAM Web is a remote interface to SAM on your Mac. All work happens on your Mac - you're controlling SAM remotely.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Native SAM App</th>
+<th>SAM Web</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chat interface</td>
+<td>✅ Full</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>Conversations</td>
+<td>✅ Full management</td>
+<td>✅ Full management</td>
+</tr>
+<tr>
+<td>Mini-prompts</td>
+<td>✅ Full management</td>
+<td>✅ Full management</td>
+</tr>
+<tr>
+<td>Model selection</td>
+<td>✅ All providers</td>
+<td>✅ All configured providers</td>
+</tr>
+<tr>
+<td>System prompts</td>
+<td>✅ Full selection</td>
+<td>✅ Full selection</td>
+</tr>
+<tr>
+<td>Personalities</td>
+<td>✅ Full selection</td>
+<td>✅ Full selection</td>
+</tr>
+<tr>
+<td>Shared topics</td>
+<td>✅ Full management</td>
+<td>✅ Full management</td>
+</tr>
+<tr>
+<td>Folders</td>
+<td>✅ Organize conversations</td>
+<td>✅ Organize conversations</td>
+</tr>
+<tr>
+<td>Image generation</td>
+<td>✅ Full (images on Mac)</td>
+<td>✅ Full (images on Mac)</td>
+</tr>
+<tr>
+<td>File operations</td>
+<td>✅ Full (Mac file system)</td>
+<td>✅ Full (Mac file system)</td>
+</tr>
+<tr>
+<td>Terminal access</td>
+<td>✅ Full shell access</td>
+<td>✅ Full (Mac terminal)</td>
+</tr>
+<tr>
+<td>Memory/RAG</td>
+<td>✅ Full (via tools)</td>
+<td>✅ Full (via tools)</td>
+</tr>
+<tr>
+<td>Document upload</td>
+<td>✅ Drag and drop</td>
+<td>⏳ Planned</td>
+</tr>
+<tr>
+<td>Voice input/output</td>
+<td>✅ Full support</td>
+<td>⏳ Planned</td>
+</tr>
+<tr>
+<td>LoRA training</td>
+<td>✅ Complete UI</td>
+<td>❌ Not available</td>
+</tr>
+<tr>
+<td>Conversation export</td>
+<td>✅ JSON, MD, PDF, TXT</td>
+<td>❌ Not available</td>
+</tr>
+<tr>
+<td>Memory/RAG UI</td>
+<td>✅ Document management</td>
+<td>❌ Not available</td>
+</tr>
+<tr>
+<td>Offline mode</td>
+<td>✅ Local models</td>
+<td>❌ Requires network</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Legend:</strong>
+- ✅ = Available
+- ⏳ = Planned for future release
+- ❌ = Not available
+- "(Mac)" = Works via SAM's tools, affects your Mac where SAM runs</p>
+<p><strong>Summary:</strong> SAM Web provides full chat and configuration access. Features marked "(Mac)" work via SAM's tools but affect your Mac's file system, not the device you're browsing from. Missing: LoRA training UI, conversation export, document management UI.</p>
+<h3 id="technical-details">Technical Details</h3>
+<p><strong>Architecture:</strong>
+- Pure HTML5, CSS3, JavaScript (no build step required)
+- Zero dependencies, all assets self-hosted
+- Server-Sent Events (SSE) for real-time streaming
+- Bearer token authentication
+- LocalStorage for settings persistence</p>
+<p><strong>Repository:</strong>
+- Source code: <a href="https://github.com/SyntheticAutonomicMind/SAM-web">github.com/SyntheticAutonomicMind/SAM-web</a>
+- License: GNU GPL v3.0 (same as SAM)
+- Contributions welcome</p>
+<p><strong>Learn More</strong>: See the complete <a href="sam-web.html">SAM Web Guide</a> for setup instructions, troubleshooting, and detailed feature documentation.</p>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you understand SAM's features, dive deeper into specific topics:</p>
+<p><strong>Essential Guides</strong>:
+- <strong><a href="memory-and-rag.html">Memory &amp; RAG</a></strong> - Master SAM's memory system
+- <strong><a href="shared-topics.html">Shared Topics</a></strong> - Multi-conversation workflows
+- <strong><a href="../power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Subagents and complex projects</p>
+<p><strong>Power User</strong>:
+- <strong><a href="../power-user/tools-reference.html">Tools Reference</a></strong> - Complete tools reference
+- <strong><a href="../power-user/configuration.html">Configuration</a></strong> - Complete settings guide
+- <strong><a href="../power-user/troubleshooting.html">Troubleshooting</a></strong> - Common issues</p>
+<p><strong>Developer</strong>:
+- <strong><a href="../developer/api-reference.html">API Reference</a></strong> - REST API documentation
+- <strong><a href="../developer/architecture.html">Architecture</a></strong> - System internals</p>
+<hr />
+<p><strong>Ready to explore?</strong> Start with the feature that interests you most!</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../../docs/README.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

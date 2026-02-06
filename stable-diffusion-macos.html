@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALICE - Stable Diffusion for macOS | Local Image Generation</title>
+    <meta name="description" content="ALICE is a Stable Diffusion service for macOS with an OpenAI-compatible API. Download models from CivitAI and HuggingFace, generate unlimited images locally.">
+    <meta name="keywords" content="Stable Diffusion macOS, local image generation Mac, ALICE, AI image generation">
+    <meta name="author" content="Andrew Wyatt (Fewtarius)">
+    <link rel="stylesheet" href="css/styles.css?v=7">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">
+                <img src="images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="/#documentation">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="/#get-started" class="nav-download">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-modern">
+        <div class="container-wide">
+            <div class="hero-modern-content">
+                <div class="eyebrow" style="color: var(--primary-blue); margin-bottom: 24px;">ALICE</div>
+                <h1>Generate images locally.</h1>
+                <p class="hero-lead">ALICE is a Stable Diffusion service for macOS with an OpenAI-compatible API. Download models from CivitAI and HuggingFace, then generate unlimited images on your hardware.</p>
+                <div class="hero-cta">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
+                        Download ALICE
+                    </a>
+                    <a href="docs/README.html" class="btn-large btn-secondary">
+                        Read the Docs
+                    </a>
+                </div>
+                <p class="hero-note">Free and open source. macOS with CUDA or MPS support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Image -->
+    <section class="feature-highlight">
+        <div class="container">
+            <div style="text-align: center;">
+                <img src="images/alice.png" alt="ALICE" style="max-width: 480px; width: 100%; height: auto;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Capabilities -->
+    <section class="feature-highlight alt">
+        <div class="container">
+            <h2 class="section-title-centered">Your GPU, your data, your creations.</h2>
+            
+            <div class="features-grid-modern">
+                <div class="feature-item-modern">
+                    <h3>Stable Diffusion service</h3>
+                    <p>FastAPI-based service with OpenAI-compatible API. Generate images programmatically or via web interface.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Download any model</h3>
+                    <p>CivitAI, HuggingFace, or local checkpoints. SDXL, SD 1.5, and custom fine-tuned models all supported.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Unlimited generation</h3>
+                    <p>No usage caps, no API bills. Generate as many images as you want on your own hardware.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>SAM integration</h3>
+                    <p>Generate images directly from SAM conversations. ALICE handles the heavy lifting.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Web interface</h3>
+                    <p>Browse models, configure parameters, and generate images through a clean web UI.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>REST API access</h3>
+                    <p>OpenAI-compatible API for integration with other tools and workflows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Highlights -->
+    <section class="feature-highlight">
+        <div class="container">
+            <div class="feature-split">
+                <div class="feature-text">
+                    <h2>Complete control over generation.</h2>
+                    <p>Adjust steps, guidance scale, samplers, and schedulers. Use negative prompts, LoRA models, and embeddings.</p>
+                    <p>Full Stable Diffusion capabilities without compromise.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Generation Controls</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-highlight alt">
+        <div class="container">
+            <div class="feature-split reverse">
+                <div class="feature-text">
+                    <h2>Privacy by design.</h2>
+                    <p>All image generation happens on your Mac. No cloud services, no data collection, no usage tracking.</p>
+                    <p>Your prompts and generated images stay on your machine.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Local Processing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-highlight">
+        <div class="container">
+            <div class="feature-split">
+                <div class="feature-text">
+                    <h2>Batch generation and automation.</h2>
+                    <p>Generate multiple images with varying seeds. Queue batches for overnight generation. Automate workflows via REST API.</p>
+                    <p>Perfect for artists, designers, and creative professionals.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Batch Processing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Get started with ALICE.</h2>
+                <p>Download for macOS. Generate images locally.</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
+                        Download ALICE
+                    </a>
+                    <a href="docs/README.html" class="btn-large btn-secondary">
+                        Read the Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="docs/README.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

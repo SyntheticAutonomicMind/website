@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developers Guide | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Developers Guide">
+    <link rel="stylesheet" href="../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../#features">Features</a>
+                <a href="../../docs/README.html">Docs</a>
+                <a href="../../#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../../docs/README.html">Documentation</a> / Developers Guide
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="developers-guide">Developers Guide</h1>
+<p><strong>Build an AI assistant that actually ships code.</strong></p>
+<p>SAM was developed using a novel human-AI collaboration methodology called <strong>The Unbroken Method</strong>, and you can use the same approach. This guide covers everything you need to contribute to SAM, extend its capabilities, or learn from its architecture.</p>
+<p><strong>What makes SAM's development unique:</strong>
+- Structured AI collaboration methodology
+- Architecture designed for extensibility and testing
+- Complete tool system you can extend
+- Zero architectural debt carried forward</p>
+<p><strong>This guide covers:</strong>
+- Setting up your development environment
+- Building SAM from source
+- Architecture and code organization
+- Creating custom tools and extending SAM
+- Testing, debugging, and release process</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#development-philosophy">Development Philosophy</a></li>
+<li><a href="#development-setup">Development Setup</a></li>
+<li><a href="#building-sam">Building SAM</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#architecture-overview">Architecture Overview</a></li>
+<li><a href="#adding-new-features">Adding New Features</a></li>
+<li><a href="#creating-custom-tools">Creating Custom Tools</a></li>
+<li><a href="#testing">Testing</a></li>
+<li><a href="#debugging">Debugging</a></li>
+<li><a href="#performance-optimization">Performance Optimization</a></li>
+<li><a href="#release-process">Release Process</a></li>
+</ol>
+<hr />
+<h2 id="development-philosophy">Development Philosophy</h2>
+<p>SAM was developed using <strong>The Unbroken Method</strong>, a systematic approach to human-AI collaboration that maximizes productivity and quality. This methodology is documented separately and applies to all SAM development work.</p>
+<p><strong>Key Principles:</strong>
+- <strong>Continuous Context</strong>: Never break the conversation - maintain context across sessions
+- <strong>Complete Ownership</strong>: Find it, fix it - no "out of scope" escapes
+- <strong>Investigation First</strong>: Understand before acting - read code before modifying
+- <strong>Root Cause Focus</strong>: Fix problems, not symptoms
+- <strong>Complete Deliverables</strong>: Finish what you start - no partial implementations
+- <strong>Structured Handoffs</strong>: Perfect context transfer between sessions
+- <strong>Learning from Failure</strong>: Document anti-patterns to prevent recurrence</p>
+<p>These principles enable consistent, high-quality development with features complete on first implementation.</p>
+<p><strong>Read More:</strong> <a href="the-unbroken-method.html">The Unbroken Method</a> - Complete methodology documentation</p>
+<hr />
+<h2 id="development-setup">Development Setup</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li><strong>macOS 14.0+</strong> (Sonoma or later)</li>
+<li><strong>Xcode 15.0+</strong> with Command Line Tools</li>
+<li><strong>Swift 5.9+</strong></li>
+<li><strong>Git</strong></li>
+<li><strong>ccache</strong> (optional, speeds up builds)</li>
+</ul>
+<h3 id="install-dependencies">Install Dependencies</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Install Homebrew (if not installed)</span>
+/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="c1"># Install ccache (optional but recommended)</span>
+brew<span class="w"> </span>install<span class="w"> </span>ccache
+
+<span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SyntheticAutonomicMind/SAM.git
+<span class="nb">cd</span><span class="w"> </span>SAM
+
+<span class="c1"># Initialize submodules (llama.cpp, etc.)</span>
+git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+</code></pre></div>
+
+<h3 id="configure-xcode">Configure Xcode</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Select Xcode command line tools</span>
+sudo<span class="w"> </span>xcode-select<span class="w"> </span>--switch<span class="w"> </span>/Applications/Xcode.app/Contents/Developer
+
+<span class="c1"># Accept license if needed</span>
+sudo<span class="w"> </span>xcodebuild<span class="w"> </span>-license<span class="w"> </span>accept
+</code></pre></div>
+
+<h3 id="recommended-development-tools">Recommended Development Tools</h3>
+<h4 id="clio-command-line-intelligence-orchestrator">CLIO - Command Line Intelligence Orchestrator</h4>
+<p><strong>CLIO is the recommended terminal AI assistant for SAM development.</strong></p>
+<p>CLIO is a terminal-based AI code assistant built by the SAM team specifically for developers who prefer command-line workflows. It's particularly valuable when working on SAM projects.</p>
+<p><strong>Why Use CLIO for SAM Development:</strong>
+- Terminal-native interface complements SAM's GUI
+- Quick file operations, code reviews, and git workflows
+- Custom instructions support (<code>.clio/instructions.md</code>) enforces SAM coding standards automatically
+- Same privacy-first philosophy as SAM
+- Zero dependencies (just Perl 5.20+)
+- Perfect for remote development and SSH sessions</p>
+<p><strong>Quick Install:</strong></p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SyntheticAutonomicMind/CLIO.git
+<span class="nb">cd</span><span class="w"> </span>CLIO
+sudo<span class="w"> </span>./install.sh
+</code></pre></div>
+
+<p><strong>Usage Examples:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Code review</span>
+clio<span class="w"> </span>--new
+:<span class="w"> </span>Review<span class="w"> </span>the<span class="w"> </span>changes<span class="w"> </span><span class="k">in</span><span class="w"> </span>Sources/UserInterface/ChatView.swift
+
+<span class="c1"># Quick refactoring</span>
+clio<span class="w"> </span>--resume
+:<span class="w"> </span>Refactor<span class="w"> </span>this<span class="w"> </span><span class="k">function</span><span class="w"> </span>to<span class="w"> </span>use<span class="w"> </span>async/await<span class="w"> </span>properly
+
+<span class="c1"># Git workflow</span>
+:<span class="w"> </span>Show<span class="w"> </span>git<span class="w"> </span>status<span class="w"> </span>and<span class="w"> </span>create<span class="w"> </span>a<span class="w"> </span>commit<span class="w"> </span><span class="k">for</span><span class="w"> </span>these<span class="w"> </span>changes
+</code></pre></div>
+
+<p><strong>For complete CLIO documentation:</strong> See <a href="clio.html">CLIO Developer Guide</a></p>
+<h4 id="other-useful-tools">Other Useful Tools</h4>
+<p><strong>ccache</strong> - Speeds up Swift compilation:</p>
+<div class="codehilite"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>ccache
+</code></pre></div>
+
+<p><strong>SwiftLint</strong> - Code style enforcement:</p>
+<div class="codehilite"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>swiftlint
+</code></pre></div>
+
+<p><strong>SF Symbols</strong> - Browse Apple's SF Symbols for UI icons:
+- Download from <a href="https://developer.apple.com/sf-symbols/">Apple Developer</a></p>
+<hr />
+<h2 id="building-sam">Building SAM</h2>
+<h3 id="quick-build">Quick Build</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Build debug version (faster, includes debug symbols)</span>
+make<span class="w"> </span>build-debug
+
+<span class="c1"># Run debug build</span>
+open<span class="w"> </span>.build/Build/Products/Debug/SAM.app
+</code></pre></div>
+
+<h3 id="full-build-process">Full Build Process</h3>
+<p>SAM uses a custom Makefile that handles:
+1. Building llama.cpp framework (local GGUF models)
+2. Compiling Metal shaders (MLX support)
+3. Building Swift code
+4. Creating app bundle with frameworks</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Clean previous builds</span>
+make<span class="w"> </span>clean
+
+<span class="c1"># Build llama.cpp framework</span>
+make<span class="w"> </span>llamacpp
+
+<span class="c1"># Build Metal library</span>
+make<span class="w"> </span>metallib
+
+<span class="c1"># Build full debug version</span>
+make<span class="w"> </span>build-debug
+
+<span class="c1"># Or build optimized release version</span>
+make<span class="w"> </span>build-release
+</code></pre></div>
+
+<h3 id="build-output">Build Output</h3>
+<p>After building:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">.build</span><span class="err">/</span>
+<span class="err">└──</span><span class="w"> </span><span class="nf">Build</span><span class="err">/</span>
+<span class="w">    </span><span class="err">└──</span><span class="w"> </span><span class="nf">Products</span><span class="err">/</span>
+<span class="w">        </span><span class="err">├──</span><span class="w"> </span><span class="nf">Debug</span><span class="err">/</span>
+<span class="w">        </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nf">SAM</span><span class="w">                    </span><span class="c1"># Executable</span>
+<span class="w">        </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nf">SAM.app</span><span class="err">/</span><span class="w">               </span><span class="c1"># App bundle</span>
+<span class="w">        </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nf">PackageFrameworks</span><span class="err">/</span><span class="w">     </span><span class="c1"># Dependencies</span>
+<span class="w">        </span><span class="err">└──</span><span class="w"> </span><span class="nf">Release</span><span class="err">/</span>
+<span class="w">            </span><span class="err">└──</span><span class="w"> </span><span class="err">(</span><span class="nf">same</span><span class="w"> </span><span class="no">structure</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="build-targets">Build Targets</h3>
+<p>The Makefile provides several targets:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>make build-debug</code></td>
+<td>Debug build with symbols</td>
+</tr>
+<tr>
+<td><code>make build-release</code></td>
+<td>Optimized release build</td>
+</tr>
+<tr>
+<td><code>make clean</code></td>
+<td>Remove build artifacts</td>
+</tr>
+<tr>
+<td><code>make llamacpp</code></td>
+<td>Build llama.cpp only</td>
+</tr>
+<tr>
+<td><code>make metallib</code></td>
+<td>Build Metal shaders only</td>
+</tr>
+<tr>
+<td><code>make test</code></td>
+<td>Run unit tests</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="project-structure">Project Structure</h2>
+<div class="codehilite"><pre><span></span><code><span class="nx">SAM</span><span class="o">/</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">Sources</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">SAM</span><span class="o">/</span><span class="w">                          </span><span class="err">#</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="nx">Entry</span><span class="w"> </span><span class="nx">Point</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">main</span><span class="p">.</span><span class="nx">swift</span><span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="err">@</span><span class="nx">main</span><span class="w"> </span><span class="nx">entry</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">AppDelegate</span><span class="p">.</span><span class="nx">swift</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="nx">lifecycle</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">SAMCommands</span><span class="p">.</span><span class="nx">swift</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="nx">commands</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">Resources</span><span class="o">/</span><span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="nx">resources</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">UserInterface</span><span class="o">/</span><span class="w">                </span><span class="err">#</span><span class="w"> </span><span class="nx">UI</span><span class="w"> </span><span class="nx">Layer</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">Chat</span><span class="o">/</span><span class="w">                     </span><span class="err">#</span><span class="w"> </span><span class="nx">Chat</span><span class="w"> </span><span class="nx">components</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">ChatWidget</span><span class="p">.</span><span class="nx">swift</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nx">Main</span><span class="w"> </span><span class="nx">chat</span><span class="w"> </span><span class="kd">interface</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">MessageView</span><span class="p">.</span><span class="nx">swift</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nx">Individual</span><span class="w"> </span><span class="nx">messages</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MainWindowView</span><span class="p">.</span><span class="nx">swift</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nx">Main</span><span class="w"> </span><span class="nx">window</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">PreferencesView</span><span class="p">.</span><span class="nx">swift</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nx">Settings</span><span class="w"> </span><span class="nx">UI</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">Help</span><span class="o">/</span><span class="w">                     </span><span class="err">#</span><span class="w"> </span><span class="nx">Help</span><span class="w"> </span><span class="nx">system</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">HelpView</span><span class="p">.</span><span class="nx">swift</span><span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="nx">Help</span><span class="w"> </span><span class="nx">documentation</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">APIFramework</span><span class="o">/</span><span class="w">                 </span><span class="err">#</span><span class="w"> </span><span class="nx">AI</span><span class="w"> </span><span class="nx">Provider</span><span class="w"> </span><span class="nx">Layer</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">AIProvider</span><span class="p">.</span><span class="nx">swift</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">Provider</span><span class="w"> </span><span class="nx">protocol</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">OpenAIProvider</span><span class="p">.</span><span class="nx">swift</span><span class="w">      </span><span class="err">#</span><span class="w"> </span><span class="nx">OpenAI</span><span class="w"> </span><span class="nx">implementation</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">GitHubCopilotProvider</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MLXProvider</span><span class="p">.</span><span class="nx">swift</span><span class="w">         </span><span class="err">#</span><span class="w"> </span><span class="nx">Local</span><span class="w"> </span><span class="nx">MLX</span><span class="w"> </span><span class="nx">models</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">LlamaProvider</span><span class="p">.</span><span class="nx">swift</span><span class="w">       </span><span class="err">#</span><span class="w"> </span><span class="nx">Local</span><span class="w"> </span><span class="nx">GGUF</span><span class="w"> </span><span class="nx">models</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">AgentOrchestrator</span><span class="p">.</span><span class="nx">swift</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="nx">LLM</span><span class="w"> </span><span class="nx">coordination</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">EndpointManager</span><span class="p">.</span><span class="nx">swift</span><span class="w">     </span><span class="err">#</span><span class="w"> </span><span class="nx">Provider</span><span class="w"> </span><span class="nx">management</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">UniversalToolRegistry</span><span class="p">.</span><span class="nx">swift</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Tool</span><span class="w"> </span><span class="nx">registration</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MCPFramework</span><span class="o">/</span><span class="w">                 </span><span class="err">#</span><span class="w"> </span><span class="nx">MCP</span><span class="w"> </span><span class="nx">Tool</span><span class="w"> </span><span class="nx">System</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MCPManager</span><span class="p">.</span><span class="nx">swift</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">MCP</span><span class="w"> </span><span class="nx">protocol</span><span class="w"> </span><span class="nx">manager</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MCPTypes</span><span class="p">.</span><span class="nx">swift</span><span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="nx">MCP</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="nx">types</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">Tools</span><span class="o">/</span><span class="w">                    </span><span class="err">#</span><span class="w"> </span><span class="nx">MCP</span><span class="w"> </span><span class="nx">tool</span><span class="w"> </span><span class="nx">implementations</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="nx">ThinkTool</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="nx">FileOperationsTool</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="nx">TerminalOperationsTool</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="nx">MemoryOperationsTool</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="nx">RunSubagentTool</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">ConversationEngine</span><span class="o">/</span><span class="w">           </span><span class="err">#</span><span class="w"> </span><span class="nx">Conversation</span><span class="w"> </span><span class="nx">Management</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">ConversationManager</span><span class="p">.</span><span class="nx">swift</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Conversation</span><span class="w"> </span><span class="nx">state</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MemoryManager</span><span class="p">.</span><span class="nx">swift</span><span class="w">       </span><span class="err">#</span><span class="w"> </span><span class="nx">Vector</span><span class="w"> </span><span class="nx">memory</span><span class="w"> </span><span class="nx">system</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">YaRNContextProcessor</span><span class="p">.</span><span class="nx">swift</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">Context</span><span class="w"> </span><span class="nx">compression</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">AppleNLEmbeddingGenerator</span><span class="p">.</span><span class="nx">swift</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="mi">512</span><span class="o">-</span><span class="nx">dim</span><span class="w"> </span><span class="nx">embeddings</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">ConfigurationSystem</span><span class="o">/</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">Settings</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="nx">Configuration</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">SystemPromptConfiguration</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">PersonalityManager</span><span class="p">.</span><span class="nx">swift</span><span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="nx">Personality</span><span class="w"> </span><span class="nx">system</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">PersonalityTrait</span><span class="p">.</span><span class="nx">swift</span><span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="nx">Built</span><span class="o">-</span><span class="k">in</span><span class="w"> </span><span class="nx">personalities</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">EndpointConfigurationModels</span><span class="p">.</span><span class="nx">swift</span><span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="nx">ProviderType</span><span class="w"> </span><span class="nx">enum</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MLXIntegration</span><span class="o">/</span><span class="w">               </span><span class="err">#</span><span class="w"> </span><span class="nx">MLX</span><span class="w"> </span><span class="nx">Support</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">AppleMLXAdapter</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">MLXModelCache</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">HuggingFaceAPIClient</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">StableDiffusionIntegration</span><span class="o">/</span><span class="w">   </span><span class="err">#</span><span class="w"> </span><span class="nx">Image</span><span class="w"> </span><span class="nx">Generation</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">SharedData</span><span class="o">/</span><span class="w">                   </span><span class="err">#</span><span class="w"> </span><span class="nx">Shared</span><span class="w"> </span><span class="nx">Topics</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">SharedStorage</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="nx">VoiceFramework</span><span class="o">/</span><span class="w">               </span><span class="err">#</span><span class="w"> </span><span class="nx">Voice</span><span class="w"> </span><span class="nx">Features</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">SpeechRecognitionService</span><span class="p">.</span><span class="nx">swift</span>
+<span class="err">│</span><span class="w">   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">Utilities</span><span class="o">/</span><span class="w">                    </span><span class="err">#</span><span class="w"> </span><span class="nx">Helper</span><span class="w"> </span><span class="nx">utilities</span>
+<span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="o">...</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="kd">external</span><span class="o">/</span>
+<span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="nx">llama</span><span class="p">.</span><span class="nx">cpp</span><span class="o">/</span><span class="w">                    </span><span class="err">#</span><span class="w"> </span><span class="nx">Submodule</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nx">GGUF</span><span class="w"> </span><span class="nx">support</span>
+<span class="err">│</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">Info</span><span class="p">.</span><span class="nx">plist</span><span class="w">                        </span><span class="err">#</span><span class="w"> </span><span class="nx">App</span><span class="w"> </span><span class="nx">metadata</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">Package</span><span class="p">.</span><span class="nx">swift</span><span class="w">                     </span><span class="err">#</span><span class="w"> </span><span class="nx">SPM</span><span class="w"> </span><span class="nx">dependencies</span>
+<span class="err">├──</span><span class="w"> </span><span class="nx">Makefile</span><span class="w">                          </span><span class="err">#</span><span class="w"> </span><span class="nx">Build</span><span class="w"> </span><span class="nx">system</span>
+<span class="err">└──</span><span class="w"> </span><span class="nx">README</span><span class="p">.</span><span class="nx">md</span>
+</code></pre></div>
+
+<hr />
+<h2 id="architecture-overview">Architecture Overview</h2>
+<h3 id="design-principles">Design Principles</h3>
+<p>SAM follows these core principles:</p>
+<ol>
+<li><strong>Protocol-Oriented</strong>: Use protocols for abstractions (AIProvider, ToolService)</li>
+<li><strong>Async/Await</strong>: Modern concurrency throughout</li>
+<li><strong>SwiftUI</strong>: Declarative, reactive UI</li>
+<li><strong>Modular</strong>: Clear separation of concerns</li>
+<li><strong>Testable</strong>: Dependency injection, mockable interfaces</li>
+</ol>
+<h3 id="component-layers">Component Layers</h3>
+<div class="codehilite"><pre><span></span><code>┌─────────────────────────────────────┐
+│        UserInterface Layer          │
+│  (SwiftUI Views, ChatWidget)        │
+└────────────────┬────────────────────┘
+                 │
+┌────────────────▼────────────────────┐
+│      Business Logic Layer           │
+│  (AgentOrchestrator, ToolService)   │
+└────────────────┬────────────────────┘
+                 │
+┌────────────────▼────────────────────┐
+│       Provider Layer                │
+│  (OpenAI, MLX, Copilot)             │
+└────────────────┬────────────────────┘
+                 │
+┌────────────────▼────────────────────┐
+│      Infrastructure Layer           │
+│  (Database, Network)                │
+└─────────────────────────────────────┘
+</code></pre></div>
+
+<h3 id="key-patterns">Key Patterns</h3>
+<p><strong>1. Provider Pattern</strong></p>
+<p>All AI providers implement <code>AIProvider</code> protocol:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">protocol</span><span class="w"> </span><span class="nc">AIProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">sendMessage</span><span class="p">(</span>
+<span class="w">        </span><span class="kc">_</span><span class="w"> </span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">        </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Message</span><span class="p">],</span>
+<span class="w">        </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Tool</span><span class="p">]?,</span>
+<span class="w">        </span><span class="n">stream</span><span class="p">:</span><span class="w"> </span><span class="nb">Bool</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">ChatResponse</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>2. Tool System</strong></p>
+<p>Tools are discovered, registered, and executed dynamically:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">protocol</span><span class="w"> </span><span class="nc">ToolService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">tool</span><span class="p">:</span><span class="w"> </span><span class="n">Tool</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">tool</span><span class="p">:</span><span class="w"> </span><span class="n">ToolCall</span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">ToolResult</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>3. Streaming</strong></p>
+<p>Server-Sent Events (SSE) for real-time responses:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">provider</span><span class="p">.</span><span class="n">streamMessage</span><span class="p">(...)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">await</span><span class="w"> </span><span class="n">updateUI</span><span class="p">(</span><span class="n">with</span><span class="p">:</span><span class="w"> </span><span class="n">chunk</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>4. State Management</strong></p>
+<p>SwiftUI's <code>@State</code>, <code>@StateObject</code>, <code>@EnvironmentObject</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="n">StateObject</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">conversationManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ConversationManager</span><span class="p">()</span>
+<span class="p">@</span><span class="n">State</span><span class="w"> </span><span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">messages</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Message</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[]</span>
+</code></pre></div>
+
+<hr />
+<h2 id="adding-new-features">Adding New Features</h2>
+<h3 id="example-add-a-new-tool">Example: Add a New Tool</h3>
+<p><strong>Step 1: Define Tool</strong></p>
+<p>Create <code>Sources/MCPFramework/Tools/MyNewTool.swift</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">Foundation</span>
+<span class="kd">import</span><span class="w"> </span><span class="nc">Logging</span>
+
+<span class="kd">public</span><span class="w"> </span><span class="kr">final</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">MyNewTool</span><span class="p">:</span><span class="w"> </span><span class="n">MCPTool</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// MARK: - Protocol Conformance</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;my_new_tool&quot;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">description</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Brief description of what the tool does.</span>
+
+<span class="s">    USE FOR:</span>
+<span class="s">    - List the use cases</span>
+
+<span class="s">    PARAMETERS:</span>
+<span class="s">    - param1: Description of first parameter</span>
+<span class="s">    &quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">parameters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s">&quot;param1&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">(</span>
+<span class="w">                </span><span class="n">type</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">string</span><span class="p">,</span>
+<span class="w">                </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;First parameter description&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="kr">required</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">            </span><span class="s">&quot;param2&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">(</span>
+<span class="w">                </span><span class="n">type</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">number</span><span class="p">,</span>
+<span class="w">                </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Optional second parameter&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="kr">required</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// MARK: - Execution</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">logger</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Logger</span><span class="p">(</span><span class="n">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;com.sam.mcp.MyNewTool&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="n">arguments</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="nb">Any</span><span class="p">],</span>
+<span class="w">        </span><span class="n">conversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">ConversationManager</span><span class="p">?,</span>
+<span class="w">        </span><span class="n">conversationId</span><span class="p">:</span><span class="w"> </span><span class="n">UUID</span><span class="p">?</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="c1">// 1. Validate required arguments</span>
+<span class="w">        </span><span class="k">guard</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">param1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">[</span><span class="s">&quot;param1&quot;</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="p">?</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="p">(</span>
+<span class="w">                </span><span class="n">success</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">MCPOutput</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Error: param1 is required&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mimeType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text/plain&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">toolName</span><span class="p">:</span><span class="w"> </span><span class="n">name</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="c1">// 2. Get optional arguments</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">param2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">[</span><span class="s">&quot;param2&quot;</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="p">?</span><span class="w"> </span><span class="nb">Double</span><span class="w"> </span><span class="p">??</span><span class="w"> </span><span class="mf">0.0</span>
+
+<span class="w">        </span><span class="c1">// 3. Perform tool operation</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">processParameters</span><span class="p">(</span><span class="n">param1</span><span class="p">,</span><span class="w"> </span><span class="n">param2</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// 4. Return success result</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="p">(</span>
+<span class="w">            </span><span class="n">success</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">MCPOutput</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">mimeType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text/plain&quot;</span><span class="p">),</span>
+<span class="w">            </span><span class="n">toolName</span><span class="p">:</span><span class="w"> </span><span class="n">name</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">processParameters</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">p1</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="kc">_</span><span class="w"> </span><span class="n">p2</span><span class="p">:</span><span class="w"> </span><span class="nb">Double</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Your tool logic here</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Processed: </span><span class="si">\(</span><span class="n">p1</span><span class="si">)</span><span class="s"> with value </span><span class="si">\(</span><span class="n">p2</span><span class="si">)</span><span class="s">&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Step 2: Register Tool</strong></p>
+<p>In <code>Sources/SAM/main.swift</code>, add the tool registration:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// In the tool registration section</span>
+<span class="n">conversationManager</span><span class="p">.</span><span class="n">mcpManager</span><span class="p">.</span><span class="n">registerTool</span><span class="p">(</span><span class="n">MyNewTool</span><span class="p">(),</span><span class="w"> </span><span class="n">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_new_tool&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Step 3: Build and Test</strong></p>
+<div class="codehilite"><pre><span></span><code>make<span class="w"> </span>build-debug
+<span class="c1"># Test by asking SAM to use your new tool</span>
+</code></pre></div>
+
+<h3 id="example-add-a-new-provider">Example: Add a New Provider</h3>
+<p><strong>Step 1: Create Provider Class</strong></p>
+<p>Create <code>Sources/APIFramework/MyProvider.swift</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">Foundation</span>
+
+<span class="kd">class</span><span class="w"> </span><span class="nc">MyProvider</span><span class="p">:</span><span class="w"> </span><span class="n">AIProvider</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">apiKey</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">baseURL</span><span class="p">:</span><span class="w"> </span><span class="n">URL</span>
+
+<span class="w">    </span><span class="kd">init</span><span class="p">(</span><span class="n">apiKey</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kc">self</span><span class="p">.</span><span class="n">apiKey</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">apiKey</span>
+<span class="w">        </span><span class="kc">self</span><span class="p">.</span><span class="n">baseURL</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">URL</span><span class="p">(</span><span class="n">string</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://api.myprovider.com&quot;</span><span class="p">)</span><span class="o">!</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">sendMessage</span><span class="p">(</span>
+<span class="w">        </span><span class="kc">_</span><span class="w"> </span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">        </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Message</span><span class="p">],</span>
+<span class="w">        </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Tool</span><span class="p">]?,</span>
+<span class="w">        </span><span class="n">stream</span><span class="p">:</span><span class="w"> </span><span class="nb">Bool</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">ChatResponse</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Implement API call</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">request</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">createRequest</span><span class="p">(</span><span class="n">message</span><span class="p">:</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">context</span><span class="p">)</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="w"> </span><span class="kc">_</span><span class="p">)</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">URLSession</span><span class="p">.</span><span class="n">shared</span><span class="p">.</span><span class="n">data</span><span class="p">(</span><span class="k">for</span><span class="p">:</span><span class="w"> </span><span class="n">request</span><span class="p">)</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="n">JSONDecoder</span><span class="p">().</span><span class="n">decode</span><span class="p">(</span><span class="n">ChatResponse</span><span class="p">.</span><span class="kc">self</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">data</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Step 2: Register Provider</strong></p>
+<p>In <code>Sources/ConfigurationSystem/EndpointManager.swift</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">registerProviders</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">register</span><span class="p">(</span><span class="s">&quot;openai&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">OpenAIProvider</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span>
+<span class="w">    </span><span class="n">register</span><span class="p">(</span><span class="s">&quot;copilot&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">GitHubCopilotProvider</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span>
+<span class="w">    </span><span class="n">register</span><span class="p">(</span><span class="s">&quot;myprovider&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">MyProvider</span><span class="p">.</span><span class="kc">self</span><span class="p">)</span><span class="w">  </span><span class="c1">// Add your provider</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Step 3: Add UI Configuration</strong></p>
+<p>In <code>Sources/UserInterface/PreferencesView.swift</code>, add settings UI for your provider.</p>
+<hr />
+<h2 id="creating-custom-tools">Creating Custom Tools</h2>
+<h3 id="tool-lifecycle">Tool Lifecycle</h3>
+<ol>
+<li><strong>Discovery</strong>: Tool registered via <code>MCPManager.registerTool()</code></li>
+<li><strong>Definition</strong>: Tool schema (parameters) sent to LLM</li>
+<li><strong>Execution</strong>: LLM calls tool with arguments</li>
+<li><strong>Result</strong>: Tool returns <code>MCPToolResponse</code> to LLM</li>
+</ol>
+<h3 id="tool-template">Tool Template</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">Foundation</span>
+<span class="kd">import</span><span class="w"> </span><span class="nc">Logging</span>
+
+<span class="c1">/// Custom MCP tool implementation</span>
+<span class="kd">public</span><span class="w"> </span><span class="kr">final</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">MyCustomTool</span><span class="p">:</span><span class="w"> </span><span class="n">MCPTool</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// MARK: - Required Protocol Properties</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;my_custom_tool&quot;</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">description</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">    Brief description of what the tool does.</span>
+
+<span class="s">    USE FOR:</span>
+<span class="s">    - Use case 1</span>
+<span class="s">    - Use case 2</span>
+<span class="s">    &quot;&quot;&quot;</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">parameters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">[</span>
+<span class="w">            </span><span class="s">&quot;arg1&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">(</span>
+<span class="w">                </span><span class="n">type</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">string</span><span class="p">,</span>
+<span class="w">                </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Description of arg1&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="kr">required</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">            </span><span class="p">),</span>
+<span class="w">            </span><span class="s">&quot;arg2&quot;</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">(</span>
+<span class="w">                </span><span class="n">type</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">number</span><span class="p">,</span>
+<span class="w">                </span><span class="n">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Description of arg2&quot;</span><span class="p">,</span>
+<span class="w">                </span><span class="kr">required</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// MARK: - Execution</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">logger</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Logger</span><span class="p">(</span><span class="n">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;com.sam.mcp.MyCustomTool&quot;</span><span class="p">)</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span>
+<span class="w">        </span><span class="n">arguments</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="nb">Any</span><span class="p">],</span>
+<span class="w">        </span><span class="n">conversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">ConversationManager</span><span class="p">?,</span>
+<span class="w">        </span><span class="n">conversationId</span><span class="p">:</span><span class="w"> </span><span class="n">UUID</span><span class="p">?</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="c1">// 1. Validate required arguments</span>
+<span class="w">        </span><span class="k">guard</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">arg1</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">[</span><span class="s">&quot;arg1&quot;</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="p">?</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="p">(</span>
+<span class="w">                </span><span class="n">success</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">MCPOutput</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Error: arg1 is required&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mimeType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text/plain&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">toolName</span><span class="p">:</span><span class="w"> </span><span class="n">name</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">arg2</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">arguments</span><span class="p">[</span><span class="s">&quot;arg2&quot;</span><span class="p">]</span><span class="w"> </span><span class="k">as</span><span class="p">?</span><span class="w"> </span><span class="nb">Double</span><span class="w"> </span><span class="p">??</span><span class="w"> </span><span class="mf">0.0</span>
+
+<span class="w">        </span><span class="c1">// 2. Perform tool operation</span>
+<span class="w">        </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">performOperation</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span><span class="w"> </span><span class="n">arg2</span><span class="p">)</span>
+
+<span class="w">            </span><span class="c1">// 3. Return success result</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="p">(</span>
+<span class="w">                </span><span class="n">success</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                </span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">MCPOutput</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="n">mimeType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text/plain&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">toolName</span><span class="p">:</span><span class="w"> </span><span class="n">name</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// 4. Return error result</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">MCPToolResponse</span><span class="p">(</span>
+<span class="w">                </span><span class="n">success</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                </span><span class="n">output</span><span class="p">:</span><span class="w"> </span><span class="n">MCPOutput</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Error: </span><span class="se">\\</span><span class="s">(error.localizedDescription)&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mimeType</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;text/plain&quot;</span><span class="p">),</span>
+<span class="w">                </span><span class="n">toolName</span><span class="p">:</span><span class="w"> </span><span class="n">name</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="c1">// MARK: - Helper Methods</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">performOperation</span><span class="p">(</span>
+<span class="w">        </span><span class="kc">_</span><span class="w"> </span><span class="n">arg1</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span>
+<span class="w">        </span><span class="kc">_</span><span class="w"> </span><span class="n">arg2</span><span class="p">:</span><span class="w"> </span><span class="nb">Double</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Your tool logic here</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;Result&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="tool-best-practices">Tool Best Practices</h3>
+<ol>
+<li><strong>Clear Descriptions</strong>: Help LLM understand when to use tool</li>
+<li><strong>Validate Inputs</strong>: Check arguments before execution</li>
+<li><strong>Error Handling</strong>: Return meaningful error messages</li>
+<li><strong>Async Operations</strong>: Use <code>async/await</code> for network/file I/O</li>
+<li><strong>Safety</strong>: Validate dangerous operations (terminal, file writes)</li>
+</ol>
+<hr />
+<h2 id="testing">Testing</h2>
+<h3 id="unit-tests">Unit Tests</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Run all tests</span>
+make<span class="w"> </span><span class="nb">test</span>
+
+<span class="c1"># Run specific test file</span>
+swift<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--filter<span class="w"> </span>MyToolTests
+
+<span class="c1"># Run with coverage</span>
+swift<span class="w"> </span><span class="nb">test</span><span class="w"> </span>--enable-code-coverage
+</code></pre></div>
+
+<h3 id="writing-tests">Writing Tests</h3>
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">XCTest</span>
+<span class="p">@</span><span class="n">testable</span><span class="w"> </span><span class="kd">import</span><span class="w"> </span><span class="nc">SAM</span>
+
+<span class="kr">final</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">MyFeatureTests</span><span class="p">:</span><span class="w"> </span><span class="n">XCTestCase</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">sut</span><span class="p">:</span><span class="w"> </span><span class="n">MyFeature</span><span class="p">!</span>
+
+<span class="w">    </span><span class="kr">override</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">setUp</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kc">super</span><span class="p">.</span><span class="n">setUp</span><span class="p">()</span>
+<span class="w">        </span><span class="n">sut</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MyFeature</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kr">override</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">tearDown</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">sut</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="kc">nil</span>
+<span class="w">        </span><span class="kc">super</span><span class="p">.</span><span class="n">tearDown</span><span class="p">()</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">testFeatureBehavior</span><span class="p">()</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Given</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">input</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;test&quot;</span>
+
+<span class="w">        </span><span class="c1">// When</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">sut</span><span class="p">.</span><span class="n">process</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+
+<span class="w">        </span><span class="c1">// Then</span>
+<span class="w">        </span><span class="n">XCTAssertEqual</span><span class="p">(</span><span class="n">result</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;expected&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="integration-tests">Integration Tests</h3>
+<p>Test full workflows:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">testFullChatFlow</span><span class="p">()</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Create conversation</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Conversation</span><span class="p">()</span>
+
+<span class="w">    </span><span class="c1">// Send message</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">provider</span><span class="p">.</span><span class="n">sendMessage</span><span class="p">(</span>
+<span class="w">        </span><span class="s">&quot;Hello&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+<span class="w">        </span><span class="n">tools</span><span class="p">:</span><span class="w"> </span><span class="kc">nil</span><span class="p">,</span>
+<span class="w">        </span><span class="n">stream</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="w">    </span><span class="c1">// Verify response</span>
+<span class="w">    </span><span class="n">XCTAssertFalse</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">content</span><span class="p">.</span><span class="bp">isEmpty</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="debugging">Debugging</h2>
+<h3 id="xcode-debugging">Xcode Debugging</h3>
+<ol>
+<li><strong>Breakpoints</strong>: Click line number in Xcode</li>
+<li><strong>LLDB</strong>: Use <code>po</code> command to inspect variables</li>
+<li><strong>View Hierarchy</strong>: Debug → View Debugging → Capture View Hierarchy</li>
+</ol>
+<h3 id="console-logging">Console Logging</h3>
+<p>SAM uses structured logging:</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">import</span><span class="w"> </span><span class="nc">os</span><span class="p">.</span><span class="nc">log</span>
+
+<span class="kd">let</span><span class="w"> </span><span class="nv">logger</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">Logger</span><span class="p">(</span><span class="n">subsystem</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;com.sam&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">category</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MyFeature&quot;</span><span class="p">)</span>
+
+<span class="n">logger</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Debug message&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Info message&quot;</span><span class="p">)</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Error: </span><span class="si">\(</span><span class="n">error</span><span class="p">.</span><span class="n">localizedDescription</span><span class="si">)</span><span class="s">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>View logs:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Console.app → Search &quot;SAM&quot;</span>
+<span class="c1"># Or use log command:</span>
+log<span class="w"> </span>stream<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;subsystem == &quot;com.sam&quot;&#39;</span><span class="w"> </span>--level<span class="w"> </span>debug
+</code></pre></div>
+
+<h3 id="network-debugging">Network Debugging</h3>
+<p>Use Charles Proxy or Proxyman to inspect HTTP/HTTPS traffic:</p>
+<ol>
+<li>Install proxy tool</li>
+<li>Configure macOS to use proxy</li>
+<li>Install SSL certificate</li>
+<li>Monitor SAM's API calls</li>
+</ol>
+<hr />
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="profiling">Profiling</h3>
+<p>Use Xcode Instruments:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Build with profiling enabled</span>
+xcodebuild<span class="w"> </span>-scheme<span class="w"> </span>SAM<span class="w"> </span>-configuration<span class="w"> </span>Release
+
+<span class="c1"># Launch Instruments</span>
+open<span class="w"> </span>/Applications/Xcode.app/Contents/Applications/Instruments.app
+</code></pre></div>
+
+<p>Key instruments:
+- <strong>Time Profiler</strong>: CPU usage
+- <strong>Allocations</strong>: Memory usage
+- <strong>Leaks</strong>: Memory leaks
+- <strong>Network</strong>: Network activity</p>
+<h3 id="optimization-tips">Optimization Tips</h3>
+<p><strong>1. Async/Await</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// ❌ Bad: Synchronous</span>
+<span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">expensiveOperation</span><span class="p">()</span>
+
+<span class="c1">// ✅ Good: Asynchronous</span>
+<span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">Task</span><span class="p">.</span><span class="n">detached</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">expensiveOperation</span><span class="p">()</span>
+<span class="p">}.</span><span class="n">value</span>
+</code></pre></div>
+
+<p><strong>2. Lazy Loading</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// ❌ Bad: Load all upfront</span>
+<span class="kd">let</span><span class="w"> </span><span class="nv">models</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">loadAllModels</span><span class="p">()</span>
+
+<span class="c1">// ✅ Good: Lazy load</span>
+<span class="kr">lazy</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">models</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">loadAllModels</span><span class="p">()</span><span class="w"> </span><span class="p">}()</span>
+</code></pre></div>
+
+<p><strong>3. Caching</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Cache expensive computations</span>
+<span class="kd">private</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">cache</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="n">Result</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="p">[:]</span>
+
+<span class="kd">func</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">Result</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">cached</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">cache</span><span class="p">[</span><span class="n">input</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">cached</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">result</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">expensiveComputation</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
+<span class="w">    </span><span class="n">cache</span><span class="p">[</span><span class="n">input</span><span class="p">]</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">result</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<hr />
+<h2 id="release-process">Release Process</h2>
+<h3 id="version-numbering">Version Numbering</h3>
+<p>SAM uses semantic versioning: <code>MAJOR.MINOR.PATCH</code></p>
+<ul>
+<li><strong>MAJOR</strong>: Breaking changes</li>
+<li><strong>MINOR</strong>: New features, backwards compatible</li>
+<li><strong>PATCH</strong>: Bug fixes</li>
+</ul>
+<h3 id="creating-a-release">Creating a Release</h3>
+<p><strong>1. Update Version</strong></p>
+<p>Edit <code>Info.plist</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;key&gt;</span>CFBundleShortVersionString<span class="nt">&lt;/key&gt;</span>
+<span class="nt">&lt;string&gt;</span>1.0.25<span class="nt">&lt;/string&gt;</span>
+</code></pre></div>
+
+<p><strong>2. Build Release</strong></p>
+<div class="codehilite"><pre><span></span><code>make<span class="w"> </span>build-release
+</code></pre></div>
+
+<p><strong>3. Create Archive</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>.build/Build/Products/Release
+zip<span class="w"> </span>-r<span class="w"> </span>SAM.app.zip<span class="w"> </span>SAM.app
+</code></pre></div>
+
+<p><strong>4. Sign Archive</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Sign with Sparkle EdDSA key</span>
+./bin/sign_update<span class="w"> </span>SAM.app.zip
+
+<span class="c1"># Output:</span>
+<span class="c1"># sparkle:edSignature=&quot;...&quot; length=&quot;...&quot;</span>
+</code></pre></div>
+
+<p><strong>5. Update Appcast</strong></p>
+<p>Edit <code>appcast.xml</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;item&gt;</span>
+<span class="w">    </span><span class="nt">&lt;title&gt;</span>SAM<span class="w"> </span>1.0.25<span class="nt">&lt;/title&gt;</span>
+<span class="w">    </span><span class="nt">&lt;sparkle:version&gt;</span>1.0.25<span class="nt">&lt;/sparkle:version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;sparkle:edSignature&gt;</span>PASTE_SIGNATURE_HERE<span class="nt">&lt;/sparkle:edSignature&gt;</span>
+<span class="w">    </span><span class="nt">&lt;enclosure</span><span class="w"> </span><span class="na">url=</span><span class="s">&quot;https://github.com/SyntheticAutonomicMind/SAM/releases/download/v1.0.25/SAM.app.zip&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/item&gt;</span>
+</code></pre></div>
+
+<p><strong>6. Create GitHub Release</strong></p>
+<div class="codehilite"><pre><span></span><code>gh<span class="w"> </span>release<span class="w"> </span>create<span class="w"> </span>v1.0.25<span class="w"> </span>SAM.app.zip<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--title<span class="w"> </span><span class="s2">&quot;SAM 1.0.25&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--notes<span class="w"> </span><span class="s2">&quot;Release notes here&quot;</span>
+</code></pre></div>
+
+<p><strong>7. Commit Appcast</strong></p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>appcast.xml
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;chore: Update appcast for v1.0.25&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+</code></pre></div>
+
+<hr />
+<h2 id="advanced-topics">Advanced Topics</h2>
+<h3 id="metal-shaders">Metal Shaders</h3>
+<p>SAM uses Metal for GPU acceleration (MLX):</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Compile Metal shaders</span>
+xcrun<span class="w"> </span>metal<span class="w"> </span>-c<span class="w"> </span>shader.metal<span class="w"> </span>-o<span class="w"> </span>shader.air
+xcrun<span class="w"> </span>metallib<span class="w"> </span>shader.air<span class="w"> </span>-o<span class="w"> </span>default.metallib
+</code></pre></div>
+
+<h3 id="code-signing">Code Signing</h3>
+<p>For distribution outside App Store:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Sign app bundle</span>
+codesign<span class="w"> </span>--deep<span class="w"> </span>--force<span class="w"> </span>--verify<span class="w"> </span>--verbose<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--sign<span class="w"> </span><span class="s2">&quot;Developer ID Application: YOUR NAME&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>SAM.app
+
+<span class="c1"># Verify signature</span>
+codesign<span class="w"> </span>--verify<span class="w"> </span>--deep<span class="w"> </span>--strict<span class="w"> </span>--verbose<span class="o">=</span><span class="m">2</span><span class="w"> </span>SAM.app
+</code></pre></div>
+
+<h3 id="notarization">Notarization</h3>
+<p>Required for macOS 10.15+:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create archive</span>
+ditto<span class="w"> </span>-c<span class="w"> </span>-k<span class="w"> </span>--keepParent<span class="w"> </span>SAM.app<span class="w"> </span>SAM.zip
+
+<span class="c1"># Submit for notarization</span>
+xcrun<span class="w"> </span>notarytool<span class="w"> </span>submit<span class="w"> </span>SAM.zip<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--apple-id<span class="w"> </span>your@email.com<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--team-id<span class="w"> </span>TEAMID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--password<span class="w"> </span><span class="s2">&quot;app-specific-password&quot;</span>
+
+<span class="c1"># Staple ticket</span>
+xcrun<span class="w"> </span>stapler<span class="w"> </span>staple<span class="w"> </span>SAM.app
+</code></pre></div>
+
+<hr />
+<h2 id="resources">Resources</h2>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li><a href="https://swift.org/documentation/">Swift.org</a></li>
+<li><a href="https://developer.apple.com/tutorials/swiftui">SwiftUI Tutorials</a></li>
+<li><a href="https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html">Async/Await Guide</a></li>
+</ul>
+<h3 id="tools">Tools</h3>
+<ul>
+<li><strong>Xcode</strong>: IDE for Swift development</li>
+<li><strong>Swift Package Manager</strong>: Dependency management</li>
+<li><strong>Instruments</strong>: Performance profiling</li>
+<li><strong>lldb</strong>: Debugger</li>
+</ul>
+<h3 id="community">Community</h3>
+<ul>
+<li><a href="https://forums.swift.org/">Swift Forums</a></li>
+<li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions">GitHub Discussions</a></li>
+<li><a href="contributing.html">Contributing Guide</a></li>
+</ul>
+<hr />
+<p><strong>Happy Developing! 🚀</strong></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../../docs/README.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

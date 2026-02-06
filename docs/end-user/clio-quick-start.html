@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with CLIO | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Getting Started with CLIO">
+    <link rel="stylesheet" href="../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../#features">Features</a>
+                <a href="../../docs/README.html">Docs</a>
+                <a href="../../#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../../docs/README.html">Documentation</a> / Clio Quick Start
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="getting-started-with-clio">Getting Started with CLIO</h1>
+<p><strong>Your Terminal AI Assistant for Quick Development Tasks</strong></p>
+<hr />
+<h2 id="what-is-clio">What is CLIO?</h2>
+<p><strong>CLIO (Command Line Intelligence Orchestrator)</strong> is an AI assistant that runs entirely in your terminal. If you're comfortable with the command line and want AI help without leaving it, CLIO is for you.</p>
+<p>CLIO is made by the same team that created SAM and shares the same privacy-first philosophy: your code and conversations stay on your machine.</p>
+<h3 id="why-use-clio">Why Use CLIO?</h3>
+<ul>
+<li><strong>Terminal-native</strong> - No browser tabs or GUI windows, just your terminal</li>
+<li><strong>Lightweight</strong> - Requires only Perl (included on macOS and most Linux)</li>
+<li><strong>Privacy-focused</strong> - Everything stored locally on your machine</li>
+<li><strong>Real operations</strong> - CLIO actually reads files, runs commands, and uses git</li>
+<li><strong>Persistent sessions</strong> - Pick up where you left off anytime</li>
+<li><strong>Works everywhere</strong> - macOS, Linux, remote servers via SSH</li>
+</ul>
+<h3 id="clio-vs-sam-when-to-use-which">CLIO vs SAM: When to Use Which?</h3>
+<p><strong>Use CLIO for:</strong>
+- Quick code reviews
+- File operations and searching
+- Git workflow (commit, branch, diff)
+- Running tests and build commands
+- Terminal-focused development
+- Working on remote servers</p>
+<p><strong>Use SAM for:</strong>
+- Complex multi-day projects
+- Document research and semantic search
+- Training custom models
+- Image generation
+- Multi-conversation collaboration (Shared Topics)
+- Visual project management</p>
+<p><strong>Use both together</strong> for the best development experience!</p>
+<hr />
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="installation">Installation</h3>
+<p><strong>1. Clone and install:</strong></p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SyntheticAutonomicMind/CLIO.git
+<span class="nb">cd</span><span class="w"> </span>CLIO
+sudo<span class="w"> </span>./install.sh
+</code></pre></div>
+
+<p><strong>2. Verify it works:</strong></p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--help
+</code></pre></div>
+
+<h3 id="first-time-setup">First-Time Setup</h3>
+<p><strong>GitHub Copilot</strong> (Recommended)</p>
+<p>Start CLIO and login:</p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--new
+:<span class="w"> </span>/login
+</code></pre></div>
+
+<p>Follow the browser prompts to authorize. That's it!</p>
+<p><strong>Other Providers</strong></p>
+<p>If you prefer OpenAI or another provider:</p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--new
+:<span class="w"> </span>/api<span class="w"> </span>provider<span class="w"> </span>openai
+:<span class="w"> </span>/api<span class="w"> </span>key<span class="w"> </span>YOUR_API_KEY
+:<span class="w"> </span>/config<span class="w"> </span>save
+</code></pre></div>
+
+<hr />
+<h2 id="using-clio">Using CLIO</h2>
+<h3 id="start-a-conversation">Start a Conversation</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># New conversation</span>
+clio<span class="w"> </span>--new
+
+<span class="c1"># Resume last session</span>
+clio<span class="w"> </span>--resume
+</code></pre></div>
+
+<h3 id="ask-questions">Ask Questions</h3>
+<p>Just type naturally:</p>
+<div class="codehilite"><pre><span></span><code>: What files are in this directory?
+: Read main.py and explain what it does
+: Find all TODO comments in the project
+: What git branches exist?
+</code></pre></div>
+
+<h3 id="give-instructions">Give Instructions</h3>
+<div class="codehilite"><pre><span></span><code>: Create a new Python script called process_data.py
+: Fix the syntax error in src/utils.py
+: Run the test suite and show results
+: Commit these changes with a descriptive message
+</code></pre></div>
+
+<h3 id="exit">Exit</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="o">/</span><span class="k">exit</span>
+</code></pre></div>
+
+<p>Or press <code>Ctrl+D</code></p>
+<hr />
+<h2 id="essential-commands">Essential Commands</h2>
+<h3 id="session-management">Session Management</h3>
+<ul>
+<li><code>/exit</code> - End session</li>
+<li><code>/new</code> - Start fresh conversation</li>
+<li><code>/clear</code> - Clear screen</li>
+</ul>
+<h3 id="configuration">Configuration</h3>
+<ul>
+<li><code>/api provider [name]</code> - Change AI provider</li>
+<li><code>/api key [key]</code> - Set API key</li>
+<li><code>/config show</code> - Show current settings</li>
+<li><code>/config save</code> - Save settings</li>
+</ul>
+<h3 id="help">Help</h3>
+<ul>
+<li><code>/help</code> - Show all commands</li>
+<li><code>/version</code> - Show CLIO version</li>
+</ul>
+<hr />
+<h2 id="what-clio-can-do">What CLIO Can Do</h2>
+<h3 id="read-analyze-code">Read &amp; Analyze Code</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="nv">Read</span><span class="w"> </span><span class="nv">src</span><span class="o">/</span><span class="nv">database</span>.<span class="nv">py</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">explain</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">main</span><span class="w"> </span><span class="nv">class</span>
+:<span class="w"> </span><span class="nv">What</span><span class="w"> </span><span class="nv">does</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">authenticate</span><span class="w"> </span><span class="nv">function</span><span class="w"> </span><span class="k">do</span>?
+:<span class="w"> </span><span class="nv">Are</span><span class="w"> </span><span class="nv">there</span><span class="w"> </span><span class="nv">any</span><span class="w"> </span><span class="nv">security</span><span class="w"> </span><span class="nv">issues</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">auth</span>.<span class="nv">py</span>?
+</code></pre></div>
+
+<h3 id="edit-files">Edit Files</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">:</span><span class="w"> </span><span class="nx">Add</span><span class="w"> </span><span class="nx">error</span><span class="w"> </span><span class="nx">handling</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">login</span><span class="w"> </span><span class="nx">function</span>
+<span class="p">:</span><span class="w"> </span><span class="nx">Refactor</span><span class="w"> </span><span class="nx">utils</span><span class="p">.</span><span class="nx">py</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">modern</span><span class="w"> </span><span class="nx">Python</span><span class="w"> </span><span class="nx">syntax</span>
+<span class="p">:</span><span class="w"> </span><span class="nx">Add</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">hints</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">functions</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">main</span><span class="p">.</span><span class="nx">py</span>
+</code></pre></div>
+
+<h3 id="search-find">Search &amp; Find</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">:</span> <span class="n">Find</span> <span class="nb">all</span> <span class="n">files</span> <span class="n">that</span> <span class="kn">import</span><span class="w"> </span><span class="s1">&#39;requests&#39;</span>
+<span class="p">:</span> <span class="n">Search</span> <span class="k">for</span> <span class="n">database</span> <span class="n">connection</span> <span class="n">code</span>
+<span class="p">:</span> <span class="n">List</span> <span class="nb">all</span> <span class="n">Python</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">project</span>
+</code></pre></div>
+
+<h3 id="git-operations">Git Operations</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="k">Show</span><span class="w"> </span><span class="nv">git</span><span class="w"> </span><span class="nv">status</span>
+:<span class="w"> </span><span class="nv">What</span><span class="w"> </span><span class="nv">changed</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">last</span><span class="w"> </span><span class="nv">commit</span>?
+:<span class="w"> </span><span class="nv">Create</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">branch</span><span class="w"> </span><span class="nv">called</span><span class="w"> </span><span class="nv">feature</span><span class="o">/</span><span class="nv">api</span><span class="o">-</span><span class="nv">v2</span>
+:<span class="w"> </span><span class="nv">Commit</span><span class="w"> </span><span class="nv">these</span><span class="w"> </span><span class="nv">changes</span>
+</code></pre></div>
+
+<h3 id="run-commands">Run Commands</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="nv">Run</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">test</span><span class="w"> </span><span class="nv">suite</span>
+:<span class="w"> </span><span class="nv">Build</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">project</span>
+:<span class="w"> </span><span class="nv">Check</span><span class="w"> </span><span class="nv">code</span><span class="w"> </span><span class="nv">style</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">flake8</span>
+:<span class="w"> </span><span class="nv">Run</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">app</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="k">show</span><span class="w"> </span><span class="nv">output</span>
+</code></pre></div>
+
+<h3 id="get-help">Get Help</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="nv">How</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">I</span><span class="w"> </span><span class="nv">use</span><span class="w"> </span><span class="nv">asyncio</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Python</span>?
+:<span class="w"> </span><span class="nv">What</span><span class="err">&#39;s the best way to handle CSV files?</span>
+<span class="err">: Explain decorators with an example</span>
+</code></pre></div>
+
+<hr />
+<h2 id="example-session">Example Session</h2>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>clio<span class="w"> </span>--new
+
+:<span class="w"> </span>Read<span class="w"> </span>the<span class="w"> </span>README.md<span class="w"> </span>file
+
+SYSTEM:<span class="w"> </span><span class="o">[</span>file_operations<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Reading<span class="w"> </span>README.md<span class="w"> </span><span class="o">(</span><span class="m">156</span><span class="w"> </span>lines<span class="o">)</span>
+
+CLIO:<span class="w"> </span>I<span class="s1">&#39;ve read your README. This is a Python project for data </span>
+<span class="s1">processing with CSV files. The main entry point is in main.py and </span>
+<span class="s1">it uses pandas for data manipulation.</span>
+
+<span class="s1">Would you like me to explain any specific part?</span>
+
+<span class="s1">: Are there any tests?</span>
+
+<span class="s1">CLIO: I can see a tests/ directory. Let me check what&#39;</span>s<span class="w"> </span>there.
+
+SYSTEM:<span class="w"> </span><span class="o">[</span>file_operations<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Listing<span class="w"> </span>tests/<span class="w"> </span>directory<span class="w"> </span><span class="o">(</span><span class="m">4</span><span class="w"> </span>files<span class="o">)</span>
+
+CLIO:<span class="w"> </span>Yes,<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span><span class="nb">test</span><span class="w"> </span>files:
+-<span class="w"> </span>test_main.py
+-<span class="w"> </span>test_utils.py<span class="w">  </span>
+-<span class="w"> </span>test_data_processor.py
+-<span class="w"> </span>conftest.py
+
+Would<span class="w"> </span>you<span class="w"> </span>like<span class="w"> </span>me<span class="w"> </span>to<span class="w"> </span>run<span class="w"> </span>the<span class="w"> </span><span class="nb">test</span><span class="w"> </span>suite?
+
+:<span class="w"> </span>Yes,<span class="w"> </span>run<span class="w"> </span>the<span class="w"> </span>tests
+
+SYSTEM:<span class="w"> </span><span class="o">[</span>terminal_operations<span class="o">]</span><span class="w"> </span>-<span class="w"> </span>Executing:<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>tests/
+
+CLIO:<span class="w"> </span>All<span class="w"> </span>tests<span class="w"> </span>passed!<span class="w"> </span>✓
+
+<span class="m">8</span><span class="w"> </span>tests<span class="w"> </span><span class="k">in</span><span class="w"> </span>total:
+-<span class="w"> </span>test_main.py:<span class="w"> </span><span class="m">3</span><span class="w"> </span>passed
+-<span class="w"> </span>test_utils.py:<span class="w"> </span><span class="m">2</span><span class="w"> </span>passed
+-<span class="w"> </span>test_data_processor.py:<span class="w"> </span><span class="m">3</span><span class="w"> </span>passed
+
+The<span class="w"> </span><span class="nb">test</span><span class="w"> </span>coverage<span class="w"> </span>looks<span class="w"> </span>good<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>core<span class="w"> </span>functionality.
+
+:<span class="w"> </span>/exit
+
+Session<span class="w"> </span>saved<span class="w"> </span>to<span class="w"> </span>~/.clio/sessions/sess_20260118_143052
+</code></pre></div>
+
+<hr />
+<h2 id="converting-from-other-ai-coding-assistants">Converting from Other AI Coding Assistants</h2>
+<p><strong>Switching from GitHub Copilot, Cursor, or another AI assistant?</strong> CLIO can help you convert your existing project instructions!</p>
+<h3 id="the-migration-process">The Migration Process</h3>
+<p>Many AI coding tools use custom instruction files to guide their behavior:
+- <strong>GitHub Copilot</strong>: <code>.github/copilot-instructions.md</code>
+- <strong>Cursor</strong>: <code>.cursor/instructions.md</code> or <code>.cursorrules</code>
+- <strong>Aider</strong>: <code>.aider.conf.yml</code></p>
+<p>CLIO uses <code>.clio/instructions.md</code> for project-specific guidance. The good news? CLIO can convert your existing instructions automatically!</p>
+<h3 id="step-by-step-conversion">Step-by-Step Conversion</h3>
+<p><strong>1. Navigate to your project:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/your-project
+</code></pre></div>
+
+<p><strong>2. Start CLIO and configure it:</strong></p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--new
+:<span class="w"> </span>/login<span class="w">    </span><span class="c1"># Or configure your preferred provider</span>
+</code></pre></div>
+
+<p><strong>3. Ask CLIO to study and convert:</strong></p>
+<p>Here's the prompt to use:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Please</span><span class="w"> </span><span class="nv">study</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">project</span>,<span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">well</span><span class="w"> </span><span class="nv">as</span><span class="w"> </span><span class="nv">CLIO</span><span class="err">&#39;s instructions </span>
+<span class="err">(https://raw.githubusercontent.com/SyntheticAutonomicMind/CLIO/refs/heads/main/.clio/instructions.md) </span>
+<span class="err">and the current .github/copilot-instructions.md file, then develop a set of </span>
+<span class="err">instructions that CLIO can use. Save them to .clio/instructions.md</span>
+</code></pre></div>
+
+<p><strong>4. Let CLIO do the work:</strong></p>
+<p>CLIO will:
+- Read your existing instruction files
+- Study the project structure
+- Understand CLIO's instruction format
+- Create a converted <code>.clio/instructions.md</code> file
+- Save it in the right location</p>
+<p><strong>5. Review and refine:</strong></p>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="k">Show</span><span class="w"> </span><span class="nv">me</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">created</span>
+:<span class="w"> </span><span class="nv">Let</span><span class="err">&#39;s add a section about our testing workflow</span>
+<span class="err">: Update it to mention our deployment process</span>
+</code></pre></div>
+
+<h3 id="what-gets-converted">What Gets Converted?</h3>
+<p>CLIO will translate:
+- <strong>Code style guidelines</strong> → CLIO formatting rules
+- <strong>Project structure</strong> → File navigation guidance
+- <strong>Workflows</strong> → CLIO-compatible procedures
+- <strong>Terminology</strong> → Project-specific vocabulary
+- <strong>Common tasks</strong> → CLIO command examples</p>
+<h3 id="real-example-this-website">Real Example: This Website</h3>
+<p>This SAM website project was converted from Copilot instructions:</p>
+<p><strong>Before (Copilot):</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="gh"># GitHub Copilot Instructions for SAM Website</span>
+
+When working on documentation:
+<span class="k">-</span><span class="w"> </span>Verify all technical facts against SAM source code
+<span class="k">-</span><span class="w"> </span>Use lowercase-with-hyphens.md for filenames
+<span class="k">-</span><span class="w"> </span>Test locally with python3 -m http.server 8000
+</code></pre></div>
+
+<p><strong>After (CLIO):</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="gh"># CLIO Project Instructions - SAM Website</span>
+
+<span class="gs">**CRITICAL: READ FIRST BEFORE ANY WORK**</span>
+
+<span class="gu">### Before Editing Any Documentation</span>
+
+<span class="k">1.</span> <span class="gs">**Understand the project:**</span>
+   cat README.md
+   cat .github/copilot-instructions.md
+
+<span class="k">2.</span> <span class="gs">**Know the standards:**</span>
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>All files: lowercase-with-hyphens.md
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Verify against SAM source code
+<span class="w">   </span><span class="k">-</span><span class="w"> </span>Test locally: python3 -m http.server 8000
+</code></pre></div>
+
+<p>CLIO's format is more structured and action-oriented for terminal use.</p>
+<h3 id="benefits-of-converting">Benefits of Converting</h3>
+<p>✅ <strong>Keep your project knowledge</strong> - Don't lose institutional knowledge<br />
+✅ <strong>Immediate productivity</strong> - CLIO knows your project from day one<br />
+✅ <strong>Consistency</strong> - Same standards across AI tools<br />
+✅ <strong>Easy updates</strong> - Edit one file for all CLIO sessions  </p>
+<h3 id="pro-tips">Pro Tips</h3>
+<p><strong>Start with what you have:</strong>
+Even partial instructions help CLIO understand your project better than starting from scratch.</p>
+<p><strong>Iterate:</strong>
+After conversion, use CLIO for a few tasks and refine the instructions based on what works.</p>
+<p><strong>Keep both:</strong>
+You can maintain both Copilot and CLIO instructions if you use multiple tools.</p>
+<p><strong>Update together:</strong>
+When project standards change, update both instruction files or ask CLIO to sync them.</p>
+<hr />
+<h2 id="tips-for-best-results">Tips for Best Results</h2>
+<h3 id="be-specific">Be Specific</h3>
+<p>❌ "Fix the code"<br />
+✓ "Fix the syntax error in line 42 of main.py"</p>
+<h3 id="use-context">Use Context</h3>
+<p>CLIO remembers the conversation:</p>
+<div class="codehilite"><pre><span></span><code>: Read the main.py file
+: Now add better error handling to that file
+</code></pre></div>
+
+<h3 id="verify-changes">Verify Changes</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span><span class="k">Show</span><span class="w"> </span><span class="nv">me</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">changed</span><span class="w"> </span><span class="nv">before</span><span class="w"> </span><span class="nv">committing</span>
+:<span class="w"> </span><span class="nv">Run</span><span class="w"> </span><span class="nv">tests</span><span class="w"> </span><span class="nv">before</span><span class="w"> </span><span class="nv">we</span><span class="w"> </span><span class="nv">commit</span>
+</code></pre></div>
+
+<h3 id="combine-actions">Combine Actions</h3>
+<div class="codehilite"><pre><span></span><code>: Create a new branch, fix the typo in README, and commit
+</code></pre></div>
+
+<hr />
+<h2 id="configuration_1">Configuration</h2>
+<h3 id="change-themes">Change Themes</h3>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span>/style<span class="w"> </span>list<span class="w">        </span><span class="c1"># See available styles</span>
+:<span class="w"> </span>/style<span class="w"> </span>photon<span class="w">      </span><span class="c1"># Retro BBS style</span>
+:<span class="w"> </span>/theme<span class="w"> </span>compact<span class="w">     </span><span class="c1"># Compact output</span>
+:<span class="w"> </span>/config<span class="w"> </span>save<span class="w">       </span><span class="c1"># Save preferences</span>
+</code></pre></div>
+
+<h3 id="set-custom-session-directory">Set Custom Session Directory</h3>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">CLIO_SESSION_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/clio-sessions&quot;</span>
+</code></pre></div>
+
+<h3 id="debug-mode">Debug Mode</h3>
+<p>See what CLIO is doing:</p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--debug
+</code></pre></div>
+
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="cant-find-clio-modules">"Can't find CLIO modules"</h3>
+<p>Run from the CLIO directory or reinstall:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/CLIO
+./clio
+<span class="c1"># OR</span>
+sudo<span class="w"> </span>./install.sh
+</code></pre></div>
+
+<h3 id="api-key-not-set">"API key not set"</h3>
+<p>Configure your provider:</p>
+<div class="codehilite"><pre><span></span><code>:<span class="w"> </span>/api<span class="w"> </span>key<span class="w"> </span>YOUR_KEY
+:<span class="w"> </span>/config<span class="w"> </span>save
+</code></pre></div>
+
+<h3 id="colors-not-working">Colors not working</h3>
+<p>Set your terminal type:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">TERM</span><span class="o">=</span>xterm-256color
+</code></pre></div>
+
+<h3 id="need-help">Need help?</h3>
+<ul>
+<li>Check <code>/help</code> in CLIO</li>
+<li>Read the full <a href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/docs/USER_GUIDE.html">CLIO User Guide</a></li>
+<li>Visit the <a href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO repository</a></li>
+</ul>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p><strong>For Developers:</strong> Read the complete <a href="../developer/clio.html">CLIO Developer Guide</a> for:
+- Advanced workflows
+- Custom instructions for SAM projects
+- Integration with SAM
+- Session management strategies</p>
+<p><strong>For SAM Users:</strong> Learn how to use CLIO and SAM together:
+- Use SAM for planning and research
+- Use CLIO for implementation
+- Connect CLIO to SAM's API
+- Share context between tools</p>
+<p><strong>Dive Deeper:</strong>
+- <a href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/docs/CUSTOM_INSTRUCTIONS.html">Custom Instructions Guide</a>
+- <a href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/docs/ARCHITECTURE.html">Architecture Documentation</a>
+- <a href="../developer/the-unbroken-method.html">The Unbroken Method</a> - AI collaboration methodology</p>
+<hr />
+<h2 id="welcome-to-clio">Welcome to CLIO!</h2>
+<p>You now have a powerful AI assistant in your terminal. Whether you're fixing bugs, writing new features, or just exploring code, CLIO is ready to help.</p>
+<p>Start your first session:</p>
+<div class="codehilite"><pre><span></span><code>clio<span class="w"> </span>--new
+</code></pre></div>
+
+<p>Happy coding! 🚀</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../../docs/README.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

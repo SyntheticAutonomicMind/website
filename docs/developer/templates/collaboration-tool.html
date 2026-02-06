@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration Tool Scripts | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Collaboration Tool Scripts">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="../../../#features">Features</a>
+                <a href="../../../docs/README.html">Docs</a>
+                <a href="../../../#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../../../docs/README.html">Documentation</a> / Collaboration Tool
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="collaboration-tool-scripts">Collaboration Tool Scripts</h1>
+<p><strong>Programmatic tools for creating checkpoints in your AI collaboration workflow.</strong></p>
+<p>These scripts pause execution for human input, display context clearly, and maintain collaboration flow without breaking the conversation.</p>
+<hr />
+<h2 id="why-use-a-collaboration-tool">Why Use a Collaboration Tool?</h2>
+<p>The collaboration tool is the heart of The Unbroken Method. It:</p>
+<ul>
+<li><strong>Pauses for human input</strong> - Creates natural checkpoints</li>
+<li><strong>Preserves context</strong> - AI stays in the same session</li>
+<li><strong>Enables validation</strong> - Catch issues before they compound</li>
+<li><strong>Creates rhythm</strong> - Investigation → Checkpoint → Implementation</li>
+</ul>
+<p>Without a tool, you're limited to chat responses, which break flow and can lose context.</p>
+<hr />
+<h2 id="bash-implementation">Bash Implementation</h2>
+<h3 id="basic-version">Basic Version</h3>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># collaboration.sh - Simple checkpoint tool</span>
+<span class="c1"># Usage: ./collaboration.sh &quot;Your message here&quot;</span>
+
+<span class="nv">MESSAGE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">Press</span><span class="p"> Enter to continue</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CHECKPOINT&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MESSAGE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">read</span><span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Response: &quot;</span><span class="w"> </span>response
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$response</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;User response: </span><span class="nv">$response</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Continuing...&quot;</span>
+</code></pre></div>
+
+<h3 id="enhanced-version-with-colors">Enhanced Version (with colors)</h3>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># collaboration.sh - Enhanced checkpoint tool with colors</span>
+<span class="c1"># Usage: ./collaboration.sh &quot;Your message here&quot;</span>
+
+<span class="c1"># Colors</span>
+<span class="nv">BLUE</span><span class="o">=</span><span class="s1">&#39;\033[0;34m&#39;</span>
+<span class="nv">GREEN</span><span class="o">=</span><span class="s1">&#39;\033[0;32m&#39;</span>
+<span class="nv">YELLOW</span><span class="o">=</span><span class="s1">&#39;\033[1;33m&#39;</span>
+<span class="nv">NC</span><span class="o">=</span><span class="s1">&#39;\033[0m&#39;</span><span class="w"> </span><span class="c1"># No Color</span>
+
+<span class="nv">MESSAGE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">Press</span><span class="p"> Enter to continue</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">BLUE</span><span class="si">}</span><span class="s2">🤝 COLLABORATION CHECKPOINT</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MESSAGE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span>-en<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">GREEN</span><span class="si">}</span><span class="s2">Enter your response: </span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>response
+
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$response</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">YELLOW</span><span class="si">}</span><span class="s2">User response:</span><span class="si">${</span><span class="nv">NC</span><span class="si">}</span><span class="s2"> </span><span class="nv">$response</span><span class="s2">&quot;</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Continuing...&quot;</span>
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+
+<h3 id="installation">Installation</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create scripts directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>scripts
+
+<span class="c1"># Create the script</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>scripts/collaboration.sh<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<span class="s">#!/bin/bash</span>
+<span class="s"># [Paste script content here]</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Make executable</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>scripts/collaboration.sh
+
+<span class="c1"># Test it</span>
+./scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Test checkpoint. Press Enter: &quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="python-implementation">Python Implementation</h2>
+<h3 id="basic-version_1">Basic Version</h3>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">collaboration.py - Checkpoint tool for AI collaboration</span>
+<span class="sd">Usage: python collaboration.py &quot;Your message here&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Press Enter to continue&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a collaboration checkpoint and wait for user input.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CHECKPOINT&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Response: &quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User response: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Continuing...&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Press Enter to continue&quot;</span>
+    <span class="n">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="enhanced-version-with-logging">Enhanced Version (with logging)</h3>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">collaboration.py - Enhanced checkpoint tool with logging</span>
+<span class="sd">Usage: python collaboration.py &quot;Your message here&quot;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Colors for terminal output</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Colors</span><span class="p">:</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0;34m&#39;</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0;32m&#39;</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[1;33m&#39;</span>
+    <span class="n">NC</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[0m&#39;</span>  <span class="c1"># No Color</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Press Enter to continue&quot;</span><span class="p">,</span> <span class="n">log_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a collaboration checkpoint and wait for user input.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        message: The message to display</span>
+<span class="sd">        log_file: Optional path to log checkpoints</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The user&#39;s response string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span>
+
+    <span class="c1"># Display checkpoint</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">BLUE</span><span class="si">}</span><span class="s2">🤝 COLLABORATION CHECKPOINT</span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">NC</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+
+    <span class="c1"># Get response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">GREEN</span><span class="si">}</span><span class="s2">Enter your response: </span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">NC</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">YELLOW</span><span class="si">}</span><span class="s2">User response:</span><span class="si">{</span><span class="n">Colors</span><span class="o">.</span><span class="n">NC</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Log if requested</span>
+    <span class="k">if</span> <span class="n">log_file</span><span class="p">:</span>
+        <span class="n">log_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">log_file</span><span class="p">)</span>
+        <span class="n">log_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_path</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Checkpoint: </span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2"> ---</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Response: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Continuing...&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Press Enter to continue&quot;</span>
+    <span class="n">log_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;CHECKPOINT_LOG&#39;</span><span class="p">)</span>  <span class="c1"># Optional: set CHECKPOINT_LOG env var</span>
+    <span class="n">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_file</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="installation_1">Installation</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create scripts directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>scripts
+
+<span class="c1"># Create the script</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>scripts/collaboration.py<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<span class="s"># [Paste script content here]</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Make executable</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>scripts/collaboration.py
+
+<span class="c1"># Test it</span>
+python3<span class="w"> </span>scripts/collaboration.py<span class="w"> </span><span class="s2">&quot;Test checkpoint. Press Enter: &quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="usage-patterns">Usage Patterns</h2>
+<h3 id="before-major-implementation">Before Major Implementation</h3>
+<div class="codehilite"><pre><span></span><code>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;I&#39;ve investigated the issue and found:</span>
+
+<span class="s2">- Root cause is in FileManager.swift line 234</span>
+<span class="s2">- The path validation is missing a null check</span>
+<span class="s2">- This affects all file operations</span>
+
+<span class="s2">Proposed fix:</span>
+<span class="s2">- Add null check before path resolution</span>
+<span class="s2">- Add unit test for edge case</span>
+
+<span class="s2">Press Enter to proceed with implementation: &quot;</span>
+</code></pre></div>
+
+<h3 id="after-investigation">After Investigation</h3>
+<div class="codehilite"><pre><span></span><code>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Investigation complete.</span>
+
+<span class="s2">Findings:</span>
+<span class="s2">1. The bug is in MessageBus, not ChatWidget</span>
+<span class="s2">2. Messages are being duplicated during streaming</span>
+<span class="s2">3. Root cause: Both components create messages</span>
+
+<span class="s2">Options:</span>
+<span class="s2">A) Make MessageBus the single source of truth</span>
+<span class="s2">B) Add deduplication logic</span>
+
+<span class="s2">I recommend Option A - cleaner architecture.</span>
+
+<span class="s2">Which approach? (Enter for A, or type B): &quot;</span>
+</code></pre></div>
+
+<h3 id="before-ending-session">Before Ending Session</h3>
+<div class="codehilite"><pre><span></span><code>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Work complete. Summary:</span>
+
+<span class="s2">Completed:</span>
+<span class="s2">✓ Fixed file validation bug</span>
+<span class="s2">✓ Added unit tests</span>
+<span class="s2">✓ Updated documentation</span>
+
+<span class="s2">Commits:</span>
+<span class="s2">- abc123: fix(files): Add null check to path validation</span>
+<span class="s2">- def456: test(files): Add edge case coverage</span>
+
+<span class="s2">All tests passing. Build successful.</span>
+
+<span class="s2">Press Enter to confirm and end session: &quot;</span>
+</code></pre></div>
+
+<h3 id="when-uncertain">When Uncertain</h3>
+<div class="codehilite"><pre><span></span><code>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;I&#39;m uncertain about the best approach here.</span>
+
+<span class="s2">The feature could be implemented as:</span>
+<span class="s2">1. A new class (more isolated, more code)</span>
+<span class="s2">2. An extension to existing class (less code, tighter coupling)</span>
+
+<span class="s2">Both work. What&#39;s your preference?</span>
+
+<span class="s2">Type 1 or 2, or Enter for my recommendation (Option 1): &quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="integration-tips">Integration Tips</h2>
+<h3 id="in-your-instructions-file">In Your Instructions File</h3>
+<p>Add this to your AI collaboration prompt:</p>
+<div class="codehilite"><pre><span></span><code><span class="gu">## Collaboration Tool</span>
+
+Use the collaboration tool for checkpoints:
+
+```bash
+scripts/collaboration.sh &quot;Your message. Press Enter: &quot;
+</code></pre></div>
+
+<p><strong>When to use:</strong>
+- After investigation, before implementation
+- After completing significant work
+- When uncertain about approach
+- Before ending the session</p>
+<p><strong>Format your message with:</strong>
+- What you found/did
+- What you propose next
+- Any questions
+- Clear call to action</p>
+<div class="codehilite"><pre><span></span><code>###<span class="w"> </span><span class="nv">Handling</span><span class="w"> </span><span class="nv">Tool</span><span class="w"> </span><span class="nv">Failures</span>
+
+<span class="k">If</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">script</span><span class="w"> </span><span class="nv">fails</span><span class="w"> </span><span class="ss">(</span><span class="nv">permissions</span>,<span class="w"> </span><span class="nv">missing</span><span class="w"> </span><span class="nv">file</span><span class="ss">)</span>,<span class="w"> </span><span class="nv">use</span><span class="w"> </span><span class="nv">fallbacks</span>:
+
+```<span class="nv">bash</span>
+#<span class="w"> </span><span class="nv">Fallback</span><span class="w"> </span><span class="mi">1</span>:<span class="w"> </span><span class="nv">Direct</span><span class="w"> </span><span class="nv">read</span>
+<span class="nv">read</span><span class="w"> </span><span class="o">-</span><span class="nv">p</span><span class="w"> </span><span class="s2">&quot;CHECKPOINT: Your message. Press Enter: &quot;</span><span class="w"> </span><span class="nv">response</span>
+
+#<span class="w"> </span><span class="nv">Fallback</span><span class="w"> </span><span class="mi">2</span>:<span class="w"> </span><span class="nv">Printf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">read</span>
+<span class="nv">printf</span><span class="w"> </span><span class="s2">&quot;CHECKPOINT: Your message.\nPress Enter: &quot;</span>
+<span class="nv">read</span><span class="w"> </span><span class="nv">response</span>
+
+#<span class="w"> </span><span class="nv">Fallback</span><span class="w"> </span><span class="mi">3</span>:<span class="w"> </span><span class="nv">Echo</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">cat</span><span class="w"> </span><span class="ss">(</span><span class="nv">last</span><span class="w"> </span><span class="nv">resort</span><span class="ss">)</span>
+<span class="nv">echo</span><span class="w"> </span><span class="s2">&quot;CHECKPOINT: Type &#39;continue&#39; and press Enter:&quot;</span>
+<span class="nv">cat</span>
+</code></pre></div>
+
+<h3 id="logging-checkpoints">Logging Checkpoints</h3>
+<p>Track checkpoints for later review:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Set environment variable</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">CHECKPOINT_LOG</span><span class="o">=</span><span class="s2">&quot;./checkpoint_history.log&quot;</span>
+
+<span class="c1"># Or modify script to always log</span>
+<span class="nv">LOGFILE</span><span class="o">=</span><span class="s2">&quot;./scratch/checkpoints.log&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">] </span><span class="nv">$MESSAGE</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOGFILE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[</span><span class="k">$(</span>date<span class="k">)</span><span class="s2">] Response: </span><span class="nv">$response</span><span class="s2">&quot;</span><span class="w"> </span>&gt;&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOGFILE</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="script-not-found">Script Not Found</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check path</span>
+which<span class="w"> </span>scripts/collaboration.sh
+ls<span class="w"> </span>-la<span class="w"> </span>scripts/collaboration.sh
+
+<span class="c1"># Use absolute path</span>
+/path/to/project/scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Message&quot;</span>
+</code></pre></div>
+
+<h3 id="permission-denied">Permission Denied</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Make executable</span>
+chmod<span class="w"> </span>+x<span class="w"> </span>scripts/collaboration.sh
+
+<span class="c1"># Or run with interpreter</span>
+bash<span class="w"> </span>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Message&quot;</span>
+python3<span class="w"> </span>scripts/collaboration.py<span class="w"> </span><span class="s2">&quot;Message&quot;</span>
+</code></pre></div>
+
+<h3 id="input-not-captured">Input Not Captured</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check terminal mode</span>
+<span class="c1"># Some AI tools run in non-interactive mode</span>
+
+<span class="c1"># Try with explicit stdin</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>scripts/collaboration.sh<span class="w"> </span><span class="s2">&quot;Message&quot;</span>
+</code></pre></div>
+
+<h3 id="colors-not-showing">Colors Not Showing</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check terminal support</span>
+<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;\033[0;32mGreen\033[0m&quot;</span>
+
+<span class="c1"># Use plain version without colors</span>
+<span class="c1"># Or check TERM environment variable</span>
+</code></pre></div>
+
+<hr />
+<h2 id="related-templates">Related Templates</h2>
+<ul>
+<li><a href="quick-start-prompt.html">Quick Start Prompt</a> - Minimal collaboration prompt</li>
+<li><a href="full-collaboration-prompt.html">Full Collaboration Prompt</a> - Complete prompt</li>
+<li><a href="handoff-templates.html">Handoff Templates</a> - Session transition documents</li>
+<li><a href="anti-pattern-template.html">Anti-Pattern Template</a> - Document failures</li>
+</ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../../../docs/README.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
