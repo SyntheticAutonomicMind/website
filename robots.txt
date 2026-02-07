@@ -1,0 +1,23 @@
+# Robots.txt for www.syntheticautonomicmind.org
+# This file helps search engines crawl and index the site properly
+
+User-agent: *
+Allow: /
+Disallow: /.clio/
+Disallow: /.git/
+Disallow: /ai-assisted/
+Disallow: /project-docs/
+Disallow: /.doc-template.html
+
+# Sitemap location
+Sitemap: https://www.syntheticautonomicmind.org/sitemap.xml
+
+# Crawl delay (optional - allow aggressive crawling for public sites)
+# Crawl-delay: 0
+
+# User-agent specific rules for major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
