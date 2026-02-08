@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent | CLIO</title>
+    <meta name="description" content="Multi-agent">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/getting-started.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="index.html">Documentation</a> / Multi-Agent
+        </div>
+        
+        <div class="doc-content">
+<h1>Multi-Agent Coordination</h1>
+<p class="lead">Parallel AI agents working together on complex tasks</p>
+
+<h2>Overview</h2>
+<p>CLIO supports spawning multiple AI agents that work in parallel on the same codebase without conflicts. This enables:</p>
+<ul>
+    <li>Parallel task execution</li>
+    <li>File locking to prevent concurrent edits</li>
+    <li>Git coordination for safe commits</li>
+    <li>Knowledge sharing between agents</li>
+    <li>Message-based communication</li>
+</ul>
+
+<h2>Operating Modes</h2>
+
+<h3>Oneshot Mode (Default)</h3>
+<p>Agent spawns, executes a single task, and exits:</p>
+<pre><code>: /subagent spawn "fix bug in Module::A"</code></pre>
+<p><strong>Best for:</strong> Independent parallel tasks that don't need coordination</p>
+
+<h3>Persistent Mode</h3>
+<p>Agent stays alive, polls for messages, handles multiple tasks:</p>
+<pre><code>: /subagent spawn "refactor auth module" --persistent</code></pre>
+<p><strong>Best for:</strong> Complex work requiring back-and-forth communication</p>
+
+<h2>Usage Examples</h2>
+
+<h3>Spawning Agents</h3>
+<pre><code># Basic spawn
+: /subagent spawn "add tests for UserController"
+
+# Persistent agent
+: /subagent spawn "refactor database layer" --persistent
+
+# Specify model
+: /subagent spawn "optimize queries" --model gpt-4o --persistent</code></pre>
+
+<h3>Communication</h3>
+<pre><code># View messages from agents
+: /subagent inbox
+
+# Reply to agent question
+: /subagent reply agent-1 "yes, proceed with that approach"
+
+# Send guidance
+: /subagent send agent-2 "try alternative implementation"
+
+# Broadcast to all agents
+: /subagent broadcast "code freeze - finish current work"</code></pre>
+
+<h3>Monitoring</h3>
+<pre><code># List all active agents
+: /subagent list
+
+# Show detailed status
+: /subagent status agent-1
+
+# View file/git locks
+: /subagent locks
+
+# See shared discoveries
+: /subagent discoveries</code></pre>
+
+<h2>Message Types</h2>
+
+<h3>From Agents</h3>
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Color</th>
+        <th>Meaning</th>
+    </tr>
+    <tr>
+        <td>question</td>
+        <td>Yellow</td>
+        <td>Agent needs guidance</td>
+    </tr>
+    <tr>
+        <td>blocked</td>
+        <td>Red</td>
+        <td>Waiting for input</td>
+    </tr>
+    <tr>
+        <td>complete</td>
+        <td>Green</td>
+        <td>Task finished</td>
+    </tr>
+    <tr>
+        <td>status</td>
+        <td>Cyan</td>
+        <td>Progress update</td>
+    </tr>
+    <tr>
+        <td>discovery</td>
+        <td>Magenta</td>
+        <td>Shared finding</td>
+    </tr>
+</table>
+
+<h2>Coordination Features</h2>
+<ul>
+    <li><strong>File Locking:</strong> Only one agent can edit a file at a time</li>
+    <li><strong>Git Coordination:</strong> Commits are serialized to avoid conflicts</li>
+    <li><strong>Discovery Sharing:</strong> Agents share findings with each other</li>
+    <li><strong>Automatic Inbox Polling:</strong> Main session checks for new messages</li>
+</ul>
+
+<h2>Best Practices</h2>
+<ul>
+    <li>Use oneshot mode for independent tasks</li>
+    <li>Use persistent mode when agents need to ask questions</li>
+    <li>Monitor the inbox regularly</li>
+    <li>Broadcast important context to all agents</li>
+    <li>Use discoveries to share findings across agents</li>
+</ul>
+
+<h2>Next Steps</h2>
+<ul>
+    <li><a href="remote-execution.html">Remote Execution</a> - Run CLIO on remote systems</li>
+    <li><a href="workflows.html">Workflows</a> - Effective usage patterns</li>
+    <li><a href="tools-reference.html">Tools Reference</a> - All available tools</li>
+</ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

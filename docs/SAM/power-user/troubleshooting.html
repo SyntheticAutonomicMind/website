@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Guide | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Troubleshooting Guide">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/troubleshooting.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../index.html">Documentation</a> / Troubleshooting
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="troubleshooting-guide">Troubleshooting Guide</h1>
+<p><strong>Solutions to common issues with SAM.</strong></p>
+<p>Running into problems? This guide covers the most common issues and how to fix them quickly.</p>
+<hr />
+<h2 id="installation-issues">Installation Issues</h2>
+<h3 id="samapp-is-damaged-and-cant-be-opened">"SAM.app is damaged and can't be opened"</h3>
+<p><strong>Cause</strong>: macOS Gatekeeper blocking unsigned app</p>
+<p><strong>Solution</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Remove quarantine attribute</span>
+xattr<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>/Applications/SAM.app
+
+<span class="c1"># Or allow in System Settings</span>
+<span class="c1"># System Settings → Privacy &amp; Security → Allow anyway</span>
+</code></pre></div>
+
+<h3 id="samapp-cant-be-opened-because-apple-cannot-check-it">"SAM.app can't be opened because Apple cannot check it"</h3>
+<p><strong>Cause</strong>: First launch security check</p>
+<p><strong>Solution</strong>:
+- Right-click SAM.app → Select "Open"
+- Click "Open" in security dialog
+- Only needed once</p>
+<hr />
+<h2 id="api-key-issues">API Key Issues</h2>
+<h3 id="invalid-api-key">"Invalid API key"</h3>
+<p><strong>Common Causes</strong>:
+- Key copied incorrectly (check for extra spaces)
+- Key expired or revoked by the provider
+- Using the wrong provider's key</p>
+<p><strong>Solutions</strong>:
+1. Copy the key again from your provider's website
+2. Remove any leading or trailing spaces
+3. Verify the key works on the provider's website first
+4. Confirm you're using the correct provider (OpenAI vs GitHub Copilot)</p>
+<h3 id="insufficient-quota-openai">"Insufficient quota" (OpenAI)</h3>
+<p><strong>Cause</strong>: Your OpenAI account has no remaining API credits</p>
+<p><strong>Solution</strong>:
+- Add a payment method at https://platform.openai.com/account/billing
+- Check your usage at https://platform.openai.com/account/usage</p>
+<h3 id="rate-limit-exceeded">"Rate limit exceeded"</h3>
+<p><strong>Cause</strong>: Too many API requests sent in a short time period</p>
+<p><strong>Solutions</strong>:
+- Wait 60 seconds and try your request again
+- For OpenAI: Upgrade your tier for higher rate limits
+- Use local models instead (no rate limits)</p>
+<hr />
+<h2 id="model-issues">Model Issues</h2>
+<h3 id="local-model-wont-load">Local model won't load</h3>
+<p><strong>Symptoms</strong>: "Failed to load model" error</p>
+<p><strong>Solutions</strong>:</p>
+<p><strong>For MLX models</strong>:
+1. Verify you have Apple Silicon (M1/M2/M3/M4)
+2. Check model is in <code>~/Library/Caches/sam/models/</code>
+3. Ensure model is compatible MLX format
+4. Close other memory-intensive apps
+5. Try smaller model if out of memory</p>
+<p><strong>For GGUF models</strong>:
+1. Check model is in <code>~/Library/Caches/sam/models/</code>
+2. Verify file is valid <code>.gguf</code> format
+3. Try smaller quantization (Q4 instead of Q8)
+4. Reduce context size in Advanced Parameters if out of memory</p>
+<h3 id="model-is-very-slow">Model is very slow</h3>
+<p><strong>Solutions</strong>:
+- Close other apps to free up RAM
+- Use a smaller quantized model (Q4 instead of Q8)
+- For MLX: Verify Metal acceleration is enabled
+- For GGUF: Reduce the context size in Advanced Parameters
+- Check Activity Monitor for high CPU or memory usage</p>
+<h3 id="model-not-found">"Model not found"</h3>
+<p><strong>Solution</strong>:
+1. Refresh model list (reload button in dropdown)
+2. Check model directory permissions
+3. Restart SAM
+4. Re-download model if corrupted</p>
+<hr />
+<h2 id="tool-issues">Tool Issues</h2>
+<h3 id="tools-not-working">Tools not working</h3>
+<p><strong>Symptoms</strong>: Tools aren't being called by the AI, or fail when called</p>
+<p><strong>Solutions</strong>:
+1. Enable the <strong>Tools</strong> toggle in the conversation toolbar (or press ⌘T)
+2. Click the <strong>Parameters</strong> button to expand Advanced Parameters and check specific tool settings
+3. Verify you've granted required system permissions
+4. Note: Some models don't support tools (check model capabilities)
+5. For local models: Tools are disabled by default (enable manually)</p>
+<h3 id="terminal-tool-permission-denied">Terminal tool permission denied</h3>
+<p><strong>Solution</strong>:
+- Grant Full Disk Access: System Settings → Privacy &amp; Security → Full Disk Access → Add SAM
+- Grant Automation: System Settings → Privacy &amp; Security → Automation</p>
+<h3 id="file-tool-cant-read-files">File tool can't read files</h3>
+<p><strong>Solution</strong>:
+- Grant Files and Folders access when prompted
+- System Settings → Privacy &amp; Security → Files and Folders → SAM</p>
+<h3 id="web-fetch-fails">Web fetch fails</h3>
+<p><strong>Symptoms</strong>: "Failed to fetch URL" error</p>
+<p><strong>Solutions</strong>:
+1. Check your internet connection
+2. Verify the URL is accessible in your web browser
+3. Some websites block automated requests (try browser_fetch instead)
+4. Check your firewall settings aren't blocking SAM</p>
+<hr />
+<h2 id="performance-issues">Performance Issues</h2>
+<h3 id="sam-is-slow-to-launch">SAM is slow to launch</h3>
+<p><strong>Common Causes</strong>:
+- Loading large conversation history
+- Checking for software updates
+- Loading model catalogs</p>
+<p><strong>Solutions</strong>:
+- Delete old, unused conversations
+- Disable automatic update checks in Preferences
+- Clear the cache: <code>~/Library/Caches/sam</code></p>
+<h3 id="ui-feels-laggy">UI feels laggy</h3>
+<p><strong>Solutions</strong>:
+- Close unnecessary conversations
+- Reduce Advanced Parameters → Context Size
+- Disable animations in System Settings
+- Restart SAM</p>
+<h3 id="high-memory-usage">High memory usage</h3>
+<p><strong>Solutions</strong>:
+- Unload models when not in use (Eject button)
+- Use smaller quantized models
+- Limit context size
+- Close unused conversations</p>
+<hr />
+<h2 id="conversation-issues">Conversation Issues</h2>
+<h3 id="conversations-wont-load">Conversations won't load</h3>
+<p><strong>Solutions</strong>:
+1. Restart SAM to reinitialize database connections
+2. Check disk space - SAM needs free space to operate
+3. Check Console.app for specific error messages
+4. If a specific conversation fails, try deleting it and creating a new one
+5. As a last resort, reset SAM completely (see Database Issues section)</p>
+<h3 id="cant-delete-conversation">Can't delete conversation</h3>
+<p><strong>Solution</strong>:
+- Force quit SAM (⌘+Option+Esc)
+- Restart SAM
+- Try deleting again</p>
+<h3 id="conversation-history-missing">Conversation history missing</h3>
+<p><strong>Possible Causes</strong>:
+- Database corruption
+- Disk full (no space to save)
+- File permissions issue</p>
+<p><strong>Solutions</strong>:
+1. Check available disk space
+2. Verify database exists: <code>ls ~/Library/Application\ Support/SAM/</code>
+3. Check database file permissions
+4. Restore from Time Machine backup if available</p>
+<hr />
+<h2 id="update-issues">Update Issues</h2>
+<h3 id="update-check-failed">"Update check failed"</h3>
+<p><strong>Common Causes</strong>:
+- No internet connection
+- GitHub API rate limit reached
+- Firewall or network blocking GitHub</p>
+<p><strong>Solutions</strong>:
+- Check your internet connection
+- Wait and try again later (rate limits reset hourly)
+- Manually check the releases page on GitHub</p>
+<h3 id="update-download-fails">Update download fails</h3>
+<p><strong>Solutions</strong>:
+- Download manually from releases page
+- Check disk space
+- Verify internet connection stable</p>
+<h3 id="update-installation-fails">Update installation fails</h3>
+<p><strong>Solutions</strong>:
+- Quit SAM completely
+- Manually install: Replace SAM.app in Applications
+- Check permissions on /Applications folder</p>
+<hr />
+<h2 id="logging-and-debugging">Logging and Debugging</h2>
+<h3 id="view-sam-logs">View SAM logs</h3>
+<p><strong>Console.app</strong>:
+1. Open Console.app
+2. Search for "SAM" in search box
+3. Filter by subsystem: <code>com.sam</code></p>
+<p><strong>Terminal</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># View real-time logs</span>
+log<span class="w"> </span>stream<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;subsystem == &quot;com.sam&quot;&#39;</span><span class="w"> </span>--level<span class="w"> </span>debug
+
+<span class="c1"># View recent logs</span>
+log<span class="w"> </span>show<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;subsystem == &quot;com.sam&quot;&#39;</span><span class="w"> </span>--last<span class="w"> </span>1h
+</code></pre></div>
+
+<h3 id="export-diagnostic-information">Export diagnostic information</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># System info</span>
+system_profiler<span class="w"> </span>SPSoftwareDataType<span class="w"> </span>SPHardwareDataType
+
+<span class="c1"># SAM version</span>
+defaults<span class="w"> </span><span class="nb">read</span><span class="w"> </span>/Applications/SAM.app/Contents/Info<span class="w"> </span>CFBundleShortVersionString
+
+<span class="c1"># Check running processes</span>
+ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAM
+
+<span class="c1"># Check network connections</span>
+lsof<span class="w"> </span>-i<span class="w"> </span>-P<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAM
+</code></pre></div>
+
+<hr />
+<h2 id="database-issues">Database Issues</h2>
+<h3 id="reset-sam-completely">Reset SAM completely</h3>
+<p><strong>⚠️ Warning: This deletes all conversations, settings, and downloaded models</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Backup first!</span>
+cp<span class="w"> </span>-r<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM<span class="w"> </span>~/Desktop/SAM-Backup
+cp<span class="w"> </span>-r<span class="w"> </span>~/Library/Caches/sam<span class="w"> </span>~/Desktop/SAM-Cache-Backup
+
+<span class="c1"># Remove all data</span>
+rm<span class="w"> </span>-rf<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM
+rm<span class="w"> </span>-rf<span class="w"> </span>~/Library/Caches/sam
+defaults<span class="w"> </span>delete<span class="w"> </span>com.sam.SAM
+
+<span class="c1"># Restart SAM (creates fresh data)</span>
+</code></pre></div>
+
+<h3 id="export-conversations-before-reset">Export conversations before reset</h3>
+<p>Use SAM's built-in export feature:
+1. Right-click on a conversation in the sidebar
+2. Select <strong>Export</strong>
+3. Choose format (JSON, Markdown, PDF, or DOCX)
+4. Save to your preferred location</p>
+<p>Repeat for each important conversation before resetting.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

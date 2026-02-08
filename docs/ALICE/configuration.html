@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Config | ALICE</title>
+    <meta name="description" content="Configuration">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/getting-started.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="index.html">Documentation</a> / Config
+        </div>
+        
+        <div class="doc-content">
+<h1>Configuration</h1>
+<p class="lead">ALICE configuration options</p>
+
+<h2>Configuration File</h2>
+<p>ALICE uses <code>config.yaml</code> for all settings located in the installation directory.</p>
+
+<h3>Server Settings</h3>
+<ul>
+    <li><code>host</code> - Bind address (default: 0.0.0.0)</li>
+    <li><code>port</code> - HTTP port (default: 8080)</li>
+    <li><code>workers</code> - Worker processes (default: 4)</li>
+</ul>
+
+<h3>Model Settings</h3>
+<ul>
+    <li><code>directory</code> - Model storage path</li>
+    <li><code>cache_size</code> - Number of models to keep in memory</li>
+    <li><code>auto_unload</code> - Automatically free GPU memory</li>
+</ul>
+
+<h3>Generation Defaults</h3>
+<ul>
+    <li><code>steps</code> - Default inference steps (30)</li>
+    <li><code>guidance_scale</code> - Default CFG scale (10.0)</li>
+    <li><code>scheduler</code> - Default scheduler</li>
+    <li><code>width/height</code> - Default dimensions</li>
+</ul>
+
+<h2>Environment Variables</h2>
+<p>Override settings with environment variables for deployment flexibility.</p>
+
+<h2>Next Steps</h2>
+<ul>
+    <li><a href="deployment.html">Deployment</a> - Production setup</li>
+    <li><a href="performance.html">Performance</a> - Optimization</li>
+    <li><a href="model-management.html">Models</a> - Model setup</li>
+</ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

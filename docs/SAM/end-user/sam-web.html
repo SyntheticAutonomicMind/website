@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAM Web: Remote Access | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: SAM Web: Remote Access">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/sam-web.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../index.html">Documentation</a> / Sam Web
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="sam-web-remote-access">SAM Web: Remote Access</h1>
+<p><strong>Access SAM from your iPad, iPhone, or any device with a browser.</strong></p>
+<p>SAM Web is a web interface that lets you chat with SAM when you're away from your Mac. Perfect for quick questions from your tablet or accessing SAM from other devices on your network.</p>
+<hr />
+<h2 id="what-is-sam-web">What is SAM Web?</h2>
+<p>SAM Web is a browser-based interface that lets you chat with SAM from any device. All of SAM's backend features work through the chat interface - you're just controlling SAM remotely.</p>
+<p><strong>How it works:</strong></p>
+<p>SAM Web connects to SAM running on your Mac. When you chat with SAM through your iPad's browser, SAM executes everything on your Mac and streams the responses back to you. This means:</p>
+<ul>
+<li>✅ <strong>All SAM features work</strong>: Image generation, file operations, terminal commands, web research, memory/RAG, and more</li>
+<li>✅ <strong>Full conversation management</strong>: System prompts, personalities, mini-prompts, shared topics, folders</li>
+<li>✅ <strong>All your AI models</strong>: Use any provider or model you've configured in SAM</li>
+<li>✅ <strong>Everything happens on your Mac</strong>: Files are read/written on your Mac, images are saved on your Mac, terminal runs on your Mac</li>
+</ul>
+<p><strong>What's different:</strong>
+- You can't drag-and-drop documents into the browser to upload them (may be available in a future release)
+- You need SAM running on your Mac with the API server enabled
+- You need network access to your Mac (same Wi-Fi or VPN)</p>
+<p>Think of SAM Web as a remote control for SAM. Everything SAM can do, you can do through SAM Web - you're just doing it from a different device.</p>
+<hr />
+<h2 id="requirements">Requirements</h2>
+<p>Before using SAM Web, you need:</p>
+<ol>
+<li><strong>SAM installed and running</strong> on your Mac</li>
+<li>Download from <a href="https://github.com/SyntheticAutonomicMind/SAM/releases">GitHub Releases</a></li>
+<li>
+<p>SAM must stay running while you use SAM Web</p>
+</li>
+<li>
+<p><strong>API server enabled</strong> in SAM</p>
+</li>
+<li>Go to <strong>SAM → Preferences → API Server</strong></li>
+<li>Toggle <strong>Enable API Server</strong></li>
+<li>
+<p>Copy your <strong>API token</strong> (you'll need this for SAM Web)</p>
+</li>
+<li>
+<p><strong>Network access</strong> to your Mac</p>
+</li>
+<li>Same network: Works automatically if both devices are on same Wi-Fi</li>
+<li>
+<p>Remote access: Requires VPN or port forwarding (advanced)</p>
+</li>
+<li>
+<p><strong>Web browser</strong> on your device</p>
+</li>
+<li>Safari, Chrome, Firefox, or any modern browser</li>
+<li>Tested on macOS, iOS, iPadOS</li>
+</ol>
+<hr />
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="option-1-quick-start-recommended">Option 1: Quick Start (Recommended)</h3>
+<p>The easiest way to use SAM Web is to serve it directly from the repository:</p>
+<ol>
+<li>
+<p><strong>Clone the repository:</strong>
+   <code>bash
+   git clone https://github.com/SyntheticAutonomicMind/SAM-web.git
+   cd SAM-web</code></p>
+</li>
+<li>
+<p><strong>Start a local web server:</strong>
+   ```bash
+   # Using Python (built into macOS)
+   python3 -m http.server 8000</p>
+</li>
+</ol>
+<p># Or using Node.js
+   npx http-server -p 8000 --cors</p>
+<p># Or using Caddy
+   caddy file-server --listen :8000
+   ```</p>
+<ol>
+<li><strong>Open in your browser:</strong></li>
+<li>On same device: <code>http://localhost:8000</code></li>
+<li>
+<p>On other devices: <code>http://YOUR_MAC_IP:8000</code></p>
+<ul>
+<li>Find your Mac's IP in <strong>System Settings → Network</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>Connect to SAM:</strong></p>
+</li>
+<li>Enter your API token from SAM Preferences → API Server</li>
+<li>Click <strong>Connect to SAM</strong></li>
+<li>Start chatting</li>
+</ol>
+<h3 id="option-2-direct-api-connection">Option 2: Direct API Connection</h3>
+<p>You can also connect directly to SAM's API without downloading SAM Web:</p>
+<ol>
+<li>Visit the hosted version (if available) or any SAM Web instance</li>
+<li>Configure the connection to point to your Mac's IP address</li>
+<li>Enter your API token</li>
+<li>Start chatting</li>
+</ol>
+<hr />
+<h2 id="using-sam-web">Using SAM Web</h2>
+<h3 id="first-time-setup">First-Time Setup</h3>
+<ol>
+<li><strong>Get your API token:</strong></li>
+<li>Open SAM on your Mac</li>
+<li>Go to <strong>SAM → Preferences → API Server</strong></li>
+<li>
+<p>Copy the <strong>API Token</strong></p>
+</li>
+<li>
+<p><strong>Find your Mac's IP address:</strong></p>
+</li>
+<li>Go to <strong>System Settings → Network</strong></li>
+<li>Note your IP address (e.g., <code>192.168.1.100</code>)</li>
+<li>
+<p>Only needed for access from other devices</p>
+</li>
+<li>
+<p><strong>Open SAM Web:</strong></p>
+</li>
+<li>In your browser, go to <code>http://localhost:8000</code> (same device)</li>
+<li>
+<p>Or <code>http://192.168.1.100:8000</code> (from iPad/other device)</p>
+</li>
+<li>
+<p><strong>Enter credentials:</strong></p>
+</li>
+<li>Paste your API token</li>
+<li>Click <strong>Connect to SAM</strong></li>
+</ol>
+<h3 id="basic-features">Basic Features</h3>
+<p><strong>Chat Interface:</strong>
+- Type your message and press Enter or click Send
+- See responses stream in real-time
+- Code blocks have syntax highlighting
+- Click copy button on code blocks to copy</p>
+<p><strong>Conversations:</strong>
+- Create new conversations with the <strong>New</strong> button
+- Load previous conversations from the sidebar
+- Delete conversations with the trash icon
+- Rename conversations by clicking the conversation title</p>
+<p><strong>Mini-Prompts:</strong>
+- Quick context injection for specialized tasks
+- Click the prompts icon to view available mini-prompts
+- Click a mini-prompt to add it to your message
+- Create, edit, or delete mini-prompts</p>
+<p><strong>Model Selection:</strong>
+- Choose from available AI models
+- Switch models mid-conversation
+- Models must be configured in SAM first</p>
+<p><strong>Parameters:</strong>
+- Adjust temperature for more creative or focused responses
+- Configure top_p for sampling control
+- Set max tokens for response length</p>
+<h3 id="tips-for-best-experience">Tips for Best Experience</h3>
+<p><strong>On iPad:</strong>
+- Add to Home Screen for app-like experience
+- Use landscape mode for more screen space
+- Keyboard shortcuts work: Enter to send, Escape to cancel</p>
+<p><strong>Performance:</strong>
+- Keep SAM and your device on the same network for best speed
+- Close unused conversations to keep interface responsive
+- Large conversations may load slower over network</p>
+<p><strong>Privacy:</strong>
+- All data stays on your Mac (SAM Web is just an interface)
+- API token is stored in your browser's LocalStorage
+- No data sent to external servers</p>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="failed-to-connect-to-sam">"Failed to connect to SAM"</h3>
+<p><strong>Possible causes:</strong>
+1. SAM is not running on your Mac
+2. API server is disabled in SAM Preferences
+3. Wrong API token
+4. Network connectivity issues</p>
+<p><strong>Solutions:</strong>
+1. Verify SAM is running with API server enabled
+2. Check that your API token is correct (copy fresh from SAM)
+3. Make sure both devices are on same network
+4. Try pinging your Mac's IP address: <code>ping 192.168.1.100</code></p>
+<h3 id="cors-errors-in-browser-console">"CORS errors in browser console"</h3>
+<p><strong>This shouldn't happen with normal setup</strong>, but if it does:
+1. Make sure you're serving SAM Web from a web server (not opening <code>index.html</code> directly)
+2. Check that SAM's API server allows your origin
+3. Try accessing from <code>http://localhost:8000</code> instead of file://</p>
+<h3 id="models-not-loading">"Models not loading"</h3>
+<ol>
+<li>Verify models are configured in SAM (open SAM → Preferences → Providers)</li>
+<li>Check that at least one provider is configured with valid credentials</li>
+<li>Refresh the SAM Web page to reload model list</li>
+</ol>
+<h3 id="connection-works-on-mac-but-not-ipad">Connection works on Mac but not iPad</h3>
+<ol>
+<li><strong>Check network:</strong> Make sure iPad is on same Wi-Fi network</li>
+<li><strong>Find correct IP:</strong> Use your Mac's local IP (192.168.x.x), not 127.0.0.1</li>
+<li><strong>Check firewall:</strong> macOS Firewall might be blocking connections</li>
+<li>Go to <strong>System Settings → Network → Firewall</strong></li>
+<li>Add SAM to allowed apps or temporarily disable firewall to test</li>
+<li><strong>Test port:</strong> Try <code>http://YOUR_MAC_IP:8080</code> (SAM API) in iPad browser</li>
+<li>You should see a JSON response if API is accessible</li>
+</ol>
+<hr />
+<h2 id="security-considerations">Security Considerations</h2>
+<h3 id="network-security">Network Security</h3>
+<p><strong>Local network use (recommended):</strong>
+- Keep SAM Web on your trusted home/office network
+- Use strong Wi-Fi password
+- Don't expose port 8080 directly to internet</p>
+<p><strong>Remote access (advanced users):</strong>
+- Use VPN to connect to your home network
+- Or set up secure port forwarding through your router
+- Consider using HTTPS with proper certificate</p>
+<h3 id="token-management">Token Management</h3>
+<ul>
+<li>API token grants full access to SAM's features</li>
+<li>Don't share your API token</li>
+<li>Rotate token periodically (regenerate in SAM Preferences)</li>
+<li>Revoke token if you suspect it's compromised</li>
+</ul>
+<h3 id="data-privacy">Data Privacy</h3>
+<ul>
+<li>SAM Web stores API token in browser LocalStorage</li>
+<li>All conversations stay on your Mac</li>
+<li>No data sent to external servers</li>
+<li>Use HTTPS if accessing over untrusted networks</li>
+</ul>
+<hr />
+<h2 id="what-you-can-and-cant-do">What You Can and Can't Do</h2>
+<p>SAM Web is a remote interface to SAM. All AI work happens on your Mac where SAM is installed. You're just controlling it from a different device.</p>
+<p><strong>Everything works through chat:</strong>
+- Chat with full streaming responses
+- Use all conversation features (system prompts, personalities, mini-prompts, shared topics, folders)
+- Access all AI models and providers you've configured
+- Generate images (saved on your Mac)
+- Read, write, and edit files (on your Mac)
+- Run terminal commands (on your Mac)
+- Search your documents and memory
+- Use all of SAM's tools and capabilities</p>
+<p><strong>What's missing:</strong>
+- <strong>Document upload</strong>: Can't drag-and-drop documents into the browser yet (may be available in a future release)
+- <strong>LoRA training UI</strong>: No web interface for training models (use the native app)
+- <strong>Conversation export</strong>: Can't export conversations as files (use the native app)
+- <strong>Memory/RAG management UI</strong>: Can't manage documents through a UI (but SAM can still access them via tools)</p>
+<p>The key thing to understand: When you ask SAM to do something through SAM Web, it happens on your Mac. If you ask SAM to generate an image, edit a file, or run a command, it does that on your Mac and shows you the results.</p>
+<hr />
+<h2 id="technical-details">Technical Details</h2>
+<h3 id="architecture">Architecture</h3>
+<p><strong>Frontend:</strong>
+- Pure HTML5, CSS3, JavaScript (ES6+)
+- No build step or dependencies
+- Zero npm packages
+- All assets self-hosted</p>
+<p><strong>Communication:</strong>
+- REST API via SAM's Vapor server
+- Server-Sent Events (SSE) for streaming
+- Bearer token authentication</p>
+<p><strong>Storage:</strong>
+- LocalStorage for API token and settings
+- SessionStorage for temporary state
+- No backend database (all data in SAM)</p>
+<h3 id="api-endpoints-used">API Endpoints Used</h3>
+<ul>
+<li><code>POST /api/chat/completions</code> - Send messages</li>
+<li><code>GET /api/conversations</code> - List conversations</li>
+<li><code>POST /api/conversations</code> - Create conversation</li>
+<li><code>DELETE /api/conversations/:id</code> - Delete conversation</li>
+<li><code>GET /api/models</code> - List available models</li>
+<li><code>GET /api/prompts/mini</code> - List mini-prompts</li>
+<li><code>POST /api/prompts/mini</code> - Create mini-prompt</li>
+</ul>
+<h3 id="browser-compatibility">Browser Compatibility</h3>
+<ul>
+<li>✅ Safari 14+ (macOS, iOS, iPadOS)</li>
+<li>✅ Chrome 90+</li>
+<li>✅ Firefox 88+</li>
+<li>✅ Edge 90+</li>
+</ul>
+<p><strong>Minimum requirements:</strong>
+- JavaScript enabled
+- LocalStorage support
+- Server-Sent Events (SSE) support
+- Modern CSS (Grid, Flexbox)</p>
+<hr />
+<h2 id="repository">Repository</h2>
+<p><strong>Source code:</strong> <a href="https://github.com/SyntheticAutonomicMind/SAM-web">github.com/SyntheticAutonomicMind/SAM-web</a></p>
+<p><strong>License:</strong> GNU General Public License v3.0 (same as SAM)</p>
+<p><strong>Contributions:</strong> Welcome! See repository for contribution guidelines.</p>
+<hr />
+<h2 id="related-documentation">Related Documentation</h2>
+<ul>
+<li><a href="features-overview.html">Features Overview</a> - All SAM capabilities</li>
+<li><a href="getting-started.html">Getting Started</a> - Install and configure SAM</li>
+<li><a href="../power-user/configuration.html">Configuration</a> - Set up API server and providers</li>
+<li><a href="../power-user/troubleshooting.html">Troubleshooting</a> - Fix common issues</li>
+</ul>
+<hr />
+<p><strong>SAM Web brings SAM to your iPad and other devices. For full features, use the native macOS app.</strong></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Guide | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Configuration Guide">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/configuration.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../index.html">Documentation</a> / Configuration
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="configuration-guide">Configuration Guide</h1>
+<p><strong>Fine-tune SAM to work exactly how you want.</strong></p>
+<p>This comprehensive guide covers every setting, preference, and configuration option in SAM. Whether you're optimizing for speed, privacy, cost, or capability, these settings will help you get there.</p>
+<p><strong>What you'll configure:</strong>
+- API providers and model selection
+- Local model deployment (MLX and GGUF)
+- Memory and context settings
+- System prompts and behavior
+- Advanced parameters for power users</p>
+<p><strong>Who this is for:</strong>
+- Power users who want full control
+- Teams deploying SAM across multiple users
+- Anyone looking to optimize SAM's performance
+- Users integrating SAM into existing workflows</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#general-settings">General Settings</a></li>
+<li><a href="#location-settings">Location Settings</a></li>
+<li><a href="#remote-providers">Remote Providers</a></li>
+<li><a href="#local-models">Local Models</a></li>
+<li><a href="#model-training">Model Training</a></li>
+<li><a href="#personalities">Personalities</a></li>
+<li><a href="#shared-topics">Shared Topics</a></li>
+<li><a href="#conversation-settings">Conversation Settings</a></li>
+<li><a href="#advanced-parameters">Advanced Parameters</a></li>
+<li><a href="#system-prompts">System Prompts</a></li>
+</ol>
+<hr />
+<h2 id="general-settings">General Settings</h2>
+<h3 id="application-preferences">Application Preferences</h3>
+<p><strong>Access</strong>: SAM → Preferences (⌘ + ,) → General</p>
+<p><strong>Default Model</strong>:
+- Model used for new conversations
+- Can be changed per conversation</p>
+<p><strong>Theme</strong>:
+- Light Mode
+- Dark Mode (follows system)
+- Auto (system preference)</p>
+<p><strong>Launch Behavior</strong>:
+- Start with previous session
+- Start with new conversation
+- Restore window position</p>
+<p><strong>Auto-Save</strong>:
+- Save conversations automatically
+- Interval: 30 seconds (default)</p>
+<hr />
+<h2 id="location-settings">Location Settings</h2>
+<p>SAM can incorporate location context for more relevant responses.</p>
+<p><strong>Access</strong>: SAM → Preferences (⌘ + ,) → General → Location</p>
+<h3 id="general-location-manual">General Location (Manual)</h3>
+<p><strong>Purpose</strong>: Provide location context without device permissions</p>
+<p><strong>How to Set</strong>:
+1. Open Preferences → General
+2. Find "General Location" field
+3. Enter your location (e.g., "Austin, TX" or "London, UK")
+4. Location used in conversations automatically</p>
+<p><strong>Format Examples</strong>:
+- City, State: "Seattle, WA"
+- City, Country: "Toronto, Canada"
+- Region: "Pacific Northwest"</p>
+<h3 id="precise-location-device-based">Precise Location (Device-Based)</h3>
+<p><strong>Purpose</strong>: Automatic location detection using Core Location</p>
+<p><strong>How to Enable</strong>:
+1. Open Preferences → General
+2. Toggle "Enable Precise Location"
+3. Grant location permission when prompted
+4. SAM automatically detects your city</p>
+<p><strong>Privacy Features</strong>:
+- <strong>City-Level Accuracy</strong>: Uses <code>kCLLocationAccuracyKilometer</code>, not GPS
+- <strong>Local Storage Only</strong>: Location stored in UserDefaults, never transmitted
+- <strong>Opt-In</strong>: Must explicitly enable
+- <strong>Easy Disable</strong>: Toggle off anytime</p>
+<p><strong>Location Priority</strong>:
+1. Precise location (if enabled and available)
+2. General location (if set)
+3. No location (if neither configured)</p>
+<hr />
+<h2 id="remote-providers">Remote Providers</h2>
+<h3 id="openai">OpenAI</h3>
+<p><strong>Setup</strong>:
+1. Get API key from <a href="https://platform.openai.com/api-keys">platform.openai.com</a>
+2. In SAM: Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>OpenAI</strong> from the provider type dropdown
+4. Paste your key (starts with <code>sk-</code>)
+5. Click <strong>Test</strong> to verify the connection (optional)
+6. Click <strong>Save Provider</strong></p>
+<p><strong>Available Models</strong>:
+- gpt-4-turbo
+- gpt-4
+- gpt-3.5-turbo
+- gpt-4-1106-preview
+- gpt-3.5-turbo-1106</p>
+<p><strong>Settings</strong>:
+- Organization ID (optional)
+- API Base URL (for proxies)
+- Max Retries: 3 (default)
+- Timeout: 60s (default)</p>
+<h3 id="github-copilot">GitHub Copilot</h3>
+<p><strong>Setup (Device Flow Authentication)</strong>:
+1. Subscribe at <a href="https://github.com/features/copilot">github.com/features/copilot</a>
+2. In SAM: Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>GitHub Copilot</strong> from the provider type dropdown
+4. Click <strong>Authenticate with GitHub</strong>
+5. SAM displays a <strong>user code</strong> and opens GitHub in your browser
+6. Enter the code on GitHub's device verification page
+7. Authorize SAM to access Copilot
+8. SAM automatically receives the access token
+9. Click <strong>Save Provider</strong></p>
+<p><strong>Why Device Flow?</strong>
+- Industry-standard OAuth for desktop apps
+- No need to copy/paste API keys
+- Tokens refresh automatically
+- More secure than manual key entry</p>
+<p><strong>Available Models</strong>:
+- GPT-4, GPT-4 Turbo
+- Claude 3.5 Sonnet (via Copilot)
+- o1-preview, o1-mini</p>
+<p><strong>Features</strong>:
+- Integrated authentication
+- Automatic token refresh
+- Free tier support</p>
+<h3 id="anthropic-claude">Anthropic Claude</h3>
+<p><strong>Setup</strong>:
+1. Get API key from <a href="https://console.anthropic.com">console.anthropic.com</a>
+2. Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Anthropic</strong> from dropdown
+4. Paste key (starts with <code>sk-ant-</code>)
+5. Click <strong>Save Provider</strong></p>
+<p><strong>Available Models</strong>:
+- Claude 3.5 Sonnet
+- Claude 3 Opus
+- Claude 3 Sonnet
+- Claude 3 Haiku</p>
+<h3 id="deepseek">DeepSeek</h3>
+<p><strong>Setup</strong>:
+1. Get API key from <a href="https://platform.deepseek.com">platform.deepseek.com</a>
+2. Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>DeepSeek</strong> from dropdown
+4. Paste key
+5. Click <strong>Save Provider</strong></p>
+<h3 id="google-gemini">Google Gemini</h3>
+<p><strong>Setup</strong>:
+1. Get API key from <a href="https://ai.google.dev">ai.google.dev</a>
+2. Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Google Gemini</strong> from dropdown
+4. Paste API key
+5. Click <strong>Save Provider</strong></p>
+<p><strong>Available Models</strong>:
+- Gemini 1.5 Pro (up to 2M token context)
+- Gemini 1.5 Flash
+- Gemini 2.0 Flash Thinking Experimental</p>
+<p><strong>Features</strong>:
+- Function calling with automatic tool filtering
+- Vision support for image analysis
+- Extended context windows
+- Thinking models with enhanced reasoning</p>
+<h3 id="custom-provider-grok-ollama-etc">Custom Provider (Grok, Ollama, etc.)</h3>
+<p><strong>Setup</strong>:
+1. Get API key from your provider
+2. Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Custom</strong> from dropdown
+4. Configure the OpenAI-compatible endpoint URL
+5. Paste API key
+6. Click <strong>Save Provider</strong></p>
+<p><strong>Note</strong>: Custom provider works with any OpenAI-compatible API endpoint, including Grok, Ollama, and other self-hosted services.</p>
+<hr />
+<h2 id="local-models">Local Models</h2>
+<p>SAM provides a comprehensive 3-tab interface for managing local models. Access it via <strong>SAM → Preferences → Local Models</strong>.</p>
+<h3 id="local-models-interface-overview">Local Models Interface Overview</h3>
+<p>The Local Models preferences are organized into three tabs for better workflow:</p>
+<p><strong>Installed Models Tab</strong>
+- View all downloaded models (GGUF, MLX, Stable Diffusion)
+- Filter by type: All, GGUF, MLX, or Stable Diffusion
+- Sort by name, size, or date added
+- See model details including size, type, and context window
+- Remove models you no longer need</p>
+<p><strong>Download Tab</strong>
+- Search up to 100 models from HuggingFace
+- Filter by type: All, GGUF, MLX, SD, Q4, Q5, Q8
+- See context window requirements (16k+ recommended for full tool support)
+- Direct download with progress tracking
+- Models automatically appear in Installed tab when complete</p>
+<p><strong>Settings Tab</strong>
+- View storage location and disk usage
+- Configure model optimization settings
+- Quick access to model directories</p>
+<h3 id="downloading-models-recommended-method">Downloading Models (Recommended Method)</h3>
+<p><strong>Step 1: Open Download Tab</strong>
+1. SAM → Preferences → Local Models
+2. Click the <strong>Download</strong> tab</p>
+<p><strong>Step 2: Search for Models</strong>
+- Enter search terms (e.g., "Qwen2.5-Coder", "Llama-3", "Mistral")
+- Or browse using filters</p>
+<p><strong>Step 3: Apply Filters</strong>
+Choose from filter dropdown:
+- <strong>All Models</strong>: Shows GGUF, MLX, and Stable Diffusion together
+- <strong>GGUF</strong>: llama.cpp compatible models (works on all Macs)
+- <strong>MLX</strong>: Metal-optimized models (Apple Silicon only)
+- <strong>Stable Diffusion</strong>: Image generation models
+- <strong>Q4</strong>: 4-bit quantized models (smaller size)
+- <strong>Q5</strong>: 5-bit quantized models (balanced)
+- <strong>Q8</strong>: 8-bit quantized models (highest quality)</p>
+<p><strong>Step 4: Check Context Window</strong>
+- Look for the context window specification in model details
+- <strong>SAM recommends 16k+ context window</strong> for full tool support
+- Models with less than 16k will have tools automatically disabled
+- Context window shown clearly in search results</p>
+<p><strong>Step 5: Download</strong>
+- Click <strong>Download</strong> button next to desired model
+- Progress bar shows download status
+- Multiple files downloaded automatically
+- Model appears in <strong>Installed</strong> tab when complete</p>
+<p><strong>Step 6: Use the Model</strong>
+- Go to any conversation
+- Click the model dropdown
+- Select your newly downloaded model
+- MLX models display as "MLX: Model Name"
+- GGUF models display as "GGUF: Model Name"</p>
+<h3 id="mlx-models-apple-silicon">MLX Models (Apple Silicon)</h3>
+<p><strong>Requirements</strong>:
+- Apple Silicon Mac (M1/M2/M3/M4)
+- macOS 14.0+
+- Metal-capable GPU</p>
+<p><strong>Downloading via SAM</strong> (see Download Tab section above) is the recommended method.</p>
+<p><strong>Manual Installation</strong> (optional):</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Models are stored in:</span>
+~/Library/Caches/sam/models/
+
+<span class="c1"># To manually add a model:</span>
+<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
+git<span class="w"> </span>lfs<span class="w"> </span>install
+git<span class="w"> </span>clone<span class="w"> </span>https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
+</code></pre></div>
+
+<p><strong>Recommended Models</strong>:
+- <code>mlx-community/Qwen2.5-7B-Instruct-8bit</code> (16k context)
+- <code>mlx-community/Mistral-7B-Instruct-v0.3-8bit</code> (32k context)
+- <code>mlx-community/Meta-Llama-3-8B-Instruct-8bit</code> (8k context)</p>
+<p><strong>Performance</strong>:
+- Near-native speed with Metal acceleration
+- Per-conversation KV cache for 10x faster model switching
+- 8-bit: Best quality/size balance
+- 4-bit: Faster, more memory efficient</p>
+<p><strong>RAM Recommendations</strong>:
+- <strong>8GB RAM</strong>: 4B parameter models (Qwen3-4B)
+- <strong>16GB RAM</strong>: 7-8B parameter models (Qwen2.5-7B, Mistral-7B)
+- <strong>32GB+ RAM</strong>: 14B+ parameter models (Qwen3-14B, larger models)</p>
+<h3 id="gguf-models-all-macs">GGUF Models (All Macs)</h3>
+<p><strong>Requirements</strong>:
+- Any Mac (Intel or Apple Silicon)
+- macOS 14.0+</p>
+<p><strong>Downloading via SAM</strong> (see Download Tab section above) is the recommended method.</p>
+<p><strong>Manual Installation</strong> (optional):</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Models are stored in:</span>
+~/Library/Caches/sam/models/
+
+<span class="c1"># To manually add a .gguf file:</span>
+<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
+wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+</code></pre></div>
+
+<p><strong>Recommended Sources</strong>:
+- <a href="https://huggingface.co/TheBloke">TheBloke on Hugging Face</a></p>
+<p><strong>Quantization Levels</strong>:
+- <strong>Q2</strong>: Smallest size, lowest quality (not recommended)
+- <strong>Q4_K_M</strong>: Good balance of quality and size (recommended for most users)
+- <strong>Q5_K_M</strong>: Better quality, larger size
+- <strong>Q8</strong>: Best quality, closest to original model performance</p>
+<h3 id="stable-diffusion-models">Stable Diffusion Models</h3>
+<p><strong>Requirements</strong>:
+- CoreML-converted Stable Diffusion models
+- Apple Silicon recommended</p>
+<p><strong>Setup</strong>:
+1. Download CoreML-converted models (manual or via CivitAI)
+2. Place in your local models directory
+3. Filter by model type: "Stable Diffusion"
+4. Select and load the model</p>
+<p><strong>Supported</strong>:
+- Stable Diffusion 1.5
+- Stable Diffusion 2.1
+- SDXL (if converted to CoreML)
+- Community models from CivitAI</p>
+<p><strong>Generation Settings</strong>:
+- <strong>Steps</strong>: 1-150 (default: 25)
+- <strong>Guidance Scale</strong>: 1.0-20.0 (default: 7.5)
+- <strong>Scheduler</strong>: DPM++ SDE Karras (default), PNDM
+- <strong>Karras Timestep Spacing</strong>: Enabled by default for DPM++ scheduler</p>
+<p><strong>Direct SD Mode</strong>:
+Select an SD model without an LLM to bypass AI processing and generate images instantly from your exact prompts. Purple send button indicates Direct SD Mode is active.</p>
+<h3 id="alice-remote-stable-diffusion">ALICE Remote Stable Diffusion</h3>
+<p><strong>Purpose</strong>: Generate images on a remote GPU server running ALICE (AI Local Image Creation Engine). Useful for AMD GPU hardware like Steam Deck.</p>
+<p><strong>Setup</strong>:
+1. Open SAM Preferences → <strong>Stable Diffusion</strong> → <strong>Settings</strong>
+2. Enter ALICE server URL (e.g., <code>http://192.168.0.222:8090/v1</code>)
+3. Enter API key (if required by your server)
+4. Click <strong>Test</strong> to verify connection
+5. Models from ALICE server appear in the model picker</p>
+<p><strong>Using ALICE Models</strong>:
+1. Select an ALICE model from the model picker (shows "ALICE" location)
+2. UI switches to Stable Diffusion generation mode
+3. Enter your prompt and generate
+4. Images are generated on the remote server and downloaded automatically</p>
+<p><strong>Requirements</strong>:
+- Running ALICE server on your network
+- Network access to the server
+- Server must have at least one Stable Diffusion model loaded</p>
+<p><strong>Model Picker Display</strong>:
+- Local models show "Local" location
+- ALICE models show "ALICE" location
+- Provider shows as "Stable Diffusion" for all SD models</p>
+<h3 id="civitai-model-browser">CivitAI Model Browser</h3>
+<p><strong>Access</strong>: Preferences → Image Generation → Model Browser → CivitAI tab</p>
+<p>Browse and download community-created Stable Diffusion models from CivitAI's massive library.</p>
+<p><strong>API Key</strong> (Optional):
+1. Visit https://civitai.com
+2. Sign in or create account
+3. Go to Account Settings → API Keys
+4. Create new API key and paste in SAM</p>
+<p><strong>Note</strong>: API key is optional. Works without authentication, but with lower rate limits.</p>
+<p><strong>Download Settings</strong>:
+- <strong>Download Path</strong>: Where models are saved (default: local models directory)
+- <strong>Auto-Convert</strong>: Automatically convert downloaded models to CoreML format
+- <strong>NSFW Filter</strong>: Control visibility of adult content</p>
+<p><strong>Features</strong>:
+- Search thousands of community models
+- Filter by type, rating, and period
+- View model details and example images
+- One-click download and install
+- Automatic CoreML conversion (if enabled)
+- Models appear in model picker immediately</p>
+<p><strong>Workflow</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Open</span><span class="w"> </span><span class="n">Preferences</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">Generation</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">Browser</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Select</span><span class="w"> </span><span class="n">CivitAI</span><span class="w"> </span><span class="n">tab</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;anime style&quot;</span><span class="p">)</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Browse</span><span class="w"> </span><span class="n">results</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">preview</span><span class="w"> </span><span class="n">images</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">Click</span><span class="w"> </span><span class="n">download</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">desired</span><span class="w"> </span><span class="n">model</span>
+<span class="mf">6.</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">auto</span><span class="o">-</span><span class="n">converts</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">CoreML</span><span class="w"> </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="n">enabled</span><span class="p">)</span>
+<span class="mf">7.</span><span class="w"> </span><span class="n">Select</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">picker</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="n">generating</span>
+</code></pre></div>
+
+<h3 id="huggingface-model-browser">HuggingFace Model Browser</h3>
+<p><strong>Access</strong>: Preferences → Image Generation → Model Browser → HuggingFace tab</p>
+<p>Discover and download models directly from HuggingFace Hub.</p>
+<p><strong>Features</strong>:
+- Browse HuggingFace model repository
+- Search by keywords and tags
+- View model details and descriptions
+- One-click download and install
+- Auto-load results when switching tabs</p>
+<p><strong>Workflow</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Open</span><span class="w"> </span><span class="n">Preferences</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">Generation</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">Browser</span>
+<span class="mf">2.</span><span class="w"> </span><span class="n">Select</span><span class="w"> </span><span class="n">HuggingFace</span><span class="w"> </span><span class="n">tab</span>
+<span class="mf">3.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">browse</span><span class="w"> </span><span class="n">popular</span><span class="w"> </span><span class="n">options</span>
+<span class="mf">4.</span><span class="w"> </span><span class="n">Click</span><span class="w"> </span><span class="n">download</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">desired</span><span class="w"> </span><span class="n">model</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="n">appears</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="n">picker</span>
+</code></pre></div>
+
+<h3 id="lora-browser">LoRA Browser</h3>
+<p><strong>Access</strong>: Preferences → Image Generation → LoRA Browser</p>
+<p>Discover and manage LoRA (Low-Rank Adaptation) models for fine-tuning image generation.</p>
+<p><strong>Three Tabs</strong>:
+- <strong>Library</strong>: View and manage your installed LoRAs
+- <strong>CivitAI</strong>: Browse and download LoRAs from CivitAI
+- <strong>HuggingFace</strong>: Discover LoRAs from HuggingFace Hub</p>
+<p><strong>Supported Base Models</strong>:
+- SD 1.5
+- SD 2.x
+- SDXL
+- Z-Image
+- Flux</p>
+<p><strong>Features</strong>:
+- Auto-load search results when switching tabs
+- Pagination support for CivitAI (100 results per page)
+- Base model filter for compatibility
+- NSFW filter control
+- View LoRA trigger words and compatibility info</p>
+<p><strong>Using LoRAs</strong>:
+1. Browse and download LoRAs via the LoRA Browser
+2. When generating images, reference LoRA by filename in your prompt
+3. SAM automatically resolves paths and applies LoRAs during generation</p>
+<p><strong>Tip</strong>: Use the <code>list_loras</code> operation in the <code>image_generation</code> tool to see all available LoRAs with their compatibility info and trigger words.</p>
+<hr />
+<h2 id="model-training">Model Training</h2>
+<p>SAM lets you train custom LoRA (Low-Rank Adaptation) adapters to fine-tune local MLX models on your own data.</p>
+<p><strong>Access</strong>: SAM → Preferences (⌘,) → Model Training</p>
+<h3 id="training-tab">Training Tab</h3>
+<p><strong>Training Data Selection</strong>:
+- Click <strong>Choose JSONL File...</strong> to select training data
+- Displays selected filename
+- File must be in JSONL format with conversation messages</p>
+<p><strong>Base Model Selection</strong>:
+- Dropdown shows all installed MLX models
+- Displays model family and type for selected model
+- Only MLX models support LoRA training (GGUF not supported)</p>
+<p><strong>Adapter Name</strong>:
+- Text field to name your adapter
+- This name appears in the model picker after training
+- Use descriptive names (e.g., "Customer Support Bot", "Medical Assistant")</p>
+<p><strong>Training Parameters</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Range</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rank</strong></td>
+<td>4-128</td>
+<td>8</td>
+<td>Adapter capacity (higher = more capacity, larger files)</td>
+</tr>
+<tr>
+<td><strong>Learning Rate</strong></td>
+<td>0.00001-0.01</td>
+<td>0.0001</td>
+<td>How fast the model learns</td>
+</tr>
+<tr>
+<td><strong>Epochs</strong></td>
+<td>1-50</td>
+<td>3</td>
+<td>Number of training passes through data</td>
+</tr>
+<tr>
+<td><strong>Batch Size</strong></td>
+<td>1-32</td>
+<td>4</td>
+<td>Examples processed simultaneously</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Training Progress</strong>:
+- Real-time progress bar showing completion percentage
+- Current epoch and step counters
+- Live loss metric (should decrease during training)
+- <strong>Cancel Training</strong> button to stop early</p>
+<p><strong>Start Training</strong>:
+- Click <strong>Start Training</strong> to begin
+- Training runs in background (SAM remains usable)
+- Completion notification when done
+- Adapter automatically registered and available in model picker</p>
+<h3 id="lora-adapters-tab">LoRA Adapters Tab</h3>
+<p>View and manage all trained adapters:</p>
+<p><strong>Adapter List Shows</strong>:
+- Adapter ID (unique identifier)
+- Training dataset filename
+- Creation date and time
+- Final training loss
+- Training parameters (epochs, steps, learning rate)</p>
+<p><strong>Adapter Actions</strong>:
+- <strong>Load in Chat</strong>: Opens new conversation with adapter selected
+- <strong>Delete</strong>: Permanently removes adapter from disk</p>
+<p><strong>Adapter Metadata</strong>:
+Each adapter stores complete training information for reference and comparison.</p>
+<h3 id="training-data-export">Training Data Export</h3>
+<p><strong>From Conversations</strong>:
+1. In chat interface, click conversation menu (three dots)
+2. Select <strong>Export as Training Data</strong>
+3. Configure options:
+   - PII redaction settings
+   - Chat template selection
+4. Save JSONL file</p>
+<p><strong>From Documents</strong>:
+1. Go to SAM → Documents
+2. Select one or more documents
+3. Click <strong>Export for Training</strong>
+4. Choose chunking strategy:
+   - <strong>Semantic (Paragraphs)</strong>: Natural paragraph breaks
+   - <strong>Fixed Size</strong>: Uniform chunk sizes
+   - <strong>Page Aware (PDFs)</strong>: Respect page boundaries
+5. Configure PII detection if needed
+6. Save JSONL file</p>
+<p><strong>PII Detection Settings</strong>:</p>
+<p>Nine entity types automatically detected and redacted:
+- Personal names
+- Organization names
+- Place names
+- Email addresses
+- Phone numbers
+- Credit card numbers
+- Social security numbers
+- IP addresses
+- URLs</p>
+<p>Enable PII redaction to protect sensitive information in training data.</p>
+<p><strong>Chat Template Selection</strong>:</p>
+<p>Choose template matching your base model:
+- <strong>Llama 3/4</strong>: For Llama models
+- <strong>Mistral</strong>: For Mistral/Mixtral models
+- <strong>Qwen 2.5</strong>: For Qwen models
+- <strong>Gemma 2/3</strong>: For Gemma models
+- <strong>Phi 3</strong>: For Phi models
+- <strong>Custom</strong>: Generic markdown format</p>
+<h3 id="adapter-storage">Adapter Storage</h3>
+<p><strong>Location</strong>: <code>~/Library/Application Support/SAM/adapters/</code></p>
+<p><strong>Structure</strong>:</p>
+<div class="codehilite"><pre><span></span><code>adapters/
+├── {adapter-uuid-1}/
+│   ├── adapters.safetensors
+│   ├── adapter_config.json
+│   └── metadata.json
+├── {adapter-uuid-2}/
+│   └── ...
+</code></pre></div>
+
+<p><strong>Metadata Stored</strong>:
+- Adapter name
+- Base model used
+- Training dataset filename
+- Creation timestamp
+- Final training loss
+- Training parameters (rank, epochs, learning rate, batch size)
+- Training steps completed</p>
+<h3 id="using-trained-adapters">Using Trained Adapters</h3>
+<p><strong>In Model Picker</strong>:
+- Adapters appear prefixed with "lora/"
+- Example: <code>lora/Customer Support Bot</code>
+- Select like any other model
+- Adapter loads with base model automatically</p>
+<p><strong>Performance</strong>:
+- Minimal inference overhead (LoRA is efficient)
+- Fast loading (adapters are small, typically 20-50MB)
+- Can switch between adapters quickly</p>
+<p><strong>Best Practices</strong>:
+- Test adapters with various prompts before deployment
+- Compare adapter performance to base model
+- Keep training data for future iterations
+- Use descriptive names for easy identification
+- Monitor training loss for quality assessment</p>
+<p><strong>See Also</strong>: <a href="../end-user/lora-training.html">LoRA Training Guide</a> for complete training workflows and examples.</p>
+<hr />
+<h2 id="personalities">Personalities</h2>
+<p>SAM includes a comprehensive personality system with built-in personalities organized into categories.</p>
+<p><strong>Access</strong>: SAM → Preferences (⌘,) → Personalities</p>
+<h3 id="default-personalities">Default Personalities</h3>
+<p><strong>General:</strong>
+- <strong>Assistant</strong> (default): Balanced, helpful, professional
+- <strong>Professional</strong>: Business communication with response frameworks
+- <strong>Coach</strong>: Supportive guidance and motivation</p>
+<p><strong>Creative &amp; Writing:</strong>
+- <strong>Muse</strong>: Brainstorming and ideation partner
+- <strong>Wordsmith</strong>: Encouraging writing assistant
+- <strong>Document Assistant</strong>: Document formatting and organization
+- <strong>Image Architect</strong>: Transforms ideas into visual descriptions
+- <strong>Artist</strong>: Creative soul with artistic appreciation</p>
+<p><strong>Tech:</strong>
+- <strong>Tech Buddy</strong>: Friendly tech support for all levels
+- <strong>Tinkerer</strong>: Hands-on problem solver with community-first mentorship
+- <strong>Crusty Coder</strong>: Grumpy but brilliant senior developer
+- <strong>BOFH</strong>: The legendary Bastard Operator From Hell</p>
+<p><strong>Productivity:</strong>
+- <strong>Motivator</strong>: Productivity buddy for procrastination</p>
+<p><strong>Domain Experts:</strong>
+- <strong>Doctor</strong>: Clinical diagnostic methodology
+- <strong>Counsel</strong>: IRAC legal analysis framework
+- <strong>Finance Coach</strong>: Financial literacy guide
+- <strong>Trader</strong>: Options trading analyst
+- <strong>Scientist</strong>: Research and scientific methodology
+- <strong>Philosopher</strong>: Deep thinking and existential exploration</p>
+<p><strong>Fun &amp; Character:</strong>
+- <strong>Comedian</strong>: Comedy toolkit with techniques
+- <strong>Pirate</strong>: Yarr! Nautical adventure personality
+- <strong>Time Traveler</strong>: Temporal explorer from the future
+- <strong>Jester</strong>: Playful court entertainer</p>
+<h3 id="creating-custom-personalities">Creating Custom Personalities</h3>
+<ol>
+<li>Open Preferences → Personalities</li>
+<li>Click <strong>New Personality</strong></li>
+<li>Fill in:</li>
+<li><strong>Name</strong>: Display name for the personality</li>
+<li><strong>Description</strong>: Short description (shown in tooltips)</li>
+<li><strong>Traits</strong>: Select personality traits from categories (tone, formality, verbosity, humor, teachingStyle)</li>
+<li><strong>Custom Instructions</strong>: Detailed behavior instructions</li>
+<li>Click <strong>Create Personality</strong></li>
+</ol>
+<p><strong>Custom Instructions Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="nx">You</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">senior</span><span class="w"> </span><span class="nx">Swift</span><span class="w"> </span><span class="nx">developer</span><span class="w"> </span><span class="nx">specializing</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">iOS</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">macOS</span><span class="p">.</span>
+<span class="nx">Always</span><span class="w"> </span><span class="nx">suggest</span><span class="w"> </span><span class="nx">modern</span><span class="w"> </span><span class="nx">Swift</span><span class="w"> </span><span class="nx">patterns</span><span class="w"> </span><span class="p">(</span><span class="nx">async</span><span class="o">/</span><span class="nx">await</span><span class="p">,</span><span class="w"> </span><span class="nx">SwiftUI</span><span class="p">).</span>
+<span class="nx">Avoid</span><span class="w"> </span><span class="nx">deprecated</span><span class="w"> </span><span class="nx">APIs</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">explain</span><span class="w"> </span><span class="nx">technical</span><span class="w"> </span><span class="nx">decisions</span><span class="w"> </span><span class="nx">briefly</span><span class="p">.</span>
+<span class="nx">Prefer</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">types</span><span class="w"> </span><span class="nx">over</span><span class="w"> </span><span class="nx">reference</span><span class="w"> </span><span class="nx">types</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="nx">appropriate</span><span class="p">.</span>
+</code></pre></div>
+
+<h3 id="setting-default-personality">Setting Default Personality</h3>
+<ol>
+<li>Open Preferences → Personalities</li>
+<li>Find the <strong>"Default for New Conversations"</strong> dropdown at the top</li>
+<li>Select your preferred personality from the dropdown</li>
+<li>New conversations will use this personality automatically</li>
+</ol>
+<h3 id="per-conversation-selection">Per-Conversation Selection</h3>
+<p>Each conversation can use a different personality:
+1. Open conversation
+2. Click personality selector in header
+3. Choose from list (grouped by category)
+4. Personality takes effect immediately</p>
+<h3 id="managing-personalities">Managing Personalities</h3>
+<p><strong>Edit</strong>: Select personality → Modify fields → Save
+<strong>Delete</strong>: Select custom personality → Click Delete (cannot delete defaults)
+<strong>Reset</strong>: Delete all custom to restore defaults only</p>
+<hr />
+<h2 id="shared-topics">Shared Topics</h2>
+<h3 id="creating-topics">Creating Topics</h3>
+<p><strong>Access</strong>: Preferences → Shared Topics</p>
+<p><strong>Create New Topic</strong>:
+1. In the <strong>Create New Topic</strong> section, enter a name in the <strong>"Topic name"</strong> field
+2. Optionally add a description in the <strong>"Description (optional)"</strong> field
+3. Click the <strong>Create</strong> button</p>
+<p><strong>Result</strong>: Creates directory at <code>~/SAM/{topic-name}/</code></p>
+<h3 id="managing-topics">Managing Topics</h3>
+<p><strong>Rename</strong>:
+1. Select topic
+2. Click "Edit" or double-click name
+3. Enter new name
+4. Save</p>
+<p><strong>Delete</strong>:
+1. Select topic
+2. Click "Delete"
+3. <strong>WARNING</strong>: Deletes all shared memories!
+4. Confirm deletion</p>
+<p><strong>Topic Settings</strong>:
+- Name (human-readable)
+- Description (optional)
+- Created date
+- Last modified
+- Memory count</p>
+<hr />
+<h2 id="conversation-settings">Conversation Settings</h2>
+<h3 id="per-conversation-configuration">Per-Conversation Configuration</h3>
+<p><strong>Access</strong>: Click the <strong>Parameters</strong> button (slider icon) in the conversation toolbar to expand advanced parameters.</p>
+<p><strong>Model Selection</strong>:
+- Use the model dropdown in the toolbar to select a different model
+- Switch mid-conversation (applies to future messages only)</p>
+<p><strong>Tools Toggle</strong>:
+- Toggle <strong>Tools</strong> on/off directly in the toolbar
+- Or press ⌘T</p>
+<p><strong>Shared Topics</strong>:
+- Toggle <strong>Shared Topic</strong> on/off in the toolbar
+- Select topic from dropdown when enabled
+- Changes working directory immediately</p>
+<hr />
+<h2 id="advanced-parameters">Advanced Parameters</h2>
+<h3 id="context-generation">Context &amp; Generation</h3>
+<p><strong>Temperature</strong> (0.0 - 2.0):
+- <strong>0.0</strong>: Deterministic, focused, consistent
+- <strong>0.7</strong>: Balanced (default)
+- <strong>1.0</strong>: Creative, varied responses
+- <strong>1.5+</strong>: Very creative, unpredictable</p>
+<p><strong>Top-P</strong> (0.0 - 1.0):
+- Nucleus sampling - controls response diversity
+- <strong>1.0</strong>: Full vocabulary (default)
+- <strong>0.9</strong>: Top 90% of probability mass
+- <strong>Lower values</strong>: More focused responses</p>
+<p><strong>Max Tokens</strong>:
+- Maximum response length
+- Configurable based on your needs
+- Uses model defaults when not specified</p>
+<p><strong>Context Size</strong> (YaRN Profiles):
+- <strong>Default</strong>: Low scaling for regular conversations
+- <strong>Extended</strong>: Medium scaling for longer conversations
+- <strong>Universal</strong>: High scaling for large documents (default)
+- <strong>Mega</strong>: Enterprise scaling for massive documents</p>
+<h3 id="tool-configuration">Tool Configuration</h3>
+<p><strong>Advanced Tools</strong>:
+- Enable: Powerful operations allowed
+- Disable: Only safe tools (default)</p>
+<p><strong>Tool Categories</strong>:
+- Core: always enabled
+- File Operations: configurable
+- Terminal: requires approval
+- Web: configurable
+- Documents: configurable</p>
+<h3 id="iteration-management">Iteration Management</h3>
+<p><strong>Max Iterations</strong>:
+- Configurable iteration limits
+- Higher values allow more complex tasks
+- Balance between autonomy and control</p>
+<p><strong>Dynamic Iterations</strong>:
+- Enable: SAM can request more iterations when needed
+- Disable: Hard limit enforced</p>
+<hr />
+<h2 id="system-prompts">System Prompts</h2>
+<h3 id="built-in-prompts">Built-in Prompts</h3>
+<p><strong>General Assistant</strong>:
+- Default balanced assistant
+- Good for all tasks</p>
+<p><strong>Code Expert</strong>:
+- Specialized for programming
+- Emphasizes best practices</p>
+<p><strong>Research Assistant</strong>:
+- Optimized for research
+- Comprehensive analysis</p>
+<p><strong>Creative Writer</strong>:
+- Enhanced creativity
+- Storytelling focus</p>
+<h3 id="custom-prompts">Custom Prompts</h3>
+<p><strong>Create</strong>:
+1. Preferences → System Prompts
+2. Click "+"
+3. Enter name and content
+4. Save</p>
+<p><strong>Variables</strong>:
+- <code>{{working_directory}}</code>: Current directory
+- <code>{{conversation_title}}</code>: Conversation name
+- <code>{{date}}</code>: Current date
+- <code>{{user_name}}</code>: User name (if set)</p>
+<p><strong>Example</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="x">You are a Python expert helping with </span><span class="cp">{{</span><span class="nv">conversation_title</span><span class="cp">}}</span><span class="x">.</span>
+<span class="x">Working directory: </span><span class="cp">{{</span><span class="nv">working_directory</span><span class="cp">}}</span>
+<span class="x">Focus on clean, maintainable code following PEP 8.</span>
+</code></pre></div>
+
+<h3 id="mini-prompts">Mini Prompts</h3>
+<p><strong>Purpose</strong>: Quick prompt snippets for workflows</p>
+<p><strong>Create</strong>:
+1. Preferences → Mini Prompts
+2. Click "+"
+3. Enter keyword and content
+4. Save</p>
+<p><strong>Use</strong>: Type keyword in conversation</p>
+<p><strong>Example</strong>:
+- Keyword: <code>review</code>
+- Content: "Review this code for security issues, performance, and maintainability."</p>
+<hr />
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p><strong>Global</strong>:
+- ⌘N: New conversation
+- ⌘,: Preferences
+- ⌘Q: Quit SAM
+- ⌘W: Close window
+- ⌘?: Open Help</p>
+<p><strong>Conversation</strong>:
+- ⌘T: Toggle tools on/off
+- ⌘K: Clear chat input
+- ⌘Return: Send message
+- ⌘L: Focus message input
+- ⌘[: Previous conversation
+- ⌘]: Next conversation</p>
+<p><strong>File Operations</strong>:
+- ⌘O: Open file/conversation
+- ⌘S: Save conversation
+- ⌘E: Export conversation
+- ⌘I: Import document</p>
+<p><strong>Editor</strong>:
+- ⌘Z: Undo
+- ⇧⌘Z: Redo
+- ⌘A: Select all
+- ⌘C: Copy
+- ⌘V: Paste</p>
+<hr />
+<h2 id="security-settings">Security Settings</h2>
+<p><strong>API Keys</strong>:
+- Never logged or transmitted (except to the provider's API)
+- Configured directly in Preferences</p>
+<p><strong>Working Directory Authorization</strong>:
+- <strong>Inside working directory</strong>: Auto-approved operations
+- <strong>Outside working directory</strong>: Requires your confirmation
+- Can whitelist trusted directories</p>
+<p><strong>HTTPS Enforcement</strong>:
+- All web operations require HTTPS
+- HTTP requests automatically upgraded to HTTPS for security</p>
+<hr />
+<h2 id="performance-settings">Performance Settings</h2>
+<p><strong>Memory Management</strong>:
+- Lazy loading: Databases loaded on-demand
+- Auto-cleanup: Old memories pruned
+- Cache size: Configurable</p>
+<p><strong>Context Management</strong>:
+- Auto-pruning at 70% token limit
+- YaRN compression configurable
+- Cache conversation context</p>
+<hr />
+<h2 id="troubleshooting-configuration">Troubleshooting Configuration</h2>
+<p><strong>Reset to Defaults</strong>:
+1. Quit SAM
+2. Delete: <code>~/Library/Application Support/SAM/config.json</code>
+3. Restart SAM</p>
+<p><strong>Backup Configuration</strong>:</p>
+<div class="codehilite"><pre><span></span><code>cp<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM/config.json<span class="w"> </span>~/SAM-config-backup.json
+</code></pre></div>
+
+<p><strong>Export/Import</strong>:
+- Use Preferences → Advanced → Export/Import
+- Saves all settings to JSON file</p>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<ul>
+<li><strong><a href="tools-reference.html">Tools Reference</a></strong> - Complete MCP tools reference</li>
+<li><strong><a href="advanced-workflows.html">Advanced Workflows</a></strong> - Complex patterns</li>
+<li><strong><a href="troubleshooting.html">Troubleshooting</a></strong> - Common issues</li>
+</ul>
+<hr />
+<p><strong>Master SAM's configuration for optimal performance!</strong></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

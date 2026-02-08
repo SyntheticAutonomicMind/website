@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with SAM | SAM Documentation</title>
+    <meta name="description" content="SAM Documentation: Getting Started with SAM">
+    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <style>
+        /* Documentation styles - Apple-inspired */
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Typography */
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Links */
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Code */
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Blockquotes */
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        /* Tables */
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        
+        /* Strong and emphasis */
+        .doc-content strong {
+            font-weight: 600;
+        }
+        
+        .doc-content em {
+            font-style: italic;
+        }
+        
+        /* Horizontal rule */
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        /* Images */
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+        
+        // Convert mermaid code blocks to renderable divs
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('pre code').forEach(block => {
+                const text = block.textContent;
+                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
+                    // This is a mermaid diagram
+                    const mermaidCode = text.trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
+                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
+                    const div = document.createElement('div');
+                    div.className = 'mermaid';
+                    div.textContent = mermaidCode;
+                    block.closest('pre').replaceWith(div);
+                }
+            });
+        });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/getting-started.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../index.html">Documentation</a> / Getting Started
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="getting-started-with-sam">Getting Started with SAM</h1>
+<p><strong>Your AI assistant that actually remembers, actually works, and actually finishes projects.</strong></p>
+<p>You're about to meet an AI that doesn't just chat. It collaborates. SAM reads your code, understands your documents, executes commands, and remembers everything across days and weeks of conversations. No more re-explaining context. No more copy-pasting between windows. Just describe what you need, and watch it happen.</p>
+<p><strong>This guide takes about 10 minutes.</strong> By the end, you'll have SAM running with your preferred AI provider, and you'll understand the features that make it unlike any AI assistant you've used before.</p>
+<p><strong>What makes SAM different:</strong>
+- <strong>Memory that persists</strong>: Recall decisions from last week without digging through chat history
+- <strong>Documents become knowledge</strong>: Drop a PDF and ask questions about any page
+- <strong>Autonomous execution</strong>: SAM doesn't just suggest. It builds, tests, and iterates.
+- <strong>Complete privacy</strong>: Your data stays on your Mac. Always.</p>
+<p>Let's get you set up.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#first-launch--setup">First Launch &amp; Setup</a></li>
+<li><a href="#your-first-conversation">Your First Conversation</a></li>
+<li><a href="#configuring-ai-providers">Configuring AI Providers</a></li>
+<li><a href="#understanding-the-interface">Understanding the Interface</a></li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ol>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Before installing SAM, ensure you have:</p>
+<ul>
+<li><strong>macOS 14.0 (Sonoma) or later</strong></li>
+<li><strong>4GB+ available RAM</strong> (8GB+ recommended for local models)</li>
+<li><strong>4GB+ free disk space</strong></li>
+<li><strong>Internet connection</strong> (for cloud providers and downloads)</li>
+</ul>
+<p><strong>For cloud AI providers (optional)</strong>:
+- <a href="https://platform.openai.com/api-keys">OpenAI API key</a> - GPT-4, GPT-3.5-turbo, and more
+- <a href="https://github.com/features/copilot">GitHub Copilot subscription</a> - GitHub Copilot integration
+- Anthropic Claude API key - Claude models
+- Google Gemini API key - Gemini models
+- DeepSeek API key - DeepSeek models</p>
+<p><strong>For local models (optional)</strong>:
+- Apple Silicon Mac (M1/M2/M3/M4) - MLX models
+- Any Mac (Intel or Apple Silicon) - GGUF models via llama.cpp</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="method-1-download-pre-built-app-recommended">Method 1: Download Pre-built App (Recommended)</h3>
+<p>The easiest way to install SAM - just download, extract, and run.</p>
+<p><strong>Step 1: Download SAM</strong>
+1. Visit the <a href="https://github.com/SyntheticAutonomicMind/SAM/releases">Releases page</a>
+2. Download the latest <code>SAM.app.zip</code> file
+3. File size: Approximately 150MB</p>
+<p><strong>Step 2: Extract the Archive</strong>
+1. Double-click <code>SAM.app.zip</code> to extract
+2. You'll get <code>SAM.app</code></p>
+<p><strong>Step 3: Move to Applications</strong>
+Drag <code>SAM.app</code> to your Applications folder, or use Terminal:</p>
+<div class="codehilite"><pre><span></span><code>mv<span class="w"> </span>~/Downloads/SAM.app<span class="w"> </span>/Applications/
+</code></pre></div>
+
+<p><strong>Step 4: First Launch (Important)</strong>
+macOS Gatekeeper will block unsigned apps on first launch. To open SAM:</p>
+<ol>
+<li><strong>Right-click</strong> (or Control-click) <code>SAM.app</code> in Applications</li>
+<li>Select <strong>"Open"</strong> from the menu</li>
+<li>Click <strong>"Open"</strong> in the security dialog</li>
+<li>This step is only needed once</li>
+</ol>
+<p><strong>Alternative: Command Line</strong>
+If you get a "damaged app" error, remove the quarantine attribute:</p>
+<div class="codehilite"><pre><span></span><code>xattr<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>/Applications/SAM.app
+</code></pre></div>
+
+<h3 id="method-2-build-from-source">Method 2: Build from Source</h3>
+<p>For developers or advanced users who want to build SAM from source.</p>
+<p><strong>Prerequisites</strong>:
+- Xcode 15.0+ with Command Line Tools
+- Git
+- Homebrew (optional, for dependencies)</p>
+<p><strong>Build Steps</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SyntheticAutonomicMind/SAM.git
+<span class="nb">cd</span><span class="w"> </span>SAM
+
+<span class="c1"># Initialize submodules (llama.cpp for local models)</span>
+git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+
+<span class="c1"># Build debug version (faster, includes debug symbols)</span>
+make<span class="w"> </span>build-debug
+
+<span class="c1"># Or build release version (optimized)</span>
+make<span class="w"> </span>build-release
+
+<span class="c1"># Launch SAM</span>
+open<span class="w"> </span>.build/Build/Products/Debug/SAM.app
+<span class="c1"># or</span>
+open<span class="w"> </span>.build/Build/Products/Release/SAM.app
+</code></pre></div>
+
+<p>For complete build instructions, see <a href="../developer/building.html">Building from Source</a>.</p>
+<hr />
+<h2 id="first-launch-setup">First Launch &amp; Setup</h2>
+<p>When you launch SAM for the first time, you'll be greeted by the <strong>Onboarding Wizard</strong> that helps you get set up in minutes.</p>
+<h3 id="grant-permissions">Grant Permissions</h3>
+<p>SAM will request the following permissions:</p>
+<p><strong>Network Access</strong>
+- Required to connect to AI providers (OpenAI, Copilot, Gemini, etc.)
+- Click "Allow" when prompted</p>
+<p><strong>File Access</strong> (optional, on first file operation)
+- Needed if you want SAM to read/write files in your home directory
+- You can grant this later when needed</p>
+<p><strong>Location Access</strong> (optional)
+- Enables location-aware responses
+- City-level accuracy only (privacy-focused)
+- Can be configured later in Preferences</p>
+<h3 id="onboarding-wizard">Onboarding Wizard</h3>
+<p>The wizard appears automatically when SAM has no configured models or providers. It guides you through two setup paths:</p>
+<p><strong>Path 1: Use Cloud AI</strong> (Recommended for quick start)
+- Connect to services like OpenAI, Claude, Google Gemini, or GitHub Copilot
+- Most powerful models available
+- Quick setup with minimal downloads
+- Requires API key (or GitHub authentication for Copilot)</p>
+<p><strong>Path 2: Download Local Model</strong> (Best for privacy)
+- Run AI models privately on your Mac
+- 100% private and offline operation
+- No API costs or usage limits
+- Apple Silicon optimized (MLX) or works on any Mac (GGUF)</p>
+<p><strong>What the wizard does:</strong>
+- <strong>Smart Recommendations</strong>: Suggests models based on your Mac's RAM (8GB → Qwen3-4B, 16GB → Qwen3-8B, 32GB+ → larger models)
+- <strong>Direct Downloads</strong>: Download local models from HuggingFace with progress tracking
+- <strong>Provider Setup</strong>: Opens preferences for cloud provider configuration
+- <strong>Automatic Completion</strong>: Closes automatically when configuration is complete</p>
+<h3 id="choose-your-path">Choose Your Path</h3>
+<p><strong>Quick Start: Cloud Provider</strong>
+- Fast to set up
+- Access to latest models (GPT-4, Claude, Gemini, etc.)
+- Requires API key from provider
+- → Continue to <a href="#configuring-ai-providers">Configuring AI Providers</a></p>
+<p><strong>Privacy-First: Local Model</strong>
+- No API keys needed
+- Works completely offline
+- RAM-based model recommendations
+- Direct downloads with progress indicators
+- → See <a href="#using-local-models">Using Local Models</a> below</p>
+<hr />
+<h2 id="your-first-conversation">Your First Conversation</h2>
+<p>Ready to chat with SAM? Let's send your first message!</p>
+<h3 id="step-1-create-a-conversation">Step 1: Create a Conversation</h3>
+<p>SAM automatically creates a "New Conversation" when you first launch it. You can also create new conversations anytime:
+- Click the <strong>"+"</strong> button in the sidebar
+- Press <strong>⌘ + N</strong> (keyboard shortcut)</p>
+<h3 id="step-2-select-a-model-and-personality">Step 2: Select a Model and Personality</h3>
+<p>Choose a model from the dropdown at the top of the conversation:</p>
+<p><strong>Cloud Provider (OpenAI)</strong>:
+- <code>gpt-4</code> - Best quality (slower, costs more)
+- <code>gpt-3.5-turbo</code> - Good quality (faster, costs less)</p>
+<p><strong>Local Model</strong>:
+- Select your downloaded model
+- Listed by name and provider (MLX/GGUF)</p>
+<p><strong>Select a Personality</strong> (Optional):
+Click the personality selector next to the model picker:
+- <strong>Assistant</strong> (default): Balanced, helpful, professional
+- <strong>Tinkerer</strong>: Hands-on problem solver with community-first mentorship
+- <strong>Wordsmith</strong>: Encouraging writing assistant for prose and documentation
+- <strong>Muse</strong>: Brainstorming and creative ideation
+- And 20 more specialized personalities</p>
+<h3 id="step-3-send-your-first-message">Step 3: Send Your First Message</h3>
+<p>Type a message in the input field at the bottom and press Enter:</p>
+<p><strong>Example First Message</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Hello</span><span class="o">!</span><span class="w"> </span><span class="nv">Can</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">explain</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">can</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">makes</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">special</span>?
+</code></pre></div>
+
+<p>SAM will respond in real-time, explaining its capabilities and unique features.</p>
+<h3 id="step-4-try-some-basic-tasks">Step 4: Try Some Basic Tasks</h3>
+<p>Once SAM responds, try these tasks to see its capabilities:</p>
+<p><strong>Ask for Information</strong>:</p>
+<div class="codehilite"><pre><span></span><code>What are the main features that make SAM different from other AI assistants?
+</code></pre></div>
+
+<p><strong>Request File Operations</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Create a file called hello.txt with &quot;Hello from SAM!&quot; in my home directory
+</code></pre></div>
+
+<p><strong>Test Memory</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Remember that my favorite programming language is Python
+</code></pre></div>
+
+<p>Then in a new message:</p>
+<div class="codehilite"><pre><span></span><code>What&#39;s my favorite programming language?
+</code></pre></div>
+
+<p>SAM will retrieve this from memory and respond correctly.</p>
+<p><strong>Work with Attached Files</strong>:
+Click the paperclip button in the chat input area, select a file (PDF, text, code, etc.), and ask:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Summarize</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">document</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">me</span>
+</code></pre></div>
+
+<p>Files are automatically imported before your message is sent, so SAM can access their content immediately.</p>
+<p><strong>Web Research</strong> (requires API provider):</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Search</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">web</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">latest</span><span class="w"> </span><span class="nv">news</span><span class="w"> </span><span class="nv">about</span><span class="w"> </span><span class="nv">AI</span><span class="w"> </span><span class="nv">developments</span>
+</code></pre></div>
+
+<hr />
+<h2 id="configuring-ai-providers">Configuring AI Providers</h2>
+<p>To use cloud AI providers, you need to configure API keys.</p>
+<h3 id="openai-setup">OpenAI Setup</h3>
+<p><strong>Step 1: Get Your API Key</strong>
+1. Go to <a href="https://platform.openai.com/api-keys">platform.openai.com/api-keys</a>
+2. Sign in or create an account
+3. Click "Create new secret key"
+4. <strong>Copy the key</strong> (starts with <code>sk-</code>)
+5. <strong>Save it immediately</strong> - OpenAI only shows it once!</p>
+<p><strong>Step 2: Add to SAM</strong>
+1. Open SAM Preferences (press ⌘, or choose SAM → Preferences)
+2. Click <strong>Remote Providers</strong> tab
+3. Click <strong>Add Provider</strong> button
+4. Select <strong>OpenAI</strong> from the provider type dropdown
+5. Paste your API key
+6. Click <strong>Test</strong> to verify (optional)
+7. Click <strong>Save Provider</strong></p>
+<p><strong>Step 3: Start Using</strong>
+- Select an OpenAI model (gpt-4, gpt-3.5-turbo) in the model dropdown
+- Start chatting!</p>
+<h3 id="github-copilot-setup">GitHub Copilot Setup</h3>
+<p>GitHub Copilot uses <strong>Device Flow authentication</strong> - no API keys to copy/paste!</p>
+<p><strong>Step 1: Activate Subscription</strong>
+1. Go to <a href="https://github.com/features/copilot">github.com/features/copilot</a>
+2. Subscribe to GitHub Copilot (free trial available)</p>
+<p><strong>Step 2: Authenticate in SAM</strong>
+1. Open SAM Preferences (⌘,)
+2. Click <strong>Remote Providers</strong> tab
+3. Click <strong>Add Provider</strong> button, then select <strong>GitHub Copilot</strong>
+4. Click <strong>Authenticate with GitHub</strong>
+5. SAM displays a <strong>user code</strong> (e.g., "ABCD-1234")
+6. Your browser opens to GitHub's device verification page
+7. Enter the code and click <strong>Continue</strong>
+8. Click <strong>Authorize</strong> to grant SAM access
+9. Return to SAM - authentication completes automatically</p>
+<p><strong>Step 3: Use Copilot Models</strong>
+- Select a Copilot model from the dropdown
+- Available models: GPT-4, Claude 3.5 Sonnet, o1-preview, o1-mini</p>
+<p><strong>Note</strong>: Tokens refresh automatically - no need to re-authenticate frequently.</p>
+<p><strong>Other Providers</strong></p>
+<p><strong>Anthropic Claude</strong>:
+1. Get API key from <a href="https://console.anthropic.com">console.anthropic.com</a>
+2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Anthropic</strong>, paste key, and click <strong>Save Provider</strong></p>
+<p><strong>Google Gemini</strong>:
+1. Get API key from <a href="https://ai.google.dev">ai.google.dev</a>
+2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Google Gemini</strong>, paste key, and click <strong>Save Provider</strong>
+4. Available models: Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash Thinking Experimental</p>
+<p><strong>DeepSeek</strong>:
+1. Get API key from <a href="https://platform.deepseek.com">platform.deepseek.com</a>
+2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>DeepSeek</strong>, paste key, and click <strong>Save Provider</strong></p>
+<p><strong>Custom (Grok, Ollama, etc.)</strong>:
+1. Get API key from provider
+2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
+3. Select <strong>Custom</strong> (OpenAI-compatible endpoint), configure base URL and key</p>
+<hr />
+<h2 id="using-local-models">Using Local Models</h2>
+<p>For complete privacy and offline operation, use local models. SAM provides a comprehensive interface for managing local models.</p>
+<h3 id="local-models-preferences">Local Models Preferences</h3>
+<p>Open <strong>SAM → Preferences → Local Models</strong> to access the 3-tab interface:</p>
+<p><strong>Installed Models Tab</strong>
+- View all downloaded models (GGUF, MLX, Stable Diffusion)
+- Filter by type: All, GGUF, MLX, or Stable Diffusion
+- Sort by name, size, or date added
+- See model details: size, type, context window
+- Remove models you no longer need</p>
+<p><strong>Download Tab</strong>
+- Search up to 100 models from HuggingFace
+- Filter by type: All, GGUF, MLX, SD, Q4, Q5, Q8
+- See context window requirements (SAM recommends 16k+ for full tool support)
+- Click <strong>Download</strong> to install directly with progress tracking
+- Models automatically appear in Installed tab when complete</p>
+<p><strong>Settings Tab</strong>
+- View storage location and disk usage
+- Configure model optimization settings
+- Quick access to model directories</p>
+<h3 id="downloading-models-via-sam-recommended">Downloading Models via SAM (Recommended)</h3>
+<p><strong>Step 1: Open Local Models Preferences</strong>
+1. Go to <strong>SAM → Preferences → Local Models</strong>
+2. Click the <strong>Download</strong> tab</p>
+<p><strong>Step 2: Search for Models</strong>
+- Search by name (e.g., "Qwen2.5-Coder", "Llama-3", "Mistral")
+- Or browse by filter: All Models, GGUF, MLX, Stable Diffusion, Q4/Q5/Q8
+- Up to 100 results displayed per search</p>
+<p><strong>Step 3: Check Context Window</strong>
+- Look for models with 16k+ context window
+- Models with less than 16k will have tools automatically disabled
+- Context window shown in model details</p>
+<p><strong>Step 4: Download</strong>
+- Click <strong>Download</strong> button next to the model
+- Progress bar shows download status
+- Model appears in <strong>Installed</strong> tab when complete</p>
+<p><strong>Step 5: Use the Model</strong>
+- Select your model from the model dropdown in any conversation
+- MLX models show as "MLX: Model Name"
+- GGUF models show as "GGUF: Model Name"</p>
+<h3 id="manual-model-installation">Manual Model Installation</h3>
+<p>If you prefer to download models manually:</p>
+<p><strong>MLX Models (Apple Silicon Only)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/Library/Caches/sam/models/
+
+<span class="c1"># Download from HuggingFace</span>
+<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
+git<span class="w"> </span>lfs<span class="w"> </span>install
+git<span class="w"> </span>clone<span class="w"> </span>https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
+</code></pre></div>
+
+<p><strong>GGUF Models (All Macs)</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Create directory</span>
+mkdir<span class="w"> </span>-p<span class="w"> </span>~/Library/Caches/sam/models/
+
+<span class="c1"># Download model file</span>
+<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
+wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+</code></pre></div>
+
+<p><strong>Model Recommendations by RAM:</strong>
+- <strong>8GB RAM</strong>: Qwen3-4B, small 4-bit quantized models
+- <strong>16GB RAM</strong>: Qwen3-8B, Mistral-7B Q4/Q5
+- <strong>32GB+ RAM</strong>: Qwen3-14B, Llama-3-13B, larger models</p>
+<p><strong>Quantization Guide:</strong>
+- <strong>Q4_K_M</strong>: Good balance of quality and size (recommended for most users)
+- <strong>Q5_K_M</strong>: Better quality, larger size
+- <strong>Q8</strong>: Highest quality, largest size (close to original model performance)</p>
+<hr />
+<h2 id="understanding-the-interface">Understanding the Interface</h2>
+<h3 id="main-window">Main Window</h3>
+<p><img alt="SAM Default Interface" src="../../../images/sam-default.png" /></p>
+<p>When you launch SAM, you'll see the main interface with three primary areas:</p>
+<ol>
+<li><strong>Sidebar (Left)</strong>: Your conversation list, search, and navigation</li>
+<li><strong>Main Area (Center)</strong>: Active conversation with toolbar and chat</li>
+<li><strong>Bottom Bar</strong>: Memory statistics, token count, and terminal access</li>
+</ol>
+<h3 id="conversation-sidebar">Conversation Sidebar</h3>
+<p><img alt="Conversation Panel" src="../../../images/conversation-panel.png" /></p>
+<p>The sidebar provides access to all your conversations:</p>
+<ul>
+<li><strong>New Conversation Button</strong>: Create new conversations with custom names</li>
+<li><strong>Conversation List</strong>: All active conversations with timestamps</li>
+<li><strong>Pin Icon</strong>: Pin important conversations to the top of the list</li>
+<li><strong>Search Field</strong>: Find conversations by title or content</li>
+<li><strong>Global Search (F)</strong>: Press F to search across all conversations for specific messages or content</li>
+</ul>
+<h3 id="model-and-personality-selection">Model and Personality Selection</h3>
+<p><img alt="Model Toolbar" src="../../../images/model-toolbar.png" /></p>
+<p>The model toolbar gives you control over which AI you're using and how it behaves. From left to right:</p>
+<ul>
+<li><strong>Model Selector</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF)</li>
+<li><strong>System Prompt Selector</strong>: Select predefined system prompts or create custom ones</li>
+<li><strong>Personality Selector</strong>: Choose from built-in personalities (Assistant, Tinkerer, Wordsmith, etc.) or create your own</li>
+<li><strong>Working Directory Button</strong>: Set or view the working folder for this conversation</li>
+<li><strong>Memory Panel Button</strong>: Access memory search and management</li>
+<li><strong>Performance Metrics Button</strong>: View token usage and performance statistics</li>
+<li><strong>Terminal Button</strong>: Open the integrated terminal for command execution</li>
+<li><strong>Advanced Parameters Button</strong>: Access temperature, top-p, repetition penalty, and other settings</li>
+<li><strong>Export Button</strong>: Export conversation to JSON format</li>
+<li><strong>Todo List Button</strong>: View and manage agent task lists</li>
+<li><strong>Scroll Lock</strong>: Lock/unlock automatic scrolling in chat</li>
+</ul>
+<h3 id="conversation-header">Conversation Header</h3>
+<p><img alt="Conversation Header" src="../../../images/conversation-header.png" /></p>
+<p>The conversation header displays conversation metadata and controls:</p>
+<p><strong>Top Left:</strong>
+- <strong>Conversation Title</strong>: Click to rename your conversation</p>
+<p><strong>Bottom Left:</strong>
+- <strong>Message Count</strong>: Number of messages in this conversation
+- <strong>Conversation ID</strong>: Unique identifier for this conversation</p>
+<p><strong>Top Right:</strong>
+- <strong>Mini-Prompts Indicator</strong>: Shows number of mini-prompts selected when panel is closed
+- <strong>Shared Topic Identifier</strong>: Shows shared topic name when enabled, blank otherwise</p>
+<p><strong>Bottom Right (GitHub Copilot specific):</strong>
+- <strong>Cost Multiplier</strong>: Token cost multiplier for current model
+- <strong>Status Used/Remaining</strong>: Tokens or requests used vs remaining
+- <strong>Usage Percentage</strong>: Percentage of quota consumed</p>
+<h3 id="chat-input-area">Chat Input Area</h3>
+<p><img alt="Chat Input" src="../../../images/chat-input.png" /></p>
+<p>The input area at the bottom is where you interact with SAM:</p>
+<ul>
+<li><strong>Message Input Field</strong>: Type your messages here (supports multi-line with Shift+Enter)</li>
+<li><strong>Paperclip Button</strong>: Attach files (PDFs, text, code, images) which are automatically imported before sending</li>
+<li><strong>Send Button</strong>: Send your message (or press Enter)</li>
+</ul>
+<h3 id="advanced-parameters">Advanced Parameters</h3>
+<p><img alt="Advanced Parameters" src="../../../images/parameters-toolba.png" /></p>
+<p>Click the parameters button to access fine-grained control over model behavior:</p>
+<p><strong>Sliders:</strong>
+- <strong>Temperature (Temp)</strong>: Controls randomness (0.0 = focused and deterministic, 1.0 = creative and varied)
+- <strong>Top-P</strong>: Nucleus sampling for response diversity
+- <strong>Repetition Penalty (Rep)</strong>: Reduces repetition in responses
+- <strong>Max Tokens Slider</strong>: Maximum length of SAM's response
+- <strong>Context Slider</strong>: How much conversation history SAM can see</p>
+<p><strong>Switches:</strong>
+- <strong>Reasoning</strong>: Enable chain-of-thought reasoning
+- <strong>Tools</strong>: Enable/disable tool usage (file operations, web search, etc.)
+- <strong>Auto-Approve</strong>: Automatically approve tool operations
+- <strong>Terminal</strong>: Show/hide terminal panel
+- <strong>Workflow</strong>: Enable workflow mode
+- <strong>Shared Topic</strong>: Enable shared workspace across conversations
+- <strong>Extend</strong>: Enable context extension</p>
+<h3 id="working-directory">Working Directory</h3>
+<p><img alt="Directory Toolbar" src="../../../images/directory-toolbar.png" /></p>
+<p>Each conversation has its own working directory where SAM reads and writes files:</p>
+<ul>
+<li><strong>Current Directory</strong>: Shows current working directory path (default: ~/SAM/ConversationName/)</li>
+<li><strong>Change Directory</strong>: Click to select a different folder</li>
+<li><strong>Reveal in Finder</strong>: Open the working directory in Finder</li>
+<li><strong>Reset to Default</strong>: Return to default conversation directory</li>
+<li><strong>Auto-Sync</strong>: When you rename a conversation, the folder renames automatically</li>
+</ul>
+<h3 id="memory-toolbar">Memory Toolbar</h3>
+<p><img alt="Memory Toolbar" src="../../../images/memory-toolbar.png" /></p>
+<p>The memory toolbar shows and controls SAM's semantic memory:</p>
+<ul>
+<li><strong>Memory Count</strong>: Number of memories stored for this conversation or topic</li>
+<li><strong>Search Memories</strong>: Query stored memories semantically</li>
+<li><strong>Clear Memories</strong>: Remove memories for conversation or shared topic</li>
+</ul>
+<h3 id="mini-prompts">Mini-Prompts</h3>
+<p><img alt="Mini-Prompt Panel" src="../../../images/mini-prompt-panel.png" /></p>
+<p>Mini-prompts inject consistent context into your conversations without repeating yourself. They're perfect for location-based queries, project details, or personal preferences.</p>
+<p><strong>How to Use:</strong>
+1. Click the Mini-Prompts button in the conversation header
+2. Toggle mini-prompts on/off for the current conversation
+3. Create new mini-prompts in Preferences → Mini-Prompts
+4. Context is automatically added to every message when enabled</p>
+<p><strong>Example Mini-Prompts:</strong></p>
+<p><strong>SAM's Gazette</strong> - Automated local news aggregation:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Name</span><span class="o">:</span><span class="w"> </span><span class="n">SAM</span><span class="s1">&#39;s Gazette</span>
+
+<span class="s1">Content:</span>
+<span class="s1">**Develop a plan to create &quot;SAM&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">Gazette</span><span class="err">&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">serving</span><span class="w"> </span><span class="o">{</span><span class="n">LOCATION</span><span class="o">}.**</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Your</span><span class="w"> </span><span class="n">ONLY</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="o">(</span><span class="n">no</span><span class="w"> </span><span class="n">summaries</span><span class="o">,</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="n">lists</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">explanations</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">newspaper</span><span class="o">).</span>
+<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">encounter</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">fetching</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">scraping</span><span class="w"> </span><span class="n">articles</span><span class="o">,</span><span class="w"> </span><span class="n">ADAPT</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">OVERCOME</span><span class="o">:</span><span class="w">  </span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Try</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">sources</span><span class="o">,</span><span class="w"> </span><span class="n">deeper</span><span class="w"> </span><span class="n">searches</span><span class="o">,</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">blogs</span><span class="o">,</span><span class="w"> </span><span class="n">government</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">community</span><span class="w"> </span><span class="n">pages</span><span class="o">,</span><span class="w"> </span><span class="n">social</span><span class="w"> </span><span class="n">media</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">official</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">.</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="n">tools</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="n">genuine</span><span class="o">,</span><span class="w"> </span><span class="n">detailed</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">section</span><span class="o">.</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Do</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">give</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">due</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">errors</span><span class="err">-</span><span class="n">investigate</span><span class="o">,</span><span class="w"> </span><span class="n">retry</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">exhaust</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">reasonable</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">gather</span><span class="w"> </span><span class="n">information</span><span class="o">.</span>
+<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">populated</span><span class="w"> </span><span class="n">despite</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="n">efforts</span><span class="o">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">MUST</span><span class="o">:</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Clearly</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">incomplete</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.,</span><span class="w"> </span><span class="n">site</span><span class="w"> </span><span class="n">inaccessible</span><span class="o">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="n">available</span><span class="o">).</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">omit</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
+
+<span class="err">##</span><span class="w"> </span><span class="n">REQUIRED</span><span class="w"> </span><span class="n">OUTPUT</span><span class="w"> </span><span class="n">FORMAT</span>
+
+<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">SAM</span><span class="s1">&#39;s Gazette - Daily Edition for {LOCATION}  </span>
+<span class="s1">    **Date: {DATE}**</span>
+
+<span class="s1">    ---</span>
+
+<span class="s1">    ## Top Headlines</span>
+<span class="s1">    - 3-6 most important stories from all sections.  </span>
+<span class="s1">        ### **{TITLE}**  </span>
+<span class="s1">        *[{SOURCE NAME}]({SOURCE LINK}) - {DATE}*  </span>
+<span class="s1">        {Concise, factual summary with detail.}</span>
+
+<span class="s1">    ## Local/{CITY} News </span>
+<span class="s1">    - At least 3 local news articles.</span>
+
+<span class="s1">    ## {STATE} Statewide News</span>
+<span class="s1">    - At least 3 statewide articles.</span>
+
+<span class="s1">    ## Community Alerts</span>
+<span class="s1">    - At least 3 public safety, health, or event articles.</span>
+
+<span class="s1">    ## Weather Updates</span>
+<span class="s1">    - At least 3 items: forecast, warnings, or notable events.</span>
+
+<span class="s1">    ## Crime &amp; Public Safety</span>
+<span class="s1">    - At least 3 crime/public safety articles.</span>
+
+<span class="s1">    ## Politics &amp; Government </span>
+<span class="s1">    - At least 3 politics/government articles.</span>
+
+<span class="s1">    ## Major Events (Technology, Business, Sports, etc.)</span>
+<span class="s1">    - At least 3 major tech, business, or sports events.</span>
+
+<span class="s1">    ---</span>
+<span class="s1">    **Thank you for reading SAM&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">Gazette</span><span class="o">!**</span>
+
+<span class="o">---</span>
+
+<span class="err">##</span><span class="w"> </span><span class="n">INSTRUCTIONS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">RULES</span>
+
+<span class="o">-</span><span class="w"> </span><span class="n">For</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">section</span><span class="o">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">MUST</span><span class="o">:</span>
+<span class="w">    </span><span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">current</span><span class="o">,</span><span class="w"> </span><span class="n">live</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="o">(</span><span class="n">not</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">headlines</span><span class="o">,</span><span class="w"> </span><span class="n">timelines</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">aggregators</span><span class="o">).</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">sources</span><span class="w"> </span><span class="n">fail</span><span class="o">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">sources</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
+<span class="w">    </span><span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Scrape</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">fetch</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">links</span><span class="o">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">site</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="n">scraping</span><span class="o">,</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">fetch</span><span class="o">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">alternate</span><span class="w"> </span><span class="n">sites</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">seek</span><span class="w"> </span><span class="n">official</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">.</span>
+<span class="w">    </span><span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Extract</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">synthesize</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">detailed</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">based</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="o">(</span><span class="n">not</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">snippets</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">headlines</span><span class="o">).</span>
+<span class="w">    </span><span class="mi">4</span><span class="o">.</span><span class="w"> </span><span class="n">Format</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">strictly</span><span class="w"> </span><span class="n">according</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="n">markdown</span><span class="w"> </span><span class="n">template</span><span class="o">,</span><span class="w"> </span><span class="n">including</span><span class="w"> </span><span class="n">icons</span><span class="o">,</span><span class="w"> </span><span class="n">bold</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">headers</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">HRULE</span><span class="w"> </span><span class="o">(</span><span class="err">`</span><span class="o">---</span><span class="err">`</span><span class="o">)</span><span class="w"> </span><span class="n">separators</span><span class="o">.</span>
+<span class="w">    </span><span class="mi">5</span><span class="o">.</span><span class="w"> </span><span class="n">Each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">unique</span><span class="o">,</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">story</span><span class="w"> </span><span class="o">(</span><span class="n">never</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">homepage</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">generic</span><span class="w"> </span><span class="n">timeline</span><span class="o">).</span>
+<span class="w">    </span><span class="mi">6</span><span class="o">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">populate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">reasonable</span><span class="w"> </span><span class="n">attempts</span><span class="o">,</span><span class="w"> </span><span class="n">explain</span><span class="w"> </span><span class="n">exactly</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">incomplete</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">why</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="o">(</span><span class="n">never</span><span class="w"> </span><span class="n">omit</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">step</span><span class="o">).</span>
+
+<span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">summaries</span><span class="o">,</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="n">lists</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">generic</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">lists</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="n">newspaper</span><span class="o">.</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">rely</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">homepage</span><span class="o">,</span><span class="w"> </span><span class="n">timeline</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">snippet</span><span class="o">-</span><span class="n">only</span><span class="w"> </span><span class="n">links</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">summaries</span><span class="err">-</span><span class="n">always</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
+<span class="o">-</span><span class="w"> </span><span class="n">Review</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">compliance</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">publishing</span><span class="o">.</span>
+<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">complete</span><span class="o">,</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">NOT</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="o">.</span>
+</code></pre></div>
+
+<p><strong>Cruise News</strong> - Specialized industry news aggregation:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">Name</span><span class="o">:</span><span class="w"> </span><span class="n">Cruise</span><span class="w"> </span><span class="n">News</span>
+
+<span class="n">Content</span><span class="o">:</span>
+<span class="n">Develop</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">plan</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="s2">&quot;Cruise Life&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cruise</span><span class="w"> </span><span class="n">enthusiasts</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">today</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="n">headlines</span><span class="w"> </span><span class="n">related</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">Norwegian</span><span class="w"> </span><span class="o">(</span><span class="n">NCL</span><span class="o">),</span><span class="w"> </span><span class="n">Royal</span><span class="w"> </span><span class="n">Caribbean</span><span class="w"> </span><span class="o">(</span><span class="n">RCCI</span><span class="o">),</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">MSC</span><span class="w"> </span><span class="n">Cruises</span><span class="o">.</span><span class="w"> </span><span class="n">For</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">concise</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">story</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="n">directly</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">information</span><span class="o">.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">proper</span><span class="w"> </span><span class="n">emojis</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">header</span><span class="o">.</span>
+
+<span class="n">Focus</span><span class="w"> </span><span class="n">company</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">,</span><span class="w"> </span><span class="n">significant</span><span class="w"> </span><span class="n">events</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">general</span><span class="w"> </span><span class="n">industry</span><span class="w"> </span><span class="n">news</span><span class="o">.</span><span class="w"> </span><span class="n">Research</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">identify</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">locations</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">details</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">unique</span><span class="w"> </span><span class="n">stories</span><span class="o">.</span><span class="w"> </span><span class="n">Provide</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">markdown</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">sections</span><span class="o">.</span>
+</code></pre></div>
+
+<p><strong>Use Cases for Mini-Prompts:</strong>
+- <strong>Location-Based</strong>: Automatically include your location for weather, local search, or news
+- <strong>Project Context</strong>: Include tech stack, coding preferences, or project constraints
+- <strong>Personal Preferences</strong>: Name, role, communication style preferences
+- <strong>Specialized Workflows</strong>: Repeated tasks like news aggregation, report generation, or research briefs</p>
+<p><strong>Best Practices:</strong>
+- Keep mini-prompts focused on one type of context
+- Use different mini-prompts for different conversation types
+- Toggle off mini-prompts that aren't relevant to current conversation
+- Update mini-prompts as your context changes</p>
+<h3 id="keyboard-shortcuts">Keyboard Shortcuts</h3>
+<p><strong>Essential:</strong>
+- <strong>⌘N</strong>: New conversation
+- <strong>⌘,</strong>: Open Preferences
+- <strong>⌘W</strong>: Close current window
+- <strong>⌘Q</strong>: Quit SAM
+- <strong>⌘?</strong>: Open Help
+- <strong>F</strong>: Global search across all conversations</p>
+<p><strong>Conversation:</strong>
+- <strong>⌘T</strong>: Toggle tools on/off
+- <strong>⌘Return</strong>: Send message
+- <strong>⌘K</strong>: Clear chat input
+- <strong>⌘L</strong>: Focus message input
+- <strong>⌘[</strong>: Previous conversation
+- <strong>⌘]</strong>: Next conversation</p>
+<p><strong>File Operations:</strong>
+- <strong>⌘O</strong>: Open file/conversation
+- <strong>⌘S</strong>: Save conversation
+- <strong>⌘E</strong>: Export conversation
+- <strong>⌘I</strong>: Import document</p>
+<p><strong>Tip</strong>: For a complete list of keyboard shortcuts, press <strong>⌘?</strong> to open the in-app help.</p>
+<hr />
+<h2 id="example-conversations">Example Conversations</h2>
+<p>Here are real examples showing how SAM handles different types of requests. These screenshots demonstrate SAM's web search, document processing, and image generation capabilities in action.</p>
+<h3 id="initial-web-search">Initial Web Search</h3>
+<p><img alt="Example Conversation 1" src="../../../images/example-conversation-1.png" /></p>
+<p>The user asks SAM to share the most popular cheesesteak recipe. SAM performs a web search, finds top recipes from multiple sources (Allrecipes, Food Network, Delish, Chef Billy Parisi), and provides a comprehensive summary with direct links to each recipe.</p>
+<h3 id="recipe-retrieval">Recipe Retrieval</h3>
+<p><img alt="Example Conversation 2" src="../../../images/example-conversation-2.png" /></p>
+<p>The user requests Chef Billy Parisi's recipe specifically. SAM retrieves the full recipe including ingredients, step-by-step instructions, tips, and a direct link to the source. No copy-pasting needed - SAM extracts and formats the complete recipe.</p>
+<h3 id="local-business-search">Local Business Search</h3>
+<p><img alt="Example Conversation 3" src="../../../images/example-conversation-3.png" /></p>
+<p>The user asks where to find Amoroso rolls in Orlando, FL. SAM performs location-aware searches and provides multiple shopping options (Walmart, Instacart, Smart &amp; Final) with direct product links and local availability information.</p>
+<h3 id="image-generation">Image Generation</h3>
+<p><img alt="Example Conversation 4" src="../../../images/example-conversation-4.png" /></p>
+<p>The user requests an image of a man eating a cheesesteak at the beach. SAM automatically crafts a detailed Stable Diffusion prompt, generates the image, displays it in the chat, and shows all generation parameters used (model, steps, guidance scale, etc.).</p>
+<p><strong>What These Examples Show:</strong>
+- <strong>Web Search Integration</strong>: SAM searches DuckDuckGo and presents results with links
+- <strong>Content Extraction</strong>: Fetches full articles and recipes, not just snippets
+- <strong>Location Awareness</strong>: Uses mini-prompts (user location) for localized searches
+- <strong>Image Generation</strong>: Creates detailed Stable Diffusion prompts and generates images
+- <strong>Natural Flow</strong>: Conversation flows naturally between different task types
+- <strong>Tool Transparency</strong>: Shows exactly which tools were used and their results</p>
+<hr />
+<h2 id="next-steps">Next Steps</h2>
+<p>Now that you have SAM running, explore its features:</p>
+<h3 id="learn-sams-capabilities">Learn SAM's Capabilities</h3>
+<ul>
+<li><strong><a href="features-overview.html">Features Overview</a></strong> - Comprehensive guide to all features</li>
+<li><strong><a href="memory-and-rag.html">Memory &amp; RAG</a></strong> - Understanding SAM's memory system</li>
+<li><strong><a href="shared-topics.html">Shared Topics</a></strong> - Multi-conversation collaboration</li>
+</ul>
+<h3 id="for-power-users">For Power Users</h3>
+<ul>
+<li><strong><a href="../power-user/configuration.html">Configuration Guide</a></strong> - All settings explained</li>
+<li><strong><a href="../power-user/tools-reference.html">Tools Reference</a></strong> - SAM's MCP tools</li>
+<li><strong><a href="../power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Subagents, complex projects</li>
+</ul>
+<h3 id="try-these-use-cases">Try These Use Cases</h3>
+<p><strong>For Coding</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Read</span><span class="w"> </span><span class="nv">my</span><span class="w"> </span><span class="nv">Python</span><span class="w"> </span><span class="nv">project</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="o">~/</span><span class="nv">my</span><span class="o">-</span><span class="nv">project</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">help</span><span class="w"> </span><span class="nv">me</span><span class="w"> </span><span class="nv">add</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">feature</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">authentication</span>
+</code></pre></div>
+
+<p><strong>For Research</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Research the latest developments in quantum computing and create a summary document
+</code></pre></div>
+
+<p><strong>For Document Analysis</strong>:
+1. Drag a PDF file into the chat window
+2. Ask: "Summarize this document and extract the key points"</p>
+<p><strong>For Complex Projects</strong>:
+1. Create a shared topic in Preferences
+2. Create multiple conversations (frontend, backend, testing)
+3. Enable shared topic in each conversation
+4. Watch them collaborate on the same project</p>
+<h3 id="get-help">Get Help</h3>
+<p><strong>Having Issues?</strong>
+- Check <a href="../power-user/troubleshooting.html">Troubleshooting Guide</a>
+- Visit <a href="https://github.com/SyntheticAutonomicMind/SAM/issues">GitHub Issues</a></p>
+<p><strong>Want to Learn More?</strong>
+- Read <a href="../developer/architecture.html">Architecture</a> for technical details
+- See <a href="../developer/api-reference.html">API Reference</a> for programmatic access
+- Check <a href="../developer/contributing.html">Contributing Guide</a> to contribute</p>
+<hr />
+<p><strong>You're all set!</strong> Start exploring SAM's features and see how it can help your workflow.</p>
+<p><strong>What's Next?</strong> → <a href="features-overview.html">Features Overview</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../../docs/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom-modern">
+                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
