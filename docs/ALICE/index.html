@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALICE Documentation | Artificial Latent Image Composition Engine</title>
     <meta name="description" content="ALICE - Artificial Latent Image Composition Engine documentation">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
+    <link rel="stylesheet" href="../../css/styles.css?v=7">
     <style>
         /* Documentation styles - Apple-inspired */
         .doc-container {
@@ -215,19 +215,19 @@
             });
         });
     </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/getting-started.html">
+    <link rel="canonical" href="../SAM/end-user/getting-started.html">
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
+                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
                 <span class="logo">Synthetic Autonomic Mind</span>
             </a>
             <div class="nav-menu" id="navMenu">
                 <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
+                <a href="index.html">Docs</a>
                 <a href="/#community">Community</a>
                 <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
             </div>
@@ -340,7 +340,7 @@ open<span class="w"> </span>.build/Build/Products/Debug/SAM.app
 open<span class="w"> </span>.build/Build/Products/Release/SAM.app
 </code></pre></div>
 
-<p>For complete build instructions, see <a href="../developer/building.html">Building from Source</a>.</p>
+<p>For complete build instructions, see <a href="../SAM/developer/building.html">Building from Source</a>.</p>
 <hr />
 <h2 id="first-launch-setup">First Launch &amp; Setup</h2>
 <p>When you launch SAM for the first time, you'll be greeted by the <strong>Onboarding Wizard</strong> that helps you get set up in minutes.</p>
@@ -574,7 +574,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <hr />
 <h2 id="understanding-the-interface">Understanding the Interface</h2>
 <h3 id="main-window">Main Window</h3>
-<p><img alt="SAM Default Interface" src="../../../images/sam-default.png" /></p>
+<p><img alt="SAM Default Interface" src="../../images/sam-default.png" /></p>
 <p>When you launch SAM, you'll see the main interface with three primary areas:</p>
 <ol>
 <li><strong>Sidebar (Left)</strong>: Your conversation list, search, and navigation</li>
@@ -582,7 +582,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Bottom Bar</strong>: Memory statistics, token count, and terminal access</li>
 </ol>
 <h3 id="conversation-sidebar">Conversation Sidebar</h3>
-<p><img alt="Conversation Panel" src="../../../images/conversation-panel.png" /></p>
+<p><img alt="Conversation Panel" src="../../images/conversation-panel.png" /></p>
 <p>The sidebar provides access to all your conversations:</p>
 <ul>
 <li><strong>New Conversation Button</strong>: Create new conversations with custom names</li>
@@ -592,7 +592,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Global Search (F)</strong>: Press F to search across all conversations for specific messages or content</li>
 </ul>
 <h3 id="model-and-personality-selection">Model and Personality Selection</h3>
-<p><img alt="Model Toolbar" src="../../../images/model-toolbar.png" /></p>
+<p><img alt="Model Toolbar" src="../../images/model-toolbar.png" /></p>
 <p>The model toolbar gives you control over which AI you're using and how it behaves. From left to right:</p>
 <ul>
 <li><strong>Model Selector</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF)</li>
@@ -608,7 +608,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Scroll Lock</strong>: Lock/unlock automatic scrolling in chat</li>
 </ul>
 <h3 id="conversation-header">Conversation Header</h3>
-<p><img alt="Conversation Header" src="../../../images/conversation-header.png" /></p>
+<p><img alt="Conversation Header" src="../../images/conversation-header.png" /></p>
 <p>The conversation header displays conversation metadata and controls:</p>
 <p><strong>Top Left:</strong>
 - <strong>Conversation Title</strong>: Click to rename your conversation</p>
@@ -623,7 +623,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 - <strong>Status Used/Remaining</strong>: Tokens or requests used vs remaining
 - <strong>Usage Percentage</strong>: Percentage of quota consumed</p>
 <h3 id="chat-input-area">Chat Input Area</h3>
-<p><img alt="Chat Input" src="../../../images/chat-input.png" /></p>
+<p><img alt="Chat Input" src="../../images/chat-input.png" /></p>
 <p>The input area at the bottom is where you interact with SAM:</p>
 <ul>
 <li><strong>Message Input Field</strong>: Type your messages here (supports multi-line with Shift+Enter)</li>
@@ -631,7 +631,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Send Button</strong>: Send your message (or press Enter)</li>
 </ul>
 <h3 id="advanced-parameters">Advanced Parameters</h3>
-<p><img alt="Advanced Parameters" src="../../../images/parameters-toolba.png" /></p>
+<p><img alt="Advanced Parameters" src="../../images/parameters-toolba.png" /></p>
 <p>Click the parameters button to access fine-grained control over model behavior:</p>
 <p><strong>Sliders:</strong>
 - <strong>Temperature (Temp)</strong>: Controls randomness (0.0 = focused and deterministic, 1.0 = creative and varied)
@@ -648,7 +648,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 - <strong>Shared Topic</strong>: Enable shared workspace across conversations
 - <strong>Extend</strong>: Enable context extension</p>
 <h3 id="working-directory">Working Directory</h3>
-<p><img alt="Directory Toolbar" src="../../../images/directory-toolbar.png" /></p>
+<p><img alt="Directory Toolbar" src="../../images/directory-toolbar.png" /></p>
 <p>Each conversation has its own working directory where SAM reads and writes files:</p>
 <ul>
 <li><strong>Current Directory</strong>: Shows current working directory path (default: ~/SAM/ConversationName/)</li>
@@ -658,7 +658,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Auto-Sync</strong>: When you rename a conversation, the folder renames automatically</li>
 </ul>
 <h3 id="memory-toolbar">Memory Toolbar</h3>
-<p><img alt="Memory Toolbar" src="../../../images/memory-toolbar.png" /></p>
+<p><img alt="Memory Toolbar" src="../../images/memory-toolbar.png" /></p>
 <p>The memory toolbar shows and controls SAM's semantic memory:</p>
 <ul>
 <li><strong>Memory Count</strong>: Number of memories stored for this conversation or topic</li>
@@ -666,7 +666,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Clear Memories</strong>: Remove memories for conversation or shared topic</li>
 </ul>
 <h3 id="mini-prompts">Mini-Prompts</h3>
-<p><img alt="Mini-Prompt Panel" src="../../../images/mini-prompt-panel.png" /></p>
+<p><img alt="Mini-Prompt Panel" src="../../images/mini-prompt-panel.png" /></p>
 <p>Mini-prompts inject consistent context into your conversations without repeating yourself. They're perfect for location-based queries, project details, or personal preferences.</p>
 <p><strong>How to Use:</strong>
 1. Click the Mini-Prompts button in the conversation header
@@ -787,16 +787,16 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <h2 id="example-conversations">Example Conversations</h2>
 <p>Here are real examples showing how SAM handles different types of requests. These screenshots demonstrate SAM's web search, document processing, and image generation capabilities in action.</p>
 <h3 id="initial-web-search">Initial Web Search</h3>
-<p><img alt="Example Conversation 1" src="../../../images/example-conversation-1.png" /></p>
+<p><img alt="Example Conversation 1" src="../../images/example-conversation-1.png" /></p>
 <p>The user asks SAM to share the most popular cheesesteak recipe. SAM performs a web search, finds top recipes from multiple sources (Allrecipes, Food Network, Delish, Chef Billy Parisi), and provides a comprehensive summary with direct links to each recipe.</p>
 <h3 id="recipe-retrieval">Recipe Retrieval</h3>
-<p><img alt="Example Conversation 2" src="../../../images/example-conversation-2.png" /></p>
+<p><img alt="Example Conversation 2" src="../../images/example-conversation-2.png" /></p>
 <p>The user requests Chef Billy Parisi's recipe specifically. SAM retrieves the full recipe including ingredients, step-by-step instructions, tips, and a direct link to the source. No copy-pasting needed - SAM extracts and formats the complete recipe.</p>
 <h3 id="local-business-search">Local Business Search</h3>
-<p><img alt="Example Conversation 3" src="../../../images/example-conversation-3.png" /></p>
+<p><img alt="Example Conversation 3" src="../../images/example-conversation-3.png" /></p>
 <p>The user asks where to find Amoroso rolls in Orlando, FL. SAM performs location-aware searches and provides multiple shopping options (Walmart, Instacart, Smart &amp; Final) with direct product links and local availability information.</p>
 <h3 id="image-generation">Image Generation</h3>
-<p><img alt="Example Conversation 4" src="../../../images/example-conversation-4.png" /></p>
+<p><img alt="Example Conversation 4" src="../../images/example-conversation-4.png" /></p>
 <p>The user requests an image of a man eating a cheesesteak at the beach. SAM automatically crafts a detailed Stable Diffusion prompt, generates the image, displays it in the chat, and shows all generation parameters used (model, steps, guidance scale, etc.).</p>
 <p><strong>What These Examples Show:</strong>
 - <strong>Web Search Integration</strong>: SAM searches DuckDuckGo and presents results with links
@@ -810,15 +810,15 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p>Now that you have SAM running, explore its features:</p>
 <h3 id="learn-sams-capabilities">Learn SAM's Capabilities</h3>
 <ul>
-<li><strong><a href="features-overview.html">Features Overview</a></strong> - Comprehensive guide to all features</li>
-<li><strong><a href="memory-and-rag.html">Memory &amp; RAG</a></strong> - Understanding SAM's memory system</li>
-<li><strong><a href="shared-topics.html">Shared Topics</a></strong> - Multi-conversation collaboration</li>
+<li><strong><a href="getting-started.html">Features Overview</a></strong> - Comprehensive guide to all features</li>
+<li><strong><a href="../SAM/end-user/memory-and-rag.html">Memory &amp; RAG</a></strong> - Understanding SAM's memory system</li>
+<li><strong><a href="../SAM/end-user/shared-topics.html">Shared Topics</a></strong> - Multi-conversation collaboration</li>
 </ul>
 <h3 id="for-power-users">For Power Users</h3>
 <ul>
-<li><strong><a href="../power-user/configuration.html">Configuration Guide</a></strong> - All settings explained</li>
-<li><strong><a href="../power-user/tools-reference.html">Tools Reference</a></strong> - SAM's MCP tools</li>
-<li><strong><a href="../power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Subagents, complex projects</li>
+<li><strong><a href="../SAM/power-user/configuration.html">Configuration Guide</a></strong> - All settings explained</li>
+<li><strong><a href="../SAM/power-user/tools-reference.html">Tools Reference</a></strong> - SAM's MCP tools</li>
+<li><strong><a href="../SAM/power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Subagents, complex projects</li>
 </ul>
 <h3 id="try-these-use-cases">Try These Use Cases</h3>
 <p><strong>For Coding</strong>:</p>
@@ -839,15 +839,15 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 4. Watch them collaborate on the same project</p>
 <h3 id="get-help">Get Help</h3>
 <p><strong>Having Issues?</strong>
-- Check <a href="../power-user/troubleshooting.html">Troubleshooting Guide</a>
+- Check <a href="../SAM/power-user/troubleshooting.html">Troubleshooting Guide</a>
 - Visit <a href="https://github.com/SyntheticAutonomicMind/SAM/issues">GitHub Issues</a></p>
 <p><strong>Want to Learn More?</strong>
-- Read <a href="../developer/architecture.html">Architecture</a> for technical details
-- See <a href="../developer/api-reference.html">API Reference</a> for programmatic access
-- Check <a href="../developer/contributing.html">Contributing Guide</a> to contribute</p>
+- Read <a href="../SAM/developer/architecture.html">Architecture</a> for technical details
+- See <a href="../SAM/developer/api-reference.html">API Reference</a> for programmatic access
+- Check <a href="../shared/contributing.html">Contributing Guide</a> to contribute</p>
 <hr />
 <p><strong>You're all set!</strong> Start exploring SAM's features and see how it can help your workflow.</p>
-<p><strong>What's Next?</strong> → <a href="features-overview.html">Features Overview</a></p>
+<p><strong>What's Next?</strong> → <a href="getting-started.html">Features Overview</a></p>
         </div>
     </div>
 
@@ -858,7 +858,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
                 <div class="footer-col">
                     <h4>Products</h4>
                     <ul>
-                        <li><a href="../../local-ai-assistant-macos.html">SAM</a></li>
+                        <li><a href="../../index.html">SAM</a></li>
                         <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
                         <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
                     </ul>
@@ -867,7 +867,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
                 <div class="footer-col">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="../../docs/SAM/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
                         <li><a href="../../docs/SAM/index.html">SAM Docs</a></li>
                         <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
                     </ul>
