@@ -37,8 +37,8 @@
         <div class="container-wide">
             <div class="hero-modern-content">
                 <div class="eyebrow" style="color: var(--primary-blue); margin-bottom: 24px;">ALICE</div>
-                <h1>Generate images locally.</h1>
-                <p class="hero-lead">ALICE is a Stable Diffusion service for macOS and Linux with an OpenAI-compatible API. Text-to-image, image-to-image, and unlimited generation on your own hardware.</p>
+                <h1>Your AI art studio.</h1>
+                <p class="hero-lead">ALICE is a complete AI image generation platform for macOS and Linux. A generation studio, private gallery, model marketplace, and admin dashboard - all running locally on your hardware.</p>
                 <div class="hero-cta">
                     <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
                         Download ALICE
@@ -64,37 +64,37 @@
     <!-- Key Capabilities -->
     <section class="feature-highlight alt">
         <div class="container">
-            <h2 class="section-title-centered">Your GPU, your data, your creations.</h2>
+            <h2 class="section-title-centered">Everything you need to create.</h2>
             
             <div class="features-grid-modern">
                 <div class="feature-item-modern">
-                    <h3>Text-to-image and image-to-image</h3>
-                    <p>Generate images from text prompts or transform existing images. FastAPI service with OpenAI-compatible API and web interface.</p>
+                    <h3>Generation studio</h3>
+                    <p>Text-to-image and image-to-image with full parameter control. LoRA models, negative prompts, multiple schedulers, seed control, and resolution presets.</p>
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>Download any model</h3>
-                    <p>CivitAI, HuggingFace, or local checkpoints. SDXL, SD 1.5, GGUF, and custom fine-tuned models all supported.</p>
+                    <h3>Private gallery</h3>
+                    <p>Masonry grid gallery with per-image privacy controls. Optional time-limited public sharing. Regenerate from any image, view metadata, batch manage your collection.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Model marketplace</h3>
+                    <p>Browse, search, and download models from CivitAI and HuggingFace directly in the UI. SDXL, SD 1.5, FLUX, GGUF, and custom fine-tunes all supported.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Real-time dashboard</h3>
+                    <p>GPU memory, system metrics, generation history, and quick actions. Monitor everything from a single view.</p>
                 </div>
                 
                 <div class="feature-item-modern">
                     <h3>Multi-GPU support</h3>
-                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. PyTorch and stable-diffusion.cpp backends.</p>
+                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. PyTorch and stable-diffusion.cpp backends with smart model caching.</p>
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>SAM integration</h3>
-                    <p>Generate images directly from SAM conversations. ALICE handles the heavy lifting.</p>
-                </div>
-                
-                <div class="feature-item-modern">
-                    <h3>Docker and systemd deployment</h3>
-                    <p>Deploy via Docker, systemd service, or launchd daemon. Self-update system keeps ALICE current automatically.</p>
-                </div>
-                
-                <div class="feature-item-modern">
-                    <h3>Web interface and REST API</h3>
-                    <p>Browse models, configure parameters, manage gallery with pagination. OpenAI-compatible API for integration with any tool.</p>
+                    <h3>Admin and authentication</h3>
+                    <p>User management, API key generation, role-based access. Deploy for yourself or share with your team.</p>
                 </div>
             </div>
         </div>
@@ -105,13 +105,13 @@
         <div class="container">
             <div class="feature-split">
                 <div class="feature-text">
-                    <h2>Complete control over generation.</h2>
-                    <p>Adjust steps, guidance scale, samplers, and schedulers. Use negative prompts, LoRA models, and embeddings.</p>
-                    <p>Full Stable Diffusion capabilities without compromise.</p>
+                    <h2>A prompting guide built right in.</h2>
+                    <p>ALICE includes model-specific prompting guidance so you get better results from the start. Learn what works for SD 1.5, SDXL, and FLUX without leaving the app.</p>
+                    <p>Adjust steps, guidance scale, denoising strength, samplers, and schedulers. Use LoRA models for style transfer. Full Stable Diffusion capabilities without compromise.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
-                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Generation Controls</div>
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Prompting Guide</div>
                     </div>
                 </div>
             </div>
@@ -122,13 +122,13 @@
         <div class="container">
             <div class="feature-split reverse">
                 <div class="feature-text">
-                    <h2>Privacy by design.</h2>
-                    <p>All image generation happens on your hardware. No cloud services, no data collection, no usage tracking.</p>
-                    <p>Your prompts and generated images stay on your machine. Run on macOS or Linux - your GPU, your data, your creations.</p>
+                    <h2>Your images, your rules.</h2>
+                    <p>Every image is private by default. Share individual images with optional time-limited public links that expire automatically. NSFW filtering is built in and configurable.</p>
+                    <p>All generation happens on your hardware. No cloud services, no data collection, no usage tracking. Run on macOS or Linux - your GPU, your data, your creations.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
-                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Local Processing</div>
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Privacy Controls</div>
                     </div>
                 </div>
             </div>
@@ -139,13 +139,13 @@
         <div class="container">
             <div class="feature-split">
                 <div class="feature-text">
-                    <h2>Batch generation and automation.</h2>
-                    <p>Generate multiple images with varying seeds. Queue batches for overnight generation. Automate workflows via REST API.</p>
-                    <p>Perfect for artists, designers, and creative professionals.</p>
+                    <h2>Deploy anywhere.</h2>
+                    <p>Run standalone, as a systemd or launchd service, or in Docker. Self-update system keeps ALICE current automatically. Built-in SteamOS/Steam Deck installer for AMD GPUs.</p>
+                    <p>OpenAI-compatible REST API for integration with SAM, scripts, or any tool. Generate images from conversations, automate workflows, or build on top of the API.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
-                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Batch Processing</div>
+                        <div style="font-size: 21px; font-weight: 600; color: var(--text-secondary);">Deployment Options</div>
                     </div>
                 </div>
             </div>
