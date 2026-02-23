@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALICE - Stable Diffusion for macOS | Local Image Generation</title>
-    <meta name="description" content="ALICE is a Stable Diffusion service for macOS with an OpenAI-compatible API. Download models from CivitAI and HuggingFace, generate unlimited images locally.">
-    <meta name="keywords" content="Stable Diffusion macOS, local image generation Mac, ALICE, AI image generation">
+    <title>ALICE - Stable Diffusion for macOS & Linux | Local Image Generation</title>
+    <meta name="description" content="ALICE is a Stable Diffusion service for macOS and Linux with an OpenAI-compatible API. Text-to-image, image-to-image, NVIDIA CUDA, AMD Vulkan/ROCm, and Apple MPS support.">
+    <meta name="keywords" content="Stable Diffusion macOS, Stable Diffusion Linux, local image generation, ALICE, AI image generation, img2img, Vulkan, ROCm">
     <meta name="author" content="Andrew Wyatt (Fewtarius)">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/stable-diffusion-macos.html">
-    <link rel="stylesheet" href="css/styles.css?v=7">
+    <link rel="stylesheet" href="css/styles.css?v=8">
 </head>
 <body>
     <!-- Navigation -->
@@ -38,7 +38,7 @@
             <div class="hero-modern-content">
                 <div class="eyebrow" style="color: var(--primary-blue); margin-bottom: 24px;">ALICE</div>
                 <h1>Generate images locally.</h1>
-                <p class="hero-lead">ALICE is a Stable Diffusion service for macOS with an OpenAI-compatible API. Download models from CivitAI and HuggingFace, then generate unlimited images on your hardware.</p>
+                <p class="hero-lead">ALICE is a Stable Diffusion service for macOS and Linux with an OpenAI-compatible API. Text-to-image, image-to-image, and unlimited generation on your own hardware.</p>
                 <div class="hero-cta">
                     <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
                         Download ALICE
@@ -47,7 +47,7 @@
                         Read the Docs
                     </a>
                 </div>
-                <p class="hero-note">Free and open source. macOS with CUDA or MPS support.</p>
+                <p class="hero-note">Free and open source. macOS (MPS) and Linux (CUDA, ROCm, Vulkan). Deploy standalone or via Docker.</p>
             </div>
         </div>
     </section>
@@ -68,18 +68,18 @@
             
             <div class="features-grid-modern">
                 <div class="feature-item-modern">
-                    <h3>Stable Diffusion service</h3>
-                    <p>FastAPI-based service with OpenAI-compatible API. Generate images programmatically or via web interface.</p>
+                    <h3>Text-to-image and image-to-image</h3>
+                    <p>Generate images from text prompts or transform existing images. FastAPI service with OpenAI-compatible API and web interface.</p>
                 </div>
                 
                 <div class="feature-item-modern">
                     <h3>Download any model</h3>
-                    <p>CivitAI, HuggingFace, or local checkpoints. SDXL, SD 1.5, and custom fine-tuned models all supported.</p>
+                    <p>CivitAI, HuggingFace, or local checkpoints. SDXL, SD 1.5, GGUF, and custom fine-tuned models all supported.</p>
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>Unlimited generation</h3>
-                    <p>No usage caps, no API bills. Generate as many images as you want on your own hardware.</p>
+                    <h3>Multi-GPU support</h3>
+                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. PyTorch and stable-diffusion.cpp backends.</p>
                 </div>
                 
                 <div class="feature-item-modern">
@@ -88,13 +88,13 @@
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>Web interface</h3>
-                    <p>Browse models, configure parameters, and generate images through a clean web UI.</p>
+                    <h3>Docker and systemd deployment</h3>
+                    <p>Deploy via Docker, systemd service, or launchd daemon. Self-update system keeps ALICE current automatically.</p>
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>REST API access</h3>
-                    <p>OpenAI-compatible API for integration with other tools and workflows.</p>
+                    <h3>Web interface and REST API</h3>
+                    <p>Browse models, configure parameters, manage gallery with pagination. OpenAI-compatible API for integration with any tool.</p>
                 </div>
             </div>
         </div>
@@ -123,8 +123,8 @@
             <div class="feature-split reverse">
                 <div class="feature-text">
                     <h2>Privacy by design.</h2>
-                    <p>All image generation happens on your Mac. No cloud services, no data collection, no usage tracking.</p>
-                    <p>Your prompts and generated images stay on your machine.</p>
+                    <p>All image generation happens on your hardware. No cloud services, no data collection, no usage tracking.</p>
+                    <p>Your prompts and generated images stay on your machine. Run on macOS or Linux - your GPU, your data, your creations.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
@@ -157,7 +157,7 @@
         <div class="container">
             <div class="cta-content">
                 <h2>Get started with ALICE.</h2>
-                <p>Download for macOS. Generate images locally.</p>
+                <p>Download for macOS or Linux. Generate images locally.</p>
                 <div class="cta-buttons">
                     <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
                         Download ALICE

@@ -92,4 +92,4 @@ scratch/
 .clio/sessions/
 .clio/memory/
 .clio/*.json
-
+.clio/snapshots/
