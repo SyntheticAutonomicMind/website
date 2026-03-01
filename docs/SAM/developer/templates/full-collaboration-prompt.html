@@ -249,6 +249,42 @@
             <h1 id="full-collaboration-prompt">Full Collaboration Prompt</h1>
 <p><strong>A comprehensive prompt implementing all seven pillars of The Unbroken Method.</strong></p>
 <p>This prompt is designed for serious projects where quality, context preservation, and sustainable collaboration matter.</p>
+<p><strong>Where to put this prompt:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLIO</strong></td>
+<td>Built in - use <code>/init</code> to generate project-specific instructions that include this methodology</td>
+</tr>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td><code>CLAUDE.md</code> in your project root</td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td><code>.github/copilot-instructions.md</code></td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td><code>.cursorrules</code></td>
+</tr>
+<tr>
+<td><strong>Windsurf</strong></td>
+<td><code>.windsurfrules</code></td>
+</tr>
+<tr>
+<td><strong>Claude Projects</strong></td>
+<td>Project instructions in the web UI</td>
+</tr>
+</tbody>
+</table>
+<p>This prompt covers <em>how</em> the AI should collaborate. For project-specific details (architecture, testing commands, conventions), create a separate <code>AGENTS.md</code> file. See <a href="../../../shared/the-unbroken-method.html#implementation-architecture">Implementation Architecture</a> for the two-file pattern.</p>
 <hr />
 <h2 id="the-prompt">The Prompt</h2>
 <div class="codehilite"><pre><span></span><code><span class="gh"># AI Collaboration Instructions</span>
@@ -494,7 +530,9 @@ Before any major implementation, share your plan and wait for confirmation:
 <li><a href="quick-start-prompt.html">Quick Start Prompt</a> - Minimal version for getting started</li>
 <li><a href="handoff-templates.html">Handoff Templates</a> - Session transition documents</li>
 <li><a href="anti-pattern-template.html">Anti-Pattern Template</a> - Document failures systematically</li>
-<li><a href="collaboration-tool.html">Collaboration Tool Scripts</a> - Programmatic checkpoints</li>
+<li><a href="collaboration-tool.html">Collaboration Tool Scripts</a> - Programmatic checkpoints for environments without built-in tools</li>
+<li><a href="../../../shared/the-unbroken-method.html">The Unbroken Method</a> - The full methodology behind this prompt</li>
+<li><a href="../../../shared/the-unbroken-method.html#implementation-architecture">Implementation Architecture</a> - How to separate methodology from project scope using <code>AGENTS.md</code></li>
 </ul>
         </div>
     </div>

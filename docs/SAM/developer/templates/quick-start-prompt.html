@@ -248,7 +248,42 @@
         <div class="doc-content">
             <h1 id="quick-start-prompt">Quick Start Prompt</h1>
 <p><strong>A minimal prompt to get started with The Unbroken Method in under 5 minutes.</strong></p>
-<p>Copy the prompt below into your AI assistant's instructions and start working.</p>
+<p><strong>Where to put this prompt:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLIO</strong></td>
+<td>Built in - use <code>/init</code> to generate tailored instructions automatically</td>
+</tr>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td><code>CLAUDE.md</code> in your project root</td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td><code>.github/copilot-instructions.md</code></td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td><code>.cursorrules</code></td>
+</tr>
+<tr>
+<td><strong>Windsurf</strong></td>
+<td><code>.windsurfrules</code></td>
+</tr>
+<tr>
+<td><strong>Claude Projects</strong></td>
+<td>Project instructions in the web UI</td>
+</tr>
+</tbody>
+</table>
+<p>Copy the prompt below into the appropriate location for your tool and start working.</p>
 <hr />
 <h2 id="the-prompt">The Prompt</h2>
 <div class="codehilite"><pre><span></span><code><span class="gh"># AI Collaboration Instructions</span>
@@ -316,7 +351,8 @@ Don&#39;t end until I validate the work. Summarize what you did and ask me to co
 </ul>
 <hr />
 <h2 id="customization">Customization</h2>
-<p>Add project-specific details after the core prompt:</p>
+<p>For project-specific details, create a separate <code>AGENTS.md</code> file rather than adding them to the methodology prompt. This keeps the collaboration methodology separate from your project reference. See <a href="../../../shared/the-unbroken-method.html#implementation-architecture">Implementation Architecture</a> for the two-file pattern.</p>
+<p>Example <code>AGENTS.md</code> additions:</p>
 <div class="codehilite"><pre><span></span><code><span class="gu">## Project Details</span>
 <span class="k">-</span><span class="w"> </span>Language: [Your language/framework]
 <span class="k">-</span><span class="w"> </span>Build command: [Your build command]

@@ -247,42 +247,41 @@
         
         <div class="doc-content">
             <h1 id="handoff-templates">Handoff Templates</h1>
-<p><strong>Templates for the four-document handoff protocol used in The Unbroken Method.</strong></p>
+<p><strong>Templates for session handoff documents used in The Unbroken Method.</strong></p>
 <p>These documents ensure perfect context transfer between sessions, whether you're handing off to yourself tomorrow or to a teammate.</p>
+<blockquote>
+<p><strong>With CLIO:</strong> Session persistence and long-term memory handle most context preservation automatically. Handoff documents are still created for explicit session transitions, but the manual overhead is significantly reduced. CLIO's LTM system captures discoveries, solutions, and patterns across all sessions without manual documentation.</p>
+</blockquote>
 <hr />
 <h2 id="overview">Overview</h2>
-<p>When a session must end, create these four documents:</p>
+<p>When a session must end, create these documents in a timestamped handoff directory:</p>
 <table>
 <thead>
 <tr>
 <th>Document</th>
 <th>Purpose</th>
-<th>Audience</th>
+<th>Required?</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>CONTINUATION_PROMPT</td>
-<td>Complete standalone context for next session (consolidates session history)</td>
-<td>Next AI session</td>
+<td>CONTINUATION_PROMPT.md</td>
+<td>Complete standalone context for next session</td>
+<td><strong>Mandatory</strong></td>
 </tr>
 <tr>
-<td>AGENT_PLAN</td>
+<td>AGENT_PLAN.md</td>
 <td>Remaining work breakdown with investigation steps</td>
-<td>Next AI session</td>
+<td><strong>Mandatory</strong></td>
 </tr>
 <tr>
-<td>FEATURES</td>
-<td>New features implemented this session</td>
-<td>External consumers (website, marketing)</td>
-</tr>
-<tr>
-<td>CHANGELOG</td>
-<td>Detailed changes in standard format</td>
-<td>External consumers (release notes)</td>
+<td>NOTES.md</td>
+<td>Technical notes, discoveries, design decisions</td>
+<td>Optional</td>
 </tr>
 </tbody>
 </table>
+<p>Some projects may benefit from additional documents like FEATURES.md (user-facing changes) or CHANGELOG.md (release notes). Templates for these are included below under <a href="#project-specific-additions">Project-Specific Additions</a>.</p>
 <p><strong>CRITICAL PREREQUISITE:</strong> Before creating handoff documents, ensure ALL technical documentation is up-to-date:
 - Subsystem docs if you modified a component
 - Flow diagrams if you changed data flows
@@ -480,7 +479,9 @@
 </code></pre></div>
 
 <hr />
-<h2 id="3-features-template">3. FEATURES Template</h2>
+<h2 id="project-specific-additions">Project-Specific Additions</h2>
+<p>The two mandatory documents (CONTINUATION_PROMPT and AGENT_PLAN) work for any project. Some projects benefit from additional handoff documents. These are optional - add them when they serve your workflow.</p>
+<h3 id="3-features-template">FEATURES Template</h3>
 <p><strong>Purpose:</strong> New features implemented this session, for external consumers like website or marketing.</p>
 <div class="codehilite"><pre><span></span><code><span class="gh"># Features - [Date]</span>
 
@@ -530,7 +531,7 @@
 </code></pre></div>
 
 <hr />
-<h2 id="4-changelog-template">4. CHANGELOG Template</h2>
+<h3 id="4-changelog-template">CHANGELOG Template</h3>
 <p><strong>Purpose:</strong> User-facing summary of changes (for release notes, website, etc.).</p>
 <div class="codehilite"><pre><span></span><code><span class="gh"># Changelog - [Date]</span>
 
@@ -604,25 +605,26 @@
 <li>[ ] Success criteria are measurable</li>
 <li>[ ] Starting instructions are specific</li>
 <li>[ ] No references to "see other document" in CONTINUATION_PROMPT</li>
+<li>[ ] Handoff directory is NOT staged for git commit</li>
 </ul>
 <h3 id="organizing-handoffs">Organizing Handoffs</h3>
 <p>Recommended directory structure:</p>
-<div class="codehilite"><pre><span></span><code>project-docs/
-├── YYYY-MM-DD/
+<div class="codehilite"><pre><span></span><code>ai-assisted/
+├── YYYYMMDD/
 │   └── HHMM/
-│       ├── CONTINUATION_PROMPT.md
-│       ├── AGENT_PLAN.md
-│       ├── FEATURES.md
-│       └── CHANGELOG.md
+│       ├── CONTINUATION_PROMPT.md   # Mandatory
+│       ├── AGENT_PLAN.md            # Mandatory
+│       └── NOTES.md                 # Optional
 </code></pre></div>
 
 <hr />
 <h2 id="related-templates">Related Templates</h2>
 <ul>
 <li><a href="quick-start-prompt.html">Quick Start Prompt</a> - Minimal collaboration prompt</li>
-<li><a href="full-collaboration-prompt.html">Full Collaboration Prompt</a> - Complete prompt</li>
-<li><a href="anti-pattern-template.html">Anti-Pattern Template</a> - Document failures</li>
-<li><a href="collaboration-tool.html">Collaboration Tool Scripts</a> - Checkpoint automation</li>
+<li><a href="full-collaboration-prompt.html">Full Collaboration Prompt</a> - Complete prompt with all seven pillars</li>
+<li><a href="anti-pattern-template.html">Anti-Pattern Template</a> - Document failures systematically</li>
+<li><a href="../../../shared/the-unbroken-method.html">The Unbroken Method</a> - The full methodology</li>
+<li><a href="../../../shared/the-unbroken-method.html#implementation-architecture">Implementation Architecture</a> - How to organize methodology and project reference files</li>
 </ul>
         </div>
     </div>

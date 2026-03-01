@@ -652,100 +652,70 @@ Maintain an evolving catalog of anti-patterns with concrete examples of what NOT
 
 <hr />
 <h2 id="implementation-guide">Implementation Guide</h2>
-<h3 id="setting-up-your-collaboration-tool">Setting Up Your Collaboration Tool</h3>
-<p>The collaboration tool is the heart of The Unbroken Method. It's what maintains continuous context within a session.</p>
-<p><strong>Requirements:</strong>
-- Pauses AI execution for human input
-- Displays context clearly
-- Captures human response
-- Enables continuation</p>
-<p><strong>Simple Bash Implementation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># collaboration.sh</span>
-
-<span class="nv">MESSAGE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">Press</span><span class="p"> Enter to continue</span><span class="si">}</span><span class="s2">&quot;</span>
-
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;CHECKPOINT&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="nb">echo</span><span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$MESSAGE</span><span class="s2">&quot;</span>
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-<span class="nb">read</span><span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;Response: &quot;</span><span class="w"> </span>response
-
-<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$response</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;User response: </span><span class="nv">$response</span><span class="s2">&quot;</span>
-<span class="k">fi</span>
-
-<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Continuing...&quot;</span>
-</code></pre></div>
-
-<p><strong>Python Implementation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="c1"># collaboration.py</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="o">=</span><span class="s2">&quot;Press Enter to continue&quot;</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CHECKPOINT&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;━&quot;</span> <span class="o">*</span> <span class="mi">50</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Response: &quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">response</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;User response: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Continuing...&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">response</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="s2">&quot;Press Enter to continue&quot;</span>
-    <span class="n">checkpoint</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-</code></pre></div>
-
-<h3 id="creating-your-instructions-file">Creating Your Instructions File</h3>
-<p>The instructions file is your methodology codified. It tells the AI how to behave according to The Unbroken Method.</p>
-<p><strong>Key Sections to Include:</strong></p>
+<p>How you implement The Unbroken Method depends on your tools. Modern AI agents have built-in support for the key mechanisms (collaboration checkpoints, file operations, session persistence). If you're using a tool without native support, you can implement the same patterns with scripts and prompts.</p>
+<h3 id="path-1-with-clio">Path 1: With CLIO (Automated)</h3>
+<p><a href="https://github.com/fewtarius/CLIO">CLIO</a> implements The Unbroken Method natively. The methodology is embedded in its system prompt, and key pillars are enforced through built-in tools rather than prompt instructions alone.</p>
+<p><strong>New project from scratch:</strong></p>
 <ol>
-<li><strong>Ownership Requirements</strong></li>
-<li>All discovered issues must be fixed</li>
-<li>No "out of scope" or "separate issue" allowed</li>
-<li>
-<p>Session ends only after user validation</p>
-</li>
-<li>
-<p><strong>Investigation Protocol</strong></p>
-</li>
-<li>Read existing code/content first</li>
-<li>Search for patterns before creating new ones</li>
-<li>
-<p>Share findings before implementing</p>
-</li>
-<li>
-<p><strong>Collaboration Requirements</strong></p>
-</li>
-<li>Use collaboration tool before major work</li>
-<li>Share findings after investigation</li>
-<li>
-<p>Get validation before ending</p>
-</li>
-<li>
-<p><strong>Quality Standards</strong></p>
-</li>
-<li>Complete implementations only</li>
-<li>No partial solutions or TODOs</li>
-<li>Error handling required</li>
-<li>
-<p>Testing required</p>
-</li>
-<li>
-<p><strong>Anti-Pattern Catalog</strong></p>
-</li>
-<li>Document each failure as it occurs</li>
-<li>Include real examples</li>
-<li>Update regularly</li>
+<li><code>/design</code> - The Architect guides you through creating a Product Requirements Document (<code>.clio/PRD.md</code>)</li>
+<li><code>/init</code> - CLIO analyzes your codebase and generates <code>.clio/instructions.md</code> (methodology) and <code>AGENTS.md</code> (project reference), incorporating the PRD if present</li>
+<li>Start working - checkpoints, handoffs, and anti-pattern tracking are built in</li>
 </ol>
+<p><strong>Existing project:</strong></p>
+<ol>
+<li><code>/init</code> in your project directory - CLIO reads your code and creates instructions tailored to your codebase</li>
+<li>Edit <code>.clio/instructions.md</code> and <code>AGENTS.md</code> as your project evolves</li>
+</ol>
+<p>CLIO automates each pillar through dedicated tools: session persistence for continuous context, semantic search and code intelligence for investigation, todo operations for tracking deliverables, handoff directory protocols for structured transitions, and long-term memory (LTM) for learning from failure across all sessions. See <a href="#native-automation">How CLIO Automates the Pillars</a> for the full breakdown.</p>
+<p>The <code>user_collaboration</code> tool implements checkpoint discipline at the tool level - the AI calls it to pause execution and present its plan, and cannot proceed without human input.</p>
+<h3 id="path-2-with-other-agents">Path 2: With Other AI Agents</h3>
+<p>Most AI coding agents support custom instructions and have their own collaboration mechanisms:</p>
+<table>
+<thead>
+<tr>
+<th>Agent</th>
+<th>Instructions File</th>
+<th>Built-in Collaboration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Claude Code</strong></td>
+<td><code>CLAUDE.md</code></td>
+<td><code>AskUserQuestion</code> tool</td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td><code>.github/copilot-instructions.md</code></td>
+<td>Chat-based</td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td><code>.cursorrules</code></td>
+<td>Chat-based</td>
+</tr>
+<tr>
+<td><strong>Windsurf</strong></td>
+<td><code>.windsurfrules</code></td>
+<td>Chat-based</td>
+</tr>
+<tr>
+<td><strong>Claude Projects</strong></td>
+<td>Project instructions (web UI)</td>
+<td>Chat-based</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Setup:</strong></p>
+<ol>
+<li>Copy the <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> or <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> into your agent's instructions file</li>
+<li>Create an <code>AGENTS.md</code> in your project root with your architecture, conventions, and testing commands</li>
+<li>Create <a href="../SAM/developer/templates/handoff-templates.html">handoff documents</a> when ending sessions</li>
+<li>Maintain an <a href="../SAM/developer/templates/anti-pattern-template.html">anti-pattern catalog</a> as you discover failure modes</li>
+</ol>
+<p>For agents with built-in collaboration tools (like Claude Code's <code>AskUserQuestion</code>), the checkpoint discipline works naturally. For chat-based agents, the prompt instructions enforce the checkpoint pattern through the conversation itself.</p>
+<h3 id="path-3-custom-scripts">Path 3: Custom Implementation</h3>
+<p>If your environment doesn't have built-in collaboration tools, you can build the checkpoint mechanism with scripts. See the <a href="../SAM/developer/templates/collaboration-tool.html">Collaboration Tool Scripts</a> page for bash, Python, and Swift implementations that create the pause-and-validate pattern.</p>
 <hr />
 <h2 id="implementation-architecture">Implementation Architecture</h2>
 <p>The Unbroken Method is a methodology. <code>AGENTS.md</code> is a project reference file. They solve different problems, and understanding the distinction is key to implementing the method effectively.</p>
