@@ -88,8 +88,7 @@ out/
 ai-assisted/20*/
 project-docs/20*/
 scratch/
-.clio/logs/
-.clio/sessions/
-.clio/memory/
-.clio/*.json
-.clio/snapshots/
+
+# CLIO (managed automatically)
+.clio/*
+!.clio/instructions.md
