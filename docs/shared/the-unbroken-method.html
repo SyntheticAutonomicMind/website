@@ -248,7 +248,7 @@
         <div class="doc-content">
             <h1 id="the-unbroken-method">The Unbroken Method</h1>
 <p><strong>A Framework for Successful Human-AI Collaboration</strong></p>
-<p>The Unbroken Method is a systematic approach to human-AI collaboration that maximizes productivity and quality by maintaining continuous context, demanding complete ownership, and learning from documented failures. Developed during the creation of SAM (Synthetic Autonomic Mind), this methodology enabled the rapid development of a fully-functional native macOS AI assistant with multi-provider support, voice I/O, image generation, document processing, and a comprehensive tool system.</p>
+<p>The Unbroken Method is a systematic approach to human-AI collaboration that maximizes productivity and quality by maintaining continuous context, demanding complete ownership, and learning from documented failures. Developed during the creation of SAM (Synthetic Autonomic Mind) and refined through CLIO (Command Line Intelligence Orchestrator), this methodology has been used to ship production software across three languages (Swift, Perl, Python) and three platforms.</p>
 <p><strong>The core insight:</strong> The secret to successful AI collaboration isn't waiting for smarter models. It's implementing better methodology.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
@@ -256,10 +256,10 @@
 <li><a href="#why-ai-collaboration-fails">Why AI Collaboration Fails</a></li>
 <li><a href="#the-seven-pillars">The Seven Pillars</a></li>
 <li><a href="#implementation-guide">Implementation Guide</a></li>
+<li><a href="#implementation-architecture">Implementation Architecture</a></li>
 <li><a href="#for-different-audiences">For Different Audiences</a></li>
 <li><a href="#quick-reference">Quick Reference</a></li>
 <li><a href="#comparison-with-industry-models">Comparison with Industry Models</a></li>
-<li><a href="#sam-development-results">SAM Development Results</a></li>
 </ol>
 <hr />
 <h2 id="why-ai-collaboration-fails">Why AI Collaboration Fails</h2>
@@ -747,6 +747,160 @@ Maintain an evolving catalog of anti-patterns with concrete examples of what NOT
 <li>Update regularly</li>
 </ol>
 <hr />
+<h2 id="implementation-architecture">Implementation Architecture</h2>
+<p>The Unbroken Method is a methodology. <code>AGENTS.md</code> is a project reference file. They solve different problems, and understanding the distinction is key to implementing the method effectively.</p>
+<h3 id="methodology-vs-project-scope">Methodology vs. Project Scope</h3>
+<p>The Unbroken Method defines <em>how</em> humans and AI collaborate. It needs to live somewhere your AI assistant reads. But it should be separate from your project's technical reference.</p>
+<p>In practice, this means two files with distinct purposes:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Contains</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Instructions File</strong></td>
+<td>How to work (methodology)</td>
+<td>The Seven Pillars, checkpoint discipline, handoff protocols, anti-patterns, collaboration requirements</td>
+</tr>
+<tr>
+<td><strong>Project Reference</strong></td>
+<td>What to build (project scope)</td>
+<td>Architecture, code style, directory structure, testing commands, module naming, commit format</td>
+</tr>
+</tbody>
+</table>
+<p>The instructions file teaches the AI <em>how to collaborate</em>. The project reference tells it <em>what the project looks like</em>. Both are necessary. Neither replaces the other.</p>
+<h3 id="how-different-tools-implement-this">How Different Tools Implement This</h3>
+<p>Every AI coding assistant has its own way of loading custom instructions. The Unbroken Method adapts to all of them:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Instructions File (Methodology)</th>
+<th>Project Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CLIO</strong></td>
+<td><code>.clio/instructions.md</code></td>
+<td><code>AGENTS.md</code></td>
+</tr>
+<tr>
+<td><strong>GitHub Copilot</strong></td>
+<td><code>.github/copilot-instructions.md</code></td>
+<td><code>AGENTS.md</code></td>
+</tr>
+<tr>
+<td><strong>Cursor</strong></td>
+<td><code>.cursorrules</code></td>
+<td><code>AGENTS.md</code></td>
+</tr>
+<tr>
+<td><strong>Claude Projects</strong></td>
+<td>Project instructions (web UI)</td>
+<td><code>AGENTS.md</code></td>
+</tr>
+<tr>
+<td><strong>Windsurf</strong></td>
+<td><code>.windsurfrules</code></td>
+<td><code>AGENTS.md</code></td>
+</tr>
+<tr>
+<td><strong>Any tool</strong></td>
+<td>Custom instructions / system prompt</td>
+<td>Project README or reference doc</td>
+</tr>
+</tbody>
+</table>
+<p>Notice the pattern: <code>AGENTS.md</code> is the <strong>project reference</strong> - it describes your codebase, architecture, and conventions. It's the same file regardless of which AI tool you use. The <strong>instructions file</strong> is where The Unbroken Method lives, and its location varies by tool.</p>
+<h3 id="why-not-just-agents-md">The Difference Between AGENTS.md and the Method</h3>
+<p><code>AGENTS.md</code> has become a popular convention for giving AI assistants project context. It solves an important problem - but a different one. <code>AGENTS.md</code> tells an AI what your project looks like. The Unbroken Method tells it how to <em>work with you</em>.</p>
+<p>Without methodology, the AI knows your directory structure but still gives partial solutions, knows your coding style but still skips investigation, knows your test commands but doesn't run them proactively.</p>
+<p>With both:</p>
+<ul>
+<li><code>AGENTS.md</code> gives the AI project knowledge (what to build)</li>
+<li>The instructions file gives it collaboration discipline (how to build it)</li>
+<li>Together, they produce consistent, high-quality results session after session</li>
+</ul>
+<h3 id="a-practical-example">A Practical Example</h3>
+<p>Here's what the separation looks like for a real project:</p>
+<div class="codehilite"><pre><span></span><code>your-project/
+├── .clio/instructions.md     # OR .github/copilot-instructions.md OR .cursorrules
+│   └── Contains:
+│       - The Seven Pillars
+│       - Checkpoint discipline
+│       - Handoff protocol
+│       - Anti-pattern catalog
+│       - Quality standards
+│
+├── AGENTS.md
+│   └── Contains:
+│       - Project overview &amp; architecture
+│       - Directory structure
+│       - Code style &amp; conventions
+│       - Testing commands
+│       - Build process
+│       - Module naming
+│
+└── src/...
+</code></pre></div>
+
+<p>The instructions file is portable across projects - you can use the same methodology everywhere. <code>AGENTS.md</code> is project-specific - it changes with every codebase. This separation means you write the methodology once and adapt only the project reference.</p>
+<h3 id="native-automation">How CLIO Automates the Pillars</h3>
+<p>CLIO implements several pillars directly in its tooling:</p>
+<table>
+<thead>
+<tr>
+<th>Pillar</th>
+<th>Manual Implementation</th>
+<th>CLIO Automation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Continuous Context</td>
+<td>Copy-paste context between sessions</td>
+<td>Session persistence, context compression, thread summarization</td>
+</tr>
+<tr>
+<td>2. Complete Ownership</td>
+<td>Discipline in instructions</td>
+<td>Enforced in system prompt + instructions</td>
+</tr>
+<tr>
+<td>3. Investigation First</td>
+<td>Tell AI to read code first</td>
+<td>File operations, semantic search, code intelligence tools</td>
+</tr>
+<tr>
+<td>4. Root Cause Focus</td>
+<td>Discipline in instructions</td>
+<td>Enforced in system prompt + instructions</td>
+</tr>
+<tr>
+<td>5. Complete Deliverables</td>
+<td>Tell AI to finish work</td>
+<td>Todo operations with progress tracking, mandatory completion</td>
+</tr>
+<tr>
+<td>6. Structured Handoffs</td>
+<td>Manual document creation</td>
+<td>Handoff directory protocol with templates</td>
+</tr>
+<tr>
+<td>7. Learning from Failure</td>
+<td>Manual anti-pattern catalog</td>
+<td>Long-term memory (LTM) with discoveries, solutions, and patterns that persist across all sessions</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>user_collaboration</code> tool implements checkpoint discipline natively - the AI pauses, presents its plan, and waits for human approval before proceeding. This isn't just a prompt instruction; it's a tool the AI calls that actually stops execution.</p>
+<hr />
 <h2 id="for-different-audiences">For Different Audiences</h2>
 <h3 id="for-software-developers">For Software Developers</h3>
 <p><strong>Key Practices:</strong>
@@ -921,136 +1075,15 @@ Maintain an evolving catalog of anti-patterns with concrete examples of what NOT
 - Human oversight is available for quality control
 - Scale matters more than individual task depth</p>
 <hr />
-<h2 id="sam-development-results">SAM Development Results</h2>
-<p>The Unbroken Method was developed and refined during the creation of SAM, a native macOS AI assistant. In a few short months, the methodology enabled building a production-ready application from scratch.</p>
-<p><strong>What SAM Delivers:</strong></p>
-<p><strong>Multi-Provider AI Support</strong>
-Connect to OpenAI, Anthropic, GitHub Copilot, DeepSeek, or run models locally with MLX and llama.cpp. Switch providers without restarting.</p>
-<p><strong>Voice Input/Output</strong>
-Wake word detection, speech recognition, and text-to-speech for hands-free operation.</p>
-<p><strong>AI Image Generation</strong>
-Stable Diffusion integration with CoreML optimization, multiple model architectures (SD 1.5, SDXL, Z-Image), community model support via CivitAI and HuggingFace.</p>
-<p><strong>Comprehensive Tool System</strong>
-File operations, terminal execution, web research, memory management, document processing, git integration, and image generation all through a unified MCP framework.</p>
-<p><strong>Intelligent Memory</strong>
-Vector RAG with semantic search, conversation-scoped and topic-scoped memory, context archival with recall capabilities, YaRN context compression for handling massive documents.</p>
-<p><strong>Native macOS Experience</strong>
-SwiftUI interface, keyboard shortcuts, dark mode, persistent conversations, diagram rendering.</p>
-<p><strong>Key insight:</strong> This breadth of functionality was achieved not by working with a more advanced AI, but by implementing a methodology that eliminated the common failure modes.</p>
-<hr />
-<h2 id="case-studies">Case Studies</h2>
-<h3 id="case-study-1-messagebus-refactoring">Case Study 1: MessageBus Refactoring</h3>
-<p><strong>Problem:</strong> Chat streaming at 11 tokens per second with UI flicker and duplicate messages.</p>
-<p><strong>Investigation Phase:</strong>
-1. Read ChatWidget.swift and found multiple message creation points
-2. Read MessageBus.swift and found it was underutilized
-3. Traced message flow and discovered circular updates
-4. Identified root cause: Multiple sources of truth for messages</p>
-<p><strong>Solution Implemented:</strong>
-- Made MessageBus the single source of truth
-- ChatWidget became read-only observer
-- Removed duplicate message creation
-- Eliminated circular updates</p>
-<p><strong>Results:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Metric</th>
-<th>Before</th>
-<th>After</th>
-<th>Improvement</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Streaming Speed</td>
-<td>11 TPS</td>
-<td>41 TPS</td>
-<td>3.7x</td>
-</tr>
-<tr>
-<td>UI Re-renders</td>
-<td>Excessive</td>
-<td>Minimal</td>
-<td>10x reduction</td>
-</tr>
-<tr>
-<td>Duplicate Messages</td>
-<td>Frequent</td>
-<td>Zero</td>
-<td>100% eliminated</td>
-</tr>
-<tr>
-<td>Message Flicker</td>
-<td>Present</td>
-<td>None</td>
-<td>Eliminated</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Methodology Applied:</strong>
-- Investigation first (read code, trace flow)
-- Root cause analysis (multiple sources of truth)
-- Complete solution (architectural refactor, not patch)
-- User validation (tested with real conversations)</p>
-<h3 id="case-study-2-scroll-bounce-fix">Case Study 2: Scroll Bounce Fix</h3>
-<p><strong>Problem:</strong> Long conversations (88+ messages) experienced scroll "bounce" where the view would jump to older messages during streaming.</p>
-<p><strong>Investigation Phase:</strong>
-1. Reproduced issue consistently
-2. Identified pattern: bounce always to message 74 (5,392 chars)
-3. Analyzed scroll behavior during content updates
-4. Root cause: <code>scrollTo(message.id)</code> targets content that changes during streaming</p>
-<p><strong>Bad Approach (Symptom Patch):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Add delay to &quot;fix&quot; bounce - WRONG</span>
-<span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">asyncAfter</span><span class="p">(</span><span class="n">deadline</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">proxy</span><span class="p">.</span><span class="n">scrollTo</span><span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">anchor</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">bottom</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>This would have added latency and not solved the underlying issue.</p>
-<p><strong>Good Approach (Root Cause Fix):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Add stable anchor that never changes</span>
-<span class="n">Color</span><span class="p">.</span><span class="n">clear</span><span class="p">.</span><span class="n">frame</span><span class="p">(</span><span class="n">height</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">id</span><span class="p">(</span><span class="s">&quot;scroll-bottom-anchor&quot;</span><span class="p">)</span>
-
-<span class="c1">// Scroll to stable anchor instead of changing message</span>
-<span class="n">proxy</span><span class="p">.</span><span class="n">scrollTo</span><span class="p">(</span><span class="s">&quot;scroll-bottom-anchor&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">anchor</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">bottom</span><span class="p">)</span>
-</code></pre></div>
-
-<p><strong>Results:</strong>
-- Bounce completely eliminated
-- Works for conversations of any length
-- No added latency
-- Solution is permanent and stable</p>
-<h3 id="case-study-3-per-conversation-storage-migration">Case Study 3: Per-Conversation Storage Migration</h3>
-<p><strong>Problem:</strong> Single monolithic <code>conversations.json</code> file became slow as conversation count grew.</p>
-<p><strong>Investigation Phase:</strong>
-1. Profiled save operations with 100+ conversations
-2. Found full-file rewrites on every message
-3. Identified scaling issue: O(n) save time where n = total messages across all conversations</p>
-<p><strong>Solution Implemented:</strong></p>
-<div class="codehilite"><pre><span></span><code>~/Library/Application Support/SAM/conversations/
-├── {UUID}/
-│   ├── conversation.json    # Single conversation
-│   ├── tasks.json           # Agent todo list
-│   └── .vectorrag/          # Conversation-scoped RAG
-├── active-conversation.json
-└── backups/
-</code></pre></div>
-
-<p><strong>Results:</strong>
-- Save time reduced from O(n) to O(1) for conversation size
-- Backward-compatible migration from legacy format
-- Legacy file automatically moved to backups
-- Automatic cleanup on conversation deletion</p>
-<hr />
 <h2 id="getting-started">Getting Started</h2>
 <ol>
-<li><strong>Create your collaboration tool</strong> using the templates above</li>
-<li><strong>Write your instructions file</strong> with ownership and quality requirements</li>
-<li><strong>Design your handoff protocol</strong> for session transitions</li>
-<li><strong>Start your anti-pattern catalog</strong> and add to it as you learn</li>
+<li><strong>Start with a prompt</strong> - Use the <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> or <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> in your AI assistant's instructions</li>
+<li><strong>Create your project reference</strong> - Write an <code>AGENTS.md</code> describing your project's architecture, conventions, and testing commands</li>
+<li><strong>Design your handoff protocol</strong> - Use the <a href="../SAM/developer/templates/handoff-templates.html">Handoff Templates</a> for session transitions</li>
+<li><strong>Start your anti-pattern catalog</strong> - Add failures as you learn using the <a href="../SAM/developer/templates/anti-pattern-template.html">Anti-Pattern Template</a></li>
 <li><strong>Apply the Seven Pillars</strong> to every AI interaction</li>
 </ol>
+<p><strong>With CLIO:</strong> CLIO implements the methodology natively. Install via <code>brew install clio</code>, create <code>.clio/instructions.md</code> and <code>AGENTS.md</code> in your project, and start working. Context preservation, checkpoint discipline, long-term memory, and task tracking are built in.</p>
 <p>The methodology will evolve as you use it. Document what works, what doesn't, and what you learn. The anti-pattern catalog is never complete. It grows with experience.</p>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
@@ -1068,12 +1101,19 @@ SwiftUI interface, keyboard shortcuts, dark mode, persistent conversations, diag
 <p>This methodology is language-agnostic, tool-agnostic, and domain-agnostic. Whether you're writing code, documents, research, or any other knowledge work, The Unbroken Method will improve your AI collaboration.</p>
 <p><strong>Welcome to The Unbroken Method. There are no shortcuts, and that's the point.</strong></p>
 <hr />
-<p><strong>Related Documentation:</strong>
+<p><strong>Related Documentation:</strong></p>
+<p><strong>Templates &amp; Getting Started:</strong>
 - <a href="../SAM/developer/templates/index.html">Templates</a> - Ready-to-use prompts, handoffs, and tools
 - <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> - Get started in 5 minutes
-- <a href="../SAM/developer/developers-guide.html">Developers Guide</a> - Building and extending SAM
-- <a href="contributing.html">Contributing Guide</a> - How to contribute to SAM
-- <a href="../SAM/developer/architecture.html">Architecture</a> - System design and components</p>
+- <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> - Complete prompt with all seven pillars</p>
+<p><strong>CLIO (Terminal AI Assistant):</strong>
+- <a href="../../clio-terminal-ai.html">CLIO Overview</a> - AI in your terminal, built on The Unbroken Method
+- <a href="../CLIO/index.html">CLIO Documentation</a> - Installation, configuration, and usage
+- <a href="https://github.com/SyntheticAutonomicMind/CLIO" target="_blank">CLIO on GitHub</a> - Source code and issues</p>
+<p><strong>SAM (macOS AI Assistant):</strong>
+- <a href="../SAM/developer/developers-guide.html">Developer Guide</a> - Building and extending SAM
+- <a href="../SAM/developer/architecture.html">Architecture</a> - System design and components
+- <a href="contributing.html">Contributing Guide</a> - How to contribute to SAM projects</p>
         </div>
     </div>
 
@@ -1109,7 +1149,7 @@ SwiftUI interface, keyboard shortcuts, dark mode, persistent conversations, diag
             </div>
             
             <div class="footer-bottom-modern">
-                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
             </div>
         </div>
     </footer>

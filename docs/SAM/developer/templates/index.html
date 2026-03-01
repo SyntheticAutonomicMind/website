@@ -315,16 +315,24 @@
 </table>
 <hr />
 <h2 id="editor-specific-setup">Editor-Specific Setup</h2>
+<p>The Unbroken Method uses two files: an <strong>instructions file</strong> (methodology) and a <strong>project reference</strong> (project scope). The instructions file location varies by tool; the project reference is typically <code>AGENTS.md</code> in your repository root.</p>
+<h3 id="clio">CLIO</h3>
+<p>CLIO loads both files automatically:</p>
+<ul>
+<li><code>.clio/instructions.md</code> - Methodology (The Unbroken Method)</li>
+<li><code>AGENTS.md</code> - Project reference (architecture, conventions, commands)</li>
+</ul>
+<p>CLIO also implements checkpoint discipline, long-term memory, todo tracking, and session persistence natively.</p>
 <h3 id="vs-code-with-github-copilot">VS Code with GitHub Copilot</h3>
-<p>Save your prompt as <code>.github/copilot-instructions.md</code> in your repository root.</p>
+<p>Save your methodology prompt as <code>.github/copilot-instructions.md</code>. Create <code>AGENTS.md</code> in your repository root for project context.</p>
 <h3 id="cursor">Cursor</h3>
-<p>Add to your <code>.cursorrules</code> file or project-level settings.</p>
+<p>Add methodology to your <code>.cursorrules</code> file. Create <code>AGENTS.md</code> in your repository root for project context.</p>
 <h3 id="claude-projects">Claude Projects</h3>
-<p>Add as project instructions in the Claude web interface.</p>
+<p>Add methodology as project instructions in the Claude web interface. Upload <code>AGENTS.md</code> as project knowledge.</p>
 <h3 id="chatgpt">ChatGPT</h3>
-<p>Use as custom instructions or system prompt.</p>
+<p>Use methodology as custom instructions or system prompt. Paste <code>AGENTS.md</code> content at session start.</p>
 <h3 id="other-ai-assistants">Other AI Assistants</h3>
-<p>Most AI assistants support custom instructions or system prompts. Adapt the templates to your tool's format.</p>
+<p>Most AI assistants support custom instructions or system prompts. Adapt the templates to your tool's format. The pattern is always the same: methodology instructions tell the AI <em>how to work</em>, and <code>AGENTS.md</code> tells it <em>what the project looks like</em>.</p>
 <hr />
 <h2 id="getting-started">Getting Started</h2>
 <ol>
@@ -336,9 +344,10 @@
 <hr />
 <h2 id="related-documentation">Related Documentation</h2>
 <ul>
-<li><a href="../../../shared/the-unbroken-method.html">The Unbroken Method</a> - Full methodology explanation</li>
+<li><a href="../../../shared/the-unbroken-method.html">The Unbroken Method</a> - Full methodology explanation with implementation architecture</li>
+<li><a href="../../../../clio-terminal-ai.html">CLIO</a> - Terminal AI assistant that implements the method natively</li>
 <li><a href="../developers-guide.html">Developers Guide</a> - SAM-specific development practices</li>
-<li><a href="../../../shared/contributing.html">Contributing Guide</a> - How to contribute to SAM</li>
+<li><a href="../../../shared/contributing.html">Contributing Guide</a> - How to contribute to SAM projects</li>
 </ul>
         </div>
     </div>
@@ -375,7 +384,7 @@
             </div>
             
             <div class="footer-bottom-modern">
-                <p>&copy; 2025 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
             </div>
         </div>
     </footer>
