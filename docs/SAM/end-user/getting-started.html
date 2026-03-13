@@ -590,19 +590,22 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Global Search (F)</strong>: Press F to search across all conversations for specific messages or content</li>
 </ul>
 <h3 id="model-and-personality-selection">Model and Personality Selection</h3>
-<p>The model toolbar gives you control over which AI you're using and how it behaves. From left to right:</p>
+<p>The bottom toolbar sits below the text input and is divided into two sides:</p>
+<p><strong>Left side - Pickers:</strong></p>
 <ul>
-<li><strong>Model Selector</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF)</li>
-<li><strong>System Prompt Selector</strong>: Select predefined system prompts or create custom ones</li>
-<li><strong>Personality Selector</strong>: Choose from built-in personalities (Assistant, Tinkerer, Wordsmith, etc.) or create your own</li>
-<li><strong>Working Directory Button</strong>: Set or view the working folder for this conversation</li>
-<li><strong>Memory Panel Button</strong>: Access memory search and management</li>
-<li><strong>Performance Metrics Button</strong>: View token usage and performance statistics</li>
-<li><strong>Terminal Button</strong>: Open the integrated terminal for command execution</li>
-<li><strong>Advanced Parameters Button</strong>: Access temperature, top-p, repetition penalty, and other settings</li>
-<li><strong>Export Button</strong>: Export conversation to JSON format</li>
-<li><strong>Todo List Button</strong>: View and manage agent task lists</li>
-<li><strong>Scroll Lock</strong>: Lock/unlock automatic scrolling in chat</li>
+<li><strong>Model Picker</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF). When a local model is selected, Load/Eject buttons appear here too.</li>
+<li><strong>System Prompt Picker</strong>: Select a system prompt for this conversation (only shown when prompts are configured for the working directory)</li>
+<li><strong>Personality Picker</strong>: Choose a personality to shape SAM's communication style</li>
+</ul>
+<p><strong>Right side - Controls:</strong></p>
+<ul>
+<li><strong>Panels button</strong> (grid icon): Opens a menu to toggle panels - Working Directory, Session Intelligence (memory), Performance Metrics, Session Costs - plus Export Chat and Scroll Lock</li>
+<li><strong>Settings button</strong> (sliders icon): Opens the settings popover with all sampling parameters, feature toggles, and shared topic controls</li>
+<li><strong>Todo List button</strong> (clipboard icon): Shows the active agent task list with a badge count when tasks are running</li>
+<li><strong>Attach button</strong> (paperclip): Attach files to your next message</li>
+<li><strong>Speaker button</strong>: Toggle text-to-speech output</li>
+<li><strong>Microphone button</strong>: Toggle voice input</li>
+<li><strong>Send / Stop button</strong>: Send your message, stop generation in progress, or submit a response when an agent is waiting for input</li>
 </ul>
 <h3 id="conversation-header">Conversation Header</h3>
 <p>The conversation header displays conversation metadata and controls:</p>
@@ -614,33 +617,24 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>Top Right:</strong>
 - <strong>Mini-Prompts Indicator</strong>: Shows number of mini-prompts selected when panel is closed
 - <strong>Shared Topic Identifier</strong>: Shows shared topic name when enabled, blank otherwise</p>
-<p><strong>Bottom Right (GitHub Copilot specific):</strong>
-- <strong>Cost Multiplier</strong>: Token cost multiplier for current model
-- <strong>Status Used/Remaining</strong>: Tokens or requests used vs remaining
-- <strong>Usage Percentage</strong>: Percentage of quota consumed</p>
+<p><strong>Bottom Right:</strong>
+- <strong>Cost</strong>: Pricing for the current model - shown as a multiplier (e.g. 0x for free, 1x, 2x) or as input/output cost per million tokens
+- <strong>Quota (GitHub Copilot only)</strong>: When using a Copilot model, shows your username, premium requests used vs. entitlement, and percentage consumed - color-coded orange above 80% and red above 90%</p>
 <h3 id="chat-input-area">Chat Input Area</h3>
-<p>The input area at the bottom is where you interact with SAM:</p>
-<ul>
-<li><strong>Message Input Field</strong>: Type your messages here (supports multi-line with Shift+Enter)</li>
-<li><strong>Paperclip Button</strong>: Attach files (PDFs, text, code, images) which are automatically imported before sending</li>
-<li><strong>Send Button</strong>: Send your message (or press Enter)</li>
-</ul>
+<p>The text input area is where you type your messages. It supports multi-line input (Shift+Enter for newline, Enter to send). When an agent is waiting for your response, the input gains a blue border and the send button changes to "Submit". The toolbar below the input contains all controls (see above).</p>
 <h3 id="advanced-parameters">Advanced Parameters</h3>
-<p>Click the parameters button to access fine-grained control over model behavior:</p>
-<p><strong>Sliders:</strong>
-- <strong>Temperature (Temp)</strong>: Controls randomness (0.0 = focused and deterministic, 1.0 = creative and varied)
-- <strong>Top-P</strong>: Nucleus sampling for response diversity
-- <strong>Repetition Penalty (Rep)</strong>: Reduces repetition in responses
-- <strong>Max Tokens Slider</strong>: Maximum length of SAM's response
-- <strong>Context Slider</strong>: How much conversation history SAM can see</p>
-<p><strong>Switches:</strong>
-- <strong>Reasoning</strong>: Enable chain-of-thought reasoning
-- <strong>Tools</strong>: Enable/disable tool usage (file operations, web search, etc.)
-- <strong>Auto-Approve</strong>: Automatically approve tool operations
-- <strong>Terminal</strong>: Show/hide terminal panel
-- <strong>Workflow</strong>: Enable workflow mode
-- <strong>Shared Topic</strong>: Enable shared workspace across conversations
-- <strong>Extend</strong>: Enable context extension</p>
+<p>Click the <strong>Settings button</strong> (sliders icon) in the toolbar to open the settings popover.</p>
+<p><strong>Parameters:</strong>
+- <strong>Temperature</strong> (0.0-2.0): Controls randomness. 0.0 = focused and deterministic, 0.7 = balanced (default), 1.5+ = very creative
+- <strong>Top-P</strong> (0.0-1.0): Nucleus sampling - controls response diversity
+- <strong>Repetition Penalty</strong> (optional, 1.0-2.0): Reduces repetition. Add it with the "+" button, remove with the X
+- <strong>Max Tokens</strong>: Maximum response length in tokens
+- <strong>Context</strong>: How much conversation history SAM can reference</p>
+<p><strong>Features:</strong>
+- <strong>Reasoning</strong>: Enable chain-of-thought reasoning (supported models only)
+- <strong>Tools</strong>: Enable/disable tool usage (file operations, web search, etc.)</p>
+<p><strong>Shared Topic:</strong>
+- Enable shared memory across conversations and select which topic to use</p>
 <h3 id="working-directory">Working Directory</h3>
 <p>Each conversation has its own working directory where SAM reads and writes files:</p>
 <ul>
@@ -650,12 +644,13 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Reset to Default</strong>: Return to default conversation directory</li>
 <li><strong>Auto-Sync</strong>: When you rename a conversation, the folder renames automatically</li>
 </ul>
-<h3 id="memory-toolbar">Memory Toolbar</h3>
-<p>The memory toolbar shows and controls SAM's semantic memory:</p>
+<p>Access working directory controls via the <strong>Panels button</strong> -> <strong>Working Directory</strong>.</p>
+<h3 id="session-intelligence">Session Intelligence (Memory)</h3>
+<p>SAM's semantic memory for the current conversation is accessible via <strong>Panels button</strong> -> <strong>Session Intelligence</strong>. This panel shows:</p>
 <ul>
-<li><strong>Memory Count</strong>: Number of memories stored for this conversation or topic</li>
-<li><strong>Search Memories</strong>: Query stored memories semantically</li>
-<li><strong>Clear Memories</strong>: Remove memories for conversation or shared topic</li>
+<li><strong>Memory statistics</strong>: Count of stored memories for this conversation or shared topic</li>
+<li><strong>Search</strong>: Query stored memories semantically across stored, active, and archive memory</li>
+<li><strong>Clear</strong>: Remove memories for the current conversation or shared topic</li>
 </ul>
 <h3 id="mini-prompts">Mini-Prompts</h3>
 <p>Mini-prompts inject consistent context into your conversations without repeating yourself. They're perfect for location-based queries, project details, or personal preferences.</p>

@@ -611,17 +611,21 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <hr />
 <h2 id="conversation-settings">Conversation Settings</h2>
 <h3 id="per-conversation-configuration">Per-Conversation Configuration</h3>
-<p><strong>Access</strong>: Click the <strong>Parameters</strong> button (slider icon) in the conversation toolbar to expand advanced parameters.</p>
+<p>Per-conversation controls live in the bottom toolbar below the text input. The toolbar is divided into pickers (left) and controls (right).</p>
 <p><strong>Model Selection</strong>:
-- Use the model dropdown in the toolbar to select a different model
-- Switch mid-conversation (applies to future messages only)</p>
-<p><strong>Tools Toggle</strong>:
-- Toggle <strong>Tools</strong> on/off directly in the toolbar
-- Or press ⌘T</p>
-<p><strong>Shared Topics</strong>:
-- Toggle <strong>Shared Topic</strong> on/off in the toolbar
-- Select topic from dropdown when enabled
-- Changes working directory immediately</p>
+- Use the <strong>Model Picker</strong> (leftmost item) to select a different model - switch mid-conversation and it applies to future messages only
+- For local models, Load/Eject buttons appear next to the picker</p>
+<p><strong>System Prompt &amp; Personality</strong>:
+- The <strong>System Prompt Picker</strong> selects the active system prompt (visible when prompts are configured for the working directory)
+- The <strong>Personality Picker</strong> controls SAM's communication style</p>
+<p><strong>Settings Popover</strong> (sliders icon - right side of toolbar):
+- All sampling parameters: Temperature, Top-P, Repetition Penalty, Max Tokens, Context
+- Feature toggles: <strong>Reasoning</strong>, <strong>Tools</strong> (or press T)
+- Shared Topic controls: enable/disable and topic picker</p>
+<p><strong>Panels Menu</strong> (grid icon):
+- Toggle optional panels: <strong>Working Directory</strong>, <strong>Session Intelligence</strong> (memory), <strong>Performance Metrics</strong>, <strong>Session Costs</strong>
+- <strong>Export Chat</strong>: Export conversation to JSON, plain text, or PDF
+- <strong>Scroll Lock</strong>: Lock/unlock auto-scroll during generation</p>
 <hr />
 <h2 id="advanced-parameters">Advanced Parameters</h2>
 <h3 id="context-generation">Context &amp; Generation</h3>

@@ -271,6 +271,7 @@
 <li><a href="#terminal-integration">Terminal Integration</a></li>
 <li><a href="#location-awareness">Location Awareness</a></li>
 <li><a href="#api--integration">API &amp; Integration</a></li>
+<li><a href="#image-generation-with-alice">Image Generation with ALICE</a></li>
 </ol>
 <hr />
 <h2 id="core-features">Core Features</h2>
@@ -309,7 +310,7 @@
 <p><strong>Wake Word ("Hey SAM")</strong></p>
 <p>When enabled, SAM listens for "Hey SAM" and starts voice input automatically.</p>
 <p><strong>How to Enable:</strong>
-1. Go to <strong>SAM → Preferences → Voice</strong>
+1. Go to <strong>SAM → Preferences → Sound</strong>
 2. Toggle <strong>Enable Wake Word Detection</strong>
 3. Grant microphone permission when prompted
 4. Say "Hey SAM" followed by your request</p>
@@ -1448,6 +1449,33 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 - License: GNU GPL v3.0 (same as SAM)
 - Contributions welcome</p>
 <p><strong>Learn More</strong>: See the complete <a href="sam-web.html">SAM Web Guide</a> for setup instructions, troubleshooting, and detailed feature documentation.</p>
+<hr />
+<hr />
+<h2 id="image-generation-with-alice">Image Generation with ALICE</h2>
+<p>SAM can generate images when connected to an <strong>ALICE</strong> server - a GPU-accelerated Stable Diffusion service that runs on your local network.</p>
+<p>Image generation is not built into SAM directly. It requires a separate ALICE server running on a machine with a capable GPU. Once connected, SAM uses the <code>image_generation</code> tool automatically when you ask it to create, draw, or generate an image.</p>
+<h3 id="how-to-set-up-alice">How to Set Up ALICE</h3>
+<ol>
+<li>Set up an ALICE server on a machine with a GPU (see <a href="../../../stable-diffusion-macos.html">ALICE documentation</a>)</li>
+<li>In SAM, open <strong>SAM -> Preferences -> ALICE</strong></li>
+<li>Enter the ALICE server URL (e.g. <code>http://192.168.1.100:7860/v1</code> - include the <code>/v1</code>)</li>
+<li>Optionally set an API key if your server requires authentication</li>
+<li>Click <strong>Test Connection</strong> - SAM will show server version, GPU status, and available models</li>
+</ol>
+<h3 id="using-image-generation">Using Image Generation</h3>
+<p>Once connected, just ask SAM naturally:</p>
+<ul>
+<li>"Generate an image of a mountain lake at sunset"</li>
+<li>"Draw a cartoon robot holding a coffee cup"</li>
+<li>"Create a product photo of a minimalist desk lamp"</li>
+</ul>
+<p>SAM will use the <code>image_generation</code> tool, send your prompt to ALICE, and display the result in the conversation. The ALICE preference pane also shows which Stable Diffusion models are loaded on the server and their default output dimensions.</p>
+<h3 id="alice-requirements">Requirements</h3>
+<ul>
+<li>ALICE server on your local network (Mac, Linux, or Windows with GPU)</li>
+<li>Tools enabled in the conversation (Settings button -> Tools toggle)</li>
+<li>SAM configured with the ALICE server URL in <strong>Preferences -> ALICE</strong></li>
+</ul>
 <hr />
 <h2 id="next-steps">Next Steps</h2>
 <p>Now that you understand SAM's features, dive deeper into specific topics:</p>
