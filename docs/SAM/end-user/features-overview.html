@@ -261,7 +261,6 @@
 <li><a href="#core-features">Core Features</a></li>
 <li><a href="#voice-input-and-output">Voice Input and Output</a></li>
 <li><a href="#personality-system">Personality System</a></li>
-<li><a href="#lora-model-training">LoRA Model Training</a></li>
 <li><a href="#memory--intelligence">Memory &amp; Intelligence</a></li>
 <li><a href="#context-archive--recall">Context Archive &amp; Recall</a></li>
 <li><a href="#document-understanding">Document Understanding</a></li>
@@ -270,7 +269,6 @@
 <li><a href="#file--code-operations">File &amp; Code Operations</a></li>
 <li><a href="#web-research">Web Research</a></li>
 <li><a href="#terminal-integration">Terminal Integration</a></li>
-<li><a href="#image-generation">Image Generation</a></li>
 <li><a href="#location-awareness">Location Awareness</a></li>
 <li><a href="#api--integration">API &amp; Integration</a></li>
 </ol>
@@ -356,7 +354,7 @@
 - Draft messages are automatically saved per conversation
 - Switch between conversations without losing your in-progress text
 - Drafts persist across app restarts
-- Stable Diffusion prompts also persist across restarts</p>
+</p>
 <p><strong>Keyboard Shortcuts:</strong>
 - <strong>⌘↑</strong> / <strong>⌘↓</strong>: Scroll conversation up/down
 - <strong>⌘T</strong>: Toggle tools on/off
@@ -691,141 +689,6 @@ Every message you send includes this context, so SAM knows your preferences with
 - Use different prompts for different project types
 - Disable prompts that aren't relevant to current conversation
 - Update prompts as your context changes</p>
-<hr />
-<h2 id="lora-model-training">LoRA Model Training</h2>
-<p><strong>Fine-tune local AI models on your own data for specialized knowledge and behavior.</strong></p>
-<p>SAM lets you train custom LoRA (Low-Rank Adaptation) adapters that specialize local MLX models on specific topics, writing styles, or knowledge domains. Instead of retraining an entire model, LoRA adds small adapter layers that modify the model's behavior using minimal data and compute.</p>
-<p><strong>Status</strong>: Production-ready for MLX models on Apple Silicon. GGUF training support is planned for a future release.</p>
-<h3 id="what-you-can-do">What You Can Do</h3>
-<ul>
-<li><strong>Customer Support</strong>: Train a model on your product documentation and support tickets</li>
-<li><strong>Domain Expert</strong>: Create specialists in medical, legal, or technical fields</li>
-<li><strong>Writing Style</strong>: Adapt models to match your brand voice or writing style</li>
-<li><strong>Knowledge Base</strong>: Build assistants trained on your company wiki or project documentation</li>
-<li><strong>Code Assistant</strong>: Train on your codebase for context-aware development help</li>
-</ul>
-<h3 id="how-it-works">How It Works</h3>
-<ol>
-<li><strong>Prepare Training Data</strong>: Export conversations or documents as JSONL training data</li>
-<li><strong>Configure Training</strong>: Select base MLX model, set parameters (rank, alpha, learning rate, epochs)</li>
-<li><strong>Train Adapter</strong>: SAM trains the adapter using MLX's Python training script on your Mac</li>
-<li><strong>Automatic Integration</strong>: Trained adapters appear immediately in the model picker</li>
-<li><strong>Use in Chat</strong>: Select your custom adapter like any other model</li>
-</ol>
-<h3 id="key-features">Key Features</h3>
-<p><strong>Complete Training UI</strong>
-- Full training configuration interface in Preferences → Model Training
-- Real-time progress tracking with loss visualization
-- Live metrics: current epoch, step, loss values
-- Cancel training anytime without losing progress
-- Training log viewer for debugging</p>
-<p><strong>Training Data Export</strong>
-- Export conversations directly from chat interface
-- Export documents with intelligent chunking strategies
-- Automatic PII detection and redaction (optional)
-- Support for multiple chat templates (Llama, Qwen, Mistral, Gemma, Phi, Custom)
-- Flexible chunking: paragraph, sentence, or token-based</p>
-<p><strong>Privacy Protection</strong>
-SAM can detect and redact personally identifiable information before training:
-- Personal names, organizations, places
-- Email addresses, phone numbers
-- Credit card numbers, social security numbers
-- IP addresses, URLs
-- Configurable on/off per export</p>
-<p><strong>Document Chunking Strategies</strong>
-Choose the best strategy for your content:
-- <strong>Semantic (Paragraphs)</strong>: Natural paragraph breaks for readable chunks
-- <strong>Sentence-Based</strong>: Split on sentence boundaries
-- <strong>Token-Based</strong>: Fixed token counts with overlap
-- <strong>Page Aware (PDFs)</strong>: Respect page boundaries in PDF documents</p>
-<p><strong>Training Parameters</strong></p>
-<p><strong>LoRA Configuration:</strong>
-- <strong>Rank (r)</strong>: 4-64 (adapter capacity, higher = more expressive but larger files)
-- <strong>Alpha</strong>: 8-128 (scaling factor, typically 2x rank)
-- <strong>Target Layers</strong>: Customize which attention layers to adapt</p>
-<p><strong>Training Settings:</strong>
-- <strong>Learning Rate</strong>: 1e-6 to 1e-3 (how fast the model learns)
-- <strong>Epochs</strong>: 1-1000 (number of passes through training data)
-- <strong>Batch Size</strong>: 1-32 (examples processed simultaneously)
-- <strong>Gradient Accumulation</strong>: For effective larger batches on limited memory</p>
-<p><strong>Real-Time Monitoring</strong>
-- Live training progress with percentage complete
-- Loss curve visualization (watch loss decrease as model learns)
-- Current epoch, step, and loss values updated in real-time
-- Estimated time remaining
-- Logs show detailed training statistics</p>
-<p><strong>Adapter Management</strong>
-- Trained adapters stored in <code>~/Library/Application Support/SAM/adapters/</code>
-- Automatic hot reload - new adapters appear immediately without restart
-- Friendly names in model picker (base model + adapter name)
-- Delete or rename adapters from Finder
-- Split model support for large base models (&gt;5GB)</p>
-<h3 id="mlx-training-available-now">MLX Training (Available Now)</h3>
-<p><strong>Requirements:</strong>
-- macOS with Apple Silicon (M1, M2, M3, M4 chips)
-- Local MLX model installed (Qwen, Llama, Mistral, etc.)
-- Training data in JSONL format
-- Sufficient disk space for adapter files</p>
-<p><strong>Performance:</strong>
-- Training uses Metal acceleration via MLX
-- Speed depends on model size and available RAM
-- Typically completes in minutes to hours
-- Can continue using SAM during training</p>
-<p><strong>How to Train:</strong>
-1. Go to <strong>SAM → Preferences → Model Training</strong>
-2. Click <strong>Export Training Data</strong> to create JSONL from conversations or documents
-3. Select <strong>Train LoRA Adapter</strong> tab
-4. Choose your base MLX model
-5. Configure training parameters (or use defaults)
-6. Click <strong>Start Training</strong>
-7. Monitor progress in real-time
-8. When complete, find your adapter in the model picker</p>
-<h3 id="gguf-training-planned">GGUF Training (Planned)</h3>
-<p>Support for training LoRA adapters for GGUF models (llama.cpp) is planned for a future release. The implementation will use Hugging Face Transformers for training and llama.cpp for inference with the adapter.</p>
-<p><strong>Status</strong>: Architecture designed, not yet implemented. Stay tuned for updates.</p>
-<h3 id="lora-vs-rag">LoRA vs RAG</h3>
-<p><strong>Use LoRA when:</strong>
-- You want the model to internalize knowledge permanently
-- You need consistent writing style or behavior
-- You have structured training examples
-- You want fast inference without retrieval overhead
-- Your knowledge is stable and doesn't change frequently</p>
-<p><strong>Use RAG when:</strong>
-- Information changes frequently and needs updates
-- You need source attribution and citations
-- You have large reference libraries (hundreds of documents)
-- You want immediate updates without retraining
-- You need to combine information from multiple sources</p>
-<p><strong>Best approach</strong>: Combine LoRA + RAG for specialized behavior with current information. Train a LoRA adapter for domain expertise and communication style, then use RAG for up-to-date facts and references.</p>
-<h3 id="practical-examples">Practical Examples</h3>
-<p><strong>Customer Support Bot</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">ticket</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">training</span><span class="w"> </span><span class="kd">data</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">on</span><span class="w"> </span><span class="n">ticket</span><span class="w"> </span><span class="n">resolution</span><span class="w"> </span><span class="n">patterns</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">knowledge</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">FAQs</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Agent</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">speaks</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">support</span><span class="w"> </span><span class="n">team</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">latest</span><span class="w"> </span><span class="n">info</span>
-</code></pre></div>
-
-<p><strong>Code Assistant</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">coding</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">project</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">on</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">codebase</span><span class="w"> </span><span class="n">patterns</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">conventions</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="n">documentation</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">search</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Assistant</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">understands</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">project</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">idioms</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">architecture</span>
-</code></pre></div>
-
-<p><strong>Writing Assistant</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="nb">Exp</span><span class="ow">or</span><span class="n">t</span><span class="w"> </span><span class="n">examples</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">writing</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">past</span><span class="w"> </span><span class="n">conversations</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Train</span><span class="w"> </span><span class="n">LoRA</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">match</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">voice</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="kr">to</span><span class="n">ne</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">RAG</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">factual</span><span class="w"> </span><span class="kr">cont</span><span class="n">ent</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Result</span><span class="p">:</span><span class="w"> </span><span class="n">Assistant</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">writes</span><span class="w"> </span><span class="n">like</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">reference</span><span class="w"> </span><span class="n">materials</span>
-</code></pre></div>
-
-<h3 id="troubleshooting">Troubleshooting</h3>
-<p><strong>Common Issues:</strong>
-- <strong>Training fails immediately</strong>: Check that your training data is valid JSONL format
-- <strong>Out of memory</strong>: Reduce batch size or use gradient accumulation
-- <strong>Loss not decreasing</strong>: Try adjusting learning rate (lower if loss explodes, higher if learning too slow)
-- <strong>Adapter doesn't appear</strong>: Check <code>~/Library/Application Support/SAM/adapters/</code> for adapter files</p>
-<p><strong>Learn More</strong>: See the complete <a href="lora-training.html">LoRA Training Guide</a> for detailed instructions, parameter tuning, best practices, and advanced techniques.</p>
 <hr />
 <h2 id="memory-intelligence">Memory &amp; Intelligence</h2>
 <p>SAM's memory system goes beyond simple conversation history. It understands context, remembers important information, and retrieves relevant details intelligently when you need them.</p>
@@ -1347,90 +1210,6 @@ Retrieved research about AI safety from memory:
 </code></pre></div>
 
 <hr />
-<h2 id="image-generation">Image Generation</h2>
-<h3 id="getting-started-with-image-generation">Getting Started with Image Generation</h3>
-<p>SAM includes built-in AI image generation that runs entirely on your Mac. Generate images from text descriptions with just a few clicks.</p>
-<p><strong>Quick Start (3 Steps)</strong>:
-1. <strong>Install a Model</strong>: Go to <strong>Preferences → Image Generation → Model Browser</strong>
-2. <strong>Download</strong>: Find a model you like and download it (with optional CoreML conversion)
-3. <strong>Generate</strong>: Type your prompt in chat or ask SAM to generate an image</p>
-<h3 id="installing-image-models">Installing Image Models</h3>
-<p><strong>From the Model Browser</strong>:
-1. Open <strong>SAM → Preferences → Image Generation</strong>
-2. Choose <strong>HuggingFace</strong> or <strong>CivitAI</strong> tab
-3. Search by name, tags, or browse popular models
-4. Click <strong>Download</strong> on any model
-5. Optionally click <strong>Convert</strong> to optimize for your Mac (recommended for Apple Silicon)
-6. Model appears in your model picker automatically</p>
-<p><strong>Model Types</strong>:
-- <strong>SD 1.5</strong>: 512×512 images, fast, wide variety of styles
-- <strong>SD 2.x</strong>: 768×768 images, improved quality
-- <strong>SDXL</strong>: 1024×1024 images, highest quality (slower)</p>
-<p><strong>Tip</strong>: Start with SD 1.5 models since they're faster and have the most community options.</p>
-<h3 id="two-ways-to-generate-images">Two Ways to Generate Images</h3>
-<p><strong>LLM-Assisted Mode</strong> (Recommended for beginners):
-Just ask SAM naturally. It handles the technical details.</p>
-<div class="codehilite"><pre><span></span><code><span class="nl">You</span><span class="p">:</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">image</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">serene</span><span class="w"> </span><span class="n">mountain</span><span class="w"> </span><span class="n">landscape</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">sunset</span>
-
-<span class="nl">SAM</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Using</span><span class="w"> </span><span class="n">image_generation</span><span class="p">]</span>
-<span class="n">Generating</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">optimal</span><span class="w"> </span><span class="n">settings</span><span class="p">...</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Enhanced</span><span class="w"> </span><span class="n">prompt</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">lighting</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">quality</span><span class="w"> </span><span class="n">details</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Selected</span><span class="w"> </span><span class="n">appropriate</span><span class="w"> </span><span class="n">negative</span><span class="w"> </span><span class="n">prompts</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Image</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">displayed</span>
-</code></pre></div>
-
-<p><strong>Direct SD Mode</strong> (Fast and precise):
-1. Click the <strong>model picker</strong> in your conversation
-2. Select an SD model (look for models prefixed with "sd/")
-3. Type your exact prompt
-4. Press Enter and the image generates immediately</p>
-<p>The send button turns <strong>purple</strong> when in Direct SD Mode.</p>
-<p><strong>Benefits of Direct SD Mode</strong>:
-- <strong>Faster</strong>: Skips LLM processing entirely
-- <strong>Precise</strong>: Your exact words go to the image generator
-- <strong>Cost-effective</strong>: No API calls to cloud providers</p>
-<h3 id="model-lora-browsers">Model &amp; LoRA Browsers</h3>
-<p>Discover and download models and LoRAs directly in SAM through integrated browsers.</p>
-<p><strong>Model Browser</strong> (Preferences → Image Generation → Model Browser):
-- <strong>CivitAI Tab</strong>: Browse thousands of community Stable Diffusion models
-- <strong>HuggingFace Tab</strong>: Discover models from HuggingFace Hub
-- Search, filter, preview, and download with one click
-- Auto-convert to CoreML for Mac optimization</p>
-<p><strong>LoRA Browser</strong> (Preferences → Image Generation → LoRA Browser):
-- <strong>Library Tab</strong>: Manage your installed LoRAs
-- <strong>CivitAI Tab</strong>: Browse and download LoRAs from CivitAI
-- <strong>HuggingFace Tab</strong>: Discover LoRAs from HuggingFace Hub
-- Filter by base model (SD 1.5, SDXL, Z-Image, Flux)
-- View trigger words and compatibility info
-- Auto-load results when switching tabs</p>
-<p><strong>Using LoRAs</strong>:
-Just reference the LoRA filename in your image prompt. SAM automatically finds and applies it.</p>
-<p><strong>Tip</strong>: Ask SAM "list available LoRAs" to see all installed LoRAs with their trigger words.</p>
-<h3 id="alice-remote-generation">ALICE Remote Generation</h3>
-<p>Generate images on remote GPU servers using the ALICE protocol. Perfect for:
-- AMD GPU hardware (not supported locally on Mac)
-- Steam Deck or Linux servers
-- Offloading generation while working</p>
-<p><strong>Setup</strong>:
-1. Open <strong>Preferences → Stable Diffusion → Settings</strong>
-2. Enter your ALICE server URL (e.g., <code>http://192.168.1.100:8090/v1</code>)
-3. Click <strong>Test Connection</strong>
-4. Save and models will appear in picker with "ALICE" location</p>
-<p><strong>Benefits</strong>:
-- Use AMD or NVIDIA GPUs remotely
-- Keep Mac responsive during generation
-- Access server-side models without downloading</p>
-<h3 id="generation-tips">Generation Tips</h3>
-<p><strong>Write Better Prompts</strong>:
-- Be specific: "Serene mountain landscape at sunset" beats "mountains"
-- Add style: "watercolor painting of...", "photo-realistic...", "digital art of..."
-- Include details: lighting, mood, colors, composition
-- Use quality tags: "8k", "detailed", "masterpiece"</p>
-<p><strong>Adjust Settings</strong> (available in Preferences → Image Generation):
-- <strong>Steps</strong>: More steps = better quality, slower generation (default: 25)
-- <strong>Guidance Scale</strong>: Higher = stricter prompt adherence (default: 8.0)
-- <strong>Scheduler</strong>: Try DPM++ with Karras for best results</p>
-<hr />
 <h2 id="location-awareness">Location Awareness</h2>
 <p>SAM can incorporate location context into conversations, enabling more relevant and personalized responses.</p>
 <h3 id="two-location-modes">Two Location Modes</h3>
@@ -1517,18 +1296,18 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 <hr />
 <h2 id="remote-access-with-sam-web">Remote Access with SAM Web</h2>
 <p><strong>Access SAM from your iPad, iPhone, or any device with a browser.</strong></p>
-<p>SAM Web lets you chat with SAM from anywhere on your network. All of SAM's backend features are available through the chat interface - image generation, file operations, terminal commands, memory, and more. You're controlling SAM remotely, so everything happens on your Mac.</p>
+<p>SAM Web lets you chat with SAM from anywhere on your network. All of SAM's backend features are available through the chat interface file operations, terminal commands, memory, and more. You're controlling SAM remotely, so everything happens on your Mac.</p>
 <h3 id="what-is-sam-web">What is SAM Web?</h3>
 <p>SAM Web is a browser-based interface that connects to SAM's API. When you're on your iPad or another device, you can have full conversations with SAM and access all its capabilities.</p>
 <p><strong>What works:</strong>
 - Full chat with streaming responses
 - All conversation features (system prompts, personalities, mini-prompts, shared topics, folders)
 - All AI models and providers you've configured in SAM
-- All of SAM's tools: image generation, file operations, terminal, web research, memory/RAG, and more
+- All of SAM's tools: file operations, terminal, web research, memory/RAG, and more
 - Model parameter configuration</p>
 <p><strong>What's missing:</strong>
 - Document upload directly from browser (may be available in a future release)</p>
-<p><strong>Important:</strong> SAM Web requires SAM running on your Mac with API server enabled. When you ask SAM to generate an image or edit a file, it happens on your Mac - SAM Web is just the remote control.</p>
+<p><strong>Important:</strong> SAM Web requires SAM running on your Mac with API server enabled. When you ask SAM to edit a file or run a command, it happens on your Mac - SAM Web is just the remote control.</p>
 <h3 id="getting-started">Getting Started</h3>
 <p><strong>Requirements:</strong>
 1. SAM installed and running on your Mac
@@ -1607,11 +1386,7 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 <td>✅ Organize conversations</td>
 <td>✅ Organize conversations</td>
 </tr>
-<tr>
-<td>Image generation</td>
-<td>✅ Full (images on Mac)</td>
-<td>✅ Full (images on Mac)</td>
-</tr>
+
 <tr>
 <td>File operations</td>
 <td>✅ Full (Mac file system)</td>
@@ -1637,11 +1412,7 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 <td>✅ Full support</td>
 <td>⏳ Planned</td>
 </tr>
-<tr>
-<td>LoRA training</td>
-<td>✅ Complete UI</td>
-<td>❌ Not available</td>
-</tr>
+
 <tr>
 <td>Conversation export</td>
 <td>✅ JSON, MD, PDF, TXT</td>
@@ -1664,7 +1435,7 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 - ⏳ = Planned for future release
 - ❌ = Not available
 - "(Mac)" = Works via SAM's tools, affects your Mac where SAM runs</p>
-<p><strong>Summary:</strong> SAM Web provides full chat and configuration access. Features marked "(Mac)" work via SAM's tools but affect your Mac's file system, not the device you're browsing from. Missing: LoRA training UI, conversation export, document management UI.</p>
+<p><strong>Summary:</strong> SAM Web provides full chat and configuration access. Features marked "(Mac)" work via SAM's tools but affect your Mac's file system, not the device you're browsing from. Missing: conversation export, document management UI.</p>
 <h3 id="technical-details">Technical Details</h3>
 <p><strong>Architecture:</strong>
 - Pure HTML5, CSS3, JavaScript (no build step required)

@@ -507,14 +507,14 @@ Click the paperclip button in the chat input area, select a file (PDF, text, cod
 <h3 id="local-models-preferences">Local Models Preferences</h3>
 <p>Open <strong>SAM → Preferences → Local Models</strong> to access the 3-tab interface:</p>
 <p><strong>Installed Models Tab</strong>
-- View all downloaded models (GGUF, MLX, Stable Diffusion)
-- Filter by type: All, GGUF, MLX, or Stable Diffusion
+- View all downloaded models (GGUF, MLX)
+- Filter by type: All, GGUF, or MLX
 - Sort by name, size, or date added
 - See model details: size, type, context window
 - Remove models you no longer need</p>
 <p><strong>Download Tab</strong>
 - Search up to 100 models from HuggingFace
-- Filter by type: All, GGUF, MLX, SD, Q4, Q5, Q8
+- Filter by type: All, GGUF, MLX, Q4, Q5, Q8
 - See context window requirements (SAM recommends 16k+ for full tool support)
 - Click <strong>Download</strong> to install directly with progress tracking
 - Models automatically appear in Installed tab when complete</p>
@@ -528,7 +528,7 @@ Click the paperclip button in the chat input area, select a file (PDF, text, cod
 2. Click the <strong>Download</strong> tab</p>
 <p><strong>Step 2: Search for Models</strong>
 - Search by name (e.g., "Qwen2.5-Coder", "Llama-3", "Mistral")
-- Or browse by filter: All Models, GGUF, MLX, Stable Diffusion, Q4/Q5/Q8
+- Or browse by filter: All Models, GGUF, MLX, Q4/Q5/Q8
 - Up to 100 results displayed per search</p>
 <p><strong>Step 3: Check Context Window</strong>
 - Look for models with 16k+ context window
@@ -785,7 +785,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>Tip</strong>: For a complete list of keyboard shortcuts, press <strong>⌘?</strong> to open the in-app help.</p>
 <hr />
 <h2 id="example-conversations">Example Conversations</h2>
-<p>Here are real examples showing how SAM handles different types of requests. These screenshots demonstrate SAM's web search, document processing, and image generation capabilities in action.</p>
+<p>Here are real examples showing how SAM handles different types of requests. These screenshots demonstrate SAM's web search and document processing capabilities in action.</p>
 <h3 id="initial-web-search">Initial Web Search</h3>
 <p><img alt="Example Conversation 1" src="../../../images/example-conversation-1.png" /></p>
 <p>The user asks SAM to share the most popular cheesesteak recipe. SAM performs a web search, finds top recipes from multiple sources (Allrecipes, Food Network, Delish, Chef Billy Parisi), and provides a comprehensive summary with direct links to each recipe.</p>
@@ -795,14 +795,11 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <h3 id="local-business-search">Local Business Search</h3>
 <p><img alt="Example Conversation 3" src="../../../images/example-conversation-3.png" /></p>
 <p>The user asks where to find Amoroso rolls in Orlando, FL. SAM performs location-aware searches and provides multiple shopping options (Walmart, Instacart, Smart &amp; Final) with direct product links and local availability information.</p>
-<h3 id="image-generation">Image Generation</h3>
-<p><img alt="Example Conversation 4" src="../../../images/example-conversation-4.png" /></p>
-<p>The user requests an image of a man eating a cheesesteak at the beach. SAM automatically crafts a detailed Stable Diffusion prompt, generates the image, displays it in the chat, and shows all generation parameters used (model, steps, guidance scale, etc.).</p>
+
 <p><strong>What These Examples Show:</strong>
 - <strong>Web Search Integration</strong>: SAM searches DuckDuckGo and presents results with links
 - <strong>Content Extraction</strong>: Fetches full articles and recipes, not just snippets
 - <strong>Location Awareness</strong>: Uses mini-prompts (user location) for localized searches
-- <strong>Image Generation</strong>: Creates detailed Stable Diffusion prompts and generates images
 - <strong>Natural Flow</strong>: Conversation flows naturally between different task types
 - <strong>Tool Transparency</strong>: Shows exactly which tools were used and their results</p>
 <hr />
