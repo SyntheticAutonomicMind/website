@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLIO - AI Coding Assistant for Terminal | macOS, Linux</title>
-    <meta name="description" content="CLIO brings AI directly to your command line. Built with Perl for maximum portability. Runs on macOS and Linux. Works over SSH for remote development.">
-    <meta name="keywords" content="terminal AI, command line AI, coding assistant terminal, CLIO, AI SSH">
+    <title>CLIO - AI Development Agent for Terminal | macOS, Linux</title>
+    <meta name="description" content="CLIO is a terminal-native AI development agent. Describe a task, CLIO reads your code, makes changes, runs tests, and commits - iterating until the work is done. Zero dependencies. Runs anywhere Perl runs.">
+    <meta name="keywords" content="terminal AI agent, AI coding assistant terminal, command line AI, CLIO, pair programming terminal, AI development agent">
     <meta name="author" content="Andrew Wyatt (Fewtarius)">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/clio-terminal-ai.html">
     <link rel="stylesheet" href="css/styles.css?v=8">
@@ -37,8 +37,8 @@
         <div class="container-wide">
             <div class="hero-modern-content">
                 <div class="eyebrow" style="color: var(--primary-blue); margin-bottom: 24px;">CLIO</div>
-                <h1>AI in your terminal.</h1>
-                <p class="hero-lead">Bring AI directly to your command line. Built with Perl for maximum portability. Runs on macOS and Linux with zero external dependencies. Works over SSH.</p>
+                <h1>Your AI development agent.</h1>
+                <p class="hero-lead">Describe a task. CLIO reads your code, makes changes, runs tests, and commits - iterating until the work is done. Interrupt it mid-task to redirect, and it picks up exactly where you left off next session.</p>
                 <div class="hero-cta">
                     <a href="https://github.com/SyntheticAutonomicMind/CLIO/releases/latest" class="btn-large btn-primary" target="_blank">
                         Download CLIO
@@ -47,7 +47,7 @@
                         Read the Docs
                     </a>
                 </div>
-                <p class="hero-note">Free and open source. Runs anywhere Perl runs.</p>
+                <p class="hero-note">Free and open source. ~50MB. Zero external dependencies. macOS and Linux.</p>
             </div>
         </div>
     </section>
@@ -64,52 +64,52 @@
     <!-- Key Capabilities -->
     <section class="feature-highlight alt">
         <div class="container">
-            <h2 class="section-title-centered">Terminal-first AI.</h2>
-            
+            <h2 class="section-title-centered">An agent that works, not just suggests.</h2>
+
             <div class="features-grid-modern">
                 <div class="feature-item-modern">
-                    <h3>Maximum portability</h3>
-                    <p>Built with Perl. Runs on macOS and Linux. Zero external dependencies beyond Perl core. Install via Homebrew or Docker.</p>
+                    <h3>End-to-end execution</h3>
+                    <p>CLIO doesn't hand you a snippet and walk away. It reads your code, makes changes, runs tests, fixes errors, and commits - autonomously, from start to finish.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>MCP tool integration</h3>
-                    <p>Full Model Context Protocol support with stdio and HTTP/SSE transports. Connect to any MCP server with OAuth 2.0 + PKCE authentication.</p>
+                    <h3>Interrupt anytime</h3>
+                    <p>Press any key to stop CLIO mid-task. It pauses, asks what you need, and adapts its approach - like tapping your pair programmer on the shoulder.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Multi-agent coordination</h3>
-                    <p>Spawn parallel AI agents that work simultaneously on different tasks. Coordinate complex work across multiple sub-agents.</p>
+                    <h3>Remembers across sessions</h3>
+                    <p>Long-term memory stores project discoveries, solved problems, and code patterns. Every new session starts with what CLIO learned last time - no re-explaining.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Remote execution</h3>
-                    <p>Execute tasks on any SSH-accessible system. Run builds, gather diagnostics, or deploy across your infrastructure.</p>
+                    <h3>Learns your style</h3>
+                    <p>Run <code>/profile build</code> and CLIO analyzes your session history to learn how you communicate, what you prefer, and how to work with you - across every project.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Full git integration</h3>
-                    <p>Complete git operations: status, diff, commit, branch, push, pull, stash, tag, and blame. All from the AI chat.</p>
+                    <h3>Parallel multi-agent work</h3>
+                    <p>Spawn multiple AI agents to tackle different parts of a problem simultaneously. File and git locking prevent conflicts. Live output streams in separate tmux, screen, or Zellij panes.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Long-term memory</h3>
-                    <p>Persistent memory across all sessions. CLIO learns patterns, stores solutions, and recalls previous discoveries.</p>
+                    <h3>Remote fleet execution</h3>
+                    <p>SSH into any machine, run an AI task, get results back. Execute across your entire fleet in parallel - diagnostics, builds, analysis, deployment.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Reasoning display</h3>
-                    <p>See the model's thinking process in real time. Streaming display of reasoning content with toggle control. Supports OpenRouter reasoning models.</p>
+                    <h3>No surprise bills</h3>
+                    <p>Real-time billing awareness with <code>/usage</code>: quota consumed, per-model cost multipliers, and reset dates. CLIO warns you when a premium model costs extra before you send.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Multi-provider support</h3>
-                    <p>Connect to OpenAI, Anthropic, GitHub Copilot, DeepSeek, Google Gemini, OpenRouter, local llama.cpp, LM Studio, or any OpenAI-compatible API.</p>
+                    <h3>Secrets stay secret</h3>
+                    <p>Built-in secret redaction catches API keys, tokens, passwords, and PII before they reach any AI provider. Your credentials never leave your machine.</p>
                 </div>
-                
+
                 <div class="feature-item-modern">
-                    <h3>Works over SSH</h3>
-                    <p>Perfect for remote development. Run CLIO on any server you can SSH into. All processing happens where your code lives.</p>
+                    <h3>Zero dependencies</h3>
+                    <p>Pure Perl. ~50MB at startup. No npm, no pip, no CPAN. Runs on anything from a ClockworkPi uConsole to an M4 Mac. Install via Homebrew, Docker, or a single script.</p>
                 </div>
             </div>
         </div>
@@ -120,9 +120,9 @@
         <div class="container">
             <div class="feature-split">
                 <div class="feature-text">
-                    <h2>File operations and terminal commands.</h2>
-                    <p>CLIO reads, writes, searches, and refactors files. Apply patches across multiple files with automatic snapshots and undo support. Executes shell commands with safety validation.</p>
-                    <p>Built-in grep, semantic search, and code intelligence. Work directly in your development environment without switching contexts.</p>
+                    <h2>Full access to your codebase.</h2>
+                    <p>CLIO reads, writes, searches, and refactors files across your entire project. Apply surgical patches across multiple files. Undo any AI change with a single command. Run shell commands, build tools, test suites - all from the same session.</p>
+                    <p>Semantic search understands code structure. Ask "where is authentication implemented?" and CLIO finds it - even if the file doesn't contain that word.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
@@ -137,9 +137,9 @@
         <div class="container">
             <div class="feature-split reverse">
                 <div class="feature-text">
-                    <h2>Session management and export.</h2>
-                    <p>Break down complex work into structured todos. Track progress through multi-step tasks. Export sessions to HTML for documentation and review.</p>
-                    <p>Monitor performance with `/stats`, manage context with session persistence, and maintain momentum across long sessions.</p>
+                    <h2>Pick up exactly where you left off.</h2>
+                    <p>Sessions persist. Resume any conversation with full history intact. CLIO tracks multi-step tasks with structured todos, maintains momentum across long sessions, and exports complete session transcripts to HTML for documentation and review.</p>
+                    <p>Context trimming keeps long sessions sharp - CLIO automatically compresses older messages into summaries so it never loses the thread of what you're working on.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
@@ -154,9 +154,9 @@
         <div class="container">
             <div class="feature-split">
                 <div class="feature-text">
-                    <h2>The Unbroken Method.</h2>
-                    <p>CLIO implements <a href="docs/shared/the-unbroken-method.html">The Unbroken Method</a> - a systematic approach to AI collaboration that maintains continuous context, demands complete ownership, and learns from documented failures.</p>
-                    <p>Checkpoint discipline through the <code>user_collaboration</code> tool. Long-term memory that persists discoveries across sessions. Todo tracking for complete deliverables. Methodology in <code>.clio/instructions.md</code>, project scope in <code>AGENTS.md</code>.</p>
+                    <h2>Built on a methodology, not just prompts.</h2>
+                    <p>CLIO implements <a href="docs/shared/the-unbroken-method.html">The Unbroken Method</a> - a systematic approach to AI collaboration that maintains continuous context, demands complete ownership, and learns from failure.</p>
+                    <p>Collaboration checkpoints keep the agent aligned. Long-term memory persists what it learns. Todo tracking ensures nothing gets dropped. CLIO doesn't just respond - it works through problems end-to-end with a methodology that scales to real projects.</p>
                 </div>
                 <div class="feature-visual">
                     <div class="feature-placeholder">
@@ -171,8 +171,8 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Get started with CLIO.</h2>
-                <p>Download for terminal. Works anywhere Perl runs.</p>
+                <h2>Give it a task. Ship the work.</h2>
+                <p>Start with GitHub Copilot - no API key setup, just log in and go. Swap providers anytime.</p>
                 <div class="cta-buttons">
                     <a href="https://github.com/SyntheticAutonomicMind/CLIO/releases/latest" class="btn-large btn-primary" target="_blank">
                         Download CLIO
