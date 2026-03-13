@@ -281,19 +281,19 @@
 - <strong>Specialized expertise</strong> - each subagent focuses on one aspect</p>
 <h3 id="when-to-use-subagents">When to Use Subagents</h3>
 <p>✅ <strong>Complex Multi-Part Tasks</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main: &quot;Build a full-stack web application&quot;
-├── Subagent 1: Design database schema
-├── Subagent 2: Implement REST API
-├── Subagent 3: Build React frontend
-└── Subagent 4: Write comprehensive tests
+<div class="codehilite"><pre><span></span><code>Main: &quot;Research and write a report on remote work trends&quot;
+├── Subagent 1: Find recent statistics and studies
+├── Subagent 2: Interview summaries and expert quotes
+├── Subagent 3: Draft the executive summary
+└── Subagent 4: Format and proofread final document
 </code></pre></div>
 
 <p>✅ <strong>Code Review</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main: &quot;Review this codebase&quot;
-├── Subagent 1: Security analysis
-├── Subagent 2: Performance audit
-├── Subagent 3: Code style review
-└── Subagent 4: Test coverage analysis
+<div class="codehilite"><pre><span></span><code>Main: &quot;Plan our family budget for 2025&quot;
+├── Subagent 1: Analyze current spending categories
+├── Subagent 2: Research cost-saving opportunities
+├── Subagent 3: Build the monthly budget plan
+└── Subagent 4: Create tracking spreadsheet template
 </code></pre></div>
 
 <p>✅ <strong>Research</strong>:</p>
@@ -306,10 +306,8 @@
 
 <h3 id="subagent-best-practices">Subagent Best Practices</h3>
 <p><strong>Clear Instructions</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">❌</span><span class="w"> </span><span class="n">Bad</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Help with the frontend&quot;</span>
-<span class="err">✅</span><span class="w"> </span><span class="n">Good</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build React components for user authentication with form validation, </span>
-<span class="w">         </span><span class="n">error</span><span class="w"> </span><span class="n">handling</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">loading</span><span class="w"> </span><span class="n">states</span><span class="o">.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">TypeScript</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">follow</span><span class="w"> </span><span class="n">our</span><span class="w"> </span>
-<span class="w">         </span><span class="n">component</span><span class="w"> </span><span class="n">structure</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">components</span><span class="o">/.</span><span class="s2">&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="err">❌</span><span class="w"> </span><span class="n">Bad</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Help with the budget&quot;</span>
+<span class="err">✅</span><span class="w"> </span><span class="n">Good</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Analyze our last 3 months of spending. Identify the top 3 categories where we can realistically cut 15% or more, and explain why.<span class="s2">&quot;</span>
 </code></pre></div>
 
 <p><strong>Shared Topic Integration</strong>:</p>
@@ -327,22 +325,22 @@
 <h2 id="multi-conversation-patterns">Multi-Conversation Patterns</h2>
 <h3 id="pattern-1-specialist-team">Pattern 1: Specialist Team</h3>
 <p><strong>Concept</strong>: Multiple persistent conversations, each specialized in one area</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;E-Commerce Platform&quot;
+<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Home Purchase 2025&quot;
 
 Conversations:
-├── &quot;Backend Engineer&quot; (Python/Flask expert)
-├── &quot;Frontend Developer&quot; (React specialist)
-├── &quot;Database Architect&quot; (PostgreSQL expert)
-├── &quot;DevOps Engineer&quot; (CI/CD, deployment)
-└── &quot;QA Tester&quot; (Test automation)
+├── &quot;Market Researcher&quot; (finds listings, pricing trends)
+├── &quot;Financial Planner&quot; (budget, mortgage scenarios)
+├── &quot;Neighborhood Scout&quot; (schools, commute, amenities)
+├── &quot;Inspector Prep&quot; (what to look for, checklists)
+└── &quot;Document Tracker&quot; (paperwork, deadlines)
 </code></pre></div>
 
 <p><strong>Workflow</strong>:
-1. Start with Backend Engineer for API design
-2. Switch to Database Architect for schema
-3. Frontend Developer builds UI using API
-4. DevOps sets up deployment
-5. QA tests everything</p>
+1. Start with Market Researcher to understand the market
+2. Financial Planner runs mortgage and budget scenarios
+3. Neighborhood Scout evaluates shortlisted areas
+4. Inspector Prep reviews each property before viewings
+5. Document Tracker stays on top of paperwork and deadlines</p>
 <p><strong>Benefits</strong>:
 - Deep specialization per conversation
 - Context maintained per domain
@@ -405,61 +403,61 @@ Conversations:
 
 <hr />
 <h2 id="complex-project-templates">Complex Project Templates</h2>
-<h3 id="full-stack-web-application">Full-Stack Web Application</h3>
+<h3 id="personal-project-management">Personal Project Management</h3>
 <p><strong>Shared Topic Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Topic: &quot;My Web App&quot;
+<div class="codehilite"><pre><span></span><code>Topic: "Home Buying 2025"
 
 Directory Structure:
-~/SAM/My Web App/
-├── backend/
-├── frontend/
-├── tests/
-├── docs/
-└── deployment/
+~/SAM/Home Buying 2025/
+├── research/
+├── finances/
+├── neighborhoods/
+├── viewings/
+└── documents/
 </code></pre></div>
 
 <p><strong>Conversations</strong>:
-1. <strong>"API Development"</strong>
-   - System Prompt: Backend expert
-   - Model: GPT-4 (complex logic)
-   - Working Dir: backend/</p>
+1. <strong>"Market Research"</strong>
+   - Personality: Scholar (analytical, thorough)
+   - Model: GPT-4 (complex analysis)
+   - Working Dir: research/</p>
 <ol>
-<li><strong>"UI Components"</strong></li>
-<li>System Prompt: Frontend expert</li>
-<li>Model: Claude 3.5 Sonnet (creative UI)</li>
+<li><strong>"Budget & Finances"</strong></li>
+<li>Personality: Professional (direct, business-focused)</li>
+<li>Model: Claude 3.5 Sonnet</li>
 <li>
-<p>Working Dir: frontend/</p>
+<p>Working Dir: finances/</p>
 </li>
 <li>
-<p><strong>"Database Design"</strong></p>
+<p><strong>"Neighborhood Comparison"</strong></p>
 </li>
-<li>System Prompt: Database architect</li>
+<li>Personality: Scholar</li>
 <li>Model: GPT-4</li>
 <li>
-<p>Working Dir: backend/models/</p>
+<p>Working Dir: neighborhoods/</p>
 </li>
 <li>
-<p><strong>"Integration Testing"</strong></p>
+<p><strong>"Document Checklist"</strong></p>
 </li>
-<li>System Prompt: QA expert</li>
-<li>Model: GPT-3.5-turbo (sufficient for tests)</li>
-<li>Working Dir: tests/</li>
+<li>Personality: Professional</li>
+<li>Model: GPT-3.5-turbo (sufficient for lists)</li>
+<li>Working Dir: documents/</li>
 </ol>
 <p><strong>Workflow</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">Week</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Database</span><span class="w"> </span><span class="nx">Design</span><span class="p">:</span><span class="w"> </span><span class="nx">Schema</span><span class="w"> </span><span class="nx">definition</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">API</span><span class="w"> </span><span class="nx">Development</span><span class="p">:</span><span class="w"> </span><span class="nx">CRUD</span><span class="w"> </span><span class="nx">endpoints</span>
+<div class="codehilite"><pre><span></span><code>Week 1:
+- Market Research: Average prices, trends by area
+- Budget & Finances: Pre-approval estimate, monthly payment scenarios
 
-<span class="nx">Week</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">UI</span><span class="w"> </span><span class="nx">Components</span><span class="p">:</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="kn">library</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">API</span><span class="w"> </span><span class="nx">Development</span><span class="p">:</span><span class="w"> </span><span class="nx">Business</span><span class="w"> </span><span class="nx">logic</span>
+Week 2:
+- Neighborhood Comparison: Schools, commute, amenities for shortlist
+- Market Research: Dig into specific listings
 
-<span class="nx">Week</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Integration</span><span class="w"> </span><span class="nx">Testing</span><span class="p">:</span><span class="w"> </span><span class="nx">Test</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">endpoints</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">UI</span><span class="w"> </span><span class="nx">Components</span><span class="p">:</span><span class="w"> </span><span class="nx">Wire</span><span class="w"> </span><span class="nx">up</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">API</span>
+Week 3:
+- Viewings: Log notes from each visit
+- Document Checklist: Track what's needed for offer
 
-<span class="nx">Week</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nx">conversations</span><span class="p">:</span><span class="w"> </span><span class="nx">Bug</span><span class="w"> </span><span class="nx">fixes</span><span class="p">,</span><span class="w"> </span><span class="nx">polish</span>
+Week 4:
+- All conversations: Final comparison, make offer
 </code></pre></div>
 
 <h3 id="research-writing-project">Research &amp; Writing Project</h3>
@@ -538,7 +536,7 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 <span class="s1">    &quot;conversationId&quot;: &quot;&#39;</span><span class="nv">$PROJECT_CONV_ID</span><span class="s1">&#39;&quot;,</span>
 <span class="s1">    &quot;messages&quot;: [{</span>
 <span class="s1">      &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">      &quot;content&quot;: &quot;Review git commits from today and summarize progress&quot;</span>
+<span class="s1">      &quot;content&quot;: &quot;Summarize what I worked on today and list any open questions&quot;</span>
 <span class="s1">    }]</span>
 <span class="s1">  }&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>~/daily-summary.txt
 </code></pre></div>
@@ -547,7 +545,7 @@ curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </spa
 <p><strong>Process Multiple Files</strong>:</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 
-<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;file1.py&#39;</span><span class="p">,</span> <span class="s1">&#39;file2.py&#39;</span><span class="p">,</span> <span class="s1">&#39;file3.py&#39;</span><span class="p">]</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chapter1.md&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter2.md&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter3.md&#39;</span><span class="p">]</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8080/api/chat/completions&#39;</span>
 
 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
@@ -652,10 +650,10 @@ Session 3: &quot;deploy&quot;
 
 <p><strong>Persistent Sessions</strong>:</p>
 <div class="codehilite"><pre><span></span><code>Main conversation maintains multiple sessions:
-- &quot;backend-server&quot;: Running Flask app
-- &quot;frontend-dev&quot;: React dev server
-- &quot;database&quot;: PostgreSQL instance
-- &quot;monitoring&quot;: Logs tail
+- &quot;research&quot;: Gathering sources and data
+- &quot;writing&quot;: Drafting sections
+- &quot;review&quot;: Fact-checking and editing
+- &quot;output&quot;: Formatting and export
 
 Switch between sessions as needed
 </code></pre></div>
@@ -671,78 +669,57 @@ Use:
 </code></pre></div>
 
 <p><strong>Smart Search</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Semantic</span><span class="o">:</span><span class="w"> </span><span class="n">Find</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">meaning</span>
-<span class="s2">&quot;functions that validate user input&quot;</span>
+<div class="codehilite"><pre><span></span><code>Semantic: Find by meaning
+"notes about our budget constraints"
 
-<span class="n">Regex</span><span class="o">:</span><span class="w"> </span><span class="n">Find</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">pattern</span><span class="w">  </span>
-<span class="s2">&quot;def.*validate.*\(.*\):&quot;</span>
+Regex: Find by pattern
+"Total:.*\$[0-9]+"
 
-<span class="n">Glob</span><span class="o">:</span><span class="w"> </span><span class="n">Find</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">filename</span>
-<span class="s2">&quot;**/test_*.py&quot;</span>
+Glob: Find by filename
+"**/budget-*.md"
 </code></pre></div>
 
 <hr />
-<h2 id="example-complete-full-stack-project">Example: Complete Full-Stack Project</h2>
+<h2 id="example-complete-research-project">Example: Complete Research Project</h2>
 <p><strong>Setup</strong> (Day 1):</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="s">&quot;Task Manager App&quot;</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">conversations</span><span class="p">:</span>
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="s">&quot;Backend API&quot;</span>
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="s">&quot;React Frontend&quot;</span><span class="w">  </span>
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="s">&quot;Database Schema&quot;</span>
-<span class="w">   </span><span class="o">-</span><span class="w"> </span><span class="s">&quot;API Tests&quot;</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Enable</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">conversations</span>
+<div class="codehilite"><pre><span></span><code>1. Create shared topic: "AI in Healthcare Report"
+2. Create four conversations:
+   - "Literature Review" (Scholar personality, GPT-4, working dir: sources/)
+   - "Data Analysis" (Professional personality, Claude 3.5, working dir: data/)
+   - "Writing" (Creative personality, GPT-4, working dir: drafts/)
+   - "Fact-Checking" (Scholar personality, GPT-4, working dir: sources/)
+3. Enable shared topic in all conversations
 </code></pre></div>
 
-<p><strong>Week 1</strong> (Backend):</p>
-<div class="codehilite"><pre><span></span><code>Backend API conversation:
-- Design REST API structure
-- Implement user authentication
-- Create task CRUD endpoints
-- Store API design in shared memory
-
-Database Schema conversation:
-- Design tables
-- Create migrations
-- Document relationships
-- Commit schema to shared workspace
+<p><strong>Day 1-2: Literature Review</strong></p>
+<div class="codehilite"><pre><span></span><code>You: Find and summarize 10 key papers on AI diagnostics published since 2021
+SAM: [Searches web for papers]
+     Summarized 10 papers - saved to sources/literature-review.md
+     Key themes: accuracy improvements, FDA approval challenges, bias concerns
 </code></pre></div>
 
-<p><strong>Week 2</strong> (Frontend):</p>
-<div class="codehilite"><pre><span></span><code><span class="nx">React</span><span class="w"> </span><span class="nx">Frontend</span><span class="w"> </span><span class="nx">conversation</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Read</span><span class="w"> </span><span class="nx">API</span><span class="w"> </span><span class="nx">endpoints</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">memory</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Build</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="kn">library</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Implement</span><span class="w"> </span><span class="nx">routing</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Connect</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">backend</span><span class="w"> </span><span class="nx">API</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Store</span><span class="w"> </span><span class="nx">component</span><span class="w"> </span><span class="nx">patterns</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">memory</span>
-
-<span class="nx">API</span><span class="w"> </span><span class="nx">Tests</span><span class="w"> </span><span class="nx">conversation</span><span class="p">:</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Read</span><span class="w"> </span><span class="nx">API</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">shared</span><span class="w"> </span><span class="nx">workspace</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Write</span><span class="w"> </span><span class="nx">integration</span><span class="w"> </span><span class="nx">tests</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Test</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">endpoints</span>
-<span class="o">-</span><span class="w"> </span><span class="nx">Document</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">coverage</span>
+<p><strong>Day 3: Data Analysis</strong></p>
+<div class="codehilite"><pre><span></span><code>You: Read the literature review and identify the key statistics to highlight
+SAM: [Reads sources/literature-review.md from shared workspace]
+     Found 8 compelling statistics - saved to data/key-stats.md
+     Strongest: "AI matched radiologist accuracy in 94% of cases (Smith et al, 2023)"
 </code></pre></div>
 
-<p><strong>Week 3</strong> (Polish):</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">All</span><span class="w"> </span><span class="nv">conversations</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Bug</span><span class="w"> </span><span class="nv">fixes</span><span class="w"> </span><span class="nv">using</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">memory</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">known</span><span class="w"> </span><span class="nv">issues</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Performance</span><span class="w"> </span><span class="nv">optimization</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Documentation</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Deployment</span><span class="w"> </span><span class="nv">preparation</span>
-
-<span class="nv">Spawn</span><span class="w"> </span><span class="nv">subagents</span><span class="w"> </span><span class="k">for</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Security</span><span class="w"> </span><span class="nv">audit</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Performance</span><span class="w"> </span><span class="nv">testing</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Documentation</span><span class="w"> </span><span class="nv">generation</span>
+<p><strong>Day 4-5: Writing</strong></p>
+<div class="codehilite"><pre><span></span><code>You: Write the executive summary using our research and key stats
+SAM: [Reads literature-review.md and key-stats.md]
+     Draft saved to drafts/executive-summary.md
+     ~800 words, covers all major themes
 </code></pre></div>
 
-<p><strong>Result</strong>: Complete application with:
-- Fully tested backend
-- Polished frontend
-- Comprehensive tests
-- Complete documentation
-- All in shared workspace
-- Memory of all decisions</p>
-<hr />
+<p><strong>Day 6: Fact-Checking</strong></p>
+<div class="codehilite"><pre><span></span><code>You: Check every statistic in the executive summary against our sources
+SAM: [Reads drafts/executive-summary.md and sources/literature-review.md]
+     All 6 statistics verified. One citation needed a correction - fixed in draft.
+</code></pre></div>
+
+<p><strong>Result</strong>: A well-sourced, fact-checked report built across four specialized conversations - each one staying focused, all sharing the same files and memory.</p>
+
 <h2 id="troubleshooting-advanced-workflows">Troubleshooting Advanced Workflows</h2>
 <p><strong>Subagents Not Finishing</strong>:
 - Increase max iterations in settings

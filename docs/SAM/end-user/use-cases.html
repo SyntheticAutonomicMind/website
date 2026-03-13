@@ -258,9 +258,9 @@
 <li><a href="#medical-records">Medical Records</a></li>
 <li><a href="#legal-documents">Legal Documents</a></li>
 <li><a href="#financial-statements">Financial Statements</a></li>
-<li><a href="#developer-workflows">Developer Workflows</a></li>
-<li><a href="#code-project-assistant">Code Project Assistant</a></li>
-<li><a href="#multi-team-project">Multi-Team Project</a></li>
+<li><a href="#everyday-tasks">Everyday Tasks</a></li>
+<li><a href="#personal-finance-assistant">Personal Finance Assistant</a></li>
+<li><a href="#trip-planning-assistant">Trip Planning Assistant</a></li>
 <li><a href="#research--writing">Research &amp; Writing</a></li>
 <li><a href="#academic-research">Academic Research</a></li>
 <li><a href="#content-creation">Content Creation</a></li>
@@ -269,7 +269,6 @@
 <li><a href="#customer-support-bot">Customer Support Bot</a></li>
 <li><a href="#domain-expert-specialization">Domain Expert Specialization</a></li>
 <li><a href="#writing-style-adaptation">Writing Style Adaptation</a></li>
-<li><a href="#code-style-assistant">Code Style Assistant</a></li>
 <li><a href="#business-analysis">Business Analysis</a></li>
 <li><a href="#customer-analysis">Customer Analysis</a></li>
 <li><a href="#competitive-research">Competitive Research</a></li>
@@ -425,8 +424,8 @@
 <ul>
 <li>"I live in Portland, Oregon. Pacific timezone."</li>
 <li>"My system: MacBook Pro M3 Max, 64GB RAM"</li>
-<li>"Current project: React + TypeScript + Tailwind"</li>
-<li>"Code style: 4-space indent, functional components"</li>
+<li>"I'm planning a career change into UX design"</li>
+<li>"Writing tone: conversational, avoid jargon"</li>
 </ul>
 <p><strong>How to create:</strong> Go to <strong>Preferences → Mini-Prompts → Add New</strong></p>
 <hr />
@@ -713,104 +712,56 @@
 
 <p><strong>Privacy tip:</strong> Use a local model for sensitive financial data.</p>
 <hr />
-<h2 id="developer-workflows">Developer Workflows</h2>
-<h3 id="code-project-assistant">Code Project Assistant</h3>
-<p><strong>The situation:</strong> You're working on a React/TypeScript project and want SAM to understand your codebase.</p>
-<p><strong>Step 1: Configure your environment</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TD</span>
-<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">Create</span><span class="w"> </span><span class="n">mini</span><span class="o">-</span><span class="n">prompts</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">stack</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">Enable</span><span class="w"> </span><span class="n">Tools</span><span class="w"> </span><span class="kr">and</span><span class="w"> </span><span class="n">Terminal</span><span class="p">]</span>
-<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">Select</span><span class="w"> </span><span class="n">Tinkerer</span><span class="w"> </span><span class="n">personality</span><span class="p">]</span>
-<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">Ready</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">code</span><span class="p">]</span>
+<h2 id="everyday-tasks">Everyday Tasks</h2>
+<h3 id="personal-finance-assistant">Personal Finance Assistant</h3>
+<p><strong>The situation:</strong> You want help tracking spending, planning a budget, or making sense of your finances.</p>
+<p><strong>Step 1: Set up a finance workspace</strong></p>
+<ol>
+<li>Create a mini-prompt: "My budget: $X/month, main expenses are rent, groceries, subscriptions"</li>
+<li>Enable the mini-prompt so SAM has context every time</li>
+<li>Optionally set working directory to a folder where you store bank exports or spreadsheets</li>
+</ol>
+<p><strong>Step 2: Start asking</strong></p>
+<div class="codehilite"><pre><span></span><code>You: Here's my spending for last month [paste CSV or list]. Where am I overspending?
 
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mo">00</span><span class="n">d4ff</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="mo">000</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mf">00ff</span><span class="mi">88</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="mo">000</span>
+SAM: [Reads your data]
+     Your top categories: Dining Out ($480), Subscriptions ($210), Groceries ($380)
+     Compared to your $X budget - dining is 40% over target.
+     Want me to suggest a realistic dining budget and track it going forward?
 </code></pre></div>
 
+<div class="codehilite"><pre><span></span><code>You: Help me build a savings plan to buy a car in 18 months for $15,000
+
+SAM: Based on your budget, you need to save $833/month.
+     Here's a plan: [breaks down by category what to cut]
+     Want me to draft a monthly check-in template?
+</code></pre></div>
+
+<h3 id="trip-planning-assistant">Trip Planning Assistant</h3>
+<p><strong>The situation:</strong> You're planning a vacation and want help researching, organizing, and building an itinerary.</p>
+<p><strong>Step 1: Configure</strong></p>
 <ol>
-<li>Create mini-prompts:</li>
-<li>"Project: React 18 + TypeScript 5.3 + Vite + Tailwind"</li>
-<li>"Code style: Functional components, named exports, strict TypeScript"</li>
-<li>
-<p>"Working directory: ~/projects/my-app/"</p>
-</li>
-<li>
-<p>Select <strong>Tinkerer</strong> or <strong>Crusty Coder</strong> personality</p>
-</li>
-<li>Enable <strong>Tools</strong> and <strong>Terminal</strong> toggles</li>
-<li>Enable the relevant mini-prompts for this conversation</li>
+<li>Add a mini-prompt with trip details: "Traveling to Japan, 10 days, budget $4,000, interests: food, history, hiking"</li>
+<li>Enable <strong>Tools</strong> so SAM can search the web for current information</li>
 </ol>
-<p><strong>Step 2: Start coding</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nl">You</span><span class="p">:</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">dark</span><span class="w"> </span><span class="n">mode</span><span class="w"> </span><span class="n">toggle</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="n">component</span>
+<p><strong>Step 2: Plan together</strong></p>
+<div class="codehilite"><pre><span></span><code>You: What are the must-see places in Kyoto for someone who loves history?
 
-<span class="nl">SAM</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">existing</span><span class="w"> </span><span class="n">Header</span><span class="p">.</span><span class="n">tsx</span><span class="p">]</span>
-<span class="p">[</span><span class="n">Checks</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">Tailwind</span><span class="w"> </span><span class="n">config</span><span class="p">]</span>
-<span class="p">[</span><span class="n">Creates</span><span class="w"> </span><span class="n">useTheme</span><span class="w"> </span><span class="n">hook</span><span class="w"> </span><span class="n">following</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">patterns</span><span class="p">]</span>
-<span class="p">[</span><span class="n">Updates</span><span class="w"> </span><span class="n">Header</span><span class="p">.</span><span class="n">tsx</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">toggle</span><span class="w"> </span><span class="n">button</span><span class="p">]</span>
-<span class="p">[</span><span class="n">Adds</span><span class="w"> </span><span class="n">dark</span><span class="o">:</span><span class="w"> </span><span class="n">variants</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">affected</span><span class="w"> </span><span class="n">components</span><span class="p">]</span>
+SAM: [Searches for current recommendations]
+     Top picks for history lovers: Fushimi Inari, Kinkaku-ji, Gion district at night...
+     Given your 10 days, I'd suggest 3 nights in Kyoto. Want me to draft the full itinerary?
+</code></pre></div>
 
-<span class="n">Done</span><span class="p">.</span><span class="w"> </span><span class="n">Here</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">did</span><span class="o">:</span>
-<span class="mf">1.</span><span class="w"> </span><span class="n">Created</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">hooks</span><span class="o">/</span><span class="n">useTheme</span><span class="p">.</span><span class="n">ts</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">localStorage</span><span class="w"> </span><span class="n">persistence</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Updated</span><span class="w"> </span><span class="n">Header</span><span class="p">.</span><span class="n">tsx</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">toggle</span><span class="w"> </span><span class="n">button</span><span class="w"> </span><span class="p">(</span><span class="n">matches</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">UI</span><span class="w"> </span><span class="n">patterns</span><span class="p">)</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Added</span><span class="w"> </span><span class="n">dark</span><span class="o">:</span><span class="w"> </span><span class="n">variants</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">components</span>
+<div class="codehilite"><pre><span></span><code>You: Build me a day-by-day itinerary with travel times between locations
 
-<span class="n">Run</span><span class="w"> </span><span class="err">&#39;</span><span class="n">npm</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">dev</span><span class="err">&#39;</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">test</span><span class="p">.</span>
+SAM: [Creates a detailed itinerary document in your working directory]
+     Day 1: Arrive Tokyo, jet lag recovery, Shibuya walk
+     Day 2: Tsukiji market, Senso-ji, Akihabara...
+     [Saves as Japan-Trip-2025.md so you can refer back anytime]
 </code></pre></div>
 
 <hr />
-<h3 id="multi-team-project">Multi-Team Project</h3>
-<p><strong>The situation:</strong> You're building a complex app that needs frontend, backend, and testing expertise.</p>
-<p><strong>Step 1: Create a Shared Topic</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TD</span>
-<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="n">Create</span><span class="w"> </span><span class="kr">Shared</span><span class="w"> </span><span class="n">Topic</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">Create</span><span class="w"> </span><span class="n">Backend</span><span class="w"> </span><span class="n">conversation</span><span class="p">]</span>
-<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="n">Create</span><span class="w"> </span><span class="n">Frontend</span><span class="w"> </span><span class="n">conversation</span><span class="p">]</span>
-<span class="w">    </span><span class="n">A</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="n">Create</span><span class="w"> </span><span class="n">Testing</span><span class="w"> </span><span class="n">conversation</span><span class="p">]</span>
-<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="kr">All</span><span class="w"> </span><span class="n">share</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="kr">and</span><span class="w"> </span><span class="n">memory</span><span class="p">]</span>
-<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span>
-<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span>
-
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mo">00</span><span class="n">d4ff</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="mo">000</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">D</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">141822</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mf">00ff</span><span class="mi">88</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="mo">000</span>
-</code></pre></div>
-
-<ol>
-<li>Go to <strong>Preferences → Shared Topics</strong></li>
-<li>Create topic: "My Web App"</li>
-<li>Create three conversations:</li>
-<li>"Backend API"</li>
-<li>"Frontend UI"</li>
-<li>"Testing"</li>
-<li>Enable shared topic in each conversation</li>
-</ol>
-<p><strong>Step 2: Work across conversations</strong></p>
-<p><strong>In Backend conversation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">Flask</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">authentication</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Created</span><span class="w"> </span><span class="n">backend</span><span class="sr">/app.py, backend/auth.py, backend/</span><span class="n">models</span><span class="o">.</span><span class="na">py</span>
-</code></pre></div>
-
-<p><strong>In Frontend conversation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Read</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">components</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">backend</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="na">py</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">workspace</span><span class="o">]</span>
-<span class="n">Found</span><span class="w"> </span><span class="n">endpoints</span><span class="o">:</span><span class="w"> </span><span class="sr">/login, /register, /</span><span class="n">products</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">components</span><span class="o">...</span>
-</code></pre></div>
-
-<p><strong>In Testing conversation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Write</span><span class="w"> </span><span class="n">integration</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">API</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Accesses</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">frontend</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">tests</span><span class="o">/</span>
-</code></pre></div>
-
-<p><strong>What you get:</strong>
-- Each conversation specialized in its domain
-- All see the same files
-- Shared memory of architecture decisions</p>
-<hr />
-<h2 id="research-writing">Research &amp; Writing</h2>
+<h2 id="research-writing">Research &amp; Writing</h2><h2 id="research-writing">Research &amp; Writing</h2>
 <h3 id="academic-research">Academic Research</h3>
 <p><strong>The situation:</strong> You're writing a thesis with hundreds of sources to organize and synthesize.</p>
 <p><strong>Step 1: Configure for research</strong></p>

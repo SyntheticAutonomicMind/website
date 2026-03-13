@@ -248,7 +248,7 @@
         <div class="doc-content">
             <h1 id="shared-topics-guide">Shared Topics Guide</h1>
 <p><strong>Your project. Multiple AI experts. One shared brain.</strong></p>
-<p>Building something big? Imagine having a team of AI specialists: one handling your backend, another perfecting your frontend, a third writing tests. All sharing the same codebase, the same memory, the same context. That's exactly what Shared Topics delivers.</p>
+<p>Working on something big? Imagine having a team of AI specialists: one researching, another drafting, a third reviewing and fact-checking. All sharing the same files, the same memory, the same context. That's exactly what Shared Topics delivers.</p>
 <p>With most AI tools, every conversation starts from scratch. With SAM, conversations <em>collaborate</em>. Decisions made in one conversation are instantly available to others. Files created by one agent are visible to all. Knowledge compounds over time.</p>
 <p><strong>This guide covers:</strong>
 - How Shared Topics transform complex project work
@@ -336,7 +336,7 @@ Instead of each conversation having its own isolated workspace, shared topics cr
    - ✅ Good: "My Web Application", "Research Project 2025"
    - ❌ Avoid: "Project1", "Stuff", "Test"
 2. Add description in the <strong>"Description (optional)"</strong> field:
-   - Example: "Full-stack web app with React frontend and Flask backend"
+   - Example: "Family vacation to Japan, 10 days, budget $4,000"
 3. Click the <strong>Create</strong> button</p>
 <h3 id="step-3-verify-creation">Step 3: Verify Creation</h3>
 <p>After creation:
@@ -373,60 +373,56 @@ Instead of each conversation having its own isolated workspace, shared topics cr
 </code></pre></div>
 
 <h3 id="create-multiple-conversations">Create Multiple Conversations</h3>
-<p><strong>Scenario</strong>: Building a web application</p>
+<p><strong>Scenario</strong>: Planning a research project</p>
 <p><strong>Setup</strong>:
-1. Create shared topic "My Web Application"
+1. Create shared topic "Q4 Market Research"
 2. Create conversations:
-   - "Backend API Development"
-   - "Frontend React UI"
-   - "Database Design"
-   - "Testing &amp; QA"
+   - "Data Collection"
+   - "Analysis"
+   - "Report Writing"
+   - "Presentation"
 3. Enable shared topic in each conversation
-4. Select "My Web Application" from dropdown</p>
+4. Select "Q4 Market Research" from dropdown</p>
 <p><strong>Result</strong>:
-All conversations now work in <code>~/SAM/My Web Application/</code></p>
+All conversations now work in <code>~/SAM/Q4 Market Research/</code></p>
 <hr />
 <h2 id="real-world-examples">Real-World Examples</h2>
-<h3 id="example-1-full-stack-web-development">Example 1: Full-Stack Web Development</h3>
-<p><strong>Goal</strong>: Build a complete web application</p>
+<h3 id="example-1-trip-planning">Example 1: Trip Planning</h3>
+<p><strong>Goal</strong>: Plan a complex family vacation across multiple conversations</p>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Shared</span><span class="w"> </span><span class="nv">Topic</span>:<span class="w"> </span><span class="s2">&quot;E-Commerce Platform&quot;</span>
+<div class="codehilite"><pre><span></span><code>Shared Topic: "Japan Trip 2025"
 
-<span class="nv">Conversations</span>:
-<span class="mi">1</span>.<span class="w"> </span><span class="s2">&quot;Backend API&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Handles</span><span class="w"> </span><span class="nv">server</span><span class="o">-</span><span class="nv">side</span><span class="w"> </span><span class="nv">logic</span>
-<span class="mi">2</span>.<span class="w"> </span><span class="s2">&quot;Frontend React&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Builds</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">interface</span>
-<span class="mi">3</span>.<span class="w"> </span><span class="s2">&quot;Database Schema&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Designs</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">models</span>
-<span class="mi">4</span>.<span class="w"> </span><span class="s2">&quot;API Documentation&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Documents</span><span class="w"> </span><span class="nv">endpoints</span>
-<span class="mi">5</span>.<span class="w"> </span><span class="s2">&quot;Testing&quot;</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nv">Writes</span><span class="w"> </span><span class="nv">tests</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">components</span>
+Conversations:
+1. "Research" - Finds destinations, attractions, and tips
+2. "Itinerary" - Builds the day-by-day plan
+3. "Budget" - Tracks costs and finds deals
+4. "Packing & Logistics" - Visas, packing lists, bookings
 </code></pre></div>
 
 <p><strong>Workflow</strong>:</p>
-<p><strong>Day 1 - Backend Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">Flask</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">authentication</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Created</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">~/</span><span class="n">SAM</span><span class="sr">/E-Commerce Platform/backend/</span>
-<span class="o">-</span><span class="w"> </span><span class="n">app</span><span class="o">.</span><span class="na">py</span>
-<span class="o">-</span><span class="w"> </span><span class="n">models</span><span class="o">.</span><span class="na">py</span>
-<span class="o">-</span><span class="w"> </span><span class="n">auth</span><span class="o">.</span><span class="na">py</span>
+<p><strong>Research conversation</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: What are the best areas to stay in Tokyo for first-timers?
+SAM: [Searches for current recommendations]
+     Saved summary to ~/SAM/Japan Trip 2025/research/tokyo-areas.md
 </code></pre></div>
 
-<p><strong>Day 2 - Frontend Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Read</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">endpoints</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">components</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">backend</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="na">py</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">workspace</span><span class="o">]</span>
-<span class="n">Found</span><span class="w"> </span><span class="n">endpoints</span><span class="o">:</span><span class="w"> </span><span class="sr">/login, /register, /</span><span class="n">products</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">components</span><span class="o">...</span>
+<p><strong>Itinerary conversation</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: Read the research notes and build a 10-day itinerary
+SAM: [Reads tokyo-areas.md and other research from shared workspace]
+     Created ~/SAM/Japan Trip 2025/itinerary.md with day-by-day plan
 </code></pre></div>
 
-<p><strong>Day 3 - Testing Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Write</span><span class="w"> </span><span class="n">integration</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">API</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Accesses</span><span class="w"> </span><span class="n">both</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">frontend</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">~/</span><span class="n">SAM</span><span class="sr">/E-Commerce Platform/tests/</span>
+<p><strong>Budget conversation</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: Based on our itinerary, estimate the total cost for 2 adults
+SAM: [Reads itinerary.md from shared workspace]
+     Estimated total: $3,800 - breakdown saved to budget.md
 </code></pre></div>
 
 <p><strong>Benefits</strong>:
-- Each conversation specialized in its domain
-- No manual file copying between conversations
-- All see latest code changes
-- Shared memory of architecture decisions</p>
+- Each conversation stays focused on its purpose
+- Research automatically available to itinerary planning
+- Budget pulls from the actual itinerary, not guesses
+- All notes organized in one shared folder</p>
 <h3 id="example-2-research-writing">Example 2: Research &amp; Writing</h3>
 <p><strong>Goal</strong>: Write a research paper</p>
 <p><strong>Setup</strong>:</p>
@@ -464,52 +460,37 @@ Conversations:
 <span class="n">Creating</span><span class="w"> </span><span class="n">bibliography</span><span class="o">.</span><span class="na">bib</span><span class="o">...</span>
 </code></pre></div>
 
-<h3 id="example-3-software-refactoring">Example 3: Software Refactoring</h3>
-<p><strong>Goal</strong>: Refactor a large codebase</p>
+<h3 id="example-3-home-renovation-planning">Example 3: Home Renovation Planning</h3>
+<p><strong>Goal</strong>: Plan and manage a kitchen renovation across research, budgeting, and contractor coordination</p>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Legacy Code Refactor&quot;
+<div class="codehilite"><pre><span></span><code>Shared Topic: "Kitchen Renovation"
 
 Conversations:
-1. &quot;Code Analysis&quot; - Understands existing code
-2. &quot;Architecture Design&quot; - Plans new structure
-3. &quot;Implementation&quot; - Writes refactored code
-4. &quot;Testing&quot; - Ensures behavior unchanged
+1. "Design Research" - Styles, materials, inspiration
+2. "Budget Tracking" - Cost estimates and contractor quotes
+3. "Project Timeline" - Sequencing work and scheduling
 </code></pre></div>
 
 <p><strong>Workflow</strong>:</p>
-<p><strong>Code Analysis</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Analyze</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">codebase</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">identify</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">smells</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Analyzing</span><span class="w"> </span><span class="o">~/</span><span class="n">SAM</span><span class="sr">/Legacy Code Refactor/src/</span><span class="o">...</span>
-<span class="n">Found</span><span class="w"> </span><span class="n">issues</span><span class="o">:</span>
-<span class="o">-</span><span class="w"> </span><span class="n">God</span><span class="w"> </span><span class="n">objects</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">user_manager</span><span class="o">.</span><span class="na">py</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Circular</span><span class="w"> </span><span class="n">dependencies</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Missing</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">handling</span>
-<span class="o">[</span><span class="n">Stores</span><span class="w"> </span><span class="n">analysis</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">memory</span><span class="o">]</span>
+<p><strong>Design Research</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: Research modern farmhouse kitchen styles and cabinet options under $8,000
+SAM: [Searches and compiles options]
+     Saved research and links to ~/SAM/Kitchen Renovation/design-options.md
 </code></pre></div>
 
-<p><strong>Architecture Design</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Design</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">architecture</span><span class="w"> </span><span class="n">addressing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">smells</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Retrieves</span><span class="w"> </span><span class="n">analysis</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">memory</span><span class="o">]</span>
-<span class="n">Proposed</span><span class="w"> </span><span class="n">architecture</span><span class="o">:</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Separate</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">service</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Dependency</span><span class="w"> </span><span class="n">injection</span>
-<span class="o">[</span><span class="n">Saves</span><span class="w"> </span><span class="n">design</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">workspace</span><span class="o">]</span>
+<p><strong>Budget Tracking</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: I have three contractor quotes [pastes quotes]. Which is best value?
+SAM: [Reads design-options.md for context]
+     Quote 2 covers everything in your design plan at the best rate.
+     Saved comparison to budget-analysis.md
 </code></pre></div>
 
-<p><strong>Implementation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Implement</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">service</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">design</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">workspace</span><span class="o">]</span>
-<span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">existing</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">refactored</span><span class="w"> </span><span class="n">user_service</span><span class="o">.</span><span class="na">py</span><span class="o">...</span>
+<p><strong>Project Timeline</strong>:</p>
+<div class="codehilite"><pre><span></span><code>You: Build a realistic project timeline given we can't use the kitchen for more than 3 weeks
+SAM: [Reads budget and design docs from shared workspace]
+     Created timeline.md - cabinets go in week 1, countertops week 2...
 </code></pre></div>
 
-<p><strong>Testing</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Write</span><span class="w"> </span><span class="n">tests</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">ensure</span><span class="w"> </span><span class="n">refactor</span><span class="w"> </span><span class="n">preserves</span><span class="w"> </span><span class="n">behavior</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">old</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">code</span><span class="o">]</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">comprehensive</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="n">suite</span><span class="o">...</span>
-</code></pre></div>
-
-<hr />
 <h2 id="best-practices">Best Practices</h2>
 <h3 id="naming-topics">Naming Topics</h3>
 <p><strong>Good Names</strong> (descriptive and specific):
@@ -523,9 +504,9 @@ Conversations:
 <h3 id="organizing-conversations">Organizing Conversations</h3>
 <p><strong>Use Clear, Descriptive Names</strong>:</p>
 <div class="codehilite"><pre><span></span><code>✅ Good:
-- &quot;Backend API Development&quot;
-- &quot;Frontend Components&quot;
-- &quot;Database Schema Design&quot;
+- &quot;Research &amp; Sources&quot;
+- &quot;Draft Writing&quot;
+- &quot;Budget Tracking&quot;
 
 ❌ Avoid:
 - &quot;Conversation 1&quot;
@@ -546,17 +527,16 @@ Conversations:
 
 <h3 id="file-organization">File Organization</h3>
 <p><strong>Create Clear Structure</strong>:</p>
-<div class="codehilite"><pre><span></span><code>~/SAM/My Project/
-├── backend/
-│   ├── api/
-│   ├── models/
-│   └── tests/
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   └── styles/
-├── docs/
-└── scripts/
+<div class="codehilite"><pre><span></span><code>~/SAM/My Research Project/
+├── sources/
+│   ├── papers/
+│   ├── interviews/
+│   └── data/
+├── drafts/
+│   ├── outline.md
+│   └── sections/
+├── notes/
+└── final/
 </code></pre></div>
 
 <p><strong>Benefits</strong>:
@@ -565,19 +545,19 @@ Conversations:
 - Prevents conflicts</p>
 <h3 id="memory-management">Memory Management</h3>
 <p><strong>Store Project Decisions</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Backend</span><span class="w"> </span><span class="nv">conversation</span>:
-<span class="s2">&quot;Remember: We chose PostgreSQL over MySQL for better JSON support&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Research</span><span class="w"> </span><span class="nv">conversation</span>:
+<span class="s2">&quot;Remember: We chose only including peer-reviewed studies from 2020-2025&quot;</span>
 
-<span class="nv">Later</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Frontend</span><span class="w"> </span><span class="nv">conversation</span>:
-<span class="s2">&quot;What database are we using and why?&quot;</span>
+<span class="nv">Later</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Writing</span><span class="w"> </span><span class="nv">conversation</span>:
+<span class="s2">&quot;What sources are we drawing from?&quot;</span>
 →<span class="w"> </span><span class="nv">SAM</span><span class="w"> </span><span class="nv">retrieves</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">memory</span>
 </code></pre></div>
 
 <p><strong>Tag Appropriately</strong>:</p>
 <div class="codehilite"><pre><span></span><code>Store with tags:
-- &quot;architecture&quot;
-- &quot;database&quot;
-- &quot;decision&quot;
+- &quot;sources&quot;
+- &quot;decisions&quot;
+- &quot;key-findings&quot;
 
 Easy to find later across conversations
 </code></pre></div>
