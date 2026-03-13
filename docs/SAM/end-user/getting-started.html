@@ -574,7 +574,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <hr />
 <h2 id="understanding-the-interface">Understanding the Interface</h2>
 <h3 id="main-window">Main Window</h3>
-<p><img alt="SAM Default Interface" src="../../../images/sam-default.png" /></p>
 <p>When you launch SAM, you'll see the main interface with three primary areas:</p>
 <ol>
 <li><strong>Sidebar (Left)</strong>: Your conversation list, search, and navigation</li>
@@ -582,7 +581,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Bottom Bar</strong>: Memory statistics, token count, and terminal access</li>
 </ol>
 <h3 id="conversation-sidebar">Conversation Sidebar</h3>
-<p><img alt="Conversation Panel" src="../../../images/conversation-panel.png" /></p>
 <p>The sidebar provides access to all your conversations:</p>
 <ul>
 <li><strong>New Conversation Button</strong>: Create new conversations with custom names</li>
@@ -592,7 +590,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Global Search (F)</strong>: Press F to search across all conversations for specific messages or content</li>
 </ul>
 <h3 id="model-and-personality-selection">Model and Personality Selection</h3>
-<p><img alt="Model Toolbar" src="../../../images/model-toolbar.png" /></p>
 <p>The model toolbar gives you control over which AI you're using and how it behaves. From left to right:</p>
 <ul>
 <li><strong>Model Selector</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF)</li>
@@ -608,7 +605,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Scroll Lock</strong>: Lock/unlock automatic scrolling in chat</li>
 </ul>
 <h3 id="conversation-header">Conversation Header</h3>
-<p><img alt="Conversation Header" src="../../../images/conversation-header.png" /></p>
 <p>The conversation header displays conversation metadata and controls:</p>
 <p><strong>Top Left:</strong>
 - <strong>Conversation Title</strong>: Click to rename your conversation</p>
@@ -623,7 +619,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 - <strong>Status Used/Remaining</strong>: Tokens or requests used vs remaining
 - <strong>Usage Percentage</strong>: Percentage of quota consumed</p>
 <h3 id="chat-input-area">Chat Input Area</h3>
-<p><img alt="Chat Input" src="../../../images/chat-input.png" /></p>
 <p>The input area at the bottom is where you interact with SAM:</p>
 <ul>
 <li><strong>Message Input Field</strong>: Type your messages here (supports multi-line with Shift+Enter)</li>
@@ -631,7 +626,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Send Button</strong>: Send your message (or press Enter)</li>
 </ul>
 <h3 id="advanced-parameters">Advanced Parameters</h3>
-<p><img alt="Advanced Parameters" src="../../../images/parameters-toolba.png" /></p>
 <p>Click the parameters button to access fine-grained control over model behavior:</p>
 <p><strong>Sliders:</strong>
 - <strong>Temperature (Temp)</strong>: Controls randomness (0.0 = focused and deterministic, 1.0 = creative and varied)
@@ -648,7 +642,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 - <strong>Shared Topic</strong>: Enable shared workspace across conversations
 - <strong>Extend</strong>: Enable context extension</p>
 <h3 id="working-directory">Working Directory</h3>
-<p><img alt="Directory Toolbar" src="../../../images/directory-toolbar.png" /></p>
 <p>Each conversation has its own working directory where SAM reads and writes files:</p>
 <ul>
 <li><strong>Current Directory</strong>: Shows current working directory path (default: ~/SAM/ConversationName/)</li>
@@ -658,7 +651,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Auto-Sync</strong>: When you rename a conversation, the folder renames automatically</li>
 </ul>
 <h3 id="memory-toolbar">Memory Toolbar</h3>
-<p><img alt="Memory Toolbar" src="../../../images/memory-toolbar.png" /></p>
 <p>The memory toolbar shows and controls SAM's semantic memory:</p>
 <ul>
 <li><strong>Memory Count</strong>: Number of memories stored for this conversation or topic</li>
@@ -666,7 +658,6 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li><strong>Clear Memories</strong>: Remove memories for conversation or shared topic</li>
 </ul>
 <h3 id="mini-prompts">Mini-Prompts</h3>
-<p><img alt="Mini-Prompt Panel" src="../../../images/mini-prompt-panel.png" /></p>
 <p>Mini-prompts inject consistent context into your conversations without repeating yourself. They're perfect for location-based queries, project details, or personal preferences.</p>
 <p><strong>How to Use:</strong>
 1. Click the Mini-Prompts button in the conversation header
@@ -785,15 +776,12 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>Tip</strong>: For a complete list of keyboard shortcuts, press <strong>⌘?</strong> to open the in-app help.</p>
 <hr />
 <h2 id="example-conversations">Example Conversations</h2>
-<p>Here are real examples showing how SAM handles different types of requests. These screenshots demonstrate SAM's web search and document processing capabilities in action.</p>
+<p>Here are real examples showing how SAM handles different types of requests, using web search, content extraction, and location awareness.</p>
 <h3 id="initial-web-search">Initial Web Search</h3>
-<p><img alt="Example Conversation 1" src="../../../images/example-conversation-1.png" /></p>
 <p>The user asks SAM to share the most popular cheesesteak recipe. SAM performs a web search, finds top recipes from multiple sources (Allrecipes, Food Network, Delish, Chef Billy Parisi), and provides a comprehensive summary with direct links to each recipe.</p>
 <h3 id="recipe-retrieval">Recipe Retrieval</h3>
-<p><img alt="Example Conversation 2" src="../../../images/example-conversation-2.png" /></p>
 <p>The user requests Chef Billy Parisi's recipe specifically. SAM retrieves the full recipe including ingredients, step-by-step instructions, tips, and a direct link to the source. No copy-pasting needed - SAM extracts and formats the complete recipe.</p>
 <h3 id="local-business-search">Local Business Search</h3>
-<p><img alt="Example Conversation 3" src="../../../images/example-conversation-3.png" /></p>
 <p>The user asks where to find Amoroso rolls in Orlando, FL. SAM performs location-aware searches and provides multiple shopping options (Walmart, Instacart, Smart &amp; Final) with direct product links and local availability information.</p>
 
 <p><strong>What These Examples Show:</strong>
