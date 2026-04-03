@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reflexive Ecosystem | SAM Documentation</title>
+    <meta name="description" content="Self-Building AI Development in the Synthetic Autonomic Mind - A Case Study in Continuity-Preserving, AI-Assisted Software Development">
+    <link rel="stylesheet" href="../../css/styles.css?v=7">
+    <style>
+        .doc-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
+        }
+        .doc-breadcrumb {
+            margin-bottom: var(--spacing-2xl);
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .doc-breadcrumb a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        .doc-breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .doc-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.08;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        .doc-content h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.125;
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text-primary);
+        }
+        .doc-content h3 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        .doc-content h4 {
+            font-size: 19px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+        .doc-content p {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text-primary);
+        }
+        .doc-content ul,
+        .doc-content ol {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            padding-left: 28px;
+        }
+        .doc-content li {
+            margin-bottom: var(--spacing-sm);
+        }
+        .doc-content li p {
+            margin-bottom: var(--spacing-sm);
+        }
+        .doc-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+        }
+        .doc-content a:hover {
+            text-decoration: underline;
+        }
+        .doc-content code {
+            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
+            font-size: 15px;
+            background: var(--bg-light);
+            padding: 3px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+        }
+        .doc-content pre {
+            background: var(--bg-light);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        .doc-content pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .doc-content blockquote {
+            border-left: 4px solid var(--primary-blue);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .doc-content blockquote p {
+            margin-bottom: var(--spacing-sm);
+        }
+        .doc-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--spacing-lg) 0;
+            font-size: 15px;
+        }
+        .doc-content th,
+        .doc-content td {
+            border: 1px solid var(--border-subtle);
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .doc-content th {
+            background: var(--bg-light);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .doc-content td {
+            color: var(--text-primary);
+        }
+        .doc-content strong {
+            font-weight: 600;
+        }
+        .doc-content em {
+            font-style: italic;
+        }
+        .doc-content hr {
+            border: none;
+            border-top: 1px solid var(--border-subtle);
+            margin: var(--spacing-2xl) 0;
+        }
+        .doc-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: var(--spacing-lg) 0;
+        }
+        .paper-subtitle {
+            font-size: 19px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+            font-weight: 400;
+        }
+    </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'base' });
+    </script>
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/shared/the-reflexive-ecosystem.html">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../../" class="nav-brand">
+                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
+                <span class="logo">Synthetic Autonomic Mind</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="/#features">Features</a>
+                <a href="../SAM/index.html">Docs</a>
+                <a href="/#community">Community</a>
+                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank">Download</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Documentation Content -->
+    <div class="doc-container">
+        <div class="doc-breadcrumb">
+            <a href="../SAM/index.html">Documentation</a> / The Reflexive Ecosystem
+        </div>
+        
+        <div class="doc-content">
+            <h1 id="the-reflexive-ecosystem">The Reflexive Ecosystem</h1>
+            <p class="paper-subtitle">Self-Building AI Development in the Synthetic Autonomic Mind</p>
+            <p class="paper-subtitle" style="font-size: 17px; font-style: italic;">A Case Study in Continuity-Preserving, AI-Assisted Software Development</p>
+<p><strong>Abstract</strong></p>
+<p>This paper documents the Synthetic Autonomic Mind (SAM) ecosystem - a
+collection of open source AI tools that are built and maintained through
+a pair-programming workflow between a human developer and CLIO, using a
+methodology called the Unbroken Method. The ecosystem consists of <a
+href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a>, a
+terminal-based AI coding assistant written in Perl; <a
+href="https://github.com/SyntheticAutonomicMind/SAM">SAM</a>, a native
+macOS AI assistant built in Swift; and <a
+href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a>, a
+local image generation service in Python. All three are developed and
+maintained through CLIO itself, which has been self-building (modifying
+its own codebase under human direction) since January 2026.</p>
+<p>The Unbroken Method was not designed in advance. It emerged from
+practical observations during SAM’s early development: sessions with
+preserved context produced better results, persistent memory improved
+architectural consistency, and investigation before modification reduced
+errors. These patterns were formalized into a methodology and embedded
+in CLIO, which the developer then used to build and maintain the entire
+ecosystem - including CLIO itself.</p>
+<p>The result is a reflexive system where the development tool is also
+part of what it develops. This paper examines the technical
+architecture, the development methodology, and the implications of
+self-building AI development. It presents verifiable evidence from the
+ecosystem itself while being explicit about the boundaries of what this
+evidence demonstrates. All results are empirical and observational;
+controlled experiments and independent replication remain future
+work.</p>
+<p><strong>Keywords:</strong> reflexive AI, self-building systems,
+autonomous development, Unbroken Method, continuity-preserving
+workflows, open source AI tools</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<h3 id="the-separation-assumption">1.1 The Separation Assumption</h3>
+<p>Software development assumes a clean separation between the
+developer, the tools, and the resulting artifact. A developer uses an
+editor to write code, a compiler to build it, and a test suite to verify
+it. The tools are distinct from what they produce.</p>
+<p>AI-assisted development inherits this assumption. A developer uses an
+AI assistant to help write code, but the assistant and the code remain
+separate concerns. Each session with the AI is treated as a partial
+reset - prior context is lost, decisions must be re-explained, and
+architectural knowledge evaporates between interactions.</p>
+<p>The SAM ecosystem challenges this separation. <a
+href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> is a
+terminal-based AI coding assistant that has been used to build and
+maintain itself, alongside two other production systems, since January
+2026. The tool is not separate from the artifact - it is part of the
+artifact. The development methodology is not separate from the tool - it
+is embedded in the tool’s architecture. And the development context is
+not discarded between sessions - it is accumulated and preserved.</p>
+<p>This paper uses the term <strong>continuity-preserving
+development</strong> to describe this approach: a workflow in which
+development context - architectural decisions, coding patterns,
+discovered constraints, session history - accumulates across sessions
+rather than resetting. The AI assistant retains and builds on prior
+knowledge instead of starting each interaction from scratch.</p>
+<h3 id="what-emerged">1.2 What Emerged</h3>
+<p>The story begins in July 2025, when SAM - a native macOS AI assistant
+- entered development using conventional tools (VSCode and Claude). Over
+six months of development through December 2025, a pattern became
+apparent: sessions where context was preserved across interactions
+produced measurably better results than sessions that started cold.
+Persistent memory improved consistency. Investigating code before
+modifying it reduced rework.</p>
+<p>These were not theoretical insights. They were practical observations
+from building a real product. The developer formalized those
+observations into a methodology - the <a
+href="https://www.syntheticautonomicmind.org/docs/shared/the-unbroken-method.html">Unbroken
+Method</a> - and then built CLIO specifically to embody it. Once CLIO
+was capable enough to work on itself (version 20260119.1), the developer
+began pair-programming with CLIO for all further work on the
+ecosystem.</p>
+<p>This creates an unusual situation: the methodology was proven during
+SAM’s development, then encoded in CLIO, then used through CLIO to build
+ALICE and maintain all three systems. The method validates itself
+through its own outputs.</p>
+<h3 id="scope">1.3 Scope</h3>
+<p>This is a case study documenting one ecosystem, one developer, and
+one set of practices. It presents evidence of viability, not proof of
+general superiority. The conclusions should be read accordingly: the
+Unbroken Method works here, in this context, with these tools. Whether
+it generalizes requires independent replication that has not yet been
+performed.</p>
+<p>That said, the evidence is real and verifiable. The source code is
+open. The commit history is public. The systems are in production use.
+This paper aims to document what exists, explain how it works, and
+examine what it means - without overclaiming.</p>
+<hr />
+<h2 id="what-is-new-in-this-work">2. What Is New in This Work</h2>
+<p>Most components of the SAM ecosystem have precedents in prior work.
+Memory-augmented LLM agents, tool-using assistants, session persistence,
+and task decomposition are all active research areas. The contribution
+of this paper is not any single component but their integration into a
+self-referential, continuity-preserving development workflow.
+Specifically:</p>
+<ol type="1">
+<li><p><strong>Cross-session context accumulation.</strong> Development
+memory persists, compresses, and grows across sessions indefinitely
+rather than resetting.</p></li>
+<li><p><strong>Workflow embedded in tooling.</strong> The Unbroken
+Method’s principles - investigation before modification, structured
+handoffs, checkpoint-based collaboration - are enforced by CLIO’s
+architecture, not left to developer discipline.</p></li>
+<li><p><strong>Human-directed self-modification loop.</strong> The
+developer directs CLIO to modify its own codebase, maintaining
+continuity of both code and development context. This is not autonomous
+self-optimization - it is pair-programming where one partner is also the
+artifact.</p></li>
+<li><p><strong>Verifiable reflexive development.</strong> Every claim in
+this paper can be checked against the public source code and commit
+history. The ecosystem is fully open source and the development process
+is documented in its own artifacts.</p></li>
+</ol>
+<hr />
+<h2 id="the-ecosystem">3. The Ecosystem</h2>
+<h3 id="components">3.1 Components</h3>
+<p>The SAM ecosystem is maintained by the <a
+href="https://github.com/SyntheticAutonomicMind">Synthetic Autonomic
+Mind</a> organization. It consists of three primary systems:</p>
+<p><strong><a
+href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> - Command
+Line Intelligence Orchestrator</strong></p>
+<p>CLIO is a terminal-first AI coding assistant written in Perl. It runs
+on anything from a ClockworkPi uConsole to an M4 Mac, starting at
+approximately 50 MB of RAM. The codebase spans over a hundred Perl
+modules organized into subsystems for memory, sessions, tools, security,
+coordination, and UI. It supports 10+ AI providers (GitHub Copilot,
+OpenAI, Anthropic, Google Gemini, DeepSeek, OpenRouter, MiniMax,
+llama.cpp, LM Studio, and SAM itself), provides 14 tool categories for
+autonomous operation, and includes a three-tier memory system,
+multi-agent coordination, remote execution over SSH, and terminal
+multiplexer integration.</p>
+<p>CLIO has been self-building since version 20260119.1. Every feature
+added after that date was developed through CLIO itself.</p>
+<p><strong><a
+href="https://github.com/SyntheticAutonomicMind/SAM">SAM</a> - Synthetic
+Autonomic Mind</strong></p>
+<p>SAM is a native macOS AI assistant built in Swift and SwiftUI. It
+provides voice interaction (“Hey SAM”), autonomous tool execution, and
+the same privacy-first architecture as the rest of the ecosystem. SAM
+was originally built for the developer’s wife - designed to adapt to her
+workflow rather than requiring her to adapt to it - and has since grown
+into a general-purpose macOS assistant.</p>
+<p>SAM was originally developed over six months (July-December 2025)
+using conventional tools. CLIO began maintaining SAM in January 2026.
+SAM is both the oldest system in the ecosystem and the origin of the
+methodology that now drives all development.</p>
+<p><strong><a
+href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a> -
+Artificial Latent Image Composition Engine</strong></p>
+<p>ALICE is a local image generation service written in Python. It wraps
+Stable Diffusion behind a FastAPI interface, providing GPU-accelerated
+image generation on Apple Silicon with no cloud dependency, no per-image
+cost, and no data leaving the user’s machine. SAM uses ALICE as its
+image generation backend.</p>
+<p>ALICE was built through CLIO by the developer, making it the clearest
+test case for the Unbroken Method applied to a new system from
+scratch.</p>
+<h3 id="the-build-chain">3.2 The Build Chain</h3>
+<p>The ecosystem emerged through a specific sequence:</p>
+<div class="mermaid">
+flowchart LR
+    VSCode["VSCode + Claude"] --> SAM_v1["SAM v1.0<br/>Jul-Dec 2025"]
+    SAM_v1 --> Method["Unbroken Method<br/>Discovered"]
+    Method --> CLIO_v1["CLIO v1<br/>Jan 2026"]
+    CLIO_v1 --> CLIO_self["Developer + CLIO<br/>pair-programming"]
+    CLIO_self --> SAM_updates["SAM maintained"]
+    CLIO_self --> ALICE_new["ALICE created"]</div>
+<p>This sequence matters. The method was not designed first and applied
+later. It was discovered during practical work, formalized, and then
+embedded in a tool that applies it recursively. The transition from
+conventional development to self-building development happened at a
+specific, identifiable point: CLIO version 20260119.1, the day CLIO
+could work on itself.</p>
+<h3 id="shared-architecture">3.3 Shared Architecture</h3>
+<p>Despite different languages and platforms, all three systems
+share:</p>
+<ul>
+<li><strong>Privacy by architecture.</strong> No telemetry, no accounts
+required, local-first design. Data stays on the user’s machine. Only
+minimum context is sent to AI providers, with built-in secret redaction
+for API keys, tokens, PII, and credentials.</li>
+<li><strong>Multiple AI provider support.</strong> No vendor lock-in.
+Users choose their provider.</li>
+<li><strong>Open source.</strong> All code is published under GPL-3.0,
+available for inspection and replication.</li>
+<li><strong>The Unbroken Method.</strong> All development follows the
+same continuity-preserving workflow.</li>
+</ul>
+<p>These properties are not policies layered on after the fact. They are
+embedded in the architecture of each system - a form of value
+propagation through code rather than documentation.</p>
+<hr />
+<h2 id="the-unbroken-method">4. The Unbroken Method</h2>
+<h3 id="core-principles">4.1 Core Principles</h3>
+<p>The <a
+href="https://www.syntheticautonomicmind.org/docs/shared/the-unbroken-method.html">Unbroken
+Method</a> is a development methodology built around four
+principles:</p>
+<p><strong>Continuous Context.</strong> Development sessions accumulate
+rather than reset. Each session inherits the context, decisions, and
+knowledge of prior sessions. There are no cold starts.</p>
+<p><strong>Complete Ownership.</strong> The developer retains full
+control over the system, the data, and the process. External
+dependencies are minimized. The system runs locally and the developer
+can inspect, modify, or override anything.</p>
+<p><strong>Investigation Before Action.</strong> The AI assistant reads
+and understands existing code, history, and constraints before making
+changes. Modifications are evidence-based, not speculative.</p>
+<p><strong>Structured Handoffs.</strong> Sessions end with explicit
+state - summaries, checkpoints, and continuity markers that allow the
+next session to resume cleanly. No context is silently lost.</p>
+<h3 id="operational-model">4.2 Operational Model</h3>
+<p>In practice, the method operates as a recursive process where each
+development session transforms the system state:</p>
+<p><strong>Inputs per session:</strong> - Active session context
+(current conversation) - Compressed history from prior sessions (YaRN
+thread summaries) - Long-term memory (patterns, solutions, and
+discoveries from all prior work) - User-provided requirements and
+direction</p>
+<p><strong>Outputs per session:</strong> - Modified source code -
+Updated long-term memory - Commit history with descriptive messages -
+Validation results (tests, verification) - Handoff state for session
+continuity</p>
+<p><strong>Invariants maintained across all sessions:</strong> - Version
+control remains consistent - all changes are committed and traceable -
+Tests validate before commits - Destructive operations require developer
+confirmation - Context is preserved, never silently discarded - The
+developer can interrupt, redirect, or override at any point</p>
+<p>The key property is accumulation:
+<code>context(session_n) = merge(context(session_n-1), work(session_n))</code>.
+Each session builds on the last rather than replacing it. This is what
+distinguishes the Unbroken Method from session-isolated AI assistance,
+where each interaction starts from scratch.</p>
+<h3 id="traditional-development-vs.-the-unbroken-method">4.3 Traditional
+Development vs. the Unbroken Method</h3>
+<div class="mermaid">
+flowchart LR
+    subgraph Traditional["Session-Isolated Development"]
+        T1["Session 1"] --> T2["Context lost"]
+        T2 --> T3["Session 2 (cold start)"]
+        T3 --> T4["Context lost"]
+        T4 --> T5["Session 3 (cold start)"]
+    end
+
+    subgraph Unbroken["Unbroken Method"]
+        U1["Session 1"] --> U2["Handoff + Memory"]
+        U2 --> U3["Session 2 (warm start)"]
+        U3 --> U4["Handoff + Memory"]
+        U4 --> U5["Session 3 (warm start)"]
+    end</div>
+<p>The distinction is not about automation. It is about continuity.
+Traditional AI-assisted development discards most of what was learned in
+each session. The Unbroken Method preserves it.</p>
+<hr />
+<h2 id="technical-architecture-how-continuity-works">5. Technical
+Architecture: How Continuity Works</h2>
+<p>The Unbroken Method’s principles are not aspirational - they are
+implemented in concrete subsystems within CLIO. This section describes
+the architecture that makes continuity-preserving development
+possible.</p>
+<h3 id="three-tier-memory">5.1 Three-Tier Memory</h3>
+<p>CLIO implements a <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/docs/MEMORY.md">layered
+memory system</a> that provides continuity at different time scales:</p>
+<p><strong>Short-Term Memory (STM)</strong> - <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Memory/ShortTerm.pm"><code>lib/CLIO/Memory/ShortTerm.pm</code></a></p>
+<p>The active conversation window. A sliding buffer of messages
+maintained during a session. When the buffer approaches the model’s
+context limit, older messages are compressed rather than discarded.</p>
+<p><strong>YaRN (Yet another Recurrence Navigation)</strong> - <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Memory/YaRN.pm"><code>lib/CLIO/Memory/YaRN.pm</code></a></p>
+<p>The conversation threading and compression layer. YaRN manages thread
+summaries that accumulate across a session’s lifetime. When STM messages
+are pruned, their content is merged into the thread summary rather than
+being lost. This preserves context continuity within a session even when
+individual messages are no longer in the active window.</p>
+<p>Critically, YaRN accumulates rather than replaces. Each compression
+cycle merges new information with the existing thread summary,
+maintaining a continuously growing record of the session’s decisions,
+changes, and context.</p>
+<p><strong>Long-Term Memory (LTM)</strong> - <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Memory/LongTerm.pm"><code>lib/CLIO/Memory/LongTerm.pm</code></a></p>
+<p>Persistent knowledge that survives across sessions and projects. LTM
+stores three types of entries:</p>
+<ul>
+<li><strong>Discoveries</strong> - facts about the codebase, with
+confidence scores</li>
+<li><strong>Solutions</strong> - problem-fix pairs with example file
+references</li>
+<li><strong>Patterns</strong> - coding conventions and workflow
+rules</li>
+</ul>
+<p>LTM entries are automatically injected into every new session’s
+system prompt, giving the AI assistant institutional knowledge without
+requiring re-explanation. Entries include confidence scores and can be
+updated or pruned as the codebase evolves.</p>
+<div class="mermaid">
+flowchart TB
+    subgraph Memory["CLIO Memory Architecture"]
+        STM["STM<br/>Active conversation<br/>Sliding window"]
+        YaRN["YaRN<br/>Thread summaries<br/>Accumulating compression"]
+        LTM["LTM<br/>Discoveries, Solutions, Patterns<br/>Cross-session persistence"]
+    end
+    STM -->|"overflow"| YaRN
+    YaRN -->|"key insights"| LTM
+    LTM -->|"injected at session start"| STM</div>
+<h3 id="session-persistence">5.2 Session Persistence</h3>
+<p>Sessions in CLIO are first-class objects managed by <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Session/State.pm"><code>lib/CLIO/Session/State.pm</code></a>
+and <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Session/Manager.pm"><code>lib/CLIO/Session/Manager.pm</code></a>.
+Full conversation history is stored on disk and can be resumed at any
+time. This means a developer can close CLIO, reopen it days later, and
+continue exactly where they left off - with full context, memory, and
+history intact.</p>
+<h3 id="user-profile-system">5.3 User Profile System</h3>
+<p>CLIO’s profile system (<a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Profile/Analyzer.pm"><code>lib/CLIO/Profile/Analyzer.pm</code></a>)
+analyzes session history to learn the developer’s communication style,
+technical preferences, and working patterns. This profile is injected
+into the system prompt, personalizing how CLIO communicates and makes
+decisions. The profile is generated locally from the developer’s own
+session data - no external profiling service is involved.</p>
+<h3 id="autonomous-tool-system">5.4 Autonomous Tool System</h3>
+<p>CLIO provides 14 tool categories that allow the AI to take real
+action rather than merely suggesting code:</p>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 30%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Module</th>
+<th>Capability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File Operations</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/FileOperations.pm"><code>FileOperations.pm</code></a></td>
+<td>Read, write, search, edit files</td>
+</tr>
+<tr>
+<td>Version Control</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/VersionControl.pm"><code>VersionControl.pm</code></a></td>
+<td>Git operations: commit, branch, diff, stash</td>
+</tr>
+<tr>
+<td>Terminal</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/TerminalOperations.pm"><code>TerminalOperations.pm</code></a></td>
+<td>Execute shell commands with validation</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/MemoryOperations.pm"><code>MemoryOperations.pm</code></a></td>
+<td>LTM storage, retrieval, and search</td>
+</tr>
+<tr>
+<td>Web</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/WebOperations.pm"><code>WebOperations.pm</code></a></td>
+<td>Fetch URLs, search the web</td>
+</tr>
+<tr>
+<td>Code Intelligence</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/CodeIntelligence.pm"><code>CodeIntelligence.pm</code></a></td>
+<td>Symbol search, usage analysis, commit history search</td>
+</tr>
+<tr>
+<td>Multi-Agent</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/SubAgentOperations.pm"><code>SubAgentOperations.pm</code></a></td>
+<td>Spawn parallel agents with coordination</td>
+</tr>
+<tr>
+<td>Remote Execution</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/RemoteExecution.pm"><code>RemoteExecution.pm</code></a></td>
+<td>Run tasks on remote systems over SSH</td>
+</tr>
+<tr>
+<td>Apply Patch</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/ApplyPatch.pm"><code>ApplyPatch.pm</code></a></td>
+<td>Efficient multi-file code modifications</td>
+</tr>
+<tr>
+<td>Todo Management</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/TodoList.pm"><code>TodoList.pm</code></a></td>
+<td>Structured task tracking within sessions</td>
+</tr>
+<tr>
+<td>User Collaboration</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/UserCollaboration.pm"><code>UserCollaboration.pm</code></a></td>
+<td>Interactive checkpoints with the developer</td>
+</tr>
+<tr>
+<td>MCP Bridge</td>
+<td><a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Tools/MCPBridge.pm"><code>MCPBridge.pm</code></a></td>
+<td>Model Context Protocol integration</td>
+</tr>
+</tbody>
+</table>
+<p>This tool system is what makes CLIO “actually autonomous” rather than
+a suggestion engine. The AI reads code, writes files, runs tests,
+commits changes, and iterates on errors - all within the
+continuity-preserving framework.</p>
+<h3 id="security-architecture">5.5 Security Architecture</h3>
+<p>Self-building requires trust boundaries. CLIO addresses this
+through:</p>
+<ul>
+<li><strong>Secret Redaction</strong> (<a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Security/SecretRedactor.pm"><code>SecretRedactor.pm</code></a>)
+- Catches API keys, tokens, PII, and credentials before they reach any
+AI provider</li>
+<li><strong>Path Authorization</strong> (<a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Security/PathAuthorizer.pm"><code>PathAuthorizer.pm</code></a>)
+- Controls which files and directories the AI can access</li>
+<li><strong>Invisible Character Filtering</strong> (<a
+href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/lib/CLIO/Security/InvisibleCharFilter.pm"><code>InvisibleCharFilter.pm</code></a>)
+- Strips prompt injection attempts via hidden Unicode characters</li>
+<li><strong>Developer Confirmation</strong> - Destructive operations
+(pushes, deletions, etc.) require explicit approval via the
+collaboration checkpoint system</li>
+</ul>
+<h3 id="multi-agent-coordination">5.6 Multi-Agent Coordination</h3>
+<p>For complex tasks, CLIO can spawn parallel sub-agents coordinated
+through a broker system (<a
+href="https://github.com/SyntheticAutonomicMind/CLIO/tree/main/lib/CLIO/Coordination"><code>lib/CLIO/Coordination/</code></a>).
+The broker manages file locks, git locks, and API rate limiting to
+prevent conflicts when multiple agents work simultaneously. When running
+inside tmux, GNU Screen, or Zellij, each sub-agent’s output streams in a
+separate pane for real-time visibility.</p>
+<hr />
+<h2 id="the-reflexive-loop">6. The Reflexive Loop</h2>
+<h3 id="what-self-building-means-here">6.1 What Self-Building Means
+Here</h3>
+<p>Self-building in this context is specific and verifiable: CLIO is
+used to modify CLIO’s own source code, run its tests, and commit the
+changes. This has been the case for every one of the hundreds of commits
+since version 20260119.1.</p>
+<p>This is not theoretical self-modification or speculative AGI. It is a
+concrete development workflow where:</p>
+<ol type="1">
+<li>A developer describes what needs to change</li>
+<li>CLIO reads the relevant code and history</li>
+<li>CLIO proposes changes, the developer approves or redirects</li>
+<li>CLIO implements the changes, runs tests, and commits</li>
+<li>The next session inherits the improved codebase through LTM and
+session continuity</li>
+</ol>
+<p>The developer remains in the loop throughout. CLIO does not
+autonomously decide what to build - it decides how to build what the
+developer requests, within the constraints of the Unbroken Method.</p>
+<h3 id="the-reflexive-property">6.2 The Reflexive Property</h3>
+<p>The ecosystem has a reflexive property that is philosophically
+interesting and practically demonstrable:</p>
+<ul>
+<li>The developer used CLIO to maintain and extend SAM. SAM exists and
+functions as a macOS assistant.</li>
+<li>The developer used CLIO to build ALICE from scratch. ALICE exists
+and functions as an image generation service.</li>
+<li>The developer uses CLIO to build CLIO. Every improvement to CLIO
+since version 20260119.1 was made through this pair-programming
+workflow.</li>
+<li>SAM can analyze CLIO. The analysis that produced the original
+version of this paper was conducted by SAM, examining the architecture
+of the tool that built it.</li>
+</ul>
+<p>This creates a closed loop: the tool produces systems capable of
+evaluating the tool. The evaluation is coherent. The systems function in
+production use.</p>
+<h3 id="what-self-building-demonstrates">6.3 What Self-Building
+Demonstrates</h3>
+<p>The strongest interpretation of this evidence is not that CLIO has
+proven autonomous intelligence. It is that:</p>
+<ol type="1">
+<li><p><strong>Continuity-preserving AI workflows can sustain complex,
+multi-system development.</strong> Three production systems in three
+languages, maintained by a single developer using a single tool, over
+months of continuous development.</p></li>
+<li><p><strong>Self-modification does not inevitably degrade
+quality.</strong> CLIO has been modifying itself continuously since
+January 2026. The system has not drifted into incoherence. It has
+accumulated capability - adding multi-agent coordination, remote
+execution, MCP integration, and multiplexer support, all developed
+through the developer-CLIO pair-programming workflow.</p></li>
+<li><p><strong>Reflexive analysis is possible within the
+system.</strong> SAM, a product of CLIO, can produce coherent analysis
+of CLIO’s architecture. This does not replace external verification, but
+it demonstrates that the system’s outputs can reason about the system’s
+structure.</p></li>
+</ol>
+<h3 id="what-self-building-does-not-demonstrate">6.4 What Self-Building
+Does Not Demonstrate</h3>
+<p>Intellectual honesty requires acknowledging what the evidence does
+not support:</p>
+<ul>
+<li><strong>General superiority.</strong> The Unbroken Method has not
+been compared to alternatives in controlled conditions. It works here.
+Whether it outperforms other approaches requires comparative study.</li>
+<li><strong>Guaranteed improvement.</strong> The claim that each session
+produces equal or better capability than the last is a design goal, not
+a proven invariant. Regression is possible and must be guarded against
+through testing.</li>
+<li><strong>Independence from external scaffolding.</strong> The
+ecosystem was bootstrapped using conventional tools (VSCode + Claude).
+The Unbroken Method cannot create itself from nothing - it requires an
+initial external development environment.</li>
+<li><strong>Generalization to other developers.</strong> A single
+developer’s workflow may not transfer to teams, different domains, or
+different working styles.</li>
+</ul>
+<hr />
+<h2 id="related-work">7. Related Work</h2>
+<h3 id="llm-agent-planning">7.1 LLM Agent Planning</h3>
+<p>Wang et al. (2024) survey planning mechanisms in LLM-based agents,
+identifying task decomposition, tool use, and feedback integration as
+key capabilities. CLIO implements all three: the todo system provides
+explicit task decomposition, the 14-tool system provides real-world
+action capability, and the checkpoint/collaboration system provides
+structured feedback integration. Where CLIO diverges from the survey’s
+framework is in its emphasis on cross-session continuity - most agent
+systems treat sessions as independent.</p>
+<h3 id="memory-in-llm-agents">7.2 Memory in LLM Agents</h3>
+<p>Xi et al. (2025) examine memory mechanisms in LLM agents,
+distinguishing between parametric memory (model weights), short-term
+memory (context window), and long-term external memory. CLIO’s
+three-tier architecture maps directly to this taxonomy: STM corresponds
+to the context window, YaRN provides compressed mid-term persistence,
+and LTM provides typed long-term storage with confidence scoring. CLIO’s
+contribution to this space is the accumulating compression model - YaRN
+merges rather than replaces, preventing the information loss that Xi et
+al. identify as a common weakness in memory-augmented agents.</p>
+<h3 id="task-decomposition">7.3 Task Decomposition</h3>
+<p>Liu et al. (2024) propose TDAG, a framework for task decomposition
+and agent generation. CLIO’s multi-agent system parallels this work: a
+manager agent decomposes tasks, spawns specialized sub-agents, and
+coordinates their work through a broker. The broker’s file and git
+locking mechanisms address a practical concern that TDAG does not focus
+on - safe concurrent access to shared resources during parallel agent
+execution.</p>
+<h3 id="self-modifying-systems">7.4 Self-Modifying Systems</h3>
+<p>The concept of self-modifying programs has a long history in computer
+science, from von Neumann’s self-reproducing automata to modern genetic
+programming. CLIO differs from these in an important way: it is not
+optimizing itself through automated search. It is a tool being directed
+by a human developer to modify itself in specific, intentional ways. The
+“self” in self-building refers to the causal chain (CLIO modifies CLIO’s
+code), not to autonomous self-optimization.</p>
+<hr />
+<h2 id="implications">8. Implications</h2>
+<h3 id="practice-before-theory">8.1 Practice Before Theory</h3>
+<p>The Unbroken Method emerged from practice, not from theory. The
+developer did not read papers on continuity-preserving workflows and
+then implement them. He built a system, noticed what worked, formalized
+the patterns, and embedded them in a tool.</p>
+<p>This suggests a practical epistemology for AI-assisted development:
+sometimes the most effective methodologies are discovered by doing
+rather than designed in advance. The method-then-implementation pipeline
+can also run in reverse: implementation, observation, method,
+re-implementation.</p>
+<h3 id="value-propagation-through-architecture">8.2 Value Propagation
+Through Architecture</h3>
+<p>The SAM ecosystem demonstrates that developer values can be
+propagated through code rather than policy. Privacy, local-first design,
+and user ownership are not documented guidelines that developers must
+remember to follow. They are architectural constraints enforced by the
+system’s design: no telemetry endpoints exist, secret redaction is
+applied automatically, data never leaves the local machine by
+default.</p>
+<p>When the developer uses CLIO to build a new system, these values
+carry forward because they are part of the tool’s operating behavior,
+not just its documentation.</p>
+<h3 id="the-identity-of-self-modified-systems">8.3 The Identity of
+Self-Modified Systems</h3>
+<p>CLIO today is architecturally different from CLIO version 20260119.1.
+Entire subsystems have been added - multi-agent coordination, MCP
+support, remote execution. Yet it remains recognizably CLIO: same
+language (Perl), same privacy architecture, same memory model, same
+development methodology.</p>
+<p>This suggests that identity in self-modifying systems may be better
+understood as continuity of purpose and lineage rather than preservation
+of specific code. The ship of Theseus question applies, but the answer
+may be pragmatic: the system is the same system because its history is
+continuous, its purpose is consistent, and its architecture evolves
+rather than being replaced.</p>
+<h3 id="the-limits-of-self-assessment">8.4 The Limits of
+Self-Assessment</h3>
+<p>This paper was originally drafted through a reflexive process: SAM
+(maintained through CLIO) analyzed CLIO’s architecture and produced the
+initial analysis. That analysis was then reviewed by independent AI
+agents (ChatGPT, Perplexity, and DeepSeek), and the current version
+synthesizes all perspectives. The external reviews confirmed the broad
+accuracy of the self-assessment while identifying specific gaps:
+underspecified metrics, missing failure mode analysis, terminology that
+risked overstatement, and the need for falsifiable evaluation criteria.
+All of these were addressed in subsequent revisions.</p>
+<p>The reflexive origin does not invalidate the analysis, but it does
+constrain its authority. A system describing itself can identify what it
+does and how it works. It cannot independently verify that what it does
+is optimal, safe, or free from subtle failure modes. Self-assessment
+provides evidence of capability through outputs. It does not provide
+proof of reliability.</p>
+<p>For that reason, external evaluation - by other developers, by
+independent analysis, and by empirical comparison - remains
+essential.</p>
+<hr />
+<h2 id="evaluation-framework-falsifiable-hypotheses">9. Evaluation
+Framework: Falsifiable Hypotheses</h2>
+<p>The claims in this paper should be treated as hypotheses, not as
+established results. This section proposes specific, falsifiable tests
+for the key claims, with measurement criteria that could support or
+refute them.</p>
+<h3 id="context-continuity-improves-development-performance">9.1 Context
+Continuity Improves Development Performance</h3>
+<p><strong>Hypothesis:</strong> Development sessions with preserved
+context produce fewer errors, fewer revision cycles, and faster
+completion than sessions that start cold.</p>
+<p><strong>Test:</strong> Compare matched tasks completed under two
+conditions: (a) full continuity enabled (LTM, session persistence, YaRN
+threading), and (b) context reset (fresh sessions with no memory
+injection).</p>
+<p><strong>Metrics:</strong> Defects introduced per task, number of
+revision cycles, time to completion, amount of developer re-explanation
+required, post-completion regression rate.</p>
+<h3 id="long-term-memory-improves-task-execution">9.2 Long-Term Memory
+Improves Task Execution</h3>
+<p><strong>Hypothesis:</strong> LTM injection improves future task
+performance more often than it introduces stale or misleading
+guidance.</p>
+<p><strong>Test:</strong> Audit a sample of LTM entries across sessions.
+Classify each retrieved entry as useful (improved the outcome), neutral
+(no measurable effect), or harmful (introduced incorrect assumptions or
+stale knowledge).</p>
+<p><strong>Metrics:</strong> Memory precision rate, staleness rate,
+correction rate, task success rate with and without LTM injection.</p>
+<h3 id="self-building-does-not-degrade-system-quality">9.3 Self-Building
+Does Not Degrade System Quality</h3>
+<p><strong>Hypothesis:</strong> Modifying CLIO through CLIO does not
+reduce code quality, stability, or maintainability over time.</p>
+<p><strong>Test:</strong> Track system quality longitudinally across the
+commit history using automated metrics.</p>
+<p><strong>Metrics:</strong> Build success rate, test pass rate, static
+analysis warnings, regression frequency, mean time to repair, defect
+density over time. A stable or improving trend supports the hypothesis;
+a downward trend falsifies it.</p>
+<h3 id="architectural-invariants-persist-across-sessions">9.4
+Architectural Invariants Persist Across Sessions</h3>
+<p><strong>Hypothesis:</strong> Core system properties - privacy-first
+behavior, local-first defaults, secret redaction, confirmation for
+destructive operations - are maintained as the system evolves.</p>
+<p><strong>Test:</strong> Define a checklist of architectural
+invariants. Sample sessions and commits across the project timeline.
+Verify whether each invariant holds.</p>
+<p><strong>Metrics:</strong> Invariant violation count, recovery time
+after violation, percentage of sessions preserving all invariants.</p>
+<h3 id="reflexive-analysis-is-accurate">9.5 Reflexive Analysis Is
+Accurate</h3>
+<p><strong>Hypothesis:</strong> CLIO (or a tool built within the
+ecosystem) can accurately describe the ecosystem’s architecture.</p>
+<p><strong>Test:</strong> Produce an architectural description using the
+tool. Compare the description against the source code and commit
+history. Score for factual accuracy, omissions, and overstatements.</p>
+<p><strong>Metrics:</strong> Precision of architectural claims, omission
+rate, unsupported claim rate. This tests descriptive accuracy, not
+self-awareness.</p>
+<h3 id="the-method-generalizes-beyond-the-ecosystem">9.6 The Method
+Generalizes Beyond the Ecosystem</h3>
+<p><strong>Hypothesis:</strong> The Unbroken Method improves development
+outcomes on projects outside the original ecosystem.</p>
+<p><strong>Test:</strong> Apply the workflow to a set of unrelated
+projects developed by different people. Compare results against
+conventional AI-assisted development.</p>
+<p><strong>Metrics:</strong> Delivery time, defect count, rework
+frequency, session recovery cost, developer satisfaction.</p>
+<p>This is the strongest possible test and should be treated as a
+separate study. It cannot be inferred from the current ecosystem’s
+internal success.</p>
+<hr />
+<h2 id="limitations-and-future-work">10. Limitations and Future
+Work</h2>
+<h3 id="known-limitations">10.1 Known Limitations</h3>
+<p><strong>Bootstrap dependency.</strong> The ecosystem required
+conventional tools to get started. CLIO was initially built with VSCode
+and Claude. The Unbroken Method cannot bootstrap itself from zero - it
+requires an existing development environment to reach the point of
+self-sufficiency.</p>
+<p><strong>Single-developer validation.</strong> All development has
+been performed by a single developer. The method’s effectiveness with
+teams, different working styles, or different technical domains is
+untested.</p>
+<p><strong>Absence of controlled comparison.</strong> The Unbroken
+Method has not been compared to alternative approaches under controlled
+conditions. Claims of effectiveness are based on practical outcomes, not
+experimental design.</p>
+<p><strong>Potential failure modes.</strong> Self-building systems
+introduce risks not present in conventional development: -
+<strong>Cascading errors</strong> - A bug introduced by CLIO could
+affect CLIO’s ability to fix it - <strong>Architectural drift</strong> -
+Incremental modifications may subtly shift the system away from its
+design intent - <strong>Memory staleness</strong> - LTM entries may
+become outdated as the codebase evolves, leading to incorrect guidance -
+<strong>Value degradation</strong> - Architectural values embedded in
+earlier code may be diluted by later modifications</p>
+<p>These risks have not manifested in the ecosystem’s history to date,
+but absence of observed failure is not evidence of immunity.
+Self-reported success can conceal failure modes - memory drift,
+architectural entrenchment, or unnoticed regressions - that only become
+apparent under systematic external evaluation. These risks should be
+treated as real until directly tested.</p>
+<p><strong>Presentation limitations.</strong> This paper uses Mermaid
+diagrams for inline visualization. These render correctly in web-based
+Markdown viewers and on the SAM website but may not display in PDF or
+print formats without conversion to static images.</p>
+<h3 id="future-work">10.2 Future Work</h3>
+<p><strong>Comparative studies.</strong> The most valuable next step
+would be controlled comparison of the Unbroken Method against
+conventional AI-assisted development workflows, measuring development
+speed, bug frequency, regression rate, and session recovery cost.</p>
+<p><strong>Replication.</strong> Independent developers applying the
+Unbroken Method to their own projects would test whether the methodology
+generalizes beyond this ecosystem.</p>
+<p><strong>Failure mode analysis.</strong> Deliberately introducing
+errors or degraded conditions to test the system’s resilience and
+self-recovery capabilities.</p>
+<p><strong>Formal invariant verification.</strong> Moving from observed
+invariants to formally verified properties - proving that the system
+maintains stated guarantees rather than merely observing that it has so
+far.</p>
+<p><strong>Governance frameworks.</strong> Defining which
+self-modifications should require human review, what rollback mechanisms
+are mandatory, and how responsibility is assigned when a tool modifies
+itself.</p>
+<hr />
+<h2 id="conclusion">11. Conclusion</h2>
+<p>The SAM ecosystem documents something specific and verifiable: a
+development methodology that emerged from practice, was embedded in a
+tool, and has been used by that tool to build and maintain three
+production systems across three programming languages over several
+months of continuous development.</p>
+<p>The primary contribution is not a particular tool but a process -
+continuity-preserving, constraint-driven AI-assisted development. The
+Unbroken Method demonstrates that:</p>
+<ol type="1">
+<li><p><strong>Context continuity materially supports AI-assisted
+development.</strong> Sessions that build on prior context outperform
+sessions that start cold. This is the central practical
+insight.</p></li>
+<li><p><strong>Self-building AI development is operationally
+viable.</strong> CLIO has been modifying itself continuously since
+January 2026 without degradation. The evidence is in the <a
+href="https://github.com/SyntheticAutonomicMind/CLIO/commits/main">commit
+history</a>.</p></li>
+<li><p><strong>The ecosystem spans multiple languages and
+platforms.</strong> Perl, Swift, and Python on macOS and Linux - the
+workflow is not tied to a single language or environment.</p></li>
+<li><p><strong>Reflexive development can be productive and
+coherent.</strong> A system can participate in its own maintenance and
+extension while remaining stable, useful, and architecturally
+consistent.</p></li>
+<li><p><strong>Values can be propagated through architecture.</strong>
+Privacy, ownership, and local-first design carry forward automatically
+when they are embedded in the tool rather than documented alongside
+it.</p></li>
+</ol>
+<p>These findings are empirical and limited in scope. They do not prove
+that self-building AI is universally reliable, generally optimal, or
+ready for unsupervised deployment. They demonstrate something more
+modest and more immediately useful: that a development process which
+preserves context, accumulates knowledge, and embeds its methodology in
+its own architecture can sustain real, production-quality work over
+time.</p>
+<p>The source code is open. The methodology is documented. The evidence
+is in the commit history.</p>
+<hr />
+<h2 id="references">References</h2>
+<ul>
+<li>CLIO Source Code.
+https://github.com/SyntheticAutonomicMind/CLIO</li>
+<li>SAM Source Code. https://github.com/SyntheticAutonomicMind/SAM</li>
+<li>ALICE Source Code.
+https://github.com/SyntheticAutonomicMind/ALICE</li>
+<li>Synthetic Autonomic Mind Organization.
+https://github.com/SyntheticAutonomicMind</li>
+<li>The Unbroken Method.
+https://www.syntheticautonomicmind.org/docs/shared/the-unbroken-method.html</li>
+<li>SAM Website. https://www.syntheticautonomicmind.org</li>
+<li>Wang, L., et al. (2024). <em>Plan, Span, and Think: A Survey on
+Planning of LLM Agents.</em> arXiv:2402.02716</li>
+<li>Xi, Q., et al. (2025). <em>Understanding the Memory Mechanism of
+Large Language Model Based Agents.</em> arXiv:2404.13501</li>
+<li>Liu, X., et al. (2024). <em>TDAG: A Framework for Task Decomposition
+and Agent Generation.</em> arXiv:2402.10178</li>
+</ul>
+<hr />
+<h2 id="appendix-a-preliminary-evaluation-results">Appendix A:
+Preliminary Evaluation Results</h2>
+<p>The following results represent an initial evaluation of Hypotheses
+9.3 and 9.4, conducted against the CLIO commit history as of April 2,
+2026. These are descriptive measurements, not controlled
+experiments.</p>
+<p><strong>Metric definitions:</strong> - <strong>Fix commit:</strong> A
+commit whose message begins with the conventional commit prefix
+<code>fix</code> (e.g.,
+<code>fix(session): correct model restoration</code>). This is a coarse
+proxy - some fix commits address minor formatting issues, not functional
+bugs. - <strong>Feature commit:</strong> A commit whose message begins
+with <code>feat</code>. - <strong>Lines of code:</strong> Total lines in
+Perl module files (<code>*.pm</code>) under the <code>lib/</code>
+directory at the last commit of each month. - <strong>Test files per
+module:</strong> Count of test scripts (<code>test_*.pl</code>) under
+<code>tests/unit/</code> divided by count of Perl modules under
+<code>lib/</code>. - <strong>Invariant verification:</strong> Manual
+<code>grep</code>-based inspection of the codebase and commit diffs for
+each invariant.</p>
+<h3 id="a.1-hypothesis-9.3-self-building-quality-over-time">A.1
+Hypothesis 9.3: Self-Building Quality Over Time</h3>
+<p>Measurement: fix commit density (fixes per 1,000 lines of code) and
+test coverage ratio (test files per module) across the first three full
+months of self-building development.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Jan 2026</th>
+<th>Feb 2026</th>
+<th>Mar 2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perl modules</td>
+<td>99</td>
+<td>126</td>
+<td>143</td>
+</tr>
+<tr>
+<td>Lines of code</td>
+<td>51,721</td>
+<td>74,340</td>
+<td>82,724</td>
+</tr>
+<tr>
+<td>Fix commits</td>
+<td>127</td>
+<td>116</td>
+<td>89</td>
+</tr>
+<tr>
+<td>Feature commits</td>
+<td>56</td>
+<td>57</td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Fixes per KLOC</strong></td>
+<td><strong>2.4</strong></td>
+<td><strong>1.5</strong></td>
+<td><strong>1.0</strong></td>
+</tr>
+<tr>
+<td><strong>Test files per module</strong></td>
+<td><strong>0.49</strong></td>
+<td><strong>0.82</strong></td>
+<td><strong>0.90</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Additional indicators: - 3 reverts out of 848 total commits (0.35%) -
+Current build: <code>clio syntax OK</code> (clean compilation) - Current
+test suite: 83 unit test files, 69 passing clean, 3 minor failures
+(stale assertions), 11 producing output without TAP format</p>
+<p><strong>Interpretation:</strong> Defect density dropped 58% (2.4 to
+1.0 fixes/KLOC) while the codebase grew 60% (51K to 83K LOC). Test
+coverage nearly doubled (0.49 to 0.90 test files per module). The system
+is becoming more stable as it grows - consistent with Hypothesis 9.3.
+However, fix commits are a coarse proxy for defect density. Some fix
+commits address minor issues (typos, formatting), not bugs. A more
+rigorous evaluation would classify fix severity and track regression
+rates per release.</p>
+<h3 id="a.2-hypothesis-9.4-architectural-invariant-persistence">A.2
+Hypothesis 9.4: Architectural Invariant Persistence</h3>
+<p>Measurement: presence and integrity of core security and privacy
+invariants across the commit history.</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 30%" />
+<col style="width: 19%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>Present Since</th>
+<th>Status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No telemetry/analytics</td>
+<td>Jan 19, 2026</td>
+<td>Holds</td>
+<td>No outbound analytics, beacon, or tracking endpoints in codebase.
+All “tracking” references are internal state variables.</td>
+</tr>
+<tr>
+<td>Secret redaction</td>
+<td>Feb 15, 2026</td>
+<td>Holds</td>
+<td><code>SecretRedactor.pm</code> present in 3 consuming modules. Never
+weakened.</td>
+</tr>
+<tr>
+<td>Path authorization</td>
+<td>Jan 19, 2026</td>
+<td>Holds</td>
+<td><code>PathAuthorizer.pm</code> active since initial release.
+Enforces session directory boundaries.</td>
+</tr>
+<tr>
+<td>Invisible character filtering</td>
+<td>Mar 1, 2026</td>
+<td>Holds</td>
+<td><code>InvisibleCharFilter.pm</code> with 74 passing tests. Defends
+against Unicode injection attacks.</td>
+</tr>
+<tr>
+<td>Local-first data handling</td>
+<td>Jan 19, 2026</td>
+<td>Holds</td>
+<td>All outbound HTTP destinations are user-selected AI providers,
+documentation references, or CDN assets. No data exfiltration
+paths.</td>
+</tr>
+<tr>
+<td>Security subsystem integrity</td>
+<td>Ongoing</td>
+<td>Holds</td>
+<td>17 commits to <code>lib/CLIO/Security/</code> - all additive (new
+features, refactoring, documentation). None remove or weaken existing
+protections.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interpretation:</strong> All six invariants hold as of the
+measurement date. The security architecture has only been strengthened
+over time, with three subsystems added progressively (PathAuthorizer at
+launch, SecretRedactor in February, InvisibleCharFilter in March) and
+none removed or degraded. This is consistent with Hypothesis 9.4.
+However, invariant persistence is easier to maintain in a
+single-developer project where the developer explicitly values these
+properties. The test would be more meaningful if the invariants survived
+contributions from developers who did not set them.</p>
+<h3 id="a.3-threats-to-validity">A.3 Threats to Validity</h3>
+<p><strong>Construct validity.</strong> Fix commits are identified by
+the <code>fix</code> prefix in commit messages. This captures minor
+formatting corrections alongside functional bug fixes, overstating
+defect counts. Revert commits (3 total) may also be double-counted as
+fixes. A more precise evaluation would classify fix severity.</p>
+<p><strong>Internal validity.</strong> All development is by a single
+developer. Observed quality improvements may reflect developer learning
+rather than methodology effectiveness. Invariant verification used
+manual <code>grep</code>-based inspection, which may miss logic-level
+violations that don’t appear in surface-level code patterns.</p>
+<p><strong>External validity.</strong> Results come from one ecosystem,
+one developer, and one workflow. Generalization to teams, other
+languages, or other AI assistants is untested.</p>
+<hr />
+<p><em>April 2026. Developed through the Synthetic Autonomic Mind
+ecosystem using the Unbroken Method.</em></p>
+
+            <hr />
+            <p><strong>Related Documentation:</strong></p>
+            <ul>
+                <li><a href="the-unbroken-method.html">The Unbroken Method</a> - The methodology behind the ecosystem</li>
+                <li><a href="../../clio-terminal-ai.html">CLIO Overview</a> - AI in your terminal</li>
+                <li><a href="../CLIO/index.html">CLIO Documentation</a> - Installation, configuration, and usage</li>
+                <li><a href="https://github.com/SyntheticAutonomicMind/CLIO" target="_blank">CLIO on GitHub</a> - Source code and commit history</li>
+                <li><a href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/docs/MEMORY.md" target="_blank">Memory Architecture</a> - Detailed memory system documentation</li>
+                <li><a href="https://github.com/SyntheticAutonomicMind/CLIO/blob/main/AGENTS.md" target="_blank">Multi-Agent System</a> - Agent coordination documentation</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Products</h4>
+                    <ul>
+                        <li><a href="../../index.html">SAM</a></li>
+                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
+                        <li><a href="../SAM/index.html">Documentation</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/discussions" target="_blank">Discussions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Menu Script -->
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
