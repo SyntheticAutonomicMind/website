@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools Reference | CLIO Documentation</title>
-    <meta name="description" content="SAM Documentation: Getting Started with SAM">
+    <meta name="description" content="Complete reference for CLIO's built-in tools - file operations, version control, terminal commands, memory, web search, code intelligence, and more">
     <link rel="stylesheet" href="../../css/styles.css?v=7">
     <style>
         /* Documentation styles - Apple-inspired */
@@ -249,9 +249,9 @@
 <h1>Tools Reference</h1>
 <p class="lead">Complete guide to CLIO's built-in tools</p>
 
-<p>CLIO provides 9 powerful tools for interacting with your system. Each tool is operation-based with multiple capabilities.</p>
+<p>CLIO provides a comprehensive set of tools for interacting with your system. Each tool is operation-based with multiple capabilities.</p>
 
-<h2>1. file_operations</h2>
+<h2>file_operations</h2>
 <p><strong>Purpose:</strong> File and directory management</p>
 <h3>Operations:</h3>
 <ul>
@@ -260,18 +260,20 @@
     <li><code>create_file</code> - Create new file with content</li>
     <li><code>append_file</code> - Append content to file</li>
     <li><code>replace_string</code> - Find and replace text</li>
-    <li><code>multi_replace_string</code> - Batch replace operations</li>
+    <li><code>multi_replace_string</code> - Batch replace operations across multiple files</li>
     <li><code>insert_at_line</code> - Insert content at specific line</li>
     <li><code>delete_file</code> - Delete file or directory</li>
     <li><code>rename_file</code> - Rename or move file</li>
-    <li><code>list_dir</code> - List directory contents</li>
-    <li><code>file_exists</code> - Check if file exists</li>
-    <li><code>file_search</code> - Find files matching pattern</li>
+    <li><code>create_directory</code> - Create directory with parents</li>
+    <li><code>list_dir</code> - List directory contents (optionally recursive)</li>
+    <li><code>file_exists</code> - Check if file or directory exists</li>
+    <li><code>get_file_info</code> - Get file metadata (size, type, modified time)</li>
+    <li><code>file_search</code> - Find files matching glob pattern</li>
     <li><code>grep_search</code> - Search file contents with regex</li>
-    <li><code>semantic_search</code> - Keyword-based relevance search</li>
+    <li><code>semantic_search</code> - Hybrid keyword and symbol search across codebase</li>
 </ul>
 
-<h2>2. version_control</h2>
+<h2>version_control</h2>
 <p><strong>Purpose:</strong> Git version control operations</p>
 <h3>Operations:</h3>
 <ul>
@@ -285,17 +287,19 @@
     <li><code>stash</code> - Stash operations (save, list, apply, drop)</li>
     <li><code>tag</code> - Tag operations (list, create, delete)</li>
     <li><code>blame</code> - Show file annotation</li>
+    <li><code>worktree</code> - Worktree operations (list, add, remove, prune, merge, pr)</li>
 </ul>
 
-<h2>3. terminal_operations</h2>
-<p><strong>Purpose:</strong> Execute shell commands</p>
+<h2>terminal_operations</h2>
+<p><strong>Purpose:</strong> Execute shell commands safely with validation and timeout</p>
 <h3>Operations:</h3>
 <ul>
     <li><code>exec</code> - Run command and capture output</li>
     <li><code>validate</code> - Check command safety before execution</li>
 </ul>
+<p>Commands are classified by intent (network access, credential reading, system destruction) and confirmed with the user based on risk level.</p>
 
-<h2>4. memory_operations</h2>
+<h2>memory_operations</h2>
 <p><strong>Purpose:</strong> Store and recall information across sessions</p>
 <h3>Session Memory:</h3>
 <ul>
@@ -307,16 +311,17 @@
 </ul>
 <h3>Long-Term Memory (LTM):</h3>
 <ul>
-    <li><code>recall_sessions</code> - Search previous session history</li>
-    <li><code>add_discovery</code> - Store discovered facts</li>
-    <li><code>add_solution</code> - Store problem-solution pairs</li>
+    <li><code>recall_sessions</code> - Search previous session history with keyword extraction and ranked results</li>
+    <li><code>add_discovery</code> - Store discovered facts with confidence levels</li>
+    <li><code>add_solution</code> - Store problem-solution pairs with example file paths</li>
     <li><code>add_pattern</code> - Store code/workflow patterns</li>
+    <li><code>update_ltm</code> - Update existing LTM entries (correct outdated information)</li>
     <li><code>prune_ltm</code> - Remove old/low-confidence entries</li>
     <li><code>ltm_stats</code> - Get LTM statistics</li>
 </ul>
 
-<h2>5. todo_operations</h2>
-<p><strong>Purpose:</strong> Manage structured task lists</p>
+<h2>todo_operations</h2>
+<p><strong>Purpose:</strong> Manage structured task lists with progress tracking</p>
 <h3>Operations:</h3>
 <ul>
     <li><code>read</code> - Get current todo list</li>
@@ -325,46 +330,77 @@
     <li><code>add</code> - Append new todos</li>
 </ul>
 
-<h2>6. web_operations</h2>
+<h2>web_operations</h2>
 <p><strong>Purpose:</strong> Fetch URLs and search the web</p>
 <h3>Operations:</h3>
 <ul>
     <li><code>fetch_url</code> - Fetch content from URL</li>
-    <li><code>search_web</code> - Web search (SerpAPI or DuckDuckGo)</li>
+    <li><code>search_web</code> - Web search (SerpAPI, Brave Search, or DuckDuckGo fallback)</li>
 </ul>
 
-<h2>7. code_intelligence</h2>
-<p><strong>Purpose:</strong> Code analysis and symbol search</p>
+<h2>code_intelligence</h2>
+<p><strong>Purpose:</strong> Code analysis, symbol search, and project history</p>
 <h3>Operations:</h3>
 <ul>
-    <li><code>list_usages</code> - Find all references to a symbol</li>
+    <li><code>list_usages</code> - Find all references to a symbol across the codebase</li>
+    <li><code>search_history</code> - Semantic search through git commit messages (find past work by natural language query)</li>
 </ul>
 
-<h2>8. user_collaboration</h2>
+<h2>user_collaboration</h2>
 <p><strong>Purpose:</strong> Request user input during tasks</p>
 <h3>Operations:</h3>
 <ul>
     <li><code>request_input</code> - Ask for clarification or decisions</li>
 </ul>
+<p>This tool implements checkpoint discipline - the AI pauses execution and waits for human input before proceeding. It's free (doesn't consume an API request) and blocks until the user responds.</p>
 
-<h2>9. remote_execution</h2>
+<h2>apply_patch</h2>
+<p><strong>Purpose:</strong> Apply diff-based patches to create, modify, or delete files</p>
+<p>Uses a lightweight diff format that's more efficient than full file rewrites. Each patch can contain multiple file operations with context-based anchoring for precise edits.</p>
+<h3>Supported operations within a patch:</h3>
+<ul>
+    <li>Add new files</li>
+    <li>Update existing files with contextual anchors</li>
+    <li>Delete files</li>
+</ul>
+
+<h2>remote_execution</h2>
 <p><strong>Purpose:</strong> Execute CLIO tasks on remote systems via SSH</p>
 <h3>Operations:</h3>
 <ul>
     <li><code>execute_remote</code> - Run CLIO task on remote system</li>
-    <li><code>execute_parallel</code> - Run task on multiple devices</li>
+    <li><code>execute_parallel</code> - Run task on multiple devices simultaneously</li>
     <li><code>prepare_remote</code> - Pre-stage CLIO without executing</li>
     <li><code>cleanup_remote</code> - Remove CLIO from remote</li>
     <li><code>check_remote</code> - Verify remote connectivity</li>
     <li><code>transfer_files</code> - Copy files to remote</li>
     <li><code>retrieve_files</code> - Fetch files from remote</li>
 </ul>
+<p>Copies the local CLIO installation to remote systems via rsync, ensuring version consistency. API keys are passed via environment variables and never persisted on remote systems.</p>
+
+<h2>agent_operations</h2>
+<p><strong>Purpose:</strong> Spawn and manage sub-agents for parallel work</p>
+<h3>Operations:</h3>
+<ul>
+    <li><code>spawn</code> - Create a new sub-agent with a specific task</li>
+    <li><code>list</code> - List all active sub-agents and their status</li>
+    <li><code>status</code> - Get detailed status of a specific agent</li>
+    <li><code>inbox</code> - Check for unread messages from sub-agents</li>
+    <li><code>acknowledge</code> - Mark messages as read</li>
+    <li><code>history</code> - View all messages from the session</li>
+    <li><code>send</code> - Send guidance to a specific agent</li>
+    <li><code>broadcast</code> - Send message to all agents</li>
+    <li><code>kill</code> - Terminate a specific agent</li>
+    <li><code>killall</code> - Terminate all agents</li>
+</ul>
+<p>Sub-agents run as separate processes and communicate with the parent agent via a message-passing system. The parent acts as a manager - spawning tasks, monitoring progress, and validating results.</p>
 
 <h2>Tool Transparency</h2>
-<p>When CLIO uses tools, you see real-time notifications:</p>
+<p>When CLIO uses tools, you see real-time notifications showing what's happening:</p>
 <pre><code>SYSTEM: [file_operations] - Reading ./config.json (254 lines)
 SYSTEM: [version_control] - git status
 SYSTEM: [terminal_operations] - Executing: npm install</code></pre>
+<p>All tool calls are visible, so you always know what CLIO is doing on your system.</p>
 
 <h2>Next Steps</h2>
 <ul>

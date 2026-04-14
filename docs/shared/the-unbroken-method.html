@@ -569,8 +569,8 @@ Demand complete implementations within their defined scope. Handle edge cases, a
 Session transitions lose critical context. The next session makes different assumptions, contradicts previous decisions, or duplicates completed work.</p>
 <p><strong>The Solution:</strong>
 Create structured handoff documents that capture complete context for continuation.</p>
-<p><strong>The Four-Document Handoff Protocol:</strong></p>
-<p>When a session must end (token limits, work phase complete, user request):</p>
+<p><strong>The Handoff Protocol:</strong></p>
+<p>When a session must end (token limits, work phase complete, user request), create a handoff directory with structured documents that capture complete context for continuation.</p>
 <p><strong>CRITICAL PREREQUISITE: Documentation MUST be current</strong></p>
 <p>Before creating handoff documents, ensure ALL technical documentation is up-to-date:</p>
 <ol>
@@ -579,9 +579,9 @@ Create structured handoff documents that capture complete context for continuati
 <li><strong>Specifications</strong>: If you completed a feature from a spec, mark it complete. Update spec if implementation differs from plan.</li>
 </ol>
 <p><strong>Rule:</strong> Documentation is NOT optional. Code without docs is incomplete work.</p>
-<p><strong>Then create the four handoff documents:</strong></p>
+<p><strong>Then create the handoff documents:</strong></p>
 <ol>
-<li><strong>CONTINUATION_PROMPT.md</strong></li>
+<li><strong>CONTINUATION_PROMPT.md</strong> [MANDATORY]</li>
 <li>Complete standalone context for the next session</li>
 <li>What was accomplished (detailed summary)</li>
 <li>All commits/changes made with descriptions</li>
@@ -596,7 +596,7 @@ Create structured handoff documents that capture complete context for continuati
 <p>NO external references. This document IS the context</p>
 </li>
 <li>
-<p><strong>AGENT_PLAN.md</strong></p>
+<p><strong>AGENT_PLAN.md</strong> [MANDATORY]</p>
 </li>
 <li>Remaining priorities (detailed breakdown)</li>
 <li>Investigation steps for each priority</li>
@@ -606,20 +606,12 @@ Create structured handoff documents that capture complete context for continuati
 <p>Dependencies between tasks</p>
 </li>
 <li>
-<p><strong>SESSION_HANDOFF.md</strong></p>
+<p><strong>NOTES.md</strong> [OPTIONAL]</p>
 </li>
-<li>Historical record of the session</li>
+<li>Technical notes, session history, and observations</li>
 <li>Decisions made and rationale</li>
 <li>Approaches tried and results</li>
-<li>
-<p>What worked and what didn't</p>
-</li>
-<li>
-<p><strong>FEATURES.md / CHANGELOG.md</strong></p>
-</li>
-<li>For external consumers (website, release notes)</li>
-<li>User-facing feature descriptions</li>
-<li>Change log in standard format</li>
+<li>What worked and what didn't</li>
 </ol>
 <p><strong>The Handoff Test:</strong></p>
 <blockquote>
@@ -677,7 +669,7 @@ Maintain an evolving catalog of anti-patterns with concrete examples of what NOT
 <li><code>/init</code> in your project directory - CLIO reads your code and creates instructions tailored to your codebase</li>
 <li>Edit <code>.clio/instructions.md</code> and <code>AGENTS.md</code> as your project evolves</li>
 </ol>
-<p>CLIO automates each pillar through dedicated tools: session persistence for continuous context, semantic search and code intelligence for investigation, todo operations for tracking deliverables, handoff directory protocols for structured transitions, and long-term memory (LTM) for learning from failure across all sessions. See <a href="#native-automation">How CLIO Automates the Pillars</a> for the full breakdown.</p>
+<p>CLIO automates each pillar through dedicated tools: session persistence and context compression for continuous context, semantic search and code intelligence for investigation, todo operations for tracking deliverables, handoff directory protocols for structured transitions, long-term memory (LTM) for learning from failure across all sessions, and multi-agent coordination for parallel work across sub-agents and remote systems. See <a href="#native-automation">How CLIO Automates the Pillars</a> for the full breakdown.</p>
 <p>The <code>user_collaboration</code> tool implements checkpoint discipline at the tool level - the AI calls it to pause execution and present its plan, and cannot proceed without human input.</p>
 <h3 id="path-2-with-other-agents">Path 2: With Other AI Agents</h3>
 <p>Most AI coding agents support custom instructions and have their own collaboration mechanisms:</p>
@@ -1064,7 +1056,7 @@ Maintain an evolving catalog of anti-patterns with concrete examples of what NOT
 <li><strong>Start your anti-pattern catalog</strong> - Add failures as you learn using the <a href="../SAM/developer/templates/anti-pattern-template.html">Anti-Pattern Template</a></li>
 <li><strong>Apply the Seven Pillars</strong> to every AI interaction</li>
 </ol>
-<p><strong>With CLIO:</strong> CLIO implements the methodology natively. Install via <code>brew install clio</code>, create <code>.clio/instructions.md</code> and <code>AGENTS.md</code> in your project, and start working. Context preservation, checkpoint discipline, long-term memory, and task tracking are built in.</p>
+<p><strong>With CLIO:</strong> CLIO implements the methodology natively. Install from <a href="https://github.com/SyntheticAutonomicMind/CLIO/releases/latest">GitHub releases</a>, create <code>.clio/instructions.md</code> and <code>AGENTS.md</code> in your project, and start working. Context preservation, checkpoint discipline, long-term memory, multi-agent coordination, and task tracking are built in.</p>
 <p>The methodology will evolve as you use it. Document what works, what doesn't, and what you learn. The anti-pattern catalog is never complete. It grows with experience.</p>
 <hr />
 <h2 id="conclusion">Conclusion</h2>
