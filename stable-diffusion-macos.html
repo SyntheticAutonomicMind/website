@@ -48,14 +48,14 @@
                 <h1>Unlimited image generation on your hardware.</h1>
                 <p class="hero-lead">ALICE runs Stable Diffusion locally. No subscription, no cloud upload, no cost per image. Generate whatever you want - your prompts and images never leave your machine.</p>
                 <div class="hero-cta">
-                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank" rel="noopener noreferrer">
                         Download ALICE
                     </a>
                     <a href="docs/ALICE/index.html" class="btn-large btn-secondary">
                         Read the Docs
                     </a>
                 </div>
-                <p class="hero-note">Free and open source. macOS (MPS) and Linux (CUDA, ROCm, Vulkan). Deploy standalone or via Docker.</p>
+                <p class="hero-note">Free and open source. macOS (MPS), Linux (CUDA, ROCm, Vulkan), and Steam Deck. Deploy standalone or via Docker.</p>
             </div>
         </div>
     </section>
@@ -96,13 +96,23 @@
                 </div>
                 
                 <div class="feature-item-modern">
-                    <h3>Multi-GPU support</h3>
-                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. PyTorch and stable-diffusion.cpp backends with smart model caching.</p>
+                   <h3>Multi-GPU support</h3>
+                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. Dual backend architecture: PyTorch for full diffusers pipeline support, and stable-diffusion.cpp with Vulkan for universal GPU acceleration without vendor drivers.</p>
                 </div>
                 
                 <div class="feature-item-modern">
                     <h3>Admin and authentication</h3>
                     <p>User management, API key generation, role-based access. Deploy for yourself or share with your team.</p>
+                </div>
+
+                <div class="feature-item-modern">
+                    <h3>Steam Deck ready</h3>
+                    <p>Dedicated SteamOS installer with user-level systemd service. Run Stable Diffusion on your Steam Deck's AMD GPU via ROCm or Vulkan - no desktop Linux required.</p>
+                </div>
+
+                <div class="feature-item-modern">
+                    <h3>Docker deployment</h3>
+                    <p>Pre-built containers for CPU, CUDA, and ROCm on GitHub Container Registry. One command to run: <code>docker compose --profile cuda up -d</code>.</p>
                 </div>
             </div>
         </div>
@@ -167,7 +177,7 @@
                 <h2>Get started with ALICE.</h2>
                 <p>Download for macOS or Linux. Generate images locally.</p>
                 <div class="cta-buttons">
-                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank" rel="noopener noreferrer">
                         Download ALICE
                     </a>
                     <a href="docs/ALICE/index.html" class="btn-large btn-secondary">
@@ -183,11 +193,12 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="index.html">SAM</a></li>
-                        <li><a href="clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="stable-diffusion-macos.html">ALICE</a></li>
+                   <h4>Products</h4>
+                   <ul>
+                       <li><a href="index.html">SAM</a></li>
+                       <li><a href="clio-terminal-ai.html">CLIO</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/MIRA">MIRA</a></li>
+                       <li><a href="stable-diffusion-macos.html">ALICE</a></li>
                     </ul>
                 </div>
                 
@@ -196,15 +207,15 @@
                     <ul>
                         <li><a href="docs/SAM/end-user/getting-started.html">Getting Started</a></li>
                         <li><a href="docs/ALICE/index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE" target="_blank">GitHub</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE" target="_blank" rel="noopener noreferrer">GitHub</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-col">
                     <h4>Community</h4>
                     <ul>
-                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank">Discord</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://discord.gg/bwWEKJ8u" target="_blank" rel="noopener noreferrer">Discord</a></li>
+                        <li><a href="https://github.com/SyntheticAutonomicMind/ALICE/discussions" target="_blank" rel="noopener noreferrer">Discussions</a></li>
                     </ul>
                 </div>
             </div>
