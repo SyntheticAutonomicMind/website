@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CLIO - Command Line Intelligence Orchestrator | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: CLIO - Command Line Intelligence Orchestrator">
+    <meta name="description" content="CLIO Documentation: Command Line Intelligence Orchestrator">
     <link rel="stylesheet" href="../../css/styles.css?v=7">
     <style>
         /* Documentation styles - Apple-inspired */
@@ -250,7 +250,7 @@
 <p><strong>Your AI Pair Programming Partner for the Terminal</strong></p>
 <hr />
 <h2 id="what-is-clio">What is CLIO?</h2>
-<p><strong>CLIO (Command Line Intelligence Orchestrator)</strong> is a terminal-based AI code assistant designed for developers who live in the command line. Built by the Synthetic Autonomic Mind organization, CLIO brings powerful AI capabilities directly into your terminal workflow without the overhead of browser tabs or GUI applications.</p>
+<p><strong>CLIO (Command Line Intelligence Orchestrator)</strong> is a terminal-based AI code assistant designed for developers who live in the command line. Built by the Synthetic Autonomic Mind organization, CLIO brings AI capabilities directly into your terminal workflow without the overhead of browser tabs or GUI applications.</p>
 <p>CLIO is the perfect companion to SAM-where SAM excels at complex, multi-conversation projects with its visual interface, CLIO provides instant AI assistance for terminal-focused development work.</p>
 <h3 id="why-clio">Why CLIO?</h3>
 <p><strong>Terminal-Native Experience</strong>
@@ -259,7 +259,7 @@
 - Streaming responses with syntax highlighting and proper formatting
 - Color themes and customizable styles</p>
 <p><strong>Portable &amp; Minimal</strong>
-- Requires only Perl 5.20+ with core modules (no CPAN/npm/pip dependencies)
+- Requires only Perl 5.32+ with core modules (no CPAN/npm/pip dependencies)
 - Works on any modern macOS or Linux system
 - Single executable that runs anywhere
 - Zero external dependencies for core functionality</p>
@@ -277,7 +277,7 @@
 - Automatically saves all conversations with full history
 - Resume any session exactly where you left off
 - Complete tool operation history preserved
-- Perfect for long-running development tasks</p>
+- Good for long-running development tasks</p>
 <p><strong>Custom Instructions</strong>
 - Per-project AI behavior via <code>.clio/instructions.md</code>
 - Enforce coding standards automatically
@@ -318,7 +318,7 @@
 <h3 id="prerequisites">Prerequisites</h3>
 <p><strong>System Requirements:</strong>
 - macOS 10.14+ or Linux (any modern distribution)
-- Perl 5.20 or higher (included on macOS, usually on Linux)
+- Perl 5.32 or higher (included on macOS, usually on Linux)
 - Git (for version control operations)
 - ANSI-compatible terminal emulator</p>
 <p><strong>AI Provider Requirements:</strong>
@@ -425,7 +425,7 @@
 <p>You always know exactly what CLIO is doing.</p>
 <hr />
 <h2 id="custom-instructions-for-sam-projects">Custom Instructions for SAM Projects</h2>
-<p>One of CLIO's most powerful features is <strong>custom instructions</strong> via <code>.clio/instructions.md</code>. This lets you enforce project-specific standards, pass methodology, and ensure consistency.</p>
+<p>One of CLIO's key features is <strong>custom instructions</strong> via <code>.clio/instructions.md</code>. This lets you enforce project-specific standards, pass methodology, and ensure consistency.</p>
 <h3 id="for-sam-development">For SAM Development</h3>
 <p>When working on SAM projects, create <code>.clio/instructions.md</code> in your project root:</p>
 <div class="codehilite"><pre><span></span><code><span class="gh"># CLIO Custom Instructions - SAM Development</span>
@@ -663,7 +663,7 @@ YOU: Now refactor the error handling in that file</p>
 <p>"Remember that our production API is at https://api.prod.example.com"<br />
 "Remember we use pytest for all tests"</p>
 </blockquote>
-<h3 id="leverage-custom-instructions">Leverage Custom Instructions</h3>
+<h3 id="custom-instructions">Custom Instructions</h3>
 <p>Create <code>.clio/instructions.md</code> for project-specific behavior:
 - Coding standards enforcement
 - Architecture guidelines
@@ -671,7 +671,7 @@ YOU: Now refactor the error handling in that file</p>
 - Deployment workflows</p>
 <hr />
 <h2 id="integration-with-sam">Integration with SAM</h2>
-<p>CLIO and SAM work together seamlessly in your development workflow.</p>
+<p>CLIO and SAM work together in your development workflow.</p>
 <h3 id="recommended-workflow">Recommended Workflow</h3>
 <p><strong>1. Research &amp; Planning (SAM)</strong>
 - Use SAM's Shared Topics for project coordination
@@ -681,7 +681,7 @@ YOU: Now refactor the error handling in that file</p>
 <p><strong>2. Implementation (CLIO)</strong>
 - Switch to terminal for actual coding
 - Use CLIO for file operations and git workflow
-- Leverage custom instructions for consistency
+- Use custom instructions for consistency
 - Quick iterations with CLIO's terminal speed</p>
 <p><strong>3. Review &amp; Testing (Both)</strong>
 - CLIO for running tests and fixing bugs
@@ -690,7 +690,7 @@ YOU: Now refactor the error handling in that file</p>
 - SAM for documentation updates</p>
 <p><strong>4. Documentation (SAM)</strong>
 - Use SAM's visual interface for writing docs
-- Leverage SAM's memory for project context
+- Use SAM's memory for project context
 - Generate comprehensive guides
 - SAM Web for remote documentation updates</p>
 <h3 id="connecting-clio-to-sam">Connecting CLIO to SAM</h3>
@@ -703,7 +703,7 @@ YOU: Now refactor the error handling in that file</p>
 
 <p>This routes all CLIO requests through SAM's REST API, letting you:
 - Use SAM's local models through CLIO
-- Leverage SAM's memory and context
+- Use SAM's memory and context
 - Maintain unified conversation history
 - Benefit from SAM's advanced features in the terminal</p>
 <h3 id="example-combined-workflow">Example Combined Workflow</h3>

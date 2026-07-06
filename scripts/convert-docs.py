@@ -16,8 +16,17 @@ def convert_file(md_path, template):
     
     parts = md_path.replace('.md', '').split('/')
     breadcrumb = f'<a href="{home_path}docs/README.html">Documentation</a> / {parts[-1].replace("-", " ").title()}'
+    # Determine project prefix based on file path
+    if '/SAM/' in md_path:
+        desc_prefix = 'SAM Documentation'
+    elif '/CLIO/' in md_path:
+        desc_prefix = 'CLIO Documentation'
+    elif '/ALICE/' in md_path:
+        desc_prefix = 'ALICE Documentation'
+    else:
+        desc_prefix = 'Synthetic Autonomic Mind'
     html = template.replace('{{TITLE}}', title)
-    html = html.replace('{{DESCRIPTION}}', f'SAM Documentation: {title}')
+    html = html.replace('{{DESCRIPTION}}', f'{desc_prefix}: {title}')
     html = html.replace('{{CSS_PATH}}', home_path)
     html = html.replace('{{HOME_PATH}}', home_path)
     html = html.replace('{{BREADCRUMB}}', breadcrumb)
