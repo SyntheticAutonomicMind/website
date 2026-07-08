@@ -261,7 +261,7 @@
 <h3 id="continuous-context">1. Continuous Context</h3>
 <p>AI sessions are ephemeral. You engineer continuity, or it does not exist.</p>
 <ul>
-<li><strong>In-session:</strong> stop the model at every major decision point. Read its findings. Approve before it proceeds. Unguided execution through significant changes is how scope drift and assumption cascades happen. CLIO implements this with the <a href="../developer/api-reference.md"><code>interact</code></a> tool: free to call, blocking until you answer, mandatory at every checkpoint.</li>
+<li><strong>In-session:</strong> stop the model at every major decision point. Read its findings. Approve before it proceeds. Unguided execution through significant changes is how scope drift and assumption cascades happen. CLIO implements this with the <a href="../CLIO/tools-reference.html"><code>interact</code></a> tool: free to call, blocking until you answer, mandatory at every checkpoint.</li>
 <li><strong>Cross-session:</strong> persist discoveries, solutions, and patterns so the next session inherits them instead of re-deriving them. CLIO uses <code>memory_operations</code> for LTM (entries in <code>.clio/ltm.json</code> with trust tiers) and session memory (key-value in <code>.clio/memory/</code>).</li>
 </ul>
 <p>A session with the right context is as effective as one with full history. The Fresh Start Problem loses most of its force here.</p>
@@ -453,7 +453,7 @@
 <h3 id="verify-before-documenting">Verify Before Documenting</h3>
 <p>Every technical claim in documentation must match the source code. Defaults, parameters, file paths, model lists - all of it. Wrong documentation is worse than no documentation because it creates false confidence.</p>
 <p>The verification process: 1. Read the documentation claim 2. Identify the source file that contains the truth 3. Read the source file 4. Confirm the claim matches 5. If it does not match, fix the documentation</p>
-<p>This is the <a href="../README.md#source-code-verification">source verification principle</a> the SAM documentation follows as a project-wide rule.</p>
+<p>This is the source verification principle the SAM documentation follows as a project-wide rule.</p>
 <h3 id="match-write-mechanism-to-transport">Match Write Mechanism to Transport</h3>
 <p>Different transports have different write semantics. <code>print()</code> on a non-blocking Unix socket does short writes for messages over the socket buffer boundary. The receiver gets partial data, never finds the expected delimiter, and buffers forever.</p>
 <p>The fix is documented in the CLIO LTM as a root-cause solution: when writing to a non-blocking socket, a pipe, or any streaming transport, use a blocking write loop that handles short writes. Reserve line-buffered writes for terminals and files. Match the write mechanism to the transport.</p>
