@@ -265,6 +265,23 @@
 <li><strong>Cross-session:</strong> persist discoveries, solutions, and patterns so the next session inherits them instead of re-deriving them. CLIO uses <code>memory_operations</code> for LTM (entries in <code>.clio/ltm.json</code> with trust tiers) and session memory (key-value in <code>.clio/memory/</code>).</li>
 </ul>
 <p>A session with the right context is as effective as one with full history. The Fresh Start Problem loses most of its force here.</p>
+<div class="mermaid">
+flowchart LR
+    T1[Session] --> T2[Context Lost] --> T3[New Session] --> T4[Re-explain] --> T5[Work]
+    U1[Session] --> U2[Checkpoint] --> U3[Continue] --> U4[Checkpoint] --> U5[Handoff] --> U6[New Session] --> U7[Context Intact] --> U8[Work]
+    
+    subgraph Traditional
+        T1 & T2 & T3 & T4 & T5
+    end
+    
+    subgraph Unbroken
+        U1 & U2 & U3 & U4 & U5 & U6 & U7 & U8
+    end
+    
+    style T2 fill:#ff6b6b,color:#fff
+    style T4 fill:#ff6b6b,color:#fff
+    style U7 fill:#6bcf7f,color:#000
+</div>
 <h3 id="complete-ownership">2. Complete Ownership</h3>
 <p>The model finds a bug in its working area. It fixes the bug. Not later. Not in a different session. Now.</p>
 <table>
@@ -302,6 +319,20 @@
 </tbody>
 </table>
 <p>The rule is consistent: bugs and blockers are owned. Other systems are reported. Architecture and new features are confirmed.</p>
+<div class="mermaid">
+flowchart LR
+    A[Task Assigned] --> B[Work Begins]
+    B --> C[Issue Discovered]
+    C --> D[Issue OWNED]
+    D --> E[Issue Fixed]
+    E --> F[Work Continues]
+    
+    C -.->|NEVER| G[Out of scope]
+    C -.->|NEVER| H[Separate issue]
+    
+    style G fill:#ff6b6b,color:#fff
+    style H fill:#ff6b6b,color:#fff
+</div>
 <h3 id="investigation-first">3. Investigation First</h3>
 <p>Read the code. Read the docs. Trace the actual behavior. Then change something.</p>
 <ul>
@@ -314,6 +345,19 @@
 <h3 id="root-cause-focus">4. Root Cause Focus</h3>
 <p>Fix the cause, not the symptom. Verify the fix prevents recurrence under similar conditions. If it does not, you have not found the root.</p>
 <p>Five Whys is enough tooling for most cases. Ask why. Ask why the answer is true. Ask again. By the fifth iteration, the cause usually surfaces.</p>
+<div class="mermaid">
+flowchart TD
+    A[Problem: Messages appear twice in the chat] --> B[Why? ChatWidget is creating messages<br/>AND MessageBus is creating messages]
+    B --> C[Why? ChatWidget was designed to create<br/>messages from streaming chunks]
+    C --> D[Why? Original architecture did not<br/>have MessageBus]
+    D --> E[Why? Streaming was added before<br/>centralized message management]
+    E --> F[Root Cause: Multiple sources of truth<br/>for message creation]
+    F --> G[Solution: Make MessageBus the single<br/>source of truth, ChatWidget read-only]
+    
+    style A fill:#ff6b6b,color:#fff
+    style F fill:#ffd93d,color:#000
+    style G fill:#6bcf7f,color:#000
+</div>
 <p>The CLIO codebase keeps a running list of root-cause fixes in <code>.clio/ltm.json</code> under the <code>solution</code> entry type. Each one stores the <strong>problem</strong> (verbatim error or observable behavior), the <strong>solution</strong> (what changed), and the <strong>verified outcome</strong> (what proves the fix worked). Symptom patches get re-opened; root-cause fixes get trusted.</p>
 <h3 id="complete-deliverables">5. Complete Deliverables</h3>
 <p>No <code>TODO</code> placeholders. No “we will add this later.” No draft sections committed as final. If the work is started, it is finished.</p>
