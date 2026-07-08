@@ -326,7 +326,7 @@
 <h3 id="structured-handoffs">6. Structured Handoffs</h3>
 <p>When a session ends, the next session must start cold and resume effectively. Handoffs are structured, not improvised.</p>
 <p>Minimum content: - What was accomplished - What remains - Key decisions and their rationale - Discoveries worth carrying forward - Known issues to avoid</p>
-<p>CLIO’s directory convention for handoffs is <code>ai-assisted/YYYYMMDD/HHMM/</code> with a <code>CONTINUATION_PROMPT.md</code>, an <code>AGENT_PLAN.md</code>, and optional <code>CHANGELOG.md</code> and <code>NOTES.md</code>. The test is the same as the one above: can the next session reach the same conclusions from only the handoff?</p>
+<p>CLIO’s directory convention for handoffs is <code>ai-assisted/YYYYMMDD/HHMM/</code> with a <code>CONTINUATION_PROMPT.md</code>, an <code>AGENT_PLAN.md</code>, and an optional <code>NOTES.md</code>. The test is the same as the one above: can the next session reach the same conclusions from only the handoff?</p>
 <h3 id="learning-from-failure">7. Learning from Failure</h3>
 <p>Document every mistake so the next session does not repeat it. Document every successful pattern so the next session can apply it. The discipline is what matters. A failure that is not recorded will recur. A pattern that is not recorded will be re-derived from scratch.</p>
 <p>CLIO’s LTM supports this directly: <code>add_solution</code> for problems with verified fixes, <code>add_pattern</code> for working approaches with confidence levels, <code>add_discovery</code> for facts about the codebase. Each entry tracks its trust tier.</p>
