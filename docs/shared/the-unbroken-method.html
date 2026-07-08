@@ -215,7 +215,7 @@
             });
         });
     </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/developer/the-unbroken-method.html">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/shared/the-unbroken-method.html">
 </head>
 <body>
     <!-- Navigation -->
@@ -246,849 +246,238 @@
         </div>
         
         <div class="doc-content">
-            <h1 id="the-unbroken-method">The Unbroken Method</h1>
-<p><strong>A Framework for Successful Human-AI Collaboration</strong></p>
-<p>The Unbroken Method is a systematic approach to human-AI collaboration that maximizes productivity and quality by maintaining continuous context, demanding complete ownership, and learning from documented failures. Developed during the creation of SAM (Synthetic Autonomic Mind) and refined through CLIO (Command Line Intelligence Orchestrator), this methodology has been used to ship production software across three languages (Swift, Perl, Python) and three platforms.</p>
-<p><strong>The core insight:</strong> The secret to successful AI collaboration isn't waiting for smarter models. It's implementing better methodology.</p>
-<hr />
-<h2 id="table-of-contents">Table of Contents</h2>
-<ol>
-<li><a href="#why-ai-collaboration-fails">Why AI Collaboration Fails</a></li>
-<li><a href="#the-seven-pillars">The Seven Pillars</a></li>
-<li><a href="#implementation-guide">Implementation Guide</a></li>
-<li><a href="#implementation-architecture">Implementation Architecture</a></li>
-<li><a href="#for-different-audiences">For Different Audiences</a></li>
-<li><a href="#quick-reference">Quick Reference</a></li>
-<li><a href="#comparison-with-industry-models">Comparison with Industry Models</a></li>
-</ol>
-<hr />
+<h1 id="the-unbroken-method">The Unbroken Method</h1>
+<p>You start a session. The model re-reads your codebase, re-derives what you figured out three hours ago, and explains it back to you. You patch the third bug from a partial fix instead of fixing the cause. You tell it “do X” and it asks permission for sub-step X.1 before doing it.</p>
+<p>This methodology is the contract that prevents that. Seven behaviors. Each one counters a specific failure mode in AI-assisted development. The reference implementation lives in <a href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a>; everything below cites the actual code.</p>
+<p>The method generalizes. CLIO is one harness. Any AI coding tool with structured tool calls, persistent storage, and a checkpoint mechanism can implement it. Adapt the implementation; keep the behaviors.</p>
 <h2 id="why-ai-collaboration-fails">Why AI Collaboration Fails</h2>
-<p>Most people experience AI collaboration as a series of disconnected conversations. You start fresh, explain your context, get partway through a task, and then, through session limits, context loss, or simple confusion, you have to start over.</p>
-<h3 id="common-failure-modes">Common Failure Modes</h3>
-<p><strong>1. The Fresh Start Problem</strong>
-- Every new session loses accumulated context
-- You spend 20% of each session re-explaining your project
-- The AI forgets decisions made in previous conversations
-- Progress resets to zero</p>
-<p><strong>2. The Partial Solution Trap</strong>
-- AI provides "basic implementations" that need expansion
-- "Good enough for now" becomes permanent technical debt
-- Edge cases left as "exercise for the reader"
-- You end up doing more work fixing partial solutions</p>
-<p><strong>3. The Symptom Patch Pattern</strong>
-- AI adds try-catch blocks instead of fixing underlying issues
-- Problems suppressed rather than solved
-- Code becomes increasingly fragile
-- Root causes remain hidden</p>
-<p><strong>4. The Scope Escape</strong>
-- AI identifies an issue: "This is a separate problem"
-- Issues deferred indefinitely
-- Technical debt accumulates
-- Problems discovered during work never get fixed</p>
-<p><strong>5. The Assumption Cascade</strong>
-- AI assumes how your code works without reading it
-- Solutions based on assumptions break in unexpected ways
-- Time wasted debugging incorrect implementations
-- Trust erodes, collaboration becomes adversarial</p>
-<h3 id="what-these-failures-have-in-common">What These Failures Have in Common</h3>
-<p>Every failure mode above stems from <strong>broken continuity</strong>:
-- Context breaks between sessions
-- Ownership breaks when issues are "out of scope"
-- Quality breaks when solutions are partial
-- Trust breaks when assumptions replace investigation</p>
-<p>The Unbroken Method addresses each of these by establishing protocols that maintain continuity across every dimension of collaboration.</p>
-<h3 id="traditional-ai-collaboration-broken">Traditional AI Collaboration (Broken)</h3>
-<div class="codehilite"><pre><span></span><code><span class="n">flowchart</span><span class="w"> </span><span class="n">LR</span>
-<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="err">🚀</span><span class="w"> </span><span class="n">Start</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="err">📝</span><span class="w"> </span><span class="n">Explain</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Context</span><span class="p">]</span>
-<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="err">💻</span><span class="w"> </span><span class="n">Work</span><span class="p">]</span>
-<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="err">🐛</span><span class="w"> </span><span class="n">Issue</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Found</span><span class="p">]</span>
-<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="err">🚫</span><span class="w"> </span><span class="n">Out</span><span class="w"> </span><span class="kr">of</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Scope</span><span class="p">]</span>
-<span class="w">    </span><span class="n">E</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F</span><span class="p">[</span><span class="err">📦</span><span class="w"> </span><span class="n">Partial</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Solution</span><span class="p">]</span>
-<span class="w">    </span><span class="n">F</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">G</span><span class="p">[</span><span class="err">⏹️</span><span class="w"> </span><span class="n">Session</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="kd">Ends</span><span class="p">]</span>
-<span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">H</span><span class="p">[</span><span class="err">💨</span><span class="w"> </span><span class="n">Context</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Lost</span><span class="p">]</span>
-<span class="w">    </span><span class="n">H</span><span class="w"> </span><span class="o">-</span><span class="p">.</span><span class="o">-&gt;|</span><span class="kr">Repeat</span><span class="o">|</span><span class="w"> </span><span class="n">A</span>
-
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="n">ff6b6b</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">F</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="n">ff6b6b</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="n">ff6b6b</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-</code></pre></div>
-
-<h3 id="the-unbroken-method-continuous">The Unbroken Method (Continuous)</h3>
-<div class="codehilite"><pre><span></span><code><span class="n">flowchart</span><span class="w"> </span><span class="n">LR</span>
-<span class="w">    </span><span class="n">A</span><span class="p">[</span><span class="err">🚀</span><span class="w"> </span><span class="n">Start</span><span class="p">]</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="err">📂</span><span class="w"> </span><span class="kr">Load</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Context</span><span class="p">]</span>
-<span class="w">    </span><span class="n">B</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C</span><span class="p">[</span><span class="err">🔍</span><span class="w"> </span><span class="n">Investigate</span><span class="p">]</span>
-<span class="w">    </span><span class="n">C</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">D</span><span class="p">[</span><span class="err">✋</span><span class="w"> </span><span class="kr">Checkpoint</span><span class="p">]</span>
-<span class="w">    </span><span class="n">D</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span><span class="p">[</span><span class="err">💻</span><span class="w"> </span><span class="n">Implement</span><span class="p">]</span>
-<span class="w">    </span><span class="n">E</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">F</span><span class="p">{</span><span class="err">🐛</span><span class="w"> </span><span class="n">Issue</span><span class="o">?</span><span class="p">}</span>
-<span class="w">    </span><span class="n">F</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Yes</span><span class="o">|</span><span class="w"> </span><span class="n">G</span><span class="p">[</span><span class="err">✅</span><span class="w"> </span><span class="n">Own</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Fix</span><span class="p">]</span>
-<span class="w">    </span><span class="n">G</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">E</span>
-<span class="w">    </span><span class="n">F</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">No</span><span class="o">|</span><span class="w"> </span><span class="n">H</span><span class="p">[</span><span class="err">📦</span><span class="w"> </span><span class="n">Complete</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Solution</span><span class="p">]</span>
-<span class="w">    </span><span class="n">H</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">I</span><span class="p">[</span><span class="err">✓</span><span class="w"> </span><span class="kr">Validate</span><span class="p">]</span>
-<span class="w">    </span><span class="n">I</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">J</span><span class="p">{</span><span class="kd">End?</span><span class="p">}</span>
-<span class="w">    </span><span class="n">J</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">No</span><span class="o">|</span><span class="w"> </span><span class="n">C</span>
-<span class="w">    </span><span class="n">J</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Yes</span><span class="o">|</span><span class="w"> </span><span class="n">K</span><span class="p">[</span><span class="err">📋</span><span class="w"> </span><span class="n">Handoff</span><span class="p">]</span>
-<span class="w">    </span><span class="n">K</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">L</span><span class="p">[</span><span class="err">💾</span><span class="w"> </span><span class="n">Context</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Preserved</span><span class="p">]</span>
-<span class="w">    </span><span class="n">L</span><span class="w"> </span><span class="o">-</span><span class="p">.</span><span class="o">-&gt;|</span><span class="n">Next</span><span class="w"> </span><span class="n">Session</span><span class="o">|</span><span class="w"> </span><span class="n">A</span>
-
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">51</span><span class="n">cf66</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">H</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">51</span><span class="n">cf66</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-<span class="w">    </span><span class="n">style</span><span class="w"> </span><span class="n">L</span><span class="w"> </span><span class="n">fill</span><span class="o">:</span><span class="err">#</span><span class="mi">51</span><span class="n">cf66</span><span class="p">,</span><span class="n">color</span><span class="o">:</span><span class="err">#</span><span class="n">fff</span>
-</code></pre></div>
-
-<hr />
-<h2 id="the-seven-pillars">The Seven Pillars</h2>
-<p>The Seven Pillars form the foundation of The Unbroken Method. Each addresses a specific failure mode and provides concrete guidance for maintaining productive collaboration.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TB</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P1</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C1</span><span class="p">[</span><span class="err">🔄</span><span class="w"> </span><span class="mf">1.</span><span class="w"> </span><span class="n">Continuous</span><span class="w"> </span><span class="n">Context</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Never</span><span class="w"> </span><span class="n">break</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">conversation</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P2</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C2</span><span class="p">[</span><span class="err">🎯</span><span class="w"> </span><span class="mf">2.</span><span class="w"> </span><span class="n">Complete</span><span class="w"> </span><span class="n">Ownership</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Find</span><span class="w"> </span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="n">fix</span><span class="w"> </span><span class="n">it</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P3</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C3</span><span class="p">[</span><span class="err">🔍</span><span class="w"> </span><span class="mf">3.</span><span class="w"> </span><span class="n">Investigation</span><span class="w"> </span><span class="kr">First</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Understand</span><span class="w"> </span><span class="kr">before</span><span class="w"> </span><span class="n">acting</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P4</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C4</span><span class="p">[</span><span class="err">🌱</span><span class="w"> </span><span class="mf">4.</span><span class="w"> </span><span class="n">Root</span><span class="w"> </span><span class="n">Cause</span><span class="w"> </span><span class="n">Focus</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Problems</span><span class="p">,</span><span class="w"> </span><span class="kr">not</span><span class="w"> </span><span class="n">symptoms</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P5</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C5</span><span class="p">[</span><span class="err">📦</span><span class="w"> </span><span class="mf">5.</span><span class="w"> </span><span class="n">Complete</span><span class="w"> </span><span class="n">Deliverables</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Finish</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">start</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P6</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C6</span><span class="p">[</span><span class="err">📋</span><span class="w"> </span><span class="mf">6.</span><span class="w"> </span><span class="n">Structured</span><span class="w"> </span><span class="n">Handoffs</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Perfect</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="nf">transfer</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="n">P7</span><span class="p">[</span><span class="s">&quot; &quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">C7</span><span class="p">[</span><span class="err">📚</span><span class="w"> </span><span class="mf">7.</span><span class="w"> </span><span class="n">Learning</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="kr">Failure</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Codified</span><span class="w"> </span><span class="n">anti</span><span class="o">-</span><span class="n">patterns</span><span class="p">]</span>
-<span class="w">    </span><span class="kd">end</span>
-
-<span class="w">    </span><span class="n">C1</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C2</span>
-<span class="w">    </span><span class="n">C2</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C3</span>
-<span class="w">    </span><span class="n">C3</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C4</span>
-<span class="w">    </span><span class="n">C4</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C5</span>
-<span class="w">    </span><span class="n">C5</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C6</span>
-<span class="w">    </span><span class="n">C6</span><span class="w"> </span><span class="o">--&gt;</span><span class="w"> </span><span class="n">C7</span>
-<span class="w">    </span><span class="n">C7</span><span class="w"> </span><span class="o">-</span><span class="p">.</span><span class="o">-&gt;|</span><span class="n">Improve</span><span class="o">|</span><span class="w"> </span><span class="n">C1</span>
-</code></pre></div>
-
-<h3 id="pillar-1-continuous-context">Pillar 1: Continuous Context</h3>
-<p><strong>Principle:</strong> Never break the conversation. Context is your most valuable asset.</p>
-<p><strong>The Problem It Solves:</strong>
-Traditional AI sessions end when you close the chat or hit token limits. Each new session starts from zero, forcing you to re-explain everything.</p>
-<p><strong>The Solution:</strong>
-Implement programmatic collaboration checkpoints that preserve context within sessions and structured handoffs that transfer context between sessions.</p>
-<p><strong>How It Works:</strong></p>
-<p>Within a session:
-- Use a collaboration tool (script, macro, or protocol) that creates checkpoints
-- Share findings, propose approaches, and get confirmation before major work
-- The AI stays in the same context rather than you responding and breaking flow</p>
-<p>Between sessions:
-- Create comprehensive handoff documents before ending
-- Include everything the next session needs: completed work, pending tasks, discoveries, lessons learned
-- The handoff document IS the context. It should be standalone and complete</p>
-<p><strong>The Key Insight:</strong></p>
-<div class="mermaid">
-flowchart LR
-    T1[Session] --> T2[Context Lost] --> T3[New Session] --> T4[Re-explain] --> T5[Work]
-    U1[Session] --> U2[Checkpoint] --> U3[Continue] --> U4[Checkpoint] --> U5[Handoff] --> U6[New Session] --> U7[Context Intact] --> U8[Work]
-    
-    subgraph Traditional
-        T1 & T2 & T3 & T4 & T5
-    end
-    
-    subgraph Unbroken
-        U1 & U2 & U3 & U4 & U5 & U6 & U7 & U8
-    end
-    
-    style T2 fill:#ff6b6b,color:#fff
-    style T4 fill:#ff6b6b,color:#fff
-    style U7 fill:#6bcf7f,color:#000
-</div>
-
-<hr />
-<h3 id="pillar-2-complete-ownership">Pillar 2: Complete Ownership</h3>
-<p><strong>Principle:</strong> If you find it, you fix it. There is no "out of scope."</p>
-<p><strong>The Problem It Solves:</strong>
-AI assistants often identify issues and then punt them: "This appears to be a separate issue." The issue never gets fixed because no one owns it.</p>
-<p><strong>The Solution:</strong>
-Establish absolute ownership of everything discovered during a work session. The current session owns all discovered issues.</p>
-<p><strong>What This Means in Practice:</strong></p>
-<p>❌ <strong>Not Allowed:</strong>
-- "This is a separate issue for another session"
-- "This is out of scope for the current task"
-- "Should I investigate this further?" (just do it)
-- "Would you like me to fix this?" (just fix it)</p>
-<p>✅ <strong>Required:</strong>
-- "I found issue X while working. I will fix it by doing Y."
-- "Discovered blocker Z. Proposing solution A, proceeding with implementation."
-- Work continues until ALL discovered issues are resolved</p>
-<p><strong>The Ownership Chain:</strong></p>
-<div class="mermaid">
-flowchart LR
-    A[Task Assigned] --> B[Work Begins]
-    B --> C[Issue Discovered]
-    C --> D[Issue OWNED]
-    D --> E[Issue Fixed]
-    E --> F[Work Continues]
-    
-    C -.->|NEVER| G[Out of scope]
-    C -.->|NEVER| H[Separate issue]
-    
-    style G fill:#ff6b6b,color:#fff
-   style H fill:#ff6b6b,color:#fff
-</div>
-<hr />
-<h3 id="pillar-3-investigation-first">Pillar 3: Investigation First</h3>
-<p><strong>Principle:</strong> Understand before acting. Never assume when you can verify.</p>
-<p><strong>The Problem It Solves:</strong>
-AI assistants often jump to implementation based on assumptions about how things work. These assumptions are frequently wrong, leading to wasted time and broken solutions.</p>
-<p><strong>The Solution:</strong>
-Mandate investigation before implementation. Read, search, test, and verify before writing.</p>
-<p><strong>The Investigation Protocol:</strong></p>
-<ol>
-<li><strong>Read</strong> the relevant existing code/content/documents</li>
-<li><strong>Search</strong> for patterns and precedents in the project</li>
-<li><strong>Test</strong> current behavior to confirm the issue</li>
-<li><strong>Share</strong> findings via collaboration checkpoint</li>
-<li><strong>Propose</strong> approach and wait for confirmation</li>
-<li><strong>Implement</strong> only after investigation is complete</li>
-</ol>
-<p><strong>Real Example from SAM Development:</strong></p>
-<blockquote>
-<p><strong>User Report:</strong> "The model picker shows 'Downloads' as an option"</p>
-<p><strong>Wrong Approach (Assumption):</strong>
-"I'll add a filter to hide 'Downloads' in the UI picker code."</p>
-<p><strong>Right Approach (Investigation):</strong>
-1. Read LocalModelManager.swift to understand model detection
-2. Search for where Downloads directory is created
-3. Discover: Downloads folder is INSIDE the models directory
-4. Root cause: Downloads are detected AS models because of location
-5. Solution: Move staging directory OUTSIDE models directory
-6. Result: Downloads never appear because they're never detected</p>
-</blockquote>
-<p>The investigative approach found a permanent architectural solution. The assumption approach would have created a fragile UI hack.</p>
-<p><strong>Universal Application:</strong></p>
+<p>Five patterns show up across every AI-assisted project that collapses under its own weight. Naming them is the first defense.</p>
+<p><strong>The Fresh Start Problem.</strong> Every session opens with amnesia. The model re-reads files, re-derives conclusions, re-explains what it explained yesterday. You context-switch away while it does this. Half the wall clock is rebuilding state, not making progress.</p>
+<p><strong>The Partial Solution Trap.</strong> The model delivers code that handles the obvious case. Edge cases crash. You report a bug, get a patch, find the next bug. The original “done” was never done.</p>
+<p><strong>The Symptom Patch Pattern.</strong> Errors get wrapped in <code>try/catch</code> instead of fixed. Broken UI gets hidden behind a loading spinner. The surface looks fixed. The underlying failure compounds.</p>
+<p><strong>The Scope Escape.</strong> “This is a separate problem” is the model’s favorite exit. The related bug stays unfixed. The architecture drifts toward inconsistency. You have to argue for every related improvement.</p>
+<p><strong>The Assumption Cascade.</strong> The model writes the fix before reading the source. The first assumption is wrong. The patches built on top of the wrong assumption make the situation worse. You spend the session correcting basic premises.</p>
+<h2 id="the-seven-behaviors">The Seven Behaviors</h2>
+<h3 id="continuous-context">1. Continuous Context</h3>
+<p>AI sessions are ephemeral. You engineer continuity, or it does not exist.</p>
 <ul>
-<li><strong>Developers:</strong> Read code before modifying, trace execution paths</li>
-<li><strong>Writers:</strong> Review existing content before proposing changes</li>
-<li><strong>Researchers:</strong> Survey literature before forming hypotheses</li>
-<li><strong>All:</strong> Verify assumptions with evidence</li>
+<li><strong>In-session:</strong> stop the model at every major decision point. Read its findings. Approve before it proceeds. Unguided execution through significant changes is how scope drift and assumption cascades happen. CLIO implements this with the <a href="../developer/api-reference.md"><code>interact</code></a> tool: free to call, blocking until you answer, mandatory at every checkpoint.</li>
+<li><strong>Cross-session:</strong> persist discoveries, solutions, and patterns so the next session inherits them instead of re-deriving them. CLIO uses <code>memory_operations</code> for LTM (entries in <code>.clio/ltm.json</code> with trust tiers) and session memory (key-value in <code>.clio/memory/</code>).</li>
 </ul>
-<hr />
-<h3 id="pillar-4-root-cause-focus">Pillar 4: Root Cause Focus</h3>
-<p><strong>Principle:</strong> Solve problems, not symptoms. Every fix should address the underlying cause.</p>
-<p><strong>The Problem It Solves:</strong>
-Quick fixes that address symptoms create fragile systems. The same problems resurface in different forms.</p>
-<p><strong>The Solution:</strong>
-Require root cause analysis for every fix. Ask "why?" until you reach the fundamental issue.</p>
-<p><strong>Symptom vs. Root Cause Examples:</strong></p>
+<p>A session with the right context is as effective as one with full history. The Fresh Start Problem loses most of its force here.</p>
+<h3 id="complete-ownership">2. Complete Ownership</h3>
+<p>The model finds a bug in its working area. It fixes the bug. Not later. Not in a different session. Now.</p>
 <table>
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 42%" />
+</colgroup>
 <thead>
 <tr>
-<th>Symptom</th>
-<th>Bad Fix</th>
-<th>Root Cause</th>
-<th>Good Fix</th>
+<th>Situation</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Error message appears</td>
-<td>Add try-catch to suppress</td>
-<td>Invalid input not validated</td>
-<td>Add input validation</td>
+<td>Bug in the same system, same working area</td>
+<td>Fix it. No asking.</td>
 </tr>
 <tr>
-<td>UI flickers during update</td>
-<td>Add 100ms delay</td>
-<td>Multiple refresh calls</td>
-<td>Remove duplicate calls</td>
+<td>Related issue in the same system, quick fix</td>
+<td>Fix it.</td>
 </tr>
 <tr>
-<td>Feature doesn't work</td>
-<td>Add special case handling</td>
-<td>Architecture doesn't support feature</td>
-<td>Refactor architecture</td>
+<td>Different system entirely</td>
+<td>Report it. Ask for priority.</td>
 </tr>
 <tr>
-<td>Content inconsistency</td>
-<td>Fix this instance</td>
-<td>No style guide</td>
-<td>Create and apply style guide</td>
+<td>New feature outside the stated goal</td>
+<td>Flag it. Confirm before building.</td>
+</tr>
+<tr>
+<td>Architectural change</td>
+<td>Flag it. Confirm before building.</td>
 </tr>
 </tbody>
 </table>
-<p><strong>The Five Whys Technique:</strong></p>
-<div class="mermaid">
-flowchart TD
-    A[Problem: Messages appear twice in the chat] --> B[Why? ChatWidget is creating messages<br/>AND MessageBus is creating messages]
-    B --> C[Why? ChatWidget was designed to create<br/>messages from streaming chunks]
-    C --> D[Why? Original architecture did not<br/>have MessageBus]
-    D --> E[Why? Streaming was added before<br/>centralized message management]
-    E --> F[Root Cause: Multiple sources of truth<br/>for message creation]
-    F --> G[Solution: Make MessageBus the single<br/>source of truth, ChatWidget read-only]
-    
-    style A fill:#ff6b6b,color:#fff
-    style F fill:#ffd93d,color:#000
-    style G fill:#6bcf7f,color:#000
-</div>
-<hr />
-<h3 id="pillar-5-complete-deliverables">Pillar 5: Complete Deliverables</h3>
-<p><strong>Principle:</strong> Finish what you start. No partial solutions that need expansion later.</p>
-<p><strong>The Problem It Solves:</strong>
-"I'll implement a basic version first" creates technical debt that accumulates forever. Partial implementations become permanent because "it works." The MVP mindset, while valuable for market validation, becomes counterproductive in AI collaboration where "minimum viable" outputs rarely get improved.</p>
-<p><strong>The Solution:</strong>
-Demand complete implementations within their defined scope. Handle edge cases, add error handling, follow patterns.</p>
-<p><strong>What "Complete" Means:</strong></p>
-<p>✅ <strong>Complete Within Scope:</strong>
-- All specified requirements working
-- Edge cases for THIS feature handled
-- Error handling in place
-- Follows existing project patterns
-- Tested and verified</p>
-<p>❌ <strong>Not Acceptable:</strong>
-- "Basic implementation, expand later"
-- "Handles the common case"
-- "Good enough for now"
-- Hardcoded values when dynamic values are available
-- Missing error handling</p>
-<p><strong>The Completeness Checklist:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="err">□</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nx">requirements</span><span class="w"> </span><span class="nx">addressed</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">Edge</span><span class="w"> </span><span class="nx">cases</span><span class="w"> </span><span class="nx">identified</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">handled</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">Error</span><span class="w"> </span><span class="nx">handling</span><span class="w"> </span><span class="nx">comprehensive</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">Follows</span><span class="w"> </span><span class="nx">existing</span><span class="w"> </span><span class="nx">patterns</span><span class="o">/</span><span class="nx">style</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">Tested</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">realistic</span><span class="w"> </span><span class="nx">data</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">Documentation</span><span class="w"> </span><span class="nx">updated</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">needed</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">No</span><span class="w"> </span><span class="nx">TODO</span><span class="w"> </span><span class="nx">comments</span><span class="w"> </span><span class="nx">added</span>
-<span class="err">□</span><span class="w"> </span><span class="nx">No</span><span class="w"> </span><span class="s">&quot;temporary&quot;</span><span class="w"> </span><span class="nx">code</span>
-</code></pre></div>
-
-<hr />
-<h3 id="pillar-6-structured-handoffs">Pillar 6: Structured Handoffs</h3>
-<p><strong>Principle:</strong> Perfect context transfer. The next session should start as if it never stopped.</p>
-<p><strong>The Problem It Solves:</strong>
-Session transitions lose critical context. The next session makes different assumptions, contradicts previous decisions, or duplicates completed work.</p>
-<p><strong>The Solution:</strong>
-Create structured handoff documents that capture complete context for continuation.</p>
-<p><strong>The Handoff Protocol:</strong></p>
-<p>When a session must end (token limits, work phase complete, user request), create a handoff directory with structured documents that capture complete context for continuation.</p>
-<p><strong>CRITICAL PREREQUISITE: Documentation MUST be current</strong></p>
-<p>Before creating handoff documents, ensure ALL technical documentation is up-to-date:</p>
-<ol>
-<li><strong>Subsystem Documentation</strong>: If you modified a component, update its subsystem doc. Include architecture changes, new APIs, usage examples.</li>
-<li><strong>Flow Documentation</strong>: If you changed data flows or processes, update flow diagrams. Use Mermaid sequenceDiagram or flowchart.</li>
-<li><strong>Specifications</strong>: If you completed a feature from a spec, mark it complete. Update spec if implementation differs from plan.</li>
-</ol>
-<p><strong>Rule:</strong> Documentation is NOT optional. Code without docs is incomplete work.</p>
-<p><strong>Then create the handoff documents:</strong></p>
-<ol>
-<li><strong>CONTINUATION_PROMPT.md</strong> [MANDATORY]</li>
-<li>Complete standalone context for the next session</li>
-<li>What was accomplished (detailed summary)</li>
-<li>All commits/changes made with descriptions</li>
-<li>Files modified and why</li>
-<li><strong>Documentation updated (list what was updated)</strong></li>
-<li>Testing performed and results</li>
-<li>Known issues remaining</li>
-<li>Build/project status</li>
-<li>Lessons learned</li>
-<li>Clear starting instructions</li>
-<li>
-<p>NO external references. This document IS the context</p>
-</li>
-<li>
-<p><strong>AGENT_PLAN.md</strong> [MANDATORY]</p>
-</li>
-<li>Remaining priorities (detailed breakdown)</li>
-<li>Investigation steps for each priority</li>
-<li>Success criteria for each task</li>
-<li>Time estimates if applicable</li>
-<li>
-<p>Dependencies between tasks</p>
-</li>
-<li>
-<p><strong>NOTES.md</strong> [OPTIONAL]</p>
-</li>
-<li>Technical notes, session history, and observations</li>
-<li>Decisions made and rationale</li>
-<li>Approaches tried and results</li>
-<li>What worked and what didn't</li>
-</ol>
-<p><strong>The Handoff Test:</strong></p>
-<blockquote>
-<p>Can someone start a completely new session with only the CONTINUATION_PROMPT.md and immediately continue productive work?</p>
-</blockquote>
-<p>If yes, the handoff is complete. If no, add more context.</p>
-<hr />
-<h3 id="pillar-7-learning-from-failure">Pillar 7: Learning from Failure</h3>
-<p><strong>Principle:</strong> Codify mistakes into anti-patterns. Never make the same mistake twice.</p>
-<p><strong>The Problem It Solves:</strong>
-Without documented anti-patterns, the same mistakes recur. Each session might repeat errors that previous sessions learned to avoid.</p>
-<p><strong>The Solution:</strong>
-Maintain an evolving catalog of anti-patterns with concrete examples of what NOT to do.</p>
-<p><strong>Anti-Pattern Structure:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="gu">### Anti-Pattern: [Name]</span>
-
-<span class="gs">**What It Looks Like:**</span>
-[Concrete example of the bad pattern]
-
-<span class="gs">**Why It&#39;s Wrong:**</span>
-[Explanation of the problem it causes]
-
-<span class="gs">**What To Do Instead:**</span>
-[Correct approach with example]
-
-<span class="gs">**Real Example:**</span>
-[Actual instance from project history]
-</code></pre></div>
-
-<p><strong>Building Your Anti-Pattern Catalog:</strong></p>
-<ol>
-<li><strong>Document failures immediately</strong> when they occur</li>
-<li><strong>Categorize</strong> by type (architecture, communication, process)</li>
-<li><strong>Include real examples</strong> from your project</li>
-<li><strong>Review regularly</strong> and add to instructions</li>
-<li><strong>Share</strong> anti-patterns with all collaborators</li>
-</ol>
-<p><strong>The Evolution Cycle:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Failure</span><span class="w"> </span><span class="nv">Occurs</span><span class="w"> </span>→<span class="w"> </span><span class="nv">Document</span><span class="w"> </span><span class="nv">Anti</span><span class="o">-</span><span class="nv">Pattern</span><span class="w"> </span>→<span class="w"> </span><span class="nv">Add</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">Catalog</span><span class="w"> </span>→<span class="w"> </span><span class="k">Include</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Instructions</span><span class="w"> </span>→<span class="w"> </span><span class="nv">Prevent</span><span class="w"> </span><span class="nv">Recurrence</span>
-</code></pre></div>
-
-<hr />
+<p>The rule is consistent: bugs and blockers are owned. Other systems are reported. Architecture and new features are confirmed.</p>
+<h3 id="investigation-first">3. Investigation First</h3>
+<p>Read the code. Read the docs. Trace the actual behavior. Then change something.</p>
+<ul>
+<li>Never guess at API signatures, parameter names, or default values.</li>
+<li>Never assume the framework handles edge cases.</li>
+<li>Never write a fix without knowing the root cause.</li>
+</ul>
+<p>CLIO’s source-of-truth pattern: read <a href="https://github.com/SyntheticAutonomicMind/SAM/blob/main/Sources/UserInterface/Help/HelpView.swift"><code>HelpView.swift</code></a> before documenting any keyboard shortcut. Read <a href="https://github.com/SyntheticAutonomicMind/SAM/tree/main/Sources/ConversationEngine"><code>ConversationEngine</code></a> before describing YaRN profiles. If you cannot point to the file the fact came from, the fact is an assumption.</p>
+<p><strong>Stop investigating when:</strong> you understand the problem, understand the impact, and have an action plan. If investigation is running longer than implementation would, start building and use iteration to verify assumptions.</p>
+<h3 id="root-cause-focus">4. Root Cause Focus</h3>
+<p>Fix the cause, not the symptom. Verify the fix prevents recurrence under similar conditions. If it does not, you have not found the root.</p>
+<p>Five Whys is enough tooling for most cases. Ask why. Ask why the answer is true. Ask again. By the fifth iteration, the cause usually surfaces.</p>
+<p>The CLIO codebase keeps a running list of root-cause fixes in <code>.clio/ltm.json</code> under the <code>solution</code> entry type. Each one stores the <strong>problem</strong> (verbatim error or observable behavior), the <strong>solution</strong> (what changed), and the <strong>verified outcome</strong> (what proves the fix worked). Symptom patches get re-opened; root-cause fixes get trusted.</p>
+<h3 id="complete-deliverables">5. Complete Deliverables</h3>
+<p>No <code>TODO</code> placeholders. No “we will add this later.” No draft sections committed as final. If the work is started, it is finished.</p>
+<ul>
+<li>Half-implementations compound into unmaintainable code.</li>
+<li>A documented limitation with a clear path forward is fine.</li>
+<li>An undocumented gap or a silently broken feature is a bug.</li>
+</ul>
+<p>The check before you commit: would you sign off on this as “done” if you were reviewing someone else’s pull request?</p>
+<h3 id="structured-handoffs">6. Structured Handoffs</h3>
+<p>When a session ends, the next session must start cold and resume effectively. Handoffs are structured, not improvised.</p>
+<p>Minimum content: - What was accomplished - What remains - Key decisions and their rationale - Discoveries worth carrying forward - Known issues to avoid</p>
+<p>CLIO’s directory convention for handoffs is <code>ai-assisted/YYYYMMDD/HHMM/</code> with a <code>CONTINUATION_PROMPT.md</code>, an <code>AGENT_PLAN.md</code>, and optional <code>CHANGELOG.md</code> and <code>NOTES.md</code>. The test is the same as the one above: can the next session reach the same conclusions from only the handoff?</p>
+<h3 id="learning-from-failure">7. Learning from Failure</h3>
+<p>Document every mistake so the next session does not repeat it. Document every successful pattern so the next session can apply it. The discipline is what matters. A failure that is not recorded will recur. A pattern that is not recorded will be re-derived from scratch.</p>
+<p>CLIO’s LTM supports this directly: <code>add_solution</code> for problems with verified fixes, <code>add_pattern</code> for working approaches with confidence levels, <code>add_discovery</code> for facts about the codebase. Each entry tracks its trust tier.</p>
+<p><strong>Trust discipline.</strong> A single-source claim is <code>[UNVERIFIED]</code>. To promote it, call <code>add_corroboration</code> with <code>search_text</code> plus <code>source_agent</code> and <code>source_session</code> identifying the independent observer. When an LTM entry reaches &gt;= 2 corroborations from distinct <code>agent:session</code> pairs, it auto-promotes to <code>[TRUSTED]</code>.</p>
+<h2 id="anti-patterns">Anti-Patterns</h2>
+<p>Patterns that violate the method. Each one feels reasonable in the moment. Each one creates problems.</p>
+<h3 id="skipping-investigation">Skipping Investigation</h3>
+<p>The model writes code immediately after a brief file read. It assumes the surrounding code does what its name suggests. It usually does not. The fix built on that assumption makes the next bug worse. Read the call sites. Trace the data flow. Confirm before changing.</p>
+<h3 id="symptom-patching">Symptom Patching</h3>
+<p><code>try { ... } catch (error) { console.error(error); }</code> around the failing call. The error still happens. It just becomes invisible. The pattern recurs across the codebase because nothing indicates it is broken. Fix the cause. If the error is truly unrecoverable, surface it with actionable context so the user can act.</p>
+<h3 id="partial-implementations">Partial Implementations</h3>
+<p>A feature built for the happy path. Edge cases noted in the implementation but not handled. Every partial implementation becomes a future bug report. Finish the implementation, or remove the feature. No half-built features in the codebase.</p>
+<h3 id="constant-permission-seeking">Constant Permission-Seeking</h3>
+<p>The model asks permission for every step after direction is already clear. This burns your attention on low-stakes decisions and prevents you from seeing the actual decisions that need review. Pause for direction at decision points. Execute autonomously within approved scope. Report what was done.</p>
+<h3 id="padding-bad-news">Padding Bad News</h3>
+<p>“Great work on X, but there are some issues with Y…” The compliment dilutes the actual problem and reads as performative. State the issue directly. Acknowledge good work specifically when it is earned, then move on.</p>
+<h3 id="leaving-draft-sections">Leaving Draft Sections</h3>
+<p>Documentation or code committed with <code>// TODO: explain this properly</code> and an open issue that never closes. TODOs are technical debt that compounds. Complete the section or remove it. If something genuinely needs future work, create a tracked issue with a clear owner and link it.</p>
+<h3 id="describing-instead-of-doing">Describing Instead of Doing</h3>
+<p>“I will create the file now” instead of creating the file. Description is not action. You are waiting for results, not narration. If a tool exists for the action, use it. Tool failures provide information: read the error, adjust the approach, try again. Iterate until the tool succeeds or the failure is clearly unrecoverable.</p>
 <h2 id="implementation-guide">Implementation Guide</h2>
-<p>How you implement The Unbroken Method depends on your tools. Modern AI agents have built-in support for the key mechanisms (collaboration checkpoints, file operations, session persistence). If you're using a tool without native support, you can implement the same patterns with scripts and prompts.</p>
-<h3 id="path-1-with-clio">Path 1: With CLIO (Automated)</h3>
-<p><a href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> implements The Unbroken Method natively. The methodology is embedded in its system prompt, and key pillars are enforced through built-in tools rather than prompt instructions alone.</p>
-<p><strong>New project from scratch:</strong></p>
-<ol>
-<li><code>/design</code> - The Architect guides you through creating a Product Requirements Document (<code>.clio/PRD.md</code>)</li>
-<li><code>/init</code> - CLIO analyzes your codebase and generates <code>.clio/instructions.md</code> (methodology) and <code>AGENTS.md</code> (project reference), incorporating the PRD if present</li>
-<li>Start working - checkpoints, handoffs, and anti-pattern tracking are built in</li>
-</ol>
-<p><strong>Existing project:</strong></p>
-<ol>
-<li><code>/init</code> in your project directory - CLIO reads your code and creates instructions tailored to your codebase</li>
-<li>Edit <code>.clio/instructions.md</code> and <code>AGENTS.md</code> as your project evolves</li>
-</ol>
-<p>CLIO automates each pillar through dedicated tools: session persistence and context compression for continuous context, semantic search and code intelligence for investigation, todo operations for tracking deliverables, handoff directory protocols for structured transitions, long-term memory (LTM) for learning from failure across all sessions, and multi-agent coordination for parallel work across sub-agents and remote systems. See <a href="#native-automation">How CLIO Automates the Pillars</a> for the full breakdown.</p>
-<p>The <code>user_collaboration</code> tool implements checkpoint discipline at the tool level - the AI calls it to pause execution and present its plan, and cannot proceed without human input.</p>
-<h3 id="path-2-with-other-agents">Path 2: With Other AI Agents</h3>
-<p>Most AI coding agents support custom instructions and have their own collaboration mechanisms:</p>
+<p>The behaviors describe what to do. To do them you need a harness that supports them. This section shows how each behavior maps to a real implementation. The CLIO references are one path; the general guidance covers other common harnesses.</p>
+<h3 id="establishing-checkpoints">Establishing Checkpoints</h3>
+<p>The model needs a way to pause and request input before proceeding with significant decisions.</p>
+<p><strong>CLIO:</strong> <code>interact</code> is a JSON tool call with <code>operation: "request_input"</code>. It is free (does not consume AI Credits), synchronous (workflow continues in the same API call), and blocking (pauses until response). Use it for all collaboration rather than sending summary responses, which cost a full API turn. Format: <code>{"name":"interact","parameters":{"operation":"request_input","message":"..."}}</code>.</p>
 <table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
 <thead>
 <tr>
-<th>Agent</th>
-<th>Instructions File</th>
-<th>Built-in Collaboration</th>
+<th>Harness</th>
+<th>Checkpoint mechanism</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Claude Code</strong></td>
-<td><code>CLAUDE.md</code></td>
-<td><code>AskUserQuestion</code> tool</td>
+<td>Claude Code</td>
+<td><code>AskUserQuestion</code> tool, or directional pauses</td>
 </tr>
 <tr>
-<td><strong>GitHub Copilot</strong></td>
-<td><code>.github/copilot-instructions.md</code></td>
-<td>Chat-based</td>
+<td>Cursor</td>
+<td>Inline chat prompts, chat-UI decisions</td>
 </tr>
 <tr>
-<td><strong>Cursor</strong></td>
+<td>Aider</td>
+<td><code>/ask</code> command for mid-session questions</td>
+</tr>
+<tr>
+<td>Cline / Continue</td>
+<td>Inline prompts at decision points</td>
+</tr>
+<tr>
+<td>Custom harness</td>
+<td>Any tool that surfaces a message and waits for input</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Required checkpoints:</strong> - <strong>Session start:</strong> multi-step work begins, plan presented - <strong>After investigation:</strong> before any code or config changes - <strong>After implementation:</strong> before committing - <strong>Status update:</strong> at significant milestones</p>
+<p>Reading files, running tests, and following approved plans do not require a checkpoint.</p>
+<h3 id="writing-your-instructions-file">Writing Your Instructions File</h3>
+<p>The model needs an explicit operational contract. Without one, it defaults to generic helpfulness, which violates most pillars.</p>
+<p><strong>CLIO:</strong> <code>.clio/instructions.md</code> contains core identity, authority framework, tool-first operation, licensing, smart inference, completion criteria, ownership model, multi-step task management, tool call discipline, user collaboration, response quality, and response formatting.</p>
+<table>
+<thead>
+<tr>
+<th>Harness</th>
+<th>Instructions file</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Claude Code</td>
+<td><code>CLAUDE.md</code> at project root</td>
+</tr>
+<tr>
+<td>Cursor</td>
 <td><code>.cursorrules</code></td>
-<td>Chat-based</td>
 </tr>
 <tr>
-<td><strong>Windsurf</strong></td>
-<td><code>.windsurfrules</code></td>
-<td>Chat-based</td>
+<td>Aider</td>
+<td><code>CONVENTIONS.md</code> referenced via <code>--read</code></td>
 </tr>
 <tr>
-<td><strong>Claude Projects</strong></td>
-<td>Project instructions (web UI)</td>
-<td>Chat-based</td>
+<td>Cline</td>
+<td><code>.clinerules</code></td>
+</tr>
+<tr>
+<td>Custom harness</td>
+<td>Any persistent file loaded on session start</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Setup:</strong></p>
-<ol>
-<li>Copy the <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> or <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> into your agent's instructions file</li>
-<li>Create an <code>AGENTS.md</code> in your project root with your architecture, conventions, and testing commands</li>
-<li>Create <a href="../SAM/developer/templates/handoff-templates.html">handoff documents</a> when ending sessions</li>
-<li>Maintain an <a href="../SAM/developer/templates/anti-pattern-template.html">anti-pattern catalog</a> as you discover failure modes</li>
-</ol>
-<p>For agents with built-in collaboration tools (like Claude Code's <code>AskUserQuestion</code>), the checkpoint discipline works naturally. For chat-based agents, the prompt instructions enforce the checkpoint pattern through the conversation itself.</p>
-<h3 id="path-3-custom-scripts">Path 3: Custom Implementation</h3>
-<p>If your environment doesn't have built-in collaboration tools, you can build the checkpoint mechanism with scripts. See the <a href="../SAM/developer/templates/collaboration-tool.html">Collaboration Tool Scripts</a> page for bash, Python, and Swift implementations that create the pause-and-validate pattern.</p>
-<hr />
-<h2 id="implementation-architecture">Implementation Architecture</h2>
-<p>The Unbroken Method is a methodology. <code>AGENTS.md</code> is a project reference file. They solve different problems, and understanding the distinction is key to implementing the method effectively.</p>
-<h3 id="methodology-vs-project-scope">Methodology vs. Project Scope</h3>
-<p>The Unbroken Method defines <em>how</em> humans and AI collaborate. It needs to live somewhere your AI assistant reads. But it should be separate from your project's technical reference.</p>
-<p>In practice, this means two files with distinct purposes:</p>
-<table>
-<thead>
-<tr>
-<th>File</th>
-<th>Purpose</th>
-<th>Contains</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Instructions File</strong></td>
-<td>How to work (methodology)</td>
-<td>The Seven Pillars, checkpoint discipline, handoff protocols, anti-patterns, collaboration requirements</td>
-</tr>
-<tr>
-<td><strong>Project Reference</strong></td>
-<td>What to build (project scope)</td>
-<td>Architecture, code style, directory structure, testing commands, module naming, commit format</td>
-</tr>
-</tbody>
-</table>
-<p>The instructions file teaches the AI <em>how to collaborate</em>. The project reference tells it <em>what the project looks like</em>. Both are necessary. Neither replaces the other.</p>
-<h3 id="how-different-tools-implement-this">How Different Tools Implement This</h3>
-<p>Every AI coding assistant has its own way of loading custom instructions. The Unbroken Method adapts to all of them:</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Instructions File (Methodology)</th>
-<th>Project Reference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>CLIO</strong></td>
-<td><code>.clio/instructions.md</code></td>
-<td><code>AGENTS.md</code></td>
-</tr>
-<tr>
-<td><strong>GitHub Copilot</strong></td>
-<td><code>.github/copilot-instructions.md</code></td>
-<td><code>AGENTS.md</code></td>
-</tr>
-<tr>
-<td><strong>Cursor</strong></td>
-<td><code>.cursorrules</code></td>
-<td><code>AGENTS.md</code></td>
-</tr>
-<tr>
-<td><strong>Claude Projects</strong></td>
-<td>Project instructions (web UI)</td>
-<td><code>AGENTS.md</code></td>
-</tr>
-<tr>
-<td><strong>Windsurf</strong></td>
-<td><code>.windsurfrules</code></td>
-<td><code>AGENTS.md</code></td>
-</tr>
-<tr>
-<td><strong>Any tool</strong></td>
-<td>Custom instructions / system prompt</td>
-<td>Project README or reference doc</td>
-</tr>
-</tbody>
-</table>
-<p>Notice the pattern: <code>AGENTS.md</code> is the <strong>project reference</strong> - it describes your codebase, architecture, and conventions. It's the same file regardless of which AI tool you use. The <strong>instructions file</strong> is where The Unbroken Method lives, and its location varies by tool.</p>
-<h3 id="why-not-just-agents-md">The Difference Between AGENTS.md and the Method</h3>
-<p><code>AGENTS.md</code> has become a popular convention for giving AI assistants project context. It solves an important problem - but a different one. <code>AGENTS.md</code> tells an AI what your project looks like. The Unbroken Method tells it how to <em>work with you</em>.</p>
-<p>Without methodology, the AI knows your directory structure but still gives partial solutions, knows your coding style but still skips investigation, knows your test commands but doesn't run them proactively.</p>
-<p>With both:</p>
-<ul>
-<li><code>AGENTS.md</code> gives the AI project knowledge (what to build)</li>
-<li>The instructions file gives it collaboration discipline (how to build it)</li>
-<li>Together, they produce consistent, high-quality results session after session</li>
-</ul>
-<h3 id="a-practical-example">A Practical Example</h3>
-<p>Here's what the separation looks like for a real project:</p>
-<div class="codehilite"><pre><span></span><code>your-project/
-├── .clio/instructions.md     # OR .github/copilot-instructions.md OR .cursorrules
-│   └── Contains:
-│       - The Seven Pillars
-│       - Checkpoint discipline
-│       - Handoff protocol
-│       - Anti-pattern catalog
-│       - Quality standards
-│
-├── AGENTS.md
-│   └── Contains:
-│       - Project overview &amp; architecture
-│       - Directory structure
-│       - Code style &amp; conventions
-│       - Testing commands
-│       - Build process
-│       - Module naming
-│
-└── src/...
-</code></pre></div>
-
-<p>The instructions file is portable across projects - you can use the same methodology everywhere. <code>AGENTS.md</code> is project-specific - it changes with every codebase. This separation means you write the methodology once and adapt only the project reference.</p>
-<h3 id="native-automation">How CLIO Automates the Pillars</h3>
-<p>CLIO implements several pillars directly in its tooling:</p>
-<table>
-<thead>
-<tr>
-<th>Pillar</th>
-<th>Manual Implementation</th>
-<th>CLIO Automation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1. Continuous Context</td>
-<td>Copy-paste context between sessions</td>
-<td>Session persistence, context compression, thread summarization</td>
-</tr>
-<tr>
-<td>2. Complete Ownership</td>
-<td>Discipline in instructions</td>
-<td>Enforced in system prompt + instructions</td>
-</tr>
-<tr>
-<td>3. Investigation First</td>
-<td>Tell AI to read code first</td>
-<td>File operations, semantic search, code intelligence tools</td>
-</tr>
-<tr>
-<td>4. Root Cause Focus</td>
-<td>Discipline in instructions</td>
-<td>Enforced in system prompt + instructions</td>
-</tr>
-<tr>
-<td>5. Complete Deliverables</td>
-<td>Tell AI to finish work</td>
-<td>Todo operations with progress tracking, mandatory completion</td>
-</tr>
-<tr>
-<td>6. Structured Handoffs</td>
-<td>Manual document creation</td>
-<td>Handoff directory protocol with templates</td>
-</tr>
-<tr>
-<td>7. Learning from Failure</td>
-<td>Manual anti-pattern catalog</td>
-<td>Long-term memory (LTM) with discoveries, solutions, and patterns that persist across all sessions</td>
-</tr>
-</tbody>
-</table>
-<p>The <code>user_collaboration</code> tool implements checkpoint discipline natively - the AI pauses, presents its plan, and waits for human approval before proceeding. This isn't just a prompt instruction; it's a tool the AI calls that actually stops execution.</p>
-<hr />
-<h2 id="for-different-audiences">For Different Audiences</h2>
-<h3 id="for-software-developers">For Software Developers</h3>
-<p><strong>Key Practices:</strong>
-- Run builds after EVERY change
-- Test immediately, don't batch
-- Check logs yourself, don't assume success
-- Commit frequently (every 30 minutes minimum)
-- Use proper logging, never print statements</p>
-<p><strong>Developer-Specific Anti-Patterns:</strong>
-- Using <code>swift build</code> when Makefile exists (missing dependencies)
-- Background processes for commands that should block
-- Commenting out code instead of deleting it
-- Hardcoding when metadata is available</p>
-<h3 id="for-technical-writers">For Technical Writers</h3>
-<p><strong>Key Practices:</strong>
-- Review existing content before proposing changes
-- Document style decisions as they're made
-- Complete sections fully before moving on
-- Verify citations and references during writing</p>
-<p><strong>Writer-Specific Anti-Patterns:</strong>
-- Inconsistent terminology across sections
-- Style changes without updating previous content
-- "Draft" sections that never get finished
-- References to non-existent sections</p>
-<h3 id="for-researchers">For Researchers</h3>
-<p><strong>Key Practices:</strong>
-- Document methodology as you develop it
-- Verify sources before citing
-- Follow tangents within scope (ownership principle)
-- Complete analysis before drawing conclusions</p>
-<p><strong>Researcher-Specific Anti-Patterns:</strong>
-- Drawing conclusions before investigation complete
-- Citing sources without verification
-- Stopping at surface-level findings
-- Ignoring contradictory evidence</p>
-<hr />
+<p><strong>Sections to include:</strong> - Identity and role - Authority and checkpoints - Tooling and tool call discipline - Output standards (formatting, language, tone) - Memory and context persistence - Anti-patterns to avoid</p>
+<p>The shorter the file, the more important each line. Cut the generic. Keep the specific.</p>
+<h3 id="persisting-context-across-sessions">Persisting Context Across Sessions</h3>
+<p>In-session checkpoints solve real-time direction. Cross-session memory solves the Fresh Start Problem.</p>
+<p><strong>CLIO:</strong> <code>memory_operations</code> with structured LTM types: - <code>add_discovery</code>: factual findings about the codebase - <code>add_solution</code>: error, solution, verified outcome - <code>add_pattern</code>: reusable working approach with confidence level - <code>add_corroboration</code>: independent verification, promotes unverified to trusted - <code>recall_sessions</code>: search prior session history (scored by relevance, newest first) - <code>update_ltm</code>: edit an existing LTM entry in place - <code>prune_ltm</code>: trim old or low-confidence entries - <code>ltm_stats</code>: report current entry counts by type</p>
+<p>Plus session-scoped memory via <code>store</code>, <code>retrieve</code>, <code>search</code>, <code>list</code>, and <code>delete</code> for working context that does not need to survive sessions.</p>
+<p><strong>General guidance:</strong> - A <code>notes/</code> directory with dated markdown files - Knowledge bases with searchable entries and metadata - Project trackers (Linear, GitHub Issues) for known bugs and decisions - Inline source comments for project-specific gotchas</p>
+<p>The required properties are universal: entries must be searchable, must have metadata (date, source, confidence), and must distinguish verified knowledge from assumptions.</p>
+<p><strong>Trust discipline:</strong> single-source claims are <code>[UNVERIFIED]</code>. The promotion mechanism is documented in <a href="#learning-from-failure">Seven Behaviors &gt; Learning from Failure</a>.</p>
+<h3 id="managing-multi-step-work">Managing Multi-Step Work</h3>
+<p>Mental tracking fails by the third step. Complex tasks need explicit tracking.</p>
+<p><strong>CLIO:</strong> <code>todo_operations</code> with a create-first workflow: 1. Write the full todo list (all tasks <code>not-started</code>) 2. Mark the current task <code>in-progress</code> 3. Do the work 4. Mark the todo <code>completed</code> immediately after finishing 5. Move to the next todo</p>
+<p>The discipline is universal: create todos before starting, update them as you go, never batch updates. A todo list that lags reality is worse than no todo list.</p>
+<h3 id="defining-authority-and-boundaries">Defining Authority and Boundaries</h3>
+<p>Without explicit scope rules, the model either asks permission for everything or assumes authority for everything. Both fail.</p>
+<p><strong>CLIO’s Authority Framework</strong> grants full authority to: - Act autonomously after checkpoint approval - Fix bugs discovered during work without additional permission - Commit code solving stated problems - Modify configs, scripts, and files pursuing approved goals - Make reasonable inferences about missing details - Iterate through errors until resolution</p>
+<p>Checkpoints are mandatory at session start, after investigation, after implementation, and at status updates. Work continues between checkpoints unless explicitly stopped.</p>
+<p><strong>General guidance</strong> for your instructions file, define: - <strong>Full authority:</strong> what the model can do without asking (within approved scope) - <strong>Checkpoint required:</strong> architectural decisions, new features, cross-system changes - <strong>Out of scope:</strong> different repositories, production deployments, user data modifications</p>
+<p>The default should be: act within approved scope, report outside it.</p>
+<h3 id="tool-first-operation">Tool-First Operation</h3>
+<p>Saying “I will create the file now” is wasted output. Calling the file-creation tool is the work.</p>
+<p>The rule is universal: if a tool exists for the action, use it. Do not narrate what you are about to do. Just do it. Tool failures are signals: read the error, adjust, retry. Iterate until the tool succeeds or the failure is clearly unrecoverable. A tool that fails is a reason to try a different approach, not a reason to stop.</p>
+<p><strong>In CLIO,</strong> the tool surface (file operations, version control, terminal, memory, web, todo, code intelligence, interact, apply_patch, remote execution, skill operations) is enumerated in the agent’s system prompt at session start. The model knows what is available without re-discovering it.</p>
+<h3 id="the-skill-system-optional">The Skill System (Optional)</h3>
+<p>Reusable prompt templates for common tasks reduce repetition and ensure consistency across sessions.</p>
+<p><strong>CLIO:</strong> skills are loaded via <code>skill_operations</code> and treated as instructions for the loaded task. The default catalog includes <code>design</code>, <code>design-review</code>, <code>doc</code>, <code>explain</code>, <code>fix</code>, <code>init</code>, <code>init-with-prd</code>, <code>review</code>, and <code>test</code>, plus custom skills <code>ansi-terminal-display</code>, <code>bbs-terminal-display</code>, <code>llama-cpp-steamos</code>, <code>perl-best-practices</code>, and <code>writing-voice</code>.</p>
+<p>A skill earns its keep when a task recurs frequently and the prompt itself is non-trivial. A skill that gets used twice a year is overhead.</p>
+<h2 id="for-software-developers">For Software Developers</h2>
+<p>The general pillars above apply to any domain. Software work has specific pitfalls worth calling out.</p>
+<h3 id="verify-before-documenting">Verify Before Documenting</h3>
+<p>Every technical claim in documentation must match the source code. Defaults, parameters, file paths, model lists - all of it. Wrong documentation is worse than no documentation because it creates false confidence.</p>
+<p>The verification process: 1. Read the documentation claim 2. Identify the source file that contains the truth 3. Read the source file 4. Confirm the claim matches 5. If it does not match, fix the documentation</p>
+<p>This is the <a href="../README.md#source-code-verification">source verification principle</a> the SAM documentation follows as a project-wide rule.</p>
+<h3 id="match-write-mechanism-to-transport">Match Write Mechanism to Transport</h3>
+<p>Different transports have different write semantics. <code>print()</code> on a non-blocking Unix socket does short writes for messages over the socket buffer boundary. The receiver gets partial data, never finds the expected delimiter, and buffers forever.</p>
+<p>The fix is documented in the CLIO LTM as a root-cause solution: when writing to a non-blocking socket, a pipe, or any streaming transport, use a blocking write loop that handles short writes. Reserve line-buffered writes for terminals and files. Match the write mechanism to the transport.</p>
+<h3 id="do-not-background-commands-that-should-block">Do Not Background Commands That Should Block</h3>
+<p>A long-running command should block until complete. Backgrounding it does not make it faster - it makes the next step run before the data is ready.</p>
+<p>The rule: only background commands designed to run independently (servers, watchers). Sequential commands should run sequentially. If a command takes too long, find a faster way to do it, not a parallel way to wait for it.</p>
+<h3 id="delete-code-do-not-comment-it-out">Delete Code, Do Not Comment It Out</h3>
+<p>Commented-out code rots. It stays in the file, contradicts the active code, confuses the next reader. Git remembers. The source file does not need to.</p>
+<p>The rule: keep code active or delete it. The git history is one search away.</p>
+<h3 id="test-before-committing">Test Before Committing</h3>
+<p>Every change verified before commit. The verification method depends on the project: - Compiled languages: build succeeds, tests pass - Interpreted languages: tests pass, scripts run without error - Documentation: pages render, links resolve, examples execute</p>
+<p>A commit is a promise that the change works. Broken commits create trust debt that compounds across the project. The verification cost is always less than the recovery cost.</p>
+<h3 id="report-blockers-with-depth">Report Blockers With Depth</h3>
+<p>When reporting a blocker, provide the deep-dive technical details: what was tried, what failed, what the error said, what the next step would require. High-level summaries waste your time re-deriving what the model already knows.</p>
+<p>The format that works:</p>
+<pre><code>Blocked on [X]. Tried: [list]. Need: [specific]. Options: [alternatives]. Should I continue investigating, or wait for your guidance?</code></pre>
+<p>Specifics in, specifics out. The summary is not the blocker - the missing information is.</p>
 <h2 id="quick-reference">Quick Reference</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">THE</span><span class="w"> </span><span class="n">UNBROKEN</span><span class="w"> </span><span class="n">METHOD</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">QUICK</span><span class="w"> </span><span class="n">REFERENCE</span>
+<p><strong>Before starting work:</strong> - Read the relevant code and documentation - Identify the source files that contain the answers you need - Read your project’s instructions file - Search memory for prior work on this area</p>
+<p><strong>During work:</strong> - Investigate before changing - Find the root cause, not the symptom - Complete the implementation, do not half-finish it - Update todos as you go - Iterate when tools fail</p>
+<p><strong>At decision points:</strong> - Pause and request explicit approval - Present findings, not just plans - Be specific about what you are asking permission for</p>
+<p><strong>When stuck:</strong> - Read the actual error, do not paraphrase it - Search memory for similar problems - Try a different approach - Report blockers with technical depth, not summaries</p>
+<p><strong>When ending work:</strong> - Document what was accomplished - Document what remains - Document discoveries and decisions made - Verify everything is committed and tested - Confirm handoff content is sufficient for the next session to resume cold</p>
 
-<span class="n">BEFORE</span><span class="w"> </span><span class="n">STARTING</span><span class="w"> </span><span class="n">WORK</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Read</span><span class="w"> </span><span class="n">existing</span><span class="w"> </span><span class="n">code</span><span class="o">/</span><span class="n">content</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">patterns</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">behavior</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Share</span><span class="w"> </span><span class="n">findings</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">collaboration</span><span class="w"> </span><span class="k">tool</span>
-
-<span class="n">DURING</span><span class="w"> </span><span class="n">WORK</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Fix</span><span class="w"> </span><span class="n">ALL</span><span class="w"> </span><span class="n">discovered</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="p">(</span><span class="n">no</span><span class="w"> </span><span class="s2">&quot;out of scope&quot;</span><span class="p">)</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Implement</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">solutions</span><span class="w"> </span><span class="p">(</span><span class="n">no</span><span class="w"> </span><span class="s2">&quot;basic version&quot;</span><span class="p">)</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">each</span><span class="w"> </span><span class="n">change</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Commit</span><span class="o">/</span><span class="n">save</span><span class="w"> </span><span class="n">frequently</span>
-
-<span class="n">BEFORE</span><span class="w"> </span><span class="n">ENDING</span>
-<span class="err">□</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="n">discovered</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">resolved</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Work</span><span class="w"> </span><span class="n">tested</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">verified</span>
-<span class="err">□</span><span class="w"> </span><span class="n">Changes</span><span class="w"> </span><span class="n">committed</span><span class="o">/</span><span class="n">saved</span>
-<span class="err">□</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">validation</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">collaboration</span><span class="w"> </span><span class="k">tool</span>
-
-<span class="n">COLLABORATION</span><span class="w"> </span><span class="n">CHECKPOINTS</span>
-<span class="err">•</span><span class="w"> </span><span class="n">Before</span><span class="w"> </span><span class="n">major</span><span class="w"> </span><span class="n">implementation</span>
-<span class="err">•</span><span class="w"> </span><span class="n">After</span><span class="w"> </span><span class="n">investigation</span><span class="w"> </span><span class="p">(</span><span class="n">share</span><span class="w"> </span><span class="n">findings</span><span class="p">)</span>
-<span class="err">•</span><span class="w"> </span><span class="n">After</span><span class="w"> </span><span class="n">implementation</span><span class="w"> </span><span class="p">(</span><span class="n">share</span><span class="w"> </span><span class="n">results</span><span class="p">)</span>
-<span class="err">•</span><span class="w"> </span><span class="n">Before</span><span class="w"> </span><span class="n">ending</span><span class="w"> </span><span class="p">(</span><span class="n">validation</span><span class="w"> </span><span class="n">required</span><span class="p">)</span>
-
-<span class="n">THE</span><span class="w"> </span><span class="n">SEVEN</span><span class="w"> </span><span class="n">PILLARS</span>
-<span class="mf">1.</span><span class="w"> </span><span class="n">Continuous</span><span class="w"> </span><span class="n">Context</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="k">break</span><span class="w"> </span><span class="n">conversation</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Complete</span><span class="w"> </span><span class="n">Ownership</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Find</span><span class="w"> </span><span class="n">it</span><span class="p">,</span><span class="w"> </span><span class="n">fix</span><span class="w"> </span><span class="n">it</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Investigation</span><span class="w"> </span><span class="n">First</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Understand</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">acting</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Root</span><span class="w"> </span><span class="n">Cause</span><span class="w"> </span><span class="n">Focus</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Problems</span><span class="p">,</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">symptoms</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Complete</span><span class="w"> </span><span class="n">Deliverables</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Finish</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">start</span>
-<span class="mf">6.</span><span class="w"> </span><span class="n">Structured</span><span class="w"> </span><span class="n">Handoffs</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Perfect</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="n">transfer</span>
-<span class="mf">7.</span><span class="w"> </span><span class="n">Learning</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">Failure</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Codified</span><span class="w"> </span><span class="n">anti</span><span class="o">-</span><span class="n">patterns</span>
-</code></pre></div>
-
-<hr />
-<h2 id="comparison-with-industry-models">Comparison with Industry Models</h2>
-<p>How does The Unbroken Method compare to established AI/ML development methodologies? This analysis highlights key differences in approach and philosophy.</p>
-<h3 id="methodology-comparison">Methodology Comparison</h3>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>Unbroken Method</th>
-<th>Agile AI/ML</th>
-<th>Google MLOps</th>
-<th>CRISP-DM</th>
-<th>Agentic AI</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Context Handling</strong></td>
-<td>Explicit preservation via checkpoints and handoffs</td>
-<td>Sprint boundaries can break context</td>
-<td>Documentation-dependent</td>
-<td>Phase transitions can lose context</td>
-<td>Fragments across agents</td>
-</tr>
-<tr>
-<td><strong>Issue Ownership</strong></td>
-<td>Mandatory - discovered issues must be fixed</td>
-<td>Team-distributed, can dilute</td>
-<td>Process-dependent</td>
-<td>Phase-based ownership</td>
-<td>Agent-scoped, limited</td>
-</tr>
-<tr>
-<td><strong>Investigation Rigor</strong></td>
-<td>Required before implementation</td>
-<td>Varies by team</td>
-<td>Documentation standards</td>
-<td>Strong data investigation</td>
-<td>Task-dependent</td>
-</tr>
-<tr>
-<td><strong>Root Cause Focus</strong></td>
-<td>Mandated - no symptom patches</td>
-<td>Varies by team culture</td>
-<td>Incident response varies</td>
-<td>Process-focused</td>
-<td>Often superficial</td>
-</tr>
-<tr>
-<td><strong>Completeness</strong></td>
-<td>Scope-complete deliverables</td>
-<td>MVP-oriented, iterative</td>
-<td>Production-focused</td>
-<td>Deliverable-focused</td>
-<td>Task completion varies</td>
-</tr>
-<tr>
-<td><strong>Knowledge Transfer</strong></td>
-<td>Structured 4-document protocol</td>
-<td>Retrospectives, wikis</td>
-<td>Runbooks, documentation</td>
-<td>Reports, handoffs</td>
-<td>Limited between agents</td>
-</tr>
-<tr>
-<td><strong>Learning Codification</strong></td>
-<td>Anti-pattern catalog required</td>
-<td>Retrospectives</td>
-<td>Post-mortems</td>
-<td>Lessons learned</td>
-<td>Minimal</td>
-</tr>
-</tbody>
-</table>
-<h3 id="when-to-use-each-approach">When to Use Each Approach</h3>
-<p><strong>The Unbroken Method</strong> works best when:
-- Quality and reliability matter more than speed
-- Context preservation across sessions is critical
-- You need sustainable long-term collaboration
-- Technical debt must be minimized</p>
-<p><strong>Agile AI/ML</strong> works best when:
-- Rapid experimentation is the priority
-- Requirements are highly uncertain
-- Team velocity matters most
-- Quick pivots are expected</p>
-<p><strong>Google MLOps</strong> works best when:
-- Production scale is the primary concern
-- Monitoring and reliability are paramount
-- Team has strong documentation culture
-- Infrastructure is the bottleneck</p>
-<p><strong>CRISP-DM</strong> works best when:
-- Data investigation is the core challenge
-- Stakeholder communication is critical
-- Process compliance is required
-- Traditional project management is preferred</p>
-<p><strong>Agentic AI Workflows</strong> work best when:
-- Parallelization and automation are priorities
-- Tasks are well-defined and repeatable
-- Human oversight is available for quality control
-- Scale matters more than individual task depth</p>
-<hr />
-<h2 id="getting-started">Getting Started</h2>
-<ol>
-<li><strong>Start with a prompt</strong> - Use the <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> or <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> in your AI assistant's instructions</li>
-<li><strong>Create your project reference</strong> - Write an <code>AGENTS.md</code> describing your project's architecture, conventions, and testing commands</li>
-<li><strong>Design your handoff protocol</strong> - Use the <a href="../SAM/developer/templates/handoff-templates.html">Handoff Templates</a> for session transitions</li>
-<li><strong>Start your anti-pattern catalog</strong> - Add failures as you learn using the <a href="../SAM/developer/templates/anti-pattern-template.html">Anti-Pattern Template</a></li>
-<li><strong>Apply the Seven Pillars</strong> to every AI interaction</li>
-</ol>
-<p><strong>With CLIO:</strong> CLIO implements the methodology natively. Install from <a href="https://github.com/SyntheticAutonomicMind/CLIO/releases/latest">GitHub releases</a>, create <code>.clio/instructions.md</code> and <code>AGENTS.md</code> in your project, and start working. Context preservation, checkpoint discipline, long-term memory, multi-agent coordination, and task tracking are built in.</p>
-<p>The methodology will evolve as you use it. Document what works, what doesn't, and what you learn. The anti-pattern catalog is never complete. It grows with experience.</p>
-<hr />
-<h2 id="conclusion">Conclusion</h2>
-<p>The Unbroken Method transforms AI collaboration from a series of disconnected, frustrating sessions into a continuous, productive partnership. The key principles are simple:</p>
-<ol>
-<li><strong>Maintain context</strong> - Never let it break</li>
-<li><strong>Own everything</strong> - No escape hatches</li>
-<li><strong>Investigate first</strong> - Understand before acting</li>
-<li><strong>Fix root causes</strong> - Not symptoms</li>
-<li><strong>Complete deliverables</strong> - Finish what you start</li>
-<li><strong>Perfect handoffs</strong> - Seamless transitions</li>
-<li><strong>Learn from failures</strong> - Never repeat mistakes</li>
-</ol>
-<p>The methodology works because it eliminates the common failure modes of AI collaboration. It's not about having a smarter AI. It's about having a better system.</p>
-<p>This methodology is language-agnostic, tool-agnostic, and domain-agnostic. Whether you're writing code, documents, research, or any other knowledge work, The Unbroken Method will improve your AI collaboration.</p>
-<p><strong>Welcome to The Unbroken Method. There are no shortcuts, and that's the point.</strong></p>
-<hr />
-<p><strong>Related Documentation:</strong></p>
-<p><strong>Research:</strong>
-- <a href="the-reflexive-ecosystem.html">The Reflexive Ecosystem</a> - Case study: self-building AI development in the SAM ecosystem</p>
-<p><strong>Templates &amp; Getting Started:</strong>
-- <a href="../SAM/developer/templates/index.html">Templates</a> - Ready-to-use prompts, handoffs, and tools
-- <a href="../SAM/developer/templates/quick-start-prompt.html">Quick Start Prompt</a> - Get started in 5 minutes
-- <a href="../SAM/developer/templates/full-collaboration-prompt.html">Full Collaboration Prompt</a> - Complete prompt with all seven pillars</p>
-<p><strong>CLIO (Terminal AI Assistant):</strong>
-- <a href="../../clio-terminal-ai.html">CLIO Overview</a> - AI in your terminal, built on The Unbroken Method
-- <a href="../CLIO/index.html">CLIO Documentation</a> - Installation, configuration, and usage
-- <a href="https://github.com/SyntheticAutonomicMind/CLIO" target="_blank" rel="noopener noreferrer">CLIO on GitHub</a> - Source code and issues</p>
-<p><strong>SAM (macOS AI Assistant):</strong>
-- <a href="../SAM/developer/developers-guide.html">Developer Guide</a> - Building and extending SAM
-- <a href="../SAM/developer/architecture.html">Architecture</a> - System design and components
-- <a href="contributing.html">Contributing Guide</a> - How to contribute to SAM projects</p>
         </div>
     </div>
 
