@@ -209,7 +209,7 @@ terminal-based AI coding assistant written in Perl; <a
 href="https://github.com/SyntheticAutonomicMind/SAM">SAM</a>, a native
 macOS AI assistant built in Swift; and <a
 href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a>, a
-local image generation service in Python. All three are developed and
+local image and audio generation service in Python. All three are developed and
 maintained through CLIO itself, which has been self-building (modifying
 its own codebase under human direction) since January 2026.</p>
 <p>The Unbroken Method was not designed in advance. It emerged from
@@ -349,12 +349,12 @@ SAM is both the oldest system in the ecosystem and the origin of the
 methodology that now drives all development.</p>
 <p><strong><a
 href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a> -
-Artificial Latent Image Composition Engine</strong></p>
-<p>ALICE is a local image generation service written in Python. It wraps
-Stable Diffusion behind a FastAPI interface, providing GPU-accelerated
-image generation on Apple Silicon with no cloud dependency, no per-image
+Artificial Latent Interpretive Creation Engine</strong></p>
+<p>ALICE is a local image and audio generation service written in Python. It wraps
+Stable Diffusion and Stable Audio behind a FastAPI interface, providing GPU-accelerated
+image and audio generation on Apple Silicon with no cloud dependency, no per-image
 cost, and no data leaving the user’s machine. SAM uses ALICE as its
-image generation backend.</p>
+image and audio generation backend.</p>
 <p>ALICE was built through CLIO by the developer, making it the clearest
 test case for the Unbroken Method applied to a new system from
 scratch.</p>
@@ -673,7 +673,7 @@ interesting and practically demonstrable:</p>
 <li>The developer used CLIO to maintain and extend SAM. SAM exists and
 functions as a macOS assistant.</li>
 <li>The developer used CLIO to build ALICE from scratch. ALICE exists
-and functions as an image generation service.</li>
+and functions as an image and audio generation service.</li>
 <li>The developer uses CLIO to build CLIO. Every improvement to CLIO
 since version 20260119.1 was made through this pair-programming
 workflow.</li>
