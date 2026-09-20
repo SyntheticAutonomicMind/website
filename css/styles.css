@@ -39,14 +39,13 @@
     --text-xs: 12px;
     --text-sm: 14px;
     --text-base: 17px;
-    --text-lg: 19px;
+    --text-lg: 18px;
     --text-xl: 21px;
     --text-2xl: 28px;
     --text-3xl: 40px;
     --text-4xl: 48px;
     --text-5xl: 56px;
     --text-6xl: 64px;
-    --text-7xl: 80px;
     
     /* Transitions */
     --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -84,13 +83,13 @@ h1, h2, h3, h4 {
 }
 
 h1 {
-    font-size: clamp(var(--text-4xl), 6vw, var(--text-7xl));
+    font-size: clamp(var(--text-4xl), 5vw, var(--text-5xl));
     font-weight: 700;
     letter-spacing: -0.03em;
 }
 
 h2 {
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-size: clamp(32px, 3.5vw, 44px);
     font-weight: 700;
     letter-spacing: -0.02em;
 }
@@ -461,7 +460,7 @@ section {
 .section-title-centered {
     text-align: center;
     margin-bottom: var(--spacing-3xl);
-    font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+    font-size: clamp(32px, 3vw, 40px);
 }
 
 .features-grid-modern {
