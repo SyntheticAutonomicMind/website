@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALICE + CLIO Integration | ALICE</title>
+    <meta name="description" content="CLIO automates ALICE deployments, manages GPU fleets, and orchestrates generation infrastructure from your terminal.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/ALICE/integration-clio.html">
+    <meta property="og:title" content="ALICE + CLIO Integration | ALICE">
+    <meta property="og:description" content="CLIO automates ALICE deployments, manages GPU fleets, and orchestrates generation infrastructure from your terminal.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/integration-clio.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=13">
+</head>
+<body>
+        <div id="nav-placeholder"></div>
+
+    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-clio.html" data-prev="docs/ALICE/integration-sam.html|ALICE + CLIO Integration" data-next="docs/ALICE/deployment.html|Deployment Guide">
+    <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>ALICE + CLIO Integration</span></nav>
+        
+        <div class="doc-content">
+            <h1>ALICE + CLIO Integration</h1>
+<p class="lead">CLIO automates ALICE deployments, manages GPU fleets, and orchestrates generation infrastructure from your terminal.</p>
+
+<h2 id="overview">Overview</h2>
+<p>CLIO's remote execution and multi-agent capabilities make it ideal for managing ALICE at scale. From a single Steam Deck to a fleet of GPU servers, CLIO handles the infrastructure so you can focus on generating.</p>
+
+<h2 id="deployment-automation">Deployment Automation</h2>
+<h3 id="single-server">Single Server Deployment</h3>
+<pre><code>clio --new
+> SSH into gpu-server, detect GPU type, install Docker, deploy ALICE with appropriate profile, verify health
+</code></pre>
+
+<h3 id="fleet-deployment">Fleet Deployment (Puppeteer Mode)</h3>
+<pre><code>clio --new
+> Deploy ALICE to all hosts in inventory: [gpu-1, gpu-2, gpu-3, gpu-4] using Puppeteer mode with rate limiting
+</code></pre>
+
+<p>CLIO spawns parallel agents for each target with file/git locking to prevent conflicts.</p>
+
+<h3 id="steam-deck-deployment">Steam Deck Deployment</h3>
+<pre><code>clio --new
+> SSH into Steam Deck (deck@steamdeck.local), run ALICE SteamOS installer, configure ROCm, start user service, verify web UI
+</code></pre>
+
+<h2 id="model-management">Model Management at Scale</h2>
+<h3 id="bulk-download">Bulk Model Download</h3>
+<pre><code>clio --new
+> On all ALICE servers: download top 5 SDXL models from CivitAI, verify SHA256, update model registry
+</code></pre>
+
+<h3 id="model-sync">Model Synchronization</h3>
+<pre><code>clio --new
+> Sync model library from primary ALICE server to all replicas, deduplicate, verify integrity
+</code></pre>
+
+<h2 id="monitoring-and-benchmarking">Monitoring & Benchmarking</h2>
+<h3 id="health-checks">Automated Health Checks</h3>
+<pre><code>clio --new
+> Every 5 minutes: check ALICE health endpoint on all servers, alert if any unhealthy, collect GPU metrics
+</code></pre>
+
+<h3 id="performance-benchmarks">Performance Benchmarks</h3>
+<pre><code>clio --new
+> Run standardized benchmark on all GPUs: 20 generations each, collect timing/VRAM/temperature, generate comparison report
+</code></pre>
+
+<h2 id="configuration-management">Configuration Management</h2>
+<h3 id="config-sync">Config Synchronization</h3>
+<pre><code>clio --new
+> Push updated config.yaml to all ALICE instances, rolling restart, verify zero-downtime
+</code></pre>
+
+<h3 id="backend-selection">Automatic Backend Selection</h3>
+<p>CLIO detects hardware and selects the appropriate ALICE backend:</p>
+<table>
+<thead>
+<tr>
+<th>Hardware</th>
+<th>Backend</th>
+<th>Docker Profile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA GPU</td>
+<td>CUDA + PyTorch</td>
+<td><code>--profile cuda</code></td>
+</tr>
+<tr>
+<td>AMD GPU (Linux)</td>
+<td>ROCm + PyTorch</td>
+<td><code>--profile rocm</code></td>
+</tr>
+<tr>
+<td>Apple Silicon</td>
+<td>MPS + PyTorch</td>
+<td>Native (launchd)</td>
+</tr>
+<tr>
+<td>Steam Deck</td>
+<td>ROCm/Vulkan</td>
+<td>SteamOS installer</td>
+</tr>
+<tr>
+<td>CPU Only</td>
+<td>CPU fallback</td>
+<td><code>--profile cpu</code></td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="api-integration">CLIO Calling ALICE API</h2>
+<p>CLIO can call ALICE's API for testing and validation:</p>
+<pre><code>clio --new
+> POST http://alice-server:8080/v1/images/generations with test prompt, verify response structure, download and validate image
+</code></pre>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../CLIO/integration-alice.html">CLIO + ALICE Integration</a> - CLIO perspective</li>
+<li><a href="deployment.html">ALICE Deployment</a> - All deployment options</li>
+<li><a href="../CLIO/remote-execution.html">CLIO Remote Execution</a> - SSH and fleet execution</li>
+<li><a href="../CLIO/multi-agent.html">Multi-Agent Coordination</a> - Parallel patterns</li>
+<li><a href="performance.html">ALICE Performance</a> - GPU optimization</li>
+</ul>
+        </div>
+    </div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=13"></script>
+    <script src="../../js/include.js"></script>
+</body>
+</html>

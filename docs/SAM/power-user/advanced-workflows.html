@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Workflows | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Advanced Workflows">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/advanced-workflows.html">
+    <title>Advanced Workflows | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/power-user/advanced-workflows.html">
+    <meta property="og:title" content="Advanced Workflows | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/power-user/advanced-workflows.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/advanced-workflows.html" data-prev="docs/SAM/power-user/tools-reference.html|Advanced Workflows" data-next="docs/SAM/power-user/troubleshooting.html|Troubleshooting Guide">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Advanced Workflows
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Power User</span><span class="breadcrumb-separator">/</span><span>Advanced Workflows</span></nav>
         
         <div class="doc-content">
             <h1 id="advanced-workflows">Advanced Workflows</h1>
@@ -281,41 +58,41 @@
 - <strong>Specialized expertise</strong> - each subagent focuses on one aspect</p>
 <h3 id="when-to-use-subagents">When to Use Subagents</h3>
 <p>✅ <strong>Complex Multi-Part Tasks</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main: &quot;Research and write a report on remote work trends&quot;
+<pre><code>Main: "Research and write a report on remote work trends"
 ├── Subagent 1: Find recent statistics and studies
 ├── Subagent 2: Interview summaries and expert quotes
 ├── Subagent 3: Draft the executive summary
 └── Subagent 4: Format and proofread final document
-</code></pre></div>
+</code></pre>
 
 <p>✅ <strong>Code Review</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main: &quot;Plan our family budget for 2025&quot;
+<pre><code>Main: "Plan our family budget for 2025"
 ├── Subagent 1: Analyze current spending categories
 ├── Subagent 2: Research cost-saving opportunities
 ├── Subagent 3: Build the monthly budget plan
 └── Subagent 4: Create tracking spreadsheet template
-</code></pre></div>
+</code></pre>
 
 <p>✅ <strong>Research</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main: &quot;Research AI safety&quot;
+<pre><code>Main: "Research AI safety"
 ├── Subagent 1: Literature review
 ├── Subagent 2: Current developments
 ├── Subagent 3: Expert opinions
 └── Subagent 4: Synthesis and summary
-</code></pre></div>
+</code></pre>
 
 <h3 id="subagent-best-practices">Subagent Best Practices</h3>
 <p><strong>Clear Instructions</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">❌</span><span class="w"> </span><span class="n">Bad</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Help with the budget&quot;</span>
-<span class="err">✅</span><span class="w"> </span><span class="n">Good</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Analyze our last 3 months of spending. Identify the top 3 categories where we can realistically cut 15% or more, and explain why.<span class="s2">&quot;</span>
-</code></pre></div>
+<pre><code>❌ Bad: "Help with the budget"
+✅ Good: "Analyze our last 3 months of spending. Identify the top 3 categories where we can realistically cut 15% or more, and explain why."
+</code></pre>
 
 <p><strong>Shared Topic Integration</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Enable</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">conversation</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Spawn</span><span class="w"> </span><span class="n">subagents</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">they</span><span class="w"> </span><span class="n">automatically</span><span class="w"> </span><span class="n">inherit</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="n">workspace</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="n">subagents</span><span class="w"> </span><span class="n">collaborate</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">directory</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Results</span><span class="w"> </span><span class="n">persist</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">main</span><span class="w"> </span><span class="n">conversation</span>
-</code></pre></div>
+<pre><code>1. Enable shared topic in your main conversation
+2. Spawn subagents - they automatically inherit the topic workspace
+3. All subagents collaborate in the same directory
+4. Results persist and are available to the main conversation
+</code></pre>
 
 <p><strong>Iteration Budgeting</strong>:
 - Each subagent gets fresh iteration budget
@@ -325,15 +102,15 @@
 <h2 id="multi-conversation-patterns">Multi-Conversation Patterns</h2>
 <h3 id="pattern-1-specialist-team">Pattern 1: Specialist Team</h3>
 <p><strong>Concept</strong>: Multiple persistent conversations, each specialized in one area</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Home Purchase 2025&quot;
+<pre><code>Shared Topic: "Home Purchase 2025"
 
 Conversations:
-├── &quot;Market Researcher&quot; (finds listings, pricing trends)
-├── &quot;Financial Planner&quot; (budget, mortgage scenarios)
-├── &quot;Neighborhood Scout&quot; (schools, commute, amenities)
-├── &quot;Inspector Prep&quot; (what to look for, checklists)
-└── &quot;Document Tracker&quot; (paperwork, deadlines)
-</code></pre></div>
+├── "Market Researcher" (finds listings, pricing trends)
+├── "Financial Planner" (budget, mortgage scenarios)
+├── "Neighborhood Scout" (schools, commute, amenities)
+├── "Inspector Prep" (what to look for, checklists)
+└── "Document Tracker" (paperwork, deadlines)
+</code></pre>
 
 <p><strong>Workflow</strong>:
 1. Start with Market Researcher to understand the market
@@ -347,65 +124,65 @@ Conversations:
 - All access shared workspace</p>
 <h3 id="pattern-2-pipeline-processing">Pattern 2: Pipeline Processing</h3>
 <p><strong>Setup</strong>: Sequential conversations for workflow stages</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Content Pipeline&quot;
+<pre><code>Shared Topic: "Content Pipeline"
 
 Pipeline:
-&quot;Research&quot; → &quot;Drafting&quot; → &quot;Editing&quot; → &quot;Publishing&quot;
-</code></pre></div>
+"Research" → "Drafting" → "Editing" → "Publishing"
+</code></pre>
 
 <p><strong>Workflow</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Research</span><span class="w"> </span><span class="nv">Conversation</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Gathers</span><span class="w"> </span><span class="nv">information</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Stores</span><span class="w"> </span><span class="nv">findings</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">memory</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Saves</span><span class="w"> </span><span class="nv">sources</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">workspace</span>
+<pre><code>Research Conversation:
+- Gathers information
+- Stores findings in shared memory
+- Saves sources to shared workspace
 
-<span class="nv">Drafting</span><span class="w"> </span><span class="nv">Conversation</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Retrieves</span><span class="w"> </span><span class="nv">research</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">memory</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Reads</span><span class="w"> </span><span class="nv">source</span><span class="w"> </span><span class="nv">documents</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Creates</span><span class="w"> </span><span class="nv">draft</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">workspace</span>
+Drafting Conversation:
+- Retrieves research from memory
+- Reads source documents
+- Creates draft in shared workspace
 
-<span class="nv">Editing</span><span class="w"> </span><span class="nv">Conversation</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Reads</span><span class="w"> </span><span class="nv">draft</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Refines</span><span class="w"> </span><span class="nv">content</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Applies</span><span class="w"> </span><span class="nv">style</span><span class="w"> </span><span class="nv">guidelines</span>
+Editing Conversation:
+- Reads draft
+- Refines content
+- Applies style guidelines
 
-<span class="nv">Publishing</span><span class="w"> </span><span class="nv">Conversation</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Reads</span><span class="w"> </span><span class="nv">final</span><span class="w"> </span><span class="nv">draft</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Formats</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">publication</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Handles</span><span class="w"> </span><span class="nv">deployment</span>
-</code></pre></div>
+Publishing Conversation:
+- Reads final draft
+- Formats for publication
+- Handles deployment
+</code></pre>
 
 <h3 id="pattern-3-review-iterate">Pattern 3: Review &amp; Iterate</h3>
 <p><strong>Setup</strong>: Primary + Review conversations</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;Code Project&quot;
+<pre><code>Shared Topic: "Code Project"
 
 Conversations:
-├── &quot;Implementation&quot; (primary development)
-└── &quot;Code Review&quot; (analysis and feedback)
-</code></pre></div>
+├── "Implementation" (primary development)
+└── "Code Review" (analysis and feedback)
+</code></pre>
 
 <p><strong>Workflow</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Implementation</span><span class="o">:</span>
-<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Writes</span><span class="w"> </span><span class="n">code</span>
-<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Commits</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">workspace</span>
-<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Requests</span><span class="w"> </span><span class="n">review</span>
+<pre><code>Implementation:
+1. Writes code
+2. Commits to shared workspace
+3. Requests review
 
-<span class="n">Code</span><span class="w"> </span><span class="n">Review</span><span class="o">:</span>
-<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Reads</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">workspace</span>
-<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Analyzes</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">issues</span>
-<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Stores</span><span class="w"> </span><span class="n">feedback</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">memory</span>
+Code Review:
+1. Reads code from workspace
+2. Analyzes for issues
+3. Stores feedback in memory
 
-<span class="n">Implementation</span><span class="o">:</span>
-<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Retrieves</span><span class="w"> </span><span class="n">feedback</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">memory</span>
-<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Implements</span><span class="w"> </span><span class="n">improvements</span>
-<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Cycle</span><span class="w"> </span><span class="n">repeats</span>
-</code></pre></div>
+Implementation:
+1. Retrieves feedback from memory
+2. Implements improvements
+3. Cycle repeats
+</code></pre>
 
 <hr />
 <h2 id="complex-project-templates">Complex Project Templates</h2>
 <h3 id="personal-project-management">Personal Project Management</h3>
 <p><strong>Shared Topic Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Topic: "Home Buying 2025"
+<pre><code>Topic: "Home Buying 2025"
 
 Directory Structure:
 ~/SAM/Home Buying 2025/
@@ -414,7 +191,7 @@ Directory Structure:
 ├── neighborhoods/
 ├── viewings/
 └── documents/
-</code></pre></div>
+</code></pre>
 
 <p><strong>Conversations</strong>:
 1. <strong>"Market Research"</strong>
@@ -424,7 +201,7 @@ Directory Structure:
 <ol>
 <li><strong>"Budget & Finances"</strong></li>
 <li>Personality: Professional (direct, business-focused)</li>
-<li>Model: Claude 3.5 Sonnet</li>
+<li>Model: Claude</li>
 <li>
 <p>Working Dir: finances/</p>
 </li>
@@ -444,7 +221,7 @@ Directory Structure:
 <li>Working Dir: documents/</li>
 </ol>
 <p><strong>Workflow</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Week 1:
+<pre><code>Week 1:
 - Market Research: Average prices, trends by area
 - Budget & Finances: Pre-approval estimate, monthly payment scenarios
 
@@ -458,168 +235,168 @@ Week 3:
 
 Week 4:
 - All conversations: Final comparison, make offer
-</code></pre></div>
+</code></pre>
 
 <h3 id="research-writing-project">Research &amp; Writing Project</h3>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Topic: &quot;Research Paper on AI Ethics&quot;
+<pre><code>Topic: "Research Paper on AI Ethics"
 
 Conversations:
-1. &quot;Literature Review&quot;
-2. &quot;Data Collection&quot;
-3. &quot;Analysis&quot;
-4. &quot;Writing&quot;
-5. &quot;Citations&quot;
-</code></pre></div>
+1. "Literature Review"
+2. "Data Collection"
+3. "Analysis"
+4. "Writing"
+5. "Citations"
+</code></pre>
 
 <p><strong>Advanced Pattern</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Literature</span><span class="w"> </span><span class="nv">Review</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Imports</span><span class="w"> </span><span class="nv">multiple</span><span class="w"> </span><span class="nv">PDFs</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Uses</span><span class="w"> </span><span class="nv">Vector</span><span class="w"> </span><span class="nv">RAG</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">semantic</span><span class="w"> </span><span class="nv">search</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Stores</span><span class="w"> </span><span class="nv">summaries</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">memory</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Tags</span>:<span class="w"> </span><span class="s2">&quot;methodology&quot;</span>,<span class="w"> </span><span class="s2">&quot;findings&quot;</span>,<span class="w"> </span><span class="s2">&quot;critique&quot;</span>
+<pre><code>Literature Review:
+- Imports multiple PDFs
+- Uses Vector RAG for semantic search
+- Stores summaries in shared memory
+- Tags: "methodology", "findings", "critique"
 
-<span class="nv">Data</span><span class="w"> </span><span class="nv">Collection</span><span class="w"> </span><span class="ss">(</span><span class="nv">spawns</span><span class="w"> </span><span class="nv">subagents</span><span class="ss">)</span>:
-├──<span class="w"> </span><span class="nv">Subagent</span>:<span class="w"> </span><span class="nv">Web</span><span class="w"> </span><span class="nv">research</span><span class="w"> </span><span class="ss">(</span><span class="nv">latest</span><span class="w"> </span><span class="nv">developments</span><span class="ss">)</span>
-├──<span class="w"> </span><span class="nv">Subagent</span>:<span class="w"> </span><span class="nv">Expert</span><span class="w"> </span><span class="nv">interviews</span><span class="w"> </span><span class="ss">(</span><span class="nv">contact</span><span class="w"> </span><span class="nv">info</span><span class="ss">)</span>
-└──<span class="w"> </span><span class="nv">Subagent</span>:<span class="w"> </span><span class="nv">Dataset</span><span class="w"> </span><span class="nv">analysis</span>
+Data Collection (spawns subagents):
+├── Subagent: Web research (latest developments)
+├── Subagent: Expert interviews (contact info)
+└── Subagent: Dataset analysis
 
-<span class="nv">Writing</span><span class="w"> </span><span class="ss">(</span><span class="nv">uses</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">previous</span><span class="w"> </span><span class="nv">work</span><span class="ss">)</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Retrieves</span><span class="w"> </span><span class="nv">summaries</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">memory</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Accesses</span><span class="w"> </span><span class="nv">imported</span><span class="w"> </span><span class="nv">papers</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">References</span><span class="w"> </span><span class="nv">data</span><span class="w"> </span><span class="nv">collection</span><span class="w"> </span><span class="nv">results</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Synthesizes</span><span class="w"> </span><span class="nv">into</span><span class="w"> </span><span class="nv">coherent</span><span class="w"> </span><span class="nv">paper</span>
+Writing (uses all previous work):
+- Retrieves summaries from memory
+- Accesses imported papers
+- References data collection results
+- Synthesizes into coherent paper
 
-<span class="nv">Citations</span>:
-<span class="o">-</span><span class="w"> </span><span class="nv">Scans</span><span class="w"> </span><span class="nv">all</span><span class="w"> </span><span class="nv">references</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">paper</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Generates</span><span class="w"> </span><span class="nv">bibliography</span>
-<span class="o">-</span><span class="w"> </span><span class="nv">Verifies</span><span class="w"> </span><span class="nv">citation</span><span class="w"> </span><span class="nv">format</span>
-</code></pre></div>
+Citations:
+- Scans all references in paper
+- Generates bibliography
+- Verifies citation format
+</code></pre>
 
 <hr />
 <h2 id="automation-scripting">Automation &amp; Scripting</h2>
 <h3 id="api-based-workflows">API-Based Workflows</h3>
 <p><strong>Use SAM's REST API for automation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="c1"># Automated code review script</span>
+<pre><code>#!/bin/bash
+# Automated code review script
 
-<span class="c1"># Start conversation</span>
-<span class="nv">CONV_ID</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8080/v1/conversations<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;title&quot;:&quot;Automated Review&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">&#39;.id&#39;</span><span class="k">)</span>
+# Start conversation
+CONV_ID=$(curl -X POST http://localhost:8080/v1/conversations \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Automated Review"}' \
+  | jq -r '.id')
 
-<span class="c1"># Submit code for review</span>
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8080/api/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s2">&quot;{</span>
-<span class="s2">    \&quot;model\&quot;: \&quot;gpt-4\&quot;,</span>
-<span class="s2">    \&quot;conversationId\&quot;: \&quot;</span><span class="nv">$CONV_ID</span><span class="s2">\&quot;,</span>
-<span class="s2">    \&quot;messages\&quot;: [{</span>
-<span class="s2">      \&quot;role\&quot;: \&quot;user\&quot;,</span>
-<span class="s2">      \&quot;content\&quot;: \&quot;Review this PR for security and performance issues\&quot;</span>
-<span class="s2">    }]</span>
-<span class="s2">  }&quot;</span>
-</code></pre></div>
+# Submit code for review
+curl -X POST http://localhost:8080/api/chat/completions \
+  -H "Content-Type: application/json" \
+  -d "{
+    \"model\": \"gpt-4\",
+    \"conversationId\": \"$CONV_ID\",
+    \"messages\": [{
+      \"role\": \"user\",
+      \"content\": \"Review this PR for security and performance issues\"
+    }]
+  }"
+</code></pre>
 
 <h3 id="scheduled-workflows">Scheduled Workflows</h3>
 <p><strong>Daily Summary</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># cron: 0 18 * * * /path/to/daily_summary.sh</span>
+<pre><code># cron: 0 18 * * * /path/to/daily_summary.sh
 
-<span class="c1">#!/bin/bash</span>
-<span class="c1"># Generate daily summary of project progress</span>
+#!/bin/bash
+# Generate daily summary of project progress
 
-curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8080/api/chat/completions<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
-<span class="s1">    &quot;model&quot;: &quot;gpt-4&quot;,</span>
-<span class="s1">    &quot;conversationId&quot;: &quot;&#39;</span><span class="nv">$PROJECT_CONV_ID</span><span class="s1">&#39;&quot;,</span>
-<span class="s1">    &quot;messages&quot;: [{</span>
-<span class="s1">      &quot;role&quot;: &quot;user&quot;,</span>
-<span class="s1">      &quot;content&quot;: &quot;Summarize what I worked on today and list any open questions&quot;</span>
-<span class="s1">    }]</span>
-<span class="s1">  }&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>~/daily-summary.txt
-</code></pre></div>
+curl -X POST http://localhost:8080/api/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "gpt-4",
+    "conversationId": "'$PROJECT_CONV_ID'",
+    "messages": [{
+      "role": "user",
+      "content": "Summarize what I worked on today and list any open questions"
+    }]
+  }' > ~/daily-summary.txt
+</code></pre>
 
 <h3 id="batch-processing">Batch Processing</h3>
 <p><strong>Process Multiple Files</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<pre><code>import requests
 
-<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chapter1.md&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter2.md&#39;</span><span class="p">,</span> <span class="s1">&#39;chapter3.md&#39;</span><span class="p">]</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="s1">&#39;http://localhost:8080/api/chat/completions&#39;</span>
+files = ['chapter1.md', 'chapter2.md', 'chapter3.md']
+endpoint = 'http://localhost:8080/api/chat/completions'
 
-<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
-    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span>
-        <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;gpt-4&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;conversationId&#39;</span><span class="p">:</span> <span class="n">conv_id</span><span class="p">,</span>
-        <span class="s1">&#39;messages&#39;</span><span class="p">:</span> <span class="p">[{</span>
-            <span class="s1">&#39;role&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;content&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;Analyze </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s1"> for code quality issues&#39;</span>
-        <span class="p">}]</span>
-    <span class="p">})</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results for </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
-</code></pre></div>
+for file in files:
+    response = requests.post(endpoint, json={
+        'model': 'gpt-4',
+        'conversationId': conv_id,
+        'messages': [{
+            'role': 'user',
+            'content': f'Analyze {file} for code quality issues'
+        }]
+    })
+    print(f"Results for {file}:", response.json())
+</code></pre>
 
 <hr />
 <h2 id="performance-optimization">Performance Optimization</h2>
 <h3 id="context-management">Context Management</h3>
 <p><strong>YaRN Profile Selection</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Small Tasks       → Default (low scaling)
+<pre><code>Small Tasks       → Default (low scaling)
 Long Conversations → Extended (medium scaling)
 Document Analysis  → Universal (high scaling, default)
 Enterprise Docs    → Mega (enterprise scaling)
-</code></pre></div>
+</code></pre>
 
 <p><strong>How to Set</strong>: Click the <strong>Parameters</strong> button in the toolbar to expand Advanced Parameters, then select Context Size.</p>
 <p><strong>Manual Context Pruning</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">When</span><span class="w"> </span><span class="nv">context</span><span class="w"> </span><span class="nv">fills</span>:
-<span class="mi">1</span>.<span class="w"> </span><span class="nv">Clear</span><span class="w"> </span><span class="nv">less</span><span class="w"> </span><span class="nv">important</span><span class="w"> </span><span class="nv">messages</span>
-<span class="mi">2</span>.<span class="w"> </span><span class="nv">Summarize</span><span class="w"> </span><span class="nv">earlier</span><span class="w"> </span><span class="nv">parts</span>
-<span class="mi">3</span>.<span class="w"> </span><span class="nv">Store</span><span class="w"> </span><span class="nv">summaries</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">memory</span>
-<span class="mi">4</span>.<span class="w"> </span><span class="k">Continue</span><span class="w"> </span><span class="nv">with</span><span class="w"> </span><span class="nv">clean</span><span class="w"> </span><span class="nv">context</span>
-</code></pre></div>
+<pre><code>When context fills:
+1. Clear less important messages
+2. Summarize earlier parts
+3. Store summaries in memory
+4. Continue with clean context
+</code></pre>
 
 <h3 id="memory-optimization">Memory Optimization</h3>
 <p><strong>Regular Cleanup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Every few weeks:
+<pre><code>Every few weeks:
 1. Review memory statistics
-2. Clear low-importance memories (&lt; 0.4)
+2. Clear low-importance memories (< 0.4)
 3. Remove duplicate entries
 4. Archive completed project memories
-</code></pre></div>
+</code></pre>
 
 <p><strong>Efficient Storage</strong>:</p>
-<div class="codehilite"><pre><span></span><code>❌<span class="w"> </span><span class="nv">Don</span><span class="err">&#39;t store everything</span>
-<span class="err">✅ Store decisions, requirements, and critical information</span>
+<pre><code>❌ Don't store everything
+✅ Store decisions, requirements, and critical information
 
-❌<span class="w"> </span><span class="nv">Don</span><span class="err">&#39;t duplicate across conversations</span>
-<span class="err">✅ Use shared topics for related work</span>
+❌ Don't duplicate across conversations
+✅ Use shared topics for related work
 
-❌<span class="w"> </span><span class="nv">Don</span><span class="err">&#39;t use high similarity thresholds for documents</span>
-<span class="err">✅ Lower threshold for document search (0.15-0.25)</span>
-</code></pre></div>
+❌ Don't use high similarity thresholds for documents
+✅ Lower threshold for document search (0.15-0.25)
+</code></pre>
 
 <h3 id="model-selection-strategy">Model Selection Strategy</h3>
 <p><strong>By Task Type</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Quick Q&amp;A          → GPT-3.5-turbo (fast, cheap)
+<pre><code>Quick Q&A          → GPT-3.5-turbo (fast, cheap)
 Complex Logic      → GPT-4 (best reasoning)
-Creative Writing   → Claude 3.5 Sonnet (creative)
+Creative Writing   → Claude (creative)
 Code Generation    → GitHub Copilot GPT-4 (code-optimized)
 Privacy-Critical   → Local MLX/GGUF models (offline)
-</code></pre></div>
+</code></pre>
 
 <p><strong>Cost Optimization</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">cheaper</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="p">(</span><span class="n">GPT</span><span class="o">-</span><span class="mf">3.5</span><span class="o">-</span><span class="n">turbo</span><span class="p">)</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">drafts</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Refine</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="nb">exp</span><span class="n">ensive</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="p">(</span><span class="n">GPT</span><span class="o">-</span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="n">when</span><span class="w"> </span><span class="n">needed</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">sensitive</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">privacy</span><span class="o">-</span><span class="n">critical</span><span class="w"> </span><span class="kd">data</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Enable</span><span class="w"> </span><span class="n">streaming</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">better</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="nb">exp</span><span class="n">erience</span>
-</code></pre></div>
+<pre><code>1. Use cheaper models (GPT-3.5-turbo) for initial drafts
+2. Refine with expensive models (GPT-4) when needed
+3. Use local models for sensitive or privacy-critical data
+4. Enable streaming for better user experience
+</code></pre>
 
 <hr />
 <h2 id="advanced-tool-usage">Advanced Tool Usage</h2>
 <h3 id="chaining-multiple-tools">Chaining Multiple Tools</h3>
 <p><strong>Pattern</strong>: Research → Store → Retrieve → Create</p>
-<div class="codehilite"><pre><span></span><code>Step 1: Web Research
+<pre><code>Step 1: Web Research
 Tool: web_operations (research)
 Result: Stores findings in memory
 
@@ -630,46 +407,46 @@ Result: Retrieves relevant research
 Step 3: Document Creation
 Tool: document_operations (create)
 Result: Creates final document with citations
-</code></pre></div>
+</code></pre>
 
 <h3 id="terminal-workflows">Terminal Workflows</h3>
 <p><strong>Complex Build Pipeline</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Session 1: &quot;build&quot;
-<span class="k">-</span> run_command: &quot;make clean&quot;
-<span class="k">-</span> run_command: &quot;make build&quot;
-<span class="k">-</span> get_output: Check for errors
+<pre><code>Session 1: "build"
+- run_command: "make clean"
+- run_command: "make build"
+- get_output: Check for errors
 
-Session 2: &quot;test&quot;
-<span class="k">-</span> run_command: &quot;pytest tests/&quot;
-<span class="k">-</span> get_output: Verify all passed
+Session 2: "test"
+- run_command: "pytest tests/"
+- get_output: Verify all passed
 
-Session 3: &quot;deploy&quot;
-<span class="k">-</span> run_command: &quot;docker build .&quot;
-<span class="k">-</span> run_command: &quot;docker push ...&quot;
-</code></pre></div>
+Session 3: "deploy"
+- run_command: "docker build ."
+- run_command: "docker push ..."
+</code></pre>
 
 <p><strong>Persistent Sessions</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Main conversation maintains multiple sessions:
-- &quot;research&quot;: Gathering sources and data
-- &quot;writing&quot;: Drafting sections
-- &quot;review&quot;: Fact-checking and editing
-- &quot;output&quot;: Formatting and export
+<pre><code>Main conversation maintains multiple sessions:
+- "research": Gathering sources and data
+- "writing": Drafting sections
+- "review": Fact-checking and editing
+- "output": Formatting and export
 
 Switch between sessions as needed
-</code></pre></div>
+</code></pre>
 
 <h3 id="file-operation-optimization">File Operation Optimization</h3>
 <p><strong>Bulk Operations</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Instead of:
-<span class="k">-</span> create_file (10 times)
+<pre><code>Instead of:
+- create_file (10 times)
 
 Use:
-<span class="k">-</span> multi_replace_string (one operation)
-<span class="k">-</span> Apply templates efficiently
-</code></pre></div>
+- multi_replace_string (one operation)
+- Apply templates efficiently
+</code></pre>
 
 <p><strong>Smart Search</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Semantic: Find by meaning
+<pre><code>Semantic: Find by meaning
 "notes about our budget constraints"
 
 Regex: Find by pattern
@@ -677,46 +454,46 @@ Regex: Find by pattern
 
 Glob: Find by filename
 "**/budget-*.md"
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="example-complete-research-project">Example: Complete Research Project</h2>
 <p><strong>Setup</strong> (Day 1):</p>
-<div class="codehilite"><pre><span></span><code>1. Create shared topic: "AI in Healthcare Report"
+<pre><code>1. Create shared topic: "AI in Healthcare Report"
 2. Create four conversations:
    - "Literature Review" (Scholar personality, GPT-4, working dir: sources/)
-   - "Data Analysis" (Professional personality, Claude 3.5, working dir: data/)
+   - "Data Analysis" (Professional personality, Claude, working dir: data/)
    - "Writing" (Creative personality, GPT-4, working dir: drafts/)
    - "Fact-Checking" (Scholar personality, GPT-4, working dir: sources/)
 3. Enable shared topic in all conversations
-</code></pre></div>
+</code></pre>
 
 <p><strong>Day 1-2: Literature Review</strong></p>
-<div class="codehilite"><pre><span></span><code>You: Find and summarize 10 key papers on AI diagnostics published since 2021
+<pre><code>You: Find and summarize 10 key papers on AI diagnostics published since 2021
 SAM: [Searches web for papers]
      Summarized 10 papers - saved to sources/literature-review.md
      Key themes: accuracy improvements, FDA approval challenges, bias concerns
-</code></pre></div>
+</code></pre>
 
 <p><strong>Day 3: Data Analysis</strong></p>
-<div class="codehilite"><pre><span></span><code>You: Read the literature review and identify the key statistics to highlight
+<pre><code>You: Read the literature review and identify the key statistics to highlight
 SAM: [Reads sources/literature-review.md from shared workspace]
      Found 8 compelling statistics - saved to data/key-stats.md
      Strongest: "AI matched radiologist accuracy in 94% of cases (Smith et al, 2023)"
-</code></pre></div>
+</code></pre>
 
 <p><strong>Day 4-5: Writing</strong></p>
-<div class="codehilite"><pre><span></span><code>You: Write the executive summary using our research and key stats
+<pre><code>You: Write the executive summary using our research and key stats
 SAM: [Reads literature-review.md and key-stats.md]
      Draft saved to drafts/executive-summary.md
      ~800 words, covers all major themes
-</code></pre></div>
+</code></pre>
 
 <p><strong>Day 6: Fact-Checking</strong></p>
-<div class="codehilite"><pre><span></span><code>You: Check every statistic in the executive summary against our sources
+<pre><code>You: Check every statistic in the executive summary against our sources
 SAM: [Reads drafts/executive-summary.md and sources/literature-review.md]
      All 6 statistics verified. One citation needed a correction - fixed in draft.
-</code></pre></div>
+</code></pre>
 
 <p><strong>Result</strong>: A well-sourced, fact-checked report built across four specialized conversations - each one staying focused, all sharing the same files and memory.</p>
 
@@ -752,51 +529,11 @@ SAM: [Reads drafts/executive-summary.md and sources/literature-review.md]
 <p><strong>Level up your SAM workflows and build complex projects efficiently!</strong></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # SAM Website
 
-Official documentation website for SAM (Synthetic Autonomic Mind) - a conversational AI with memory, RAG, and autonomous workflow capabilities.
+Official documentation website for the Synthetic Autonomic Mind (SAM) ecosystem — SAM, CLIO, and ALICE. Open source AI tools for macOS and Linux: a native AI assistant, a terminal-native development agent, and local image & audio generation.
 
 **Live Site**: https://www.syntheticautonomicmind.org
 
@@ -8,11 +8,30 @@ Official documentation website for SAM (Synthetic Autonomic Mind) - a conversati
 
 ## Overview
 
-This website provides comprehensive documentation for SAM, organized by user expertise level:
+This is a static HTML documentation site — no build step required. Pages are committed as `.html` files and deployed as-is when changes are pushed to `main`.
 
-- **End Users**: Getting started guides, features overview, and basic usage
-- **Power Users**: Advanced configuration, tools reference, and complex workflows
-- **Developers**: Architecture documentation, API reference, and contribution guidelines
+```
+website/
+├── index.html              # Landing page
+├── products/
+│   ├── sam.html            # SAM product page
+│   ├── clio.html           # CLIO product page
+│   └── alice.html          # ALICE product page
+├── docs/
+│   ├── index.html          # Documentation hub with product selector
+│   ├── SAM/                # SAM documentation (end-user, power-user, developer)
+│   ├── CLIO/               # CLIO documentation (flat structure)
+│   ├── ALICE/              # ALICE documentation (flat structure)
+│   └── shared/             # Cross-product docs (methodology, contributing)
+├── css/styles.css          # Global stylesheet
+├── js/main.js              # Client-side logic (navigation, tabs)
+├── images/                 # All image assets (PNG, SVG)
+├── scripts/                # Python utilities for link validation and fixes
+├── robots.txt              # Search engine crawl rules
+├── sitemap.xml             # Sitemap for SEO
+├── CNAME                   # Domain configuration (syntheticautonomicmind.org)
+└── LICENSE                 # CC BY-NC 4.0 (website content)
+```
 
 ---
 
@@ -38,196 +57,96 @@ python3 -m http.server 8000
 open http://localhost:8000
 ```
 
-The website will be available at `http://localhost:8000`.
+---
+
+## Documentation Structure
+
+Documentation is organized by product, with SAM further organized by audience:
+
+| Directory | Audience | Content |
+|-----------|----------|---------|
+| `docs/SAM/end-user/` | End users | Getting started, features, memory & RAG |
+| `docs/SAM/power-user/` | Power users | Configuration, tools reference, advanced workflows |
+| `docs/SAM/developer/` | Developers | Architecture, API reference, building, developers guide |
+| `docs/CLIO/` | All CLIO users | Installation, getting started, commands, tools, remote execution |
+| `docs/ALICE/` | All ALICE users | Installation, web interface, model management, API, deployment |
+| `docs/shared/` | Everyone | The Unbroken Method, The Reflexive Ecosystem, contributing |
 
 ---
 
-## Project Structure
-
-```
-syntheticautonomicmind.org/
-├── index.html              # Landing page
-├── viewer.html             # Markdown documentation viewer
-├── LICENSE                 # CC BY-NC 4.0 license
-├── .github/
-│   └── copilot-instructions.md  # AI assistant guidelines
-├── css/
-│   ├── styles.css         # Global styles
-│   └── markdown.css       # Markdown rendering styles
-├── scripts/
-│   └── user_collaboration.sh   # Collaboration checkpoint tool
-└── docs/
-    ├── README.md          # Documentation index
-    ├── end-user/          # User guides
-    ├── power-user/        # Advanced guides
-    ├── developer/         # Technical documentation
-    └── architecture/      # Deep-dive technical docs
-```
-
----
-
-## Documentation Standards
-
-### Content Principles
-
-1. **Clarity First**: Every sentence must be natural, readable, and helpful
-2. **User-Focused**: Organized by what users want to accomplish, not technical structure
-3. **Technically Accurate**: Facts verified against SAM source code
-4. **Consistent**: Uniform tone, style, and formatting across all pages
-
-### File Naming
-
-All documentation files use `lowercase-with-hyphens.md`:
-
-```
-✅ getting-started.md
-✅ memory-and-rag.md
-✅ tools-reference.md
-```
-
-### Writing Style
-
-- **Tone**: Professional but friendly, direct and concise
-- **Voice**: Active voice preferred
-- **Technical Terms**: Introduce simply, then use proper terminology
-- **Examples**: Concrete and actionable
-
-See `.github/copilot-instructions.md` for comprehensive guidelines.
-
----
-
-## Contributing
+## Development Workflow
 
 ### Making Changes
 
-1. **Test locally** before committing
-2. **Check links** - all internal links must work
-3. **Maintain consistency** - follow existing style
-4. **Verify accuracy** - ensure technical facts are correct
+1. **Edit HTML directly** — documentation pages are committed as `.html` files
+2. **Test locally** before committing (`python3 -m http.server 8000`)
+3. **Check links** — run `python3 scripts/validate-links.py`
+4. **Follow style** — see `AGENTS.md` for technical reference
 
 ### Commit Message Format
 
 ```bash
 docs: <action> <file/component> for <reason>
+```
 
-# Examples:
-docs: Polish memory-and-rag.md for readability
+Examples:
+```
 docs: Fix broken links in developer section
 docs: Add missing configuration examples
+docs: Polish memory-and-rag.md for readability
 ```
 
 ### Pre-Commit Checklist
 
 - [ ] Tested website locally (`python3 -m http.server 8000`)
-- [ ] Clicked through main pages and verified links work
-- [ ] No broken links in modified files
+- [ ] Clicked through changed pages, verified no console errors
+- [ ] Link validation passes (`python3 scripts/validate-links.py`)
+- [ ] No broken internal links
 - [ ] Consistent formatting with existing content
-- [ ] Technical facts verified (if changed)
-- [ ] Commit message follows format
 
 ---
 
-## Key Features
+## Design Standards
 
-### Markdown Viewer
+- **Semantic HTML**: `<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<footer>`
+- **No inline styles** — all styling via `css/styles.css`
+- **Accessibility**: `lang="en"`, descriptive titles, alt text on images
+- **External links**: always `rel="noopener noreferrer"` and `target="_blank"`
+- **Internal links**: relative paths (`./foo.html` or `../CLIO/foo.html`)
+- **Meta tags**: every page has `<title>` and `<meta name="description">`
 
-The `viewer.html` page provides beautiful rendering of markdown documentation with:
+### Product Color System
 
-- Syntax highlighting for code blocks
-- Mermaid diagram support
-- Automatic link rewriting for internal navigation
-- Mobile-responsive design
-- Dark theme optimized for readability
+Each product has a distinct color palette defined as CSS variables:
 
-### Navigation
-
-- **Homepage** (`index.html`): Feature showcase and quick start
-- **Documentation Viewer** (`viewer.html?file=<path>`): Render any markdown file
-- **Internal Links**: Automatically rewritten for seamless navigation
-
----
-
-## Technical Details
-
-### Built With
-
-- **HTML5/CSS3**: Modern, semantic markup
-- **JavaScript**: Client-side markdown rendering
-- **Marked.js**: Markdown parser
-- **Mermaid.js**: Diagram rendering
-- **DOMPurify**: Security sanitization
-
-### Browser Support
-
-- Chrome/Edge: Latest 2 versions
-- Firefox: Latest 2 versions
-- Safari: Latest 2 versions
-
-### Performance
-
-- Static site (no build process required)
-- Client-side rendering
-- Fast initial load
-- No external dependencies except CDN libraries
+| Product | CSS class | Color |
+|---------|-----------|-------|
+| SAM | `--sam-primary` | Blue (`#0071e3`) |
+| CLIO | `--clio-primary` | Purple (`#6b46c1`) |
+| ALICE | `--alice-primary` | Orange (`#e67e22`) |
+| Shared | `--shared-primary` | Emerald (`#059669`) |
 
 ---
 
 ## License
 
-This **website documentation** is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)**.
+This **website and documentation** is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)**.
 
-**Note**: The SAM application itself is licensed under **GNU General Public License v3.0 (GPLv3)**. This CC BY-NC license applies only to the website documentation content.
+**SAM, CLIO, and ALICE applications** are licensed under **GNU General Public License v3.0 (GPLv3)**.
 
-**You are free to**:
-- Share and redistribute the website content
-- Adapt and build upon the website content
-
-**Under these terms**:
-- **Attribution**: Give appropriate credit
-- **NonCommercial**: Not for commercial use
-- **No additional restrictions**: Don't apply legal/tech restrictions
-
-See [LICENSE](LICENSE) for full details.  
-Full legal text: https://creativecommons.org/licenses/by-nc/4.0/legalcode
-
-**SAM Application License**: https://github.com/SyntheticAutonomicMind/SAM/blob/main/LICENSE
+See [LICENSE](LICENSE) for full details.
 
 ---
 
 ## Deployment
 
-The website is automatically deployed to **www.syntheticautonomicmind.org** when changes are pushed to the `main` branch.
-
-### Deployment Process
-
-1. Commit changes to `main`
-2. CI/CD pipeline triggered
-3. Site deployed within 2-3 minutes
-4. Changes live at https://www.syntheticautonomicmind.org
+Push to `main` — the site deploys automatically to **www.syntheticautonomicmind.org** within 2-3 minutes. No manual deploy step.
 
 ---
 
 ## Support
 
-- **SAM Project**: https://github.com/SyntheticAutonomicMind/SAM
-- **Website Issues**: https://github.com/SyntheticAutonomicMind/website/issues
-- **Documentation**: Available at https://www.syntheticautonomicmind.org
-
----
-
-## Maintenance
-
-### Regular Tasks
-
-- Review and update documentation for new SAM features
-- Fix broken links
-- Improve clarity based on user feedback
-- Keep technical specifications current
-
-### Quality Assurance
-
-All changes go through review for:
-- Readability and clarity
-- Technical accuracy
-- Link integrity
-- Consistent formatting
+- **Issues**: https://github.com/SyntheticAutonomicMind/website/issues
+- **SAM**: https://github.com/SyntheticAutonomicMind/SAM
+- **CLIO**: https://github.com/SyntheticAutonomicMind/CLIO
+- **ALICE**: https://github.com/SyntheticAutonomicMind/ALICE

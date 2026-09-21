@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shared Topics Guide | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Shared Topics Guide">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/shared-topics.html">
+    <title>Shared Topics Guide | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/end-user/shared-topics.html">
+    <meta property="og:title" content="Shared Topics Guide | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/end-user/shared-topics.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/shared-topics.html" data-prev="docs/SAM/end-user/memory-and-rag.html|Shared Topics" data-next="docs/SAM/end-user/use-cases.html|Use Cases">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Shared Topics
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>End User</span><span class="breadcrumb-separator">/</span><span>Shared Topics Guide</span></nav>
         
         <div class="doc-content">
             <h1 id="shared-topics-guide">Shared Topics Guide</h1>
@@ -286,42 +63,42 @@ Instead of each conversation having its own isolated workspace, shared topics cr
 <h2 id="when-to-use-shared-topics">When to Use Shared Topics</h2>
 <h3 id="perfect-for">Good for:</h3>
 <p>✅ <strong>Complex Projects with Multiple Aspects</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Example</span><span class="o">:</span><span class="w"> </span><span class="n">Web</span><span class="w"> </span><span class="n">Application</span><span class="w"> </span><span class="n">Development</span>
-<span class="o">-</span><span class="w"> </span><span class="n">One</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">handles</span><span class="w"> </span><span class="n">frontend</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Another</span><span class="w"> </span><span class="n">handles</span><span class="w"> </span><span class="n">backend</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Another</span><span class="w"> </span><span class="n">handles</span><span class="w"> </span><span class="n">database</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Another</span><span class="w"> </span><span class="n">handles</span><span class="w"> </span><span class="n">testing</span>
-<span class="n">All</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="o">~/</span><span class="n">SAM</span><span class="sr">/My Web App/</span><span class="w"> </span><span class="n">directory</span>
-</code></pre></div>
+<pre><code>Example: Web Application Development
+- One conversation handles frontend
+- Another handles backend
+- Another handles database
+- Another handles testing
+All working in the same ~/SAM/My Web App/ directory
+</code></pre>
 
 <p>✅ <strong>Team-Like Collaboration</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Example</span><span class="o">:</span><span class="w"> </span><span class="n">Research</span><span class="w"> </span><span class="n">Project</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Literature</span><span class="w"> </span><span class="n">review</span><span class="w"> </span><span class="n">conversation</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Data</span><span class="w"> </span><span class="n">analysis</span><span class="w"> </span><span class="n">conversation</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Writing</span><span class="w"> </span><span class="n">conversation</span>
-<span class="n">All</span><span class="w"> </span><span class="n">accessing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">papers</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">findings</span>
-</code></pre></div>
+<pre><code>Example: Research Project
+- Literature review conversation
+- Data analysis conversation
+- Writing conversation
+All accessing the same papers and findings
+</code></pre>
 
 <p>✅ <strong>Specialized Workflows</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Example</span><span class="o">:</span><span class="w"> </span><span class="n">Content</span><span class="w"> </span><span class="n">Creation</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Research</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">gathers</span><span class="w"> </span><span class="n">information</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Writing</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">creates</span><span class="w"> </span><span class="n">content</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Editing</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">refines</span><span class="w"> </span><span class="n">output</span>
-<span class="n">All</span><span class="w"> </span><span class="n">sharing</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="n">materials</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">drafts</span>
-</code></pre></div>
+<pre><code>Example: Content Creation
+- Research conversation gathers information
+- Writing conversation creates content
+- Editing conversation refines output
+All sharing source materials and drafts
+</code></pre>
 
 <h3 id="not-ideal-for">Not Ideal For:</h3>
 <p>❌ <strong>Unrelated Projects</strong></p>
-<div class="codehilite"><pre><span></span><code>Personal notes + Work project = Use separate conversations
-</code></pre></div>
+<pre><code>Personal notes + Work project = Use separate conversations
+</code></pre>
 
 <p>❌ <strong>Privacy-Sensitive Work</strong></p>
-<div class="codehilite"><pre><span></span><code>Different clients&#39; projects = Keep isolated
-</code></pre></div>
+<pre><code>Different clients' projects = Keep isolated
+</code></pre>
 
 <p>❌ <strong>Temporary Explorations</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Quick</span><span class="w"> </span><span class="n">experiments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">regular</span><span class="w"> </span><span class="n">conversation</span>
-</code></pre></div>
+<pre><code>Quick experiments = Use regular conversation
+</code></pre>
 
 <hr />
 <h2 id="creating-a-shared-topic">Creating a Shared Topic</h2>
@@ -344,9 +121,9 @@ Instead of each conversation having its own isolated workspace, shared topics cr
 - Directory created at <code>~/SAM/{topic-name}/</code>
 - Topic available for selection in conversations</p>
 <p><strong>Verify in Terminal</strong>:</p>
-<div class="codehilite"><pre><span></span><code>ls<span class="w"> </span>~/SAM/
-<span class="c1"># You should see your topic directory</span>
-</code></pre></div>
+<pre><code>ls ~/SAM/
+# You should see your topic directory
+</code></pre>
 
 <hr />
 <h2 id="using-shared-topics">Using Shared Topics</h2>
@@ -363,14 +140,14 @@ Instead of each conversation having its own isolated workspace, shared topics cr
 - Memory scope changes to topic scope</p>
 <h3 id="working-directory-changes">Working Directory Changes</h3>
 <p><strong>Before (Regular Conversation)</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Working Directory: ~/SAM/My Conversation/
+<pre><code>Working Directory: ~/SAM/My Conversation/
 └── Files isolated to this conversation
-</code></pre></div>
+</code></pre>
 
 <p><strong>After (Shared Topic Enabled)</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Working Directory: ~/SAM/My Web Application/
+<pre><code>Working Directory: ~/SAM/My Web Application/
 └── Files shared across all conversations using this topic
-</code></pre></div>
+</code></pre>
 
 <h3 id="create-multiple-conversations">Create Multiple Conversations</h3>
 <p><strong>Scenario</strong>: Planning a research project</p>
@@ -390,33 +167,33 @@ All conversations now work in <code>~/SAM/Q4 Market Research/</code></p>
 <h3 id="example-1-trip-planning">Example 1: Trip Planning</h3>
 <p><strong>Goal</strong>: Plan a complex family vacation across multiple conversations</p>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: "Japan Trip 2025"
+<pre><code>Shared Topic: "Japan Trip 2025"
 
 Conversations:
 1. "Research" - Finds destinations, attractions, and tips
 2. "Itinerary" - Builds the day-by-day plan
 3. "Budget" - Tracks costs and finds deals
 4. "Packing & Logistics" - Visas, packing lists, bookings
-</code></pre></div>
+</code></pre>
 
 <p><strong>Workflow</strong>:</p>
 <p><strong>Research conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: What are the best areas to stay in Tokyo for first-timers?
+<pre><code>You: What are the best areas to stay in Tokyo for first-timers?
 SAM: [Searches for current recommendations]
      Saved summary to ~/SAM/Japan Trip 2025/research/tokyo-areas.md
-</code></pre></div>
+</code></pre>
 
 <p><strong>Itinerary conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: Read the research notes and build a 10-day itinerary
+<pre><code>You: Read the research notes and build a 10-day itinerary
 SAM: [Reads tokyo-areas.md and other research from shared workspace]
      Created ~/SAM/Japan Trip 2025/itinerary.md with day-by-day plan
-</code></pre></div>
+</code></pre>
 
 <p><strong>Budget conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: Based on our itinerary, estimate the total cost for 2 adults
+<pre><code>You: Based on our itinerary, estimate the total cost for 2 adults
 SAM: [Reads itinerary.md from shared workspace]
      Estimated total: $3,800 - breakdown saved to budget.md
-</code></pre></div>
+</code></pre>
 
 <p><strong>Benefits</strong>:
 - Each conversation stays focused on its purpose
@@ -426,70 +203,70 @@ SAM: [Reads itinerary.md from shared workspace]
 <h3 id="example-2-research-writing">Example 2: Research &amp; Writing</h3>
 <p><strong>Goal</strong>: Write a research paper</p>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;AI Safety Research&quot;
+<pre><code>Shared Topic: "AI Safety Research"
 
 Conversations:
-1. &quot;Literature Review&quot; - Reads and summarizes papers
-2. &quot;Data Analysis&quot; - Analyzes research data
-3. &quot;Writing&quot; - Drafts paper sections
-4. &quot;Citations&quot; - Manages references
-</code></pre></div>
+1. "Literature Review" - Reads and summarizes papers
+2. "Data Analysis" - Analyzes research data
+3. "Writing" - Drafts paper sections
+4. "Citations" - Manages references
+</code></pre>
 
 <p><strong>Workflow</strong>:</p>
 <p><strong>Literature Review Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Import</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">papers</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Imported</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">~/</span><span class="n">SAM</span><span class="sr">/AI Safety Research/papers/</span>
-<span class="n">All</span><span class="w"> </span><span class="n">indexed</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">semantic</span><span class="w"> </span><span class="n">search</span>
+<pre><code>You: Import these 15 research papers
+SAM: Imported to ~/SAM/AI Safety Research/papers/
+All indexed for semantic search
 
-<span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Summarize</span><span class="w"> </span><span class="n">key</span><span class="w"> </span><span class="n">themes</span><span class="w"> </span><span class="n">across</span><span class="w"> </span><span class="n">papers</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Analyzes</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">papers</span><span class="o">]</span>
-<span class="n">Key</span><span class="w"> </span><span class="n">themes</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="n">Alignment</span><span class="w"> </span><span class="n">problem</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="n">Value</span><span class="w"> </span><span class="n">learning</span><span class="o">...</span>
-<span class="o">[</span><span class="n">Stores</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">memory</span><span class="o">]</span>
-</code></pre></div>
+You: Summarize key themes across papers
+SAM: [Analyzes all papers]
+Key themes: 1) Alignment problem 2) Value learning...
+[Stores summary in shared memory]
+</code></pre>
 
 <p><strong>Writing Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Write</span><span class="w"> </span><span class="n">introduction</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">literature</span><span class="w"> </span><span class="n">review</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Retrieves</span><span class="w"> </span><span class="n">summaries</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">memory</span><span class="o">]</span>
-<span class="o">[</span><span class="n">Reads</span><span class="w"> </span><span class="n">paper</span><span class="w"> </span><span class="n">summaries</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">directory</span><span class="o">]</span>
-<span class="n">Drafting</span><span class="w"> </span><span class="n">introduction</span><span class="o">...</span>
-</code></pre></div>
+<pre><code>You: Write introduction section using the literature review
+SAM: [Retrieves summaries from shared memory]
+[Reads paper summaries from shared directory]
+Drafting introduction...
+</code></pre>
 
 <p><strong>Citations Conversation</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">bibliography</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">cited</span><span class="w"> </span><span class="n">papers</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="o">[</span><span class="n">Scans</span><span class="w"> </span><span class="n">papers</span><span class="sr">/ directory and writing/</span><span class="w"> </span><span class="n">drafts</span><span class="o">]</span>
-<span class="n">Creating</span><span class="w"> </span><span class="n">bibliography</span><span class="o">.</span><span class="na">bib</span><span class="o">...</span>
-</code></pre></div>
+<pre><code>You: Generate bibliography from all cited papers
+SAM: [Scans papers/ directory and writing/ drafts]
+Creating bibliography.bib...
+</code></pre>
 
 <h3 id="example-3-home-renovation-planning">Example 3: Home Renovation Planning</h3>
 <p><strong>Goal</strong>: Plan and manage a kitchen renovation across research, budgeting, and contractor coordination</p>
 <p><strong>Setup</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: "Kitchen Renovation"
+<pre><code>Shared Topic: "Kitchen Renovation"
 
 Conversations:
 1. "Design Research" - Styles, materials, inspiration
 2. "Budget Tracking" - Cost estimates and contractor quotes
 3. "Project Timeline" - Sequencing work and scheduling
-</code></pre></div>
+</code></pre>
 
 <p><strong>Workflow</strong>:</p>
 <p><strong>Design Research</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: Research modern farmhouse kitchen styles and cabinet options under $8,000
+<pre><code>You: Research modern farmhouse kitchen styles and cabinet options under $8,000
 SAM: [Searches and compiles options]
      Saved research and links to ~/SAM/Kitchen Renovation/design-options.md
-</code></pre></div>
+</code></pre>
 
 <p><strong>Budget Tracking</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: I have three contractor quotes [pastes quotes]. Which is best value?
+<pre><code>You: I have three contractor quotes [pastes quotes]. Which is best value?
 SAM: [Reads design-options.md for context]
      Quote 2 covers everything in your design plan at the best rate.
      Saved comparison to budget-analysis.md
-</code></pre></div>
+</code></pre>
 
 <p><strong>Project Timeline</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: Build a realistic project timeline given we can't use the kitchen for more than 3 weeks
+<pre><code>You: Build a realistic project timeline given we can't use the kitchen for more than 3 weeks
 SAM: [Reads budget and design docs from shared workspace]
      Created timeline.md - cabinets go in week 1, countertops week 2...
-</code></pre></div>
+</code></pre>
 
 <h2 id="best-practices">Best Practices</h2>
 <h3 id="naming-topics">Naming Topics</h3>
@@ -503,31 +280,31 @@ SAM: [Reads budget and design docs from shared workspace]
 - Too long: "The complete redesign of our customer-facing..."</p>
 <h3 id="organizing-conversations">Organizing Conversations</h3>
 <p><strong>Use Clear, Descriptive Names</strong>:</p>
-<div class="codehilite"><pre><span></span><code>✅ Good:
-- &quot;Research &amp; Sources&quot;
-- &quot;Draft Writing&quot;
-- &quot;Budget Tracking&quot;
+<pre><code>✅ Good:
+- "Research & Sources"
+- "Draft Writing"
+- "Budget Tracking"
 
 ❌ Avoid:
-- &quot;Conversation 1&quot;
-- &quot;Work&quot;
-- &quot;Main&quot;
-</code></pre></div>
+- "Conversation 1"
+- "Work"
+- "Main"
+</code></pre>
 
 <p><strong>Find the Right Level of Specialization</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Too</span><span class="w"> </span><span class="nv">Broad</span>:
-❌<span class="w"> </span><span class="nv">One</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="nv">trying</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">everything</span>
+<pre><code>Too Broad:
+❌ One conversation trying to do everything
 
-<span class="nv">Too</span><span class="w"> </span><span class="nv">Narrow</span>:
-❌<span class="w"> </span><span class="nv">Separate</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">each</span><span class="w"> </span><span class="nv">tiny</span><span class="w"> </span><span class="nv">file</span>
+Too Narrow:
+❌ Separate conversation for each tiny file
 
-<span class="nv">Just</span><span class="w"> </span><span class="nv">Right</span>:
-✅<span class="w"> </span><span class="nv">One</span><span class="w"> </span><span class="nv">conversation</span><span class="w"> </span><span class="nv">per</span><span class="w"> </span><span class="nv">major</span><span class="w"> </span><span class="nv">component</span><span class="w"> </span><span class="nv">or</span><span class="w"> </span><span class="nv">aspect</span>
-</code></pre></div>
+Just Right:
+✅ One conversation per major component or aspect
+</code></pre>
 
 <h3 id="file-organization">File Organization</h3>
 <p><strong>Create Clear Structure</strong>:</p>
-<div class="codehilite"><pre><span></span><code>~/SAM/My Research Project/
+<pre><code>~/SAM/My Research Project/
 ├── sources/
 │   ├── papers/
 │   ├── interviews/
@@ -537,7 +314,7 @@ SAM: [Reads budget and design docs from shared workspace]
 │   └── sections/
 ├── notes/
 └── final/
-</code></pre></div>
+</code></pre>
 
 <p><strong>Benefits</strong>:
 - Easy to navigate
@@ -545,22 +322,22 @@ SAM: [Reads budget and design docs from shared workspace]
 - Prevents conflicts</p>
 <h3 id="memory-management">Memory Management</h3>
 <p><strong>Store Project Decisions</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Research</span><span class="w"> </span><span class="nv">conversation</span>:
-<span class="s2">&quot;Remember: We chose only including peer-reviewed studies from 2020-2025&quot;</span>
+<pre><code>Research conversation:
+"Remember: We chose only including peer-reviewed studies from 2020-2025"
 
-<span class="nv">Later</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="nv">Writing</span><span class="w"> </span><span class="nv">conversation</span>:
-<span class="s2">&quot;What sources are we drawing from?&quot;</span>
-→<span class="w"> </span><span class="nv">SAM</span><span class="w"> </span><span class="nv">retrieves</span><span class="w"> </span><span class="nv">from</span><span class="w"> </span><span class="nv">shared</span><span class="w"> </span><span class="nv">memory</span>
-</code></pre></div>
+Later in Writing conversation:
+"What sources are we drawing from?"
+→ SAM retrieves from shared memory
+</code></pre>
 
 <p><strong>Tag Appropriately</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Store with tags:
-- &quot;sources&quot;
-- &quot;decisions&quot;
-- &quot;key-findings&quot;
+<pre><code>Store with tags:
+- "sources"
+- "decisions"
+- "key-findings"
 
 Easy to find later across conversations
-</code></pre></div>
+</code></pre>
 
 <h3 id="cleaning-up">Cleaning Up</h3>
 <p><strong>When Your Project is Complete</strong>:
@@ -610,44 +387,44 @@ Easy to find later across conversations
 <h3 id="subagents-shared-topics">Subagents + Shared Topics</h3>
 <p><strong>A Strong Combination</strong>:
 Enable a shared topic, then spawn subagents. All subagents automatically work in the same workspace.</p>
-<div class="codehilite"><pre><span></span><code>Main Conversation: &quot;My App&quot; shared topic enabled
+<pre><code>Main Conversation: "My App" shared topic enabled
 
 Spawn subagents that collaborate:
-├── &quot;API Development&quot; subagent → works in ~/SAM/My App/api/
-├── &quot;UI Design&quot; subagent → works in ~/SAM/My App/ui/
-└── &quot;Testing&quot; subagent → reads both api/ and ui/
+├── "API Development" subagent → works in ~/SAM/My App/api/
+├── "UI Design" subagent → works in ~/SAM/My App/ui/
+└── "Testing" subagent → reads both api/ and ui/
 
 All subagents share the same workspace and knowledge!
-</code></pre></div>
+</code></pre>
 
 <h3 id="topic-hierarchies-manual">Topic Hierarchies (Manual)</h3>
 <p>Create organized structure:</p>
-<div class="codehilite"><pre><span></span><code>~/SAM/
+<pre><code>~/SAM/
 ├── Client A - Project 1/
 ├── Client A - Project 2/
 ├── Client B - Project 1/
 └── Personal - Research/
-</code></pre></div>
+</code></pre>
 
 <p>Each is separate topic, but organized by prefix.</p>
 <h3 id="switching-contexts">Switching Contexts</h3>
 <p>Easily switch between different project contexts by enabling/disabling shared topics:</p>
-<div class="codehilite"><pre><span></span><code>One Conversation: &quot;Architecture Design&quot;
+<pre><code>One Conversation: "Architecture Design"
 
 Context 1: Personal Project
 - Enable shared topics
-- Select &quot;Personal Web App&quot; topic
+- Select "Personal Web App" topic
 - Work on your personal code
 
 Context 2: Work Project
 - Enable shared topics
-- Select &quot;Client XYZ App&quot; topic
+- Select "Client XYZ App" topic
 - Work on client code
 
 Context 3: Isolated Experiment
 - Disable shared topics
 - Work in isolated ~/SAM/Architecture Design/ directory
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="next-steps">Next Steps</h2>
@@ -664,51 +441,11 @@ Context 3: Isolated Experiment
 <p><strong>Unlock SAM's full collaborative potential with Shared Topics!</strong></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

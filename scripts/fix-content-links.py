@@ -25,8 +25,8 @@ class ContentLinkFixer:
             '../shared/': '../shared/',  # Already correct from most places
             
             # CLIO docs
-            'clio.html': '../CLIO/clio.html',  # From SAM developer
-            'clio-quick-start.html': '../CLIO/clio-quick-start.html',  # From SAM end-user  
+            'clio.html': '../CLIO/index.html',  # From SAM developer
+            'clio-quick-start.html': '../CLIO/getting-started.html',  # From SAM end-user  
             
             # The Unbroken Method is in shared
             'the-unbroken-method.html': '../shared/the-unbroken-method.html',  # From SAM/developer
@@ -132,7 +132,7 @@ class ContentLinkFixer:
         # Links to CLIO quick start
         content = re.sub(
             r'href="clio-quick-start\.html"',
-            'href="../../CLIO/clio-quick-start.html"',
+            'href="../../CLIO/getting-started.html"',
             content
         )
         
@@ -166,7 +166,7 @@ class ContentLinkFixer:
         # Links to CLIO from SAM index
         content = re.sub(
             r'href="end-user/clio-quick-start\.html"',
-            'href="../CLIO/clio-quick-start.html"',
+            'href="../CLIO/getting-started.html"',
             content
         )
         

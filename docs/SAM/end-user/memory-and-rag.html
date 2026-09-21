@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memory & RAG in SAM | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Memory & RAG in SAM">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/end-user/memory-and-rag.html">
+    <title>Memory & RAG in SAM | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/end-user/memory-and-rag.html">
+    <meta property="og:title" content="Memory & RAG in SAM | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/end-user/memory-and-rag.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/memory-and-rag.html" data-prev="docs/SAM/end-user/features-overview.html|Memory & RAG Guide" data-next="docs/SAM/end-user/shared-topics.html|Shared Topics">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Memory And Rag
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>End User</span><span class="breadcrumb-separator">/</span><span>Memory & RAG in SAM</span></nav>
         
         <div class="doc-content">
             <h1 id="memory-rag-in-sam">Memory &amp; RAG in SAM</h1>
@@ -302,14 +79,14 @@
 - This prevents clutter and ensures only relevant information is saved</p>
 <h3 id="manual-memory-storage">Manual Memory Storage</h3>
 <p>You can explicitly tell SAM to remember information:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Remember</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">prefer</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">JavaScript</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">work</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">I</span><span class="err">&#39;</span><span class="n">ll</span><span class="w"> </span><span class="n">remember</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">preference</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">JavaScript</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">development</span><span class="o">.</span>
-</code></pre></div>
+<pre><code>You: Remember that I prefer Python over JavaScript for backend work
+SAM: I'll remember your preference for Python over JavaScript for backend development.
+</code></pre>
 
 <p>Later:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">language</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">API</span><span class="o">?</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Based</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">your</span><span class="w"> </span><span class="n">preference</span><span class="o">,</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="n">recommend</span><span class="w"> </span><span class="n">Python</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">development</span><span class="o">.</span>
-</code></pre></div>
+<pre><code>You: What language should I use for this API?
+SAM: Based on your preference, I recommend Python for backend API development.
+</code></pre>
 
 <h3 id="vector-embeddings">Vector Embeddings</h3>
 <p><strong>How It Works</strong> (simplified):
@@ -330,39 +107,39 @@
 - Personal conversations
 - Temporary work</p>
 <p><strong>How It Works</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">graph</span><span class="w"> </span><span class="n">TB</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation A: &#39;</span><span class="nf">Project</span><span class="w"> </span><span class="n">Alpha</span><span class="s">&#39;&quot;</span>
-<span class="w">        </span><span class="n">CA</span><span class="p">[</span><span class="n">Conversation</span><span class="w"> </span><span class="n">A</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">conversationId</span><span class="o">:</span><span class="w"> </span><span class="n">ABC</span><span class="o">-</span><span class="mi">123</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MemA</span><span class="p">[</span><span class="n">Memory</span><span class="w"> </span><span class="n">Pool</span><span class="w"> </span><span class="n">A</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Isolated</span><span class="p">]</span>
-<span class="w">        </span><span class="n">VecA</span><span class="p">[(</span><span class="n">Vector</span><span class="w"> </span><span class="n">DB</span><span class="w"> </span><span class="n">A</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">conversation</span><span class="w"> </span><span class="n">scoped</span><span class="p">)]</span>
-<span class="w">    </span><span class="kd">end</span>
+<pre><code>graph TB
+    subgraph "Conversation A: 'Project Alpha'"
+        CA[Conversation A<br/>conversationId: ABC-123]
+        MemA[Memory Pool A<br/>Isolated]
+        VecA[(Vector DB A<br/>conversation scoped)]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation B: &#39;</span><span class="nf">Project</span><span class="w"> </span><span class="n">Beta</span><span class="s">&#39;&quot;</span>
-<span class="w">        </span><span class="n">CB</span><span class="p">[</span><span class="n">Conversation</span><span class="w"> </span><span class="n">B</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">conversationId</span><span class="o">:</span><span class="w"> </span><span class="n">XYZ</span><span class="o">-</span><span class="mi">789</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MemB</span><span class="p">[</span><span class="n">Memory</span><span class="w"> </span><span class="n">Pool</span><span class="w"> </span><span class="n">B</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Isolated</span><span class="p">]</span>
-<span class="w">        </span><span class="n">VecB</span><span class="p">[(</span><span class="n">Vector</span><span class="w"> </span><span class="n">DB</span><span class="w"> </span><span class="n">B</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">conversation</span><span class="w"> </span><span class="n">scoped</span><span class="p">)]</span>
-<span class="w">    </span><span class="kd">end</span>
+    subgraph "Conversation B: 'Project Beta'"
+        CB[Conversation B<br/>conversationId: XYZ-789]
+        MemB[Memory Pool B<br/>Isolated]
+        VecB[(Vector DB B<br/>conversation scoped)]
+    end
 
-<span class="w">    </span><span class="n">CA</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Stores</span><span class="o">|</span><span class="w"> </span><span class="n">MemA</span>
-<span class="w">    </span><span class="n">MemA</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mi">512</span><span class="o">-</span><span class="n">dim</span><span class="w"> </span><span class="n">embeddings</span><span class="o">|</span><span class="w"> </span><span class="n">VecA</span>
-<span class="w">    </span><span class="n">CB</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Stores</span><span class="o">|</span><span class="w"> </span><span class="n">MemB</span>
-<span class="w">    </span><span class="n">MemB</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mi">512</span><span class="o">-</span><span class="n">dim</span><span class="w"> </span><span class="n">embeddings</span><span class="o">|</span><span class="w"> </span><span class="n">VecB</span>
+    CA -->|Stores| MemA
+    MemA -->|512-dim embeddings| VecA
+    CB -->|Stores| MemB
+    MemB -->|512-dim embeddings| VecB
 
-<span class="w">    </span><span class="n">VecA</span><span class="w"> </span><span class="o">-</span><span class="p">.</span><span class="o">-&gt;|</span><span class="n">CANNOT</span><span class="w"> </span><span class="n">ACCESS</span><span class="o">|</span><span class="w"> </span><span class="n">VecB</span>
-<span class="w">    </span><span class="n">VecB</span><span class="w"> </span><span class="o">-</span><span class="p">.</span><span class="o">-&gt;|</span><span class="n">CANNOT</span><span class="w"> </span><span class="n">ACCESS</span><span class="o">|</span><span class="w"> </span><span class="n">VecA</span>
+    VecA -.->|CANNOT ACCESS| VecB
+    VecB -.->|CANNOT ACCESS| VecA
 
-<span class="w">    </span><span class="n">Note1</span><span class="p">[</span><span class="n">Each</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">has</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">isolated</span><span class="w"> </span><span class="n">memory</span><span class="p">]</span>
-<span class="w">    </span><span class="n">Note2</span><span class="p">[</span><span class="n">No</span><span class="w"> </span><span class="n">cross</span><span class="o">-</span><span class="n">talk</span><span class="w"> </span><span class="kr">between</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">unrelated</span><span class="w"> </span><span class="n">conversations</span><span class="p">]</span>
-</code></pre></div>
+    Note1[Each conversation has<br/>isolated memory]
+    Note2[No cross-talk between<br/>unrelated conversations]
+</code></pre>
 
 <p><strong>Example - Why Isolation Matters</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Conversation</span><span class="w"> </span><span class="nv">A</span>:<span class="w"> </span><span class="s2">&quot;Project Alpha&quot;</span>
-<span class="nv">You</span>:<span class="w"> </span><span class="nv">Remember</span><span class="w"> </span><span class="nv">I</span><span class="err">&#39;m using React for the frontend</span>
+<pre><code>Conversation A: "Project Alpha"
+You: Remember I'm using React for the frontend
 
-<span class="err">Conversation B: &quot;Project Beta&quot; (different conversation)</span>
-<span class="err">You: What frontend framework am I using?</span>
-<span class="nv">SAM</span>:<span class="w"> </span><span class="nv">I</span><span class="w"> </span><span class="nv">don</span><span class="err">&#39;t have information about your frontend framework in this conversation.</span>
-</code></pre></div>
+Conversation B: "Project Beta" (different conversation)
+You: What frontend framework am I using?
+SAM: I don't have information about your frontend framework in this conversation.
+</code></pre>
 
 <p>This isolation is intentional - keeps your projects separate and private.</p>
 <h3 id="topic-scoped-memory-shared-topics">Topic-Scoped Memory (Shared Topics)</h3>
@@ -371,73 +148,73 @@
 - Team-like collaboration with specialized conversations
 - Complex projects with different aspects</p>
 <p><strong>How It Works</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TB</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Shared Topic: &#39;My Web App&#39;&quot;</span>
-<span class="w">        </span><span class="n">Topic</span><span class="p">[</span><span class="n">Topic</span><span class="w"> </span><span class="n">ID</span><span class="o">:</span><span class="w"> </span><span class="n">shared</span><span class="mi">-123</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Topic</span><span class="w"> </span><span class="n">Name</span><span class="o">:</span><span class="w"> </span><span class="n">My</span><span class="w"> </span><span class="n">Web</span><span class="w"> </span><span class="n">App</span><span class="p">]</span>
-<span class="w">        </span><span class="n">SharedMem</span><span class="p">[</span><span class="n">Shared</span><span class="w"> </span><span class="n">Memory</span><span class="w"> </span><span class="n">Pool</span><span class="p">]</span>
-<span class="w">        </span><span class="n">SharedVec</span><span class="p">[(</span><span class="n">Shared</span><span class="w"> </span><span class="n">Vector</span><span class="w"> </span><span class="n">DB</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">topic</span><span class="w"> </span><span class="n">scoped</span><span class="p">)]</span>
-<span class="w">    </span><span class="n">end</span>
+<pre><code>graph TB
+    subgraph "Shared Topic: 'My Web App'"
+        Topic[Topic ID: shared-123<br/>Topic Name: My Web App]
+        SharedMem[Shared Memory Pool]
+        SharedVec[(Shared Vector DB<br/>topic scoped)]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation A: &#39;Backend API&#39;&quot;</span>
-<span class="w">        </span><span class="n">CA</span><span class="p">[</span><span class="n">Conv</span><span class="w"> </span><span class="n">A</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">useSharedData</span><span class="o">:</span><span class="w"> </span><span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">sharedTopicId</span><span class="o">:</span><span class="w"> </span><span class="n">shared</span><span class="mi">-123</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MsgA</span><span class="p">[</span><span class="n">Stores</span><span class="o">:</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">design</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">database</span><span class="w"> </span><span class="n">schema</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Conversation A: 'Backend API'"
+        CA[Conv A<br/>useSharedData: true<br/>sharedTopicId: shared-123]
+        MsgA[Stores: API design,<br/>database schema]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation B: &#39;Frontend UI&#39;&quot;</span>
-<span class="w">        </span><span class="n">CB</span><span class="p">[</span><span class="n">Conv</span><span class="w"> </span><span class="n">B</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">useSharedData</span><span class="o">:</span><span class="w"> </span><span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">sharedTopicId</span><span class="o">:</span><span class="w"> </span><span class="n">shared</span><span class="mi">-123</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MsgB</span><span class="p">[</span><span class="n">Stores</span><span class="o">:</span><span class="w"> </span><span class="n">Components</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">styling</span><span class="w"> </span><span class="n">decisions</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Conversation B: 'Frontend UI'"
+        CB[Conv B<br/>useSharedData: true<br/>sharedTopicId: shared-123]
+        MsgB[Stores: Components,<br/>styling decisions]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation C: &#39;Testing&#39;&quot;</span>
-<span class="w">        </span><span class="n">CC</span><span class="p">[</span><span class="n">Conv</span><span class="w"> </span><span class="n">C</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">useSharedData</span><span class="o">:</span><span class="w"> </span><span class="nb">true</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">sharedTopicId</span><span class="o">:</span><span class="w"> </span><span class="n">shared</span><span class="mi">-123</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MsgC</span><span class="p">[</span><span class="n">Stores</span><span class="o">:</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="n">cases</span><span class="p">,</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">coverage</span><span class="w"> </span><span class="n">reports</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Conversation C: 'Testing'"
+        CC[Conv C<br/>useSharedData: true<br/>sharedTopicId: shared-123]
+        MsgC[Stores: Test cases,<br/>coverage reports]
+    end
 
-<span class="w">    </span><span class="n">CA</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Store</span><span class="o">|</span><span class="w"> </span><span class="n">MsgA</span>
-<span class="w">    </span><span class="n">CB</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Store</span><span class="o">|</span><span class="w"> </span><span class="n">MsgB</span>
-<span class="w">    </span><span class="n">CC</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Store</span><span class="o">|</span><span class="w"> </span><span class="n">MsgC</span>
+    CA -->|Store| MsgA
+    CB -->|Store| MsgB
+    CC -->|Store| MsgC
 
-<span class="w">    </span><span class="n">MsgA</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">pool</span><span class="o">|</span><span class="w"> </span><span class="n">SharedMem</span>
-<span class="w">    </span><span class="n">MsgB</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">pool</span><span class="o">|</span><span class="w"> </span><span class="n">SharedMem</span>
-<span class="w">    </span><span class="n">MsgC</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">pool</span><span class="o">|</span><span class="w"> </span><span class="n">SharedMem</span>
+    MsgA -->|Add to shared pool| SharedMem
+    MsgB -->|Add to shared pool| SharedMem
+    MsgC -->|Add to shared pool| SharedMem
 
-<span class="w">    </span><span class="n">SharedMem</span><span class="w"> </span><span class="o">--&gt;|</span><span class="mi">512</span><span class="o">-</span><span class="n">dim</span><span class="w"> </span><span class="n">embeddings</span><span class="o">|</span><span class="w"> </span><span class="n">SharedVec</span>
+    SharedMem -->|512-dim embeddings| SharedVec
 
-<span class="w">    </span><span class="n">SharedVec</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">ALL</span><span class="w"> </span><span class="n">conversations</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">can</span><span class="w"> </span><span class="n">search</span><span class="o">|</span><span class="w"> </span><span class="n">CA</span>
-<span class="w">    </span><span class="n">SharedVec</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">ALL</span><span class="w"> </span><span class="n">conversations</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">can</span><span class="w"> </span><span class="n">search</span><span class="o">|</span><span class="w"> </span><span class="n">CB</span>
-<span class="w">    </span><span class="n">SharedVec</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">ALL</span><span class="w"> </span><span class="n">conversations</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">can</span><span class="w"> </span><span class="n">search</span><span class="o">|</span><span class="w"> </span><span class="n">CC</span>
+    SharedVec -->|ALL conversations<br/>can search| CA
+    SharedVec -->|ALL conversations<br/>can search| CB
+    SharedVec -->|ALL conversations<br/>can search| CC
 
-<span class="w">    </span><span class="n">Note</span><span class="p">[</span><span class="n">All</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="n">share</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">the</span><span class="w"> </span><span class="n">SAME</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="n">pool</span><span class="p">]</span>
-</code></pre></div>
+    Note[All conversations share<br/>the SAME memory pool]
+</code></pre>
 
 <p><strong>Example - Sharing Knowledge Across Conversations</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Shared Topic: &quot;My Web App&quot; (enabled in both conversations)
+<pre><code>Shared Topic: "My Web App" (enabled in both conversations)
 
-Conversation 1: &quot;Backend API&quot;
-You: Remember we&#39;re using PostgreSQL with SQLAlchemy ORM
+Conversation 1: "Backend API"
+You: Remember we're using PostgreSQL with SQLAlchemy ORM
 
-Conversation 2: &quot;Frontend UI&quot; (different conversation, same topic)
+Conversation 2: "Frontend UI" (different conversation, same topic)
 You: What database and ORM are we using?
-SAM: We&#39;re using PostgreSQL with SQLAlchemy ORM.
+SAM: We're using PostgreSQL with SQLAlchemy ORM.
      [Retrieved from shared topic memory!]
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="using-memory-operations">Using Memory Operations</h2>
 <h3 id="store-memory">Store Memory</h3>
 <p>Explicitly store information for future retrieval:</p>
 <p><strong>Basic Storage</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">memory</span><span class="o">:</span><span class="w"> </span><span class="n">Project</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">endpoint</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">https</span><span class="o">://</span><span class="n">api</span><span class="o">.</span><span class="na">myapp</span><span class="o">.</span><span class="na">com</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Stored</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">importance</span><span class="w"> </span><span class="mf">0.8</span>
-</code></pre></div>
+<pre><code>You: Store this in memory: Project API endpoint is https://api.myapp.com
+SAM: Stored in memory with importance 0.8
+</code></pre>
 
 <p><strong>With Tags</strong> (via tool):</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;store_memory&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Production database: db-prod-01.mycompany.com:5432&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;database&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;critical&quot;</span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "operation": "store_memory",
+  "content": "Production database: db-prod-01.mycompany.com:5432",
+  "tags": ["database", "production", "critical"]
+}
+</code></pre>
 
 <p><strong>Importance Levels</strong> (optional, advanced):
 - <strong>0.0-0.3</strong>: Low importance (temporary notes, ideas)
@@ -447,85 +224,118 @@ SAM: We&#39;re using PostgreSQL with SQLAlchemy ORM.
 <h3 id="search-memory">Search Memory</h3>
 <p>Search your stored memories:</p>
 <p><strong>Natural Language</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">anything</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">database</span><span class="w"> </span><span class="n">configuration</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Found</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">memories</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">database</span><span class="w"> </span><span class="n">configuration</span><span class="o">:</span>
-<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">PostgreSQL</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="n">string</span><span class="w"> </span><span class="o">(</span><span class="n">importance</span><span class="o">:</span><span class="w"> </span><span class="mf">0.9</span><span class="o">)</span>
-<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="n">migration</span><span class="w"> </span><span class="n">notes</span><span class="w"> </span><span class="o">(</span><span class="n">importance</span><span class="o">:</span><span class="w"> </span><span class="mf">0.6</span><span class="o">)</span>
-<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Performance</span><span class="w"> </span><span class="n">tuning</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="o">(</span><span class="n">importance</span><span class="o">:</span><span class="w"> </span><span class="mf">0.7</span><span class="o">)</span>
-</code></pre></div>
+<pre><code>You: Search memory for anything about database configuration
+SAM: Found 3 memories about database configuration:
+1. PostgreSQL connection string (importance: 0.9)
+2. Database migration notes (importance: 0.6)
+3. Performance tuning settings (importance: 0.7)
+</code></pre>
 
 <p><strong>Adjusting Similarity Threshold</strong>:
 - <strong>0.3-0.5</strong> (Default): Balanced - good for most searches
 - <strong>0.2-0.3</strong>: More results (broader search)
 - <strong>0.15-0.2</strong>: Very broad (use for document searches)</p>
 <p><strong>Example</strong> (via tool):</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;search_memory&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;authentication implementation&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;similarity_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.3&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "operation": "search_memory",
+  "query": "authentication implementation",
+  "similarity_threshold": "0.3",
+  "limit": 10
+}
+</code></pre>
 
 <h3 id="memory-statistics">Memory Statistics</h3>
 <p>Check how much is stored:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Show</span><span class="w"> </span><span class="n">memory</span><span class="w"> </span><span class="n">stats</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Memory</span><span class="w"> </span><span class="n">Statistics</span><span class="o">:</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Total</span><span class="w"> </span><span class="n">memories</span><span class="o">:</span><span class="w"> </span><span class="mi">247</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Conversation</span><span class="o">-</span><span class="n">scoped</span><span class="o">:</span><span class="w"> </span><span class="mi">185</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Topic</span><span class="o">-</span><span class="n">scoped</span><span class="o">:</span><span class="w"> </span><span class="mi">62</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Database</span><span class="w"> </span><span class="n">size</span><span class="o">:</span><span class="w"> </span><span class="mf">15.2</span><span class="w"> </span><span class="n">MB</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Last</span><span class="w"> </span><span class="n">updated</span><span class="o">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">minutes</span><span class="w"> </span><span class="n">ago</span>
-</code></pre></div>
+<pre><code>You: Show memory stats
+SAM: Memory Statistics:
+- Total memories: 247
+- Conversation-scoped: 185
+- Topic-scoped: 62
+- Database size: 15.2 MB
+- Last updated: 2 minutes ago
+</code></pre>
+
+<h3 id="list-collections">List Collections</h3>
+<p>View what memory collections exist:</p>
+<pre><code>You: What collections do I have?
+SAM: Collections:
+- default_conversation (45 memories)
+- shared_topic_project_x (12 memories)
+- documents (87 entries)
+</code></pre>
+
+<h3 id="long-term-memory-ltm">Long-Term Memory (LTM)</h3>
+<p>SAM's LTM persists across conversations and sessions. It stores key discoveries, solutions, and patterns as structured entries. LTM operations require the <code>memory_operations</code> tool with <code>operation=add_discovery</code> and similar.</p>
+<p><strong>LTM Entry Types</strong>:</p>
+<table>
+    <tr><th>Type</th><th>Purpose</th></tr>
+    <tr><td><code>add_discovery</code></td><td>Key insights and facts learned</td></tr>
+    <tr><td><code>add_solution</code></td><td>Problem-solving approaches that worked</td></tr>
+    <tr><td><code>add_pattern</code></td><td>Recurring patterns and best practices</td></tr>
+    <tr><td><code>search_kv</code></td><td>Search key-value store</td></tr>
+    <tr><td><code>list_keys</code></td><td>List all stored keys</td></tr>
+    <tr><td><code>delete_key</code></td><td>Remove a stored key</td></tr>
+    <tr><td><code>ltm_stats</code></td><td>Show LTM statistics</td></tr>
+    <tr><td><code>prune_ltm</code></td><td>Prune old LTM entries</td></tr>
+</table>
+
+<h3 id="recall-history">Recall History</h3>
+<p>When conversation context is trimmed, use <code>recall_history</code> to recover archived context:</p>
+<pre><code>You: What were the database schema decisions we made last week?
+SAM: [Uses recall_history internally] I found the discussion about the database  schema from last week:
+- PostgreSQL with UUID primary keys
+- Separate read replicas for analytics
+
+</code></pre>
 
 <h3 id="clear-memories">Clear Memories</h3>
 <p>Remove stored memories (use with caution!):</p>
 <p><strong>Conversation Scope</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Clear</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">memories</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">conversation</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="err">⚠️</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">delete</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">memories</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">conversation</span><span class="o">.</span><span class="w"> </span><span class="n">Confirm</span><span class="o">?</span>
-</code></pre></div>
+<pre><code>You: Clear all memories for this conversation
+SAM: ⚠️ This will delete all memories for this conversation. Confirm?
+</code></pre>
 
 <p><strong>Topic Scope</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Clear</span><span class="w"> </span><span class="n">memories</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">topic</span>
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="err">⚠️</span><span class="w"> </span><span class="n">WARNING</span><span class="o">:</span><span class="w"> </span><span class="n">This</span><span class="w"> </span><span class="n">will</span><span class="w"> </span><span class="n">delete</span><span class="w"> </span><span class="n">memories</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">ALL</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">topic</span><span class="o">!</span>
-</code></pre></div>
+<pre><code>You: Clear memories for this shared topic
+SAM: ⚠️ WARNING: This will delete memories for ALL conversations in this topic!
+</code></pre>
 
 <hr />
 <h2 id="document-import-rag">Document Import &amp; RAG</h2>
 <h3 id="how-vector-rag-works">How Vector RAG Works</h3>
-<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">LR</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Document Import Pipeline&quot;</span>
-<span class="w">        </span><span class="n">Doc</span><span class="p">[</span><span class="n">PDF</span><span class="o">/</span><span class="n">DOCX</span><span class="o">/</span><span class="n">Text</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Document</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Extract</span><span class="p">[</span><span class="n">Content</span><span class="w"> </span><span class="n">Extraction</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Text</span><span class="w"> </span><span class="n">parsing</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Chunk</span><span class="p">[</span><span class="n">Page</span><span class="o">-</span><span class="n">Aware</span><span class="w"> </span><span class="n">Chunking</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Semantic</span><span class="w"> </span><span class="n">Boundaries</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Embed</span><span class="p">[</span><span class="n">Embedding</span><span class="w"> </span><span class="n">Generation</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Vector</span><span class="w"> </span><span class="n">representation</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Store</span><span class="p">[(</span><span class="n">Vector</span><span class="w"> </span><span class="n">Database</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">conversationId</span><span class="w"> </span><span class="n">tagged</span><span class="p">)]</span>
-<span class="w">    </span><span class="n">end</span>
+<pre><code>graph LR
+    subgraph "Document Import Pipeline"
+        Doc[PDF/DOCX/Text<br/>Document]
+        Extract[Content Extraction<br/>Text parsing]
+        Chunk[Page-Aware Chunking<br/>Semantic Boundaries]
+        Embed[Embedding Generation<br/>Vector representation]
+        Store[(Vector Database<br/>conversationId tagged)]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Query Processing&quot;</span>
-<span class="w">        </span><span class="n">Query</span><span class="p">[</span><span class="n">User</span><span class="w"> </span><span class="n">Query</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="s">&quot;Find auth examples&quot;</span><span class="p">]</span>
-<span class="w">        </span><span class="n">QueryEmbed</span><span class="p">[</span><span class="n">Query</span><span class="w"> </span><span class="n">Embedding</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="mi">512</span><span class="o">-</span><span class="n">dim</span><span class="w"> </span><span class="n">vector</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Search</span><span class="p">[</span><span class="n">Cosine</span><span class="w"> </span><span class="n">Similarity</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Search</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Results</span><span class="p">[</span><span class="n">Top</span><span class="w"> </span><span class="n">K</span><span class="w"> </span><span class="n">Chunks</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">threshold</span><span class="w"> </span><span class="err">≥</span><span class="w"> </span><span class="mf">0.15</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Context</span><span class="p">[</span><span class="n">Add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">LLM</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Context</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Response</span><span class="p">[</span><span class="n">AI</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">with</span><span class="w"> </span><span class="n">citations</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Query Processing"
+        Query[User Query<br/>"Find auth examples"]
+        QueryEmbed[Query Embedding<br/>512-dim vector]
+        Search[Cosine Similarity<br/>Search]
+        Results[Top K Chunks<br/>threshold ≥ 0.15]
+        Context[Add to LLM<br/>Context]
+        Response[AI Response<br/>with citations]
+    end
 
-<span class="w">    </span><span class="n">Doc</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Read</span><span class="o">|</span><span class="w"> </span><span class="n">Extract</span>
-<span class="w">    </span><span class="n">Extract</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Split</span><span class="o">|</span><span class="w"> </span><span class="n">Chunk</span>
-<span class="w">    </span><span class="n">Chunk</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Generate</span><span class="o">|</span><span class="w"> </span><span class="n">Embed</span>
-<span class="w">    </span><span class="n">Embed</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Persist</span><span class="o">|</span><span class="w"> </span><span class="n">Store</span>
+    Doc -->|Read| Extract
+    Extract -->|Split| Chunk
+    Chunk -->|Generate| Embed
+    Embed -->|Persist| Store
 
-<span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Embed</span><span class="o">|</span><span class="w"> </span><span class="n">QueryEmbed</span>
-<span class="w">    </span><span class="n">QueryEmbed</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Search</span><span class="o">|</span><span class="w"> </span><span class="n">Search</span>
-<span class="w">    </span><span class="n">Store</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Match</span><span class="o">|</span><span class="w"> </span><span class="n">Search</span>
-<span class="w">    </span><span class="n">Search</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Retrieve</span><span class="o">|</span><span class="w"> </span><span class="n">Results</span>
-<span class="w">    </span><span class="n">Results</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Inject</span><span class="o">|</span><span class="w"> </span><span class="n">Context</span>
-<span class="w">    </span><span class="n">Context</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Generate</span><span class="o">|</span><span class="w"> </span><span class="n">Response</span>
+    Query -->|Embed| QueryEmbed
+    QueryEmbed -->|Search| Search
+    Store -->|Match| Search
+    Search -->|Retrieve| Results
+    Results -->|Inject| Context
+    Context -->|Generate| Response
 
-<span class="w">    </span><span class="n">Note1</span><span class="p">[</span><span class="n">Chunks</span><span class="w"> </span><span class="n">preserve</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">page</span><span class="w"> </span><span class="n">numbers</span><span class="p">]</span>
-<span class="w">    </span><span class="n">Note2</span><span class="p">[</span><span class="n">Similarity</span><span class="w"> </span><span class="n">threshold</span><span class="o">:&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="mf">0.15-0.25</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">docs</span><span class="p">]</span>
-</code></pre></div>
+    Note1[Chunks preserve<br/>page numbers]
+    Note2[Similarity threshold:<br/>0.15-0.25 for docs]
+</code></pre>
 
 <h3 id="importing-documents">Importing Documents</h3>
 <p><strong>Drag &amp; Drop</strong>:
@@ -555,67 +365,67 @@ SAM now stores searchable metadata with each document chunk, including:
 4. <strong>Store</strong>: Chunks saved in memory with metadata
 5. <strong>Tag</strong>: Labeled as "document" for easy filtering</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code>You: [Drags &quot;Research_Paper.pdf&quot; into chat]
+<pre><code>You: [Drags "Research_Paper.pdf" into chat]
 
-SAM: Importing &quot;Research_Paper.pdf&quot;...
-<span class="k">-</span> Pages: 35
-<span class="k">-</span> Chunks created: 87
-<span class="k">-</span> Format: PDF
-<span class="k">-</span> Size: 2.4 MB
+SAM: Importing "Research_Paper.pdf"...
+- Pages: 35
+- Chunks created: 87
+- Format: PDF
+- Size: 2.4 MB
 
 Document successfully imported and indexed for semantic search.
-</code></pre></div>
+</code></pre>
 
 <h3 id="querying-imported-documents">Querying Imported Documents</h3>
 <p><strong>Simple Questions</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">What</span><span class="w"> </span><span class="n">does</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">paper</span><span class="w"> </span><span class="n">say</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">methodology</span><span class="o">?</span>
+<pre><code>You: What does the research paper say about methodology?
 
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">paper</span><span class="w"> </span><span class="n">describes</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">methodology</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">pages</span><span class="w"> </span><span class="mi">12</span><span class="o">-</span><span class="mi">15</span><span class="o">:</span>
-<span class="o">[</span><span class="n">Retrieves</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">summarizes</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">chunks</span><span class="o">]</span>
-</code></pre></div>
+SAM: The research paper describes the methodology on pages 12-15:
+[Retrieves and summarizes relevant chunks]
+</code></pre>
 
 <p><strong>Cross-Document Queries</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Compare</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">approaches</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">backend_api</span><span class="o">.</span><span class="na">pdf</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">security_guide</span><span class="o">.</span><span class="na">md</span>
+<pre><code>You: Compare the authentication approaches in backend_api.pdf and security_guide.md
 
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Comparing</span><span class="w"> </span><span class="n">authentication</span><span class="w"> </span><span class="n">approaches</span><span class="o">:</span>
+SAM: Comparing authentication approaches:
 
-<span class="n">backend_api</span><span class="o">.</span><span class="na">pdf</span><span class="w"> </span><span class="o">(</span><span class="n">pages</span><span class="w"> </span><span class="mi">8</span><span class="o">-</span><span class="mi">10</span><span class="o">):</span>
-<span class="o">-</span><span class="w"> </span><span class="n">JWT</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="mi">24</span><span class="o">-</span><span class="n">hour</span><span class="w"> </span><span class="n">expiration</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Refresh</span><span class="w"> </span><span class="n">tokens</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">extended</span><span class="w"> </span><span class="n">sessions</span>
+backend_api.pdf (pages 8-10):
+- JWT tokens with 24-hour expiration
+- Refresh tokens for extended sessions
 
-<span class="n">security_guide</span><span class="o">.</span><span class="na">md</span><span class="o">:</span>
-<span class="o">-</span><span class="w"> </span><span class="n">OAuth2</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">provider</span><span class="w"> </span><span class="n">integration</span>
-<span class="o">-</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">keys</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">service</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">service</span>
-</code></pre></div>
+security_guide.md:
+- OAuth2 with provider integration
+- API keys for service-to-service
+</code></pre>
 
 <h3 id="page-aware-retrieval">Page-Aware Retrieval</h3>
 <p>SAM preserves page information when chunking:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">You</span><span class="o">:</span><span class="w"> </span><span class="n">Find</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">mentions</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s2">&quot;machine learning&quot;</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">document</span>
+<pre><code>You: Find all mentions of "machine learning" in the document
 
-<span class="n">SAM</span><span class="o">:</span><span class="w"> </span><span class="n">Found</span><span class="w"> </span><span class="s2">&quot;machine learning&quot;</span><span class="w"> </span><span class="n">mentioned</span><span class="w"> </span><span class="k">in</span><span class="o">:</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Page</span><span class="w"> </span><span class="mi">3</span><span class="o">:</span><span class="w"> </span><span class="n">Introduction</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">overview</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Page</span><span class="w"> </span><span class="mi">15</span><span class="o">:</span><span class="w"> </span><span class="n">ML</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="n">architecture</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Page</span><span class="w"> </span><span class="mi">28</span><span class="o">:</span><span class="w"> </span><span class="n">Performance</span><span class="w"> </span><span class="n">evaluation</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Page</span><span class="w"> </span><span class="mi">42</span><span class="o">:</span><span class="w"> </span><span class="n">Future</span><span class="w"> </span><span class="n">ML</span><span class="w"> </span><span class="n">applications</span>
-</code></pre></div>
+SAM: Found "machine learning" mentioned in:
+- Page 3: Introduction and overview
+- Page 15: ML model architecture
+- Page 28: Performance evaluation
+- Page 42: Future ML applications
+</code></pre>
 
 <hr />
 <h2 id="semantic-search">Semantic Search</h2>
 <h3 id="how-it-works">How It Works</h3>
 <p><strong>Traditional Keyword Search</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Query: &quot;error handling&quot;
-Finds: Only exact phrase &quot;error handling&quot;
-</code></pre></div>
+<pre><code>Query: "error handling"
+Finds: Only exact phrase "error handling"
+</code></pre>
 
 <p><strong>SAM's Semantic Search</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Query: &quot;error handling&quot;
+<pre><code>Query: "error handling"
 Finds: 
-- &quot;try/catch blocks&quot;
-- &quot;exception management&quot;
-- &quot;error recovery strategies&quot;
-- &quot;failure handling patterns&quot;
+- "try/catch blocks"
+- "exception management"
+- "error recovery strategies"
+- "failure handling patterns"
 - And more related concepts
-</code></pre></div>
+</code></pre>
 
 <h3 id="similarity-thresholds-explained">Similarity Thresholds Explained</h3>
 <p><strong>How Similarity Works</strong>:
@@ -651,23 +461,23 @@ Finds:
 </table>
 <p><strong>When You Get No Results</strong>:
 Lower the threshold step by step:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Start</span><span class="o">:</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Try</span><span class="o">:</span><span class="w"> </span><span class="mf">0.25</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Try</span><span class="o">:</span><span class="w"> </span><span class="mf">0.2</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">Last</span><span class="w"> </span><span class="n">resort</span><span class="o">:</span><span class="w"> </span><span class="mf">0.15</span>
-</code></pre></div>
+<pre><code>Start: 0.3 → Try: 0.25 → Try: 0.2 → Last resort: 0.15
+</code></pre>
 
 <h3 id="search-tips">Search Tips</h3>
 <p><strong>Be Specific</strong>:</p>
-<div class="codehilite"><pre><span></span><code>❌ &quot;code&quot;
-✅ &quot;authentication code using JWT tokens&quot;
-</code></pre></div>
+<pre><code>❌ "code"
+✅ "authentication code using JWT tokens"
+</code></pre>
 
 <p><strong>Use Context</strong>:</p>
-<div class="codehilite"><pre><span></span><code>❌<span class="w"> </span><span class="s2">&quot;that thing&quot;</span>
-✅<span class="w"> </span><span class="s2">&quot;the database migration script for PostgreSQL&quot;</span>
-</code></pre></div>
+<pre><code>❌ "that thing"
+✅ "the database migration script for PostgreSQL"
+</code></pre>
 
 <p><strong>Combine Keywords</strong>:</p>
-<div class="codehilite"><pre><span></span><code>✅<span class="w"> </span><span class="s2">&quot;React component for user profile display with hooks&quot;</span>
-</code></pre></div>
+<pre><code>✅ "React component for user profile display with hooks"
+</code></pre>
 
 <hr />
 <h2 id="best-practices">Best Practices</h2>
@@ -738,30 +548,30 @@ Lower the threshold step by step:</p>
 <hr />
 <h2 id="example-workflows">Example Workflows</h2>
 <h3 id="research-project">Research Project</h3>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="s">&quot;AI Research&quot;</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">conversations</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Literature Review&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Experiments&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Writing&quot;</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Import</span><span class="w"> </span><span class="n">research</span><span class="w"> </span><span class="n">papers</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="s">&quot;Literature Review&quot;</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">search</span><span class="w"> </span><span class="n">papers</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">findings</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="n">memory</span>
-<span class="mf">6.</span><span class="w"> </span><span class="n">Cross</span><span class="o">-</span><span class="n">reference</span><span class="w"> </span><span class="n">across</span><span class="w"> </span><span class="n">conversations</span>
-</code></pre></div>
+<pre><code>1. Create shared topic "AI Research"
+2. Create conversations: "Literature Review", "Experiments", "Writing"
+3. Import research papers in "Literature Review"
+4. All conversations can search papers
+5. Store findings in shared memory
+6. Cross-reference across conversations
+</code></pre>
 
 <h3 id="software-development">Software Development</h3>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Create</span><span class="w"> </span><span class="n">shared</span><span class="w"> </span><span class="kr">to</span><span class="n">pic</span><span class="w"> </span><span class="s">&quot;My App&quot;</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Import</span><span class="w"> </span><span class="n">documentation</span><span class="p">,</span><span class="w"> </span><span class="n">requirements</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="kr">on</span><span class="n">e</span><span class="w"> </span><span class="n">conversation</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">architecture</span><span class="w"> </span><span class="n">decisions</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">All</span><span class="w"> </span><span class="n">development</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="n">access</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">memory</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="s">&quot;how we decided to handle X&quot;</span>
-<span class="mf">6.</span><span class="w"> </span><span class="n">Consistent</span><span class="w"> </span><span class="n">information</span><span class="w"> </span><span class="n">across</span><span class="w"> </span><span class="n">conversations</span>
-</code></pre></div>
+<pre><code>1. Create shared topic "My App"
+2. Import documentation, requirements in one conversation
+3. Store architecture decisions
+4. All development conversations access same memory
+5. Search for "how we decided to handle X"
+6. Consistent information across conversations
+</code></pre>
 
 <h3 id="personal-knowledge-base">Personal Knowledge Base</h3>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">separate</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">different</span><span class="w"> </span><span class="kr">to</span><span class="n">pics</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Import</span><span class="w"> </span><span class="n">personal</span><span class="w"> </span><span class="ow">not</span><span class="n">es</span><span class="p">,</span><span class="w"> </span><span class="n">articles</span><span class="p">,</span><span class="w"> </span><span class="n">books</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Store</span><span class="w"> </span><span class="n">important</span><span class="w"> </span><span class="n">insights</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="n">across</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">conversations</span><span class="w"> </span><span class="kr">for</span><span class="w"> </span><span class="n">information</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Build</span><span class="w"> </span><span class="n">personal</span><span class="w"> </span><span class="n">knowledge</span><span class="w"> </span><span class="n">graph</span><span class="w"> </span><span class="n">over</span><span class="w"> </span><span class="n">time</span>
-</code></pre></div>
+<pre><code>1. Use separate conversations for different topics
+2. Import personal notes, articles, books
+3. Store important insights
+4. Search across all conversations for information
+5. Build personal knowledge graph over time
+</code></pre>
 
 <hr />
 <h2 id="next-steps">Next Steps</h2>
@@ -776,51 +586,11 @@ Lower the threshold step by step:</p>
 <p><strong>Master SAM's memory system and unlock its full potential!</strong></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

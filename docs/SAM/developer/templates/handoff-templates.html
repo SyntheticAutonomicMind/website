@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Handoff Templates | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Handoff Templates">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/developer/templates/handoff-templates.html">
+    <title>Handoff Templates | SAM</title>
+    <meta name="description" content="SAM templates for human-AI collaboration: prompts, handoffs, and tools.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/developer/templates/handoff-templates.html">
+    <meta property="og:title" content="Handoff Templates | SAM">
+    <meta property="og:description" content="SAM templates for human-AI collaboration: prompts, handoffs, and tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/developer/templates/handoff-templates.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../../" class="nav-brand">
-                <img src="../../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/templates/handoff-templates.html">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../../index.html">Documentation</a> / Handoff Templates
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><a href="../../../SAM/index.html">SAM</a><span class="breadcrumb-separator">/</span><span>Developer</span><span class="breadcrumb-separator">/</span><span>Handoff Templates</span></nav>
         
         <div class="doc-content">
             <h1 id="handoff-templates">Handoff Templates</h1>
@@ -291,108 +68,108 @@
 <h2 id="1-continuation_prompt-template">1. CONTINUATION_PROMPT Template</h2>
 <p><strong>Purpose:</strong> Everything the next session needs to continue immediately, including session history.</p>
 <p><strong>Critical Rule:</strong> This document must be STANDALONE. No external references. The next session should be able to start productive work with ONLY this document.</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Continuation Prompt - [Date] [Time]</span>
+<pre><code># Continuation Prompt - [Date] [Time]
 
-<span class="gu">## Context Summary</span>
+## Context Summary
 [2-3 sentences: What is this project? What were we working on?]
 
 ---
 
-<span class="gu">## Completed This Session</span>
+## Completed This Session
 
-<span class="gu">### [Task/Feature 1]</span>
-<span class="k">-</span><span class="w"> </span>What was done: [Specific description]
-<span class="k">-</span><span class="w"> </span>Files modified: [List files]
-<span class="k">-</span><span class="w"> </span>Testing performed: [What was tested, results]
-<span class="k">-</span><span class="w"> </span>Commits: [Commit hashes/messages]
+### [Task/Feature 1]
+- What was done: [Specific description]
+- Files modified: [List files]
+- Testing performed: [What was tested, results]
+- Commits: [Commit hashes/messages]
 
-<span class="gu">### [Task/Feature 2]</span>
-<span class="k">-</span><span class="w"> </span>What was done: [Specific description]
-<span class="k">-</span><span class="w"> </span>Files modified: [List files]
-<span class="k">-</span><span class="w"> </span>Testing performed: [What was tested, results]
-<span class="k">-</span><span class="w"> </span>Commits: [Commit hashes/messages]
-
----
-
-<span class="gu">## Documentation Updated</span>
-<span class="k">-</span><span class="w"> </span>[List any subsystem docs, flow diagrams, or specs that were updated]
-<span class="k">-</span><span class="w"> </span>[Or &quot;None&quot; if no documentation changes were needed]
+### [Task/Feature 2]
+- What was done: [Specific description]
+- Files modified: [List files]
+- Testing performed: [What was tested, results]
+- Commits: [Commit hashes/messages]
 
 ---
 
-<span class="gu">## Current State</span>
-
-<span class="gu">### Build Status</span>
-<span class="k">-</span><span class="w"> </span>Last build: [Success/Failure]
-<span class="k">-</span><span class="w"> </span>Build command: <span class="sb">`[command]`</span>
-<span class="k">-</span><span class="w"> </span>Known warnings: [List or &quot;None&quot;]
-
-<span class="gu">### Test Status</span>
-<span class="k">-</span><span class="w"> </span>Tests passing: [Yes/No/Partial]
-<span class="k">-</span><span class="w"> </span>Test command: <span class="sb">`[command]`</span>
-<span class="k">-</span><span class="w"> </span>Failing tests: [List or &quot;None&quot;]
-
-<span class="gu">### Runtime Status</span>
-<span class="k">-</span><span class="w"> </span>Application runs: [Yes/No]
-<span class="k">-</span><span class="w"> </span>Known issues: [List or &quot;None&quot;]
+## Documentation Updated
+- [List any subsystem docs, flow diagrams, or specs that were updated]
+- [Or "None" if no documentation changes were needed]
 
 ---
 
-<span class="gu">## Pending Work</span>
+## Current State
 
-<span class="gu">### Priority 1: [Task Name]</span>
-<span class="gs">**Why:**</span> [Why this is important]
-<span class="gs">**Approach:**</span> [How to tackle it]
-<span class="gs">**Files involved:**</span> [Key files]
-<span class="gs">**Success criteria:**</span> [How to know it&#39;s done]
+### Build Status
+- Last build: [Success/Failure]
+- Build command: `[command]`
+- Known warnings: [List or "None"]
 
-<span class="gu">### Priority 2: [Task Name]</span>
-<span class="gs">**Why:**</span> [Why this is important]
-<span class="gs">**Approach:**</span> [How to tackle it]
-<span class="gs">**Files involved:**</span> [Key files]
-<span class="gs">**Success criteria:**</span> [How to know it&#39;s done]
+### Test Status
+- Tests passing: [Yes/No/Partial]
+- Test command: `[command]`
+- Failing tests: [List or "None"]
 
----
-
-<span class="gu">## Session History (Decisions &amp; Lessons)</span>
-
-<span class="gu">### Decisions Made</span>
-<span class="k">-</span><span class="w"> </span><span class="gs">**[Decision 1]:**</span> [What was decided and why]
-<span class="k">-</span><span class="w"> </span><span class="gs">**[Decision 2]:**</span> [What was decided and why]
-
-<span class="gu">### What Worked</span>
-<span class="k">-</span><span class="w"> </span>[Successful approach or decision]
-<span class="k">-</span><span class="w"> </span>[Successful approach or decision]
-
-<span class="gu">### What Didn&#39;t Work</span>
-<span class="k">-</span><span class="w"> </span>[Failed approach and why]
-<span class="k">-</span><span class="w"> </span>[Failed approach and why]
-
-<span class="gu">### Anti-Patterns Discovered</span>
-<span class="k">-</span><span class="w"> </span>[New anti-pattern to avoid]
+### Runtime Status
+- Application runs: [Yes/No]
+- Known issues: [List or "None"]
 
 ---
 
-<span class="gu">## Key Files Reference</span>
-</code></pre></div>
+## Pending Work
+
+### Priority 1: [Task Name]
+**Why:** [Why this is important]
+**Approach:** [How to tackle it]
+**Files involved:** [Key files]
+**Success criteria:** [How to know it's done]
+
+### Priority 2: [Task Name]
+**Why:** [Why this is important]
+**Approach:** [How to tackle it]
+**Files involved:** [Key files]
+**Success criteria:** [How to know it's done]
+
+---
+
+## Session History (Decisions & Lessons)
+
+### Decisions Made
+- **[Decision 1]:** [What was decided and why]
+- **[Decision 2]:** [What was decided and why]
+
+### What Worked
+- [Successful approach or decision]
+- [Successful approach or decision]
+
+### What Didn't Work
+- [Failed approach and why]
+- [Failed approach and why]
+
+### Anti-Patterns Discovered
+- [New anti-pattern to avoid]
+
+---
+
+## Key Files Reference
+</code></pre>
 
 <p>project/
 ├── [key-file-1]    # [What it does]
 ├── [key-file-2]    # [What it does]
 └── [key-dir/]      # [What it contains]</p>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
+<pre><code>---
 
-<span class="cp">## Starting Instructions</span>
+## Starting Instructions
 
-<span class="o">**</span><span class="n">First</span><span class="w"> </span><span class="n">thing</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="k">do</span><span class="o">:**</span>
-<span class="mf">1.</span><span class="w"> </span><span class="p">[</span><span class="n">Specific</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">action</span><span class="p">]</span>
-<span class="mf">2.</span><span class="w"> </span><span class="p">[</span><span class="n">Specific</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="n">action</span><span class="p">]</span>
+**First thing to do:**
+1. [Specific first action]
+2. [Specific second action]
 
-<span class="o">**</span><span class="n">Build</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">verify</span><span class="o">:**</span>
-<span class="err">```</span><span class="n">bash</span>
-<span class="p">[</span><span class="n">build</span><span class="w"> </span><span class="n">command</span><span class="p">]</span>
-<span class="p">[</span><span class="n">test</span><span class="w"> </span><span class="n">command</span><span class="p">]</span>
-</code></pre></div>
+**Build and verify:**
+```bash
+[build command]
+[test command]
+</code></pre>
 
 <p><strong>Then continue with:</strong> [Next task from Priority 1]</p>
 <hr />
@@ -402,188 +179,188 @@
 <li>[Important constraint or rule]</li>
 <li>[Don't forget about X]</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="o">---</span>
+<pre><code>---
 
-<span class="cp">## 2. AGENT_PLAN Template</span>
+## 2. AGENT_PLAN Template
 
-<span class="o">**</span><span class="n">Purpose</span><span class="o">:**</span><span class="w"> </span><span class="n">Detailed</span><span class="w"> </span><span class="n">breakdown</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">remaining</span><span class="w"> </span><span class="n">work</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">investigation</span><span class="w"> </span><span class="n">steps</span><span class="p">.</span>
+**Purpose:** Detailed breakdown of remaining work with investigation steps.
 
-<span class="err">```</span><span class="n">markdown</span>
-<span class="cp"># Agent Plan - [Date] [Time]</span>
+```markdown
+# Agent Plan - [Date] [Time]
 
-<span class="cp">## Remaining Tasks (Priority Order)</span>
+## Remaining Tasks (Priority Order)
 
-<span class="o">---</span>
+---
 
-<span class="cp">### Task 1: [Name]</span>
+### Task 1: [Name]
 
-<span class="o">**</span><span class="n">Priority</span><span class="o">:**</span><span class="w"> </span><span class="n">High</span><span class="o">/</span><span class="n">Medium</span><span class="o">/</span><span class="n">Low</span>
-<span class="o">**</span><span class="n">Estimated</span><span class="w"> </span><span class="n">Time</span><span class="o">:**</span><span class="w"> </span><span class="p">[</span><span class="n">X</span><span class="w"> </span><span class="n">hours</span><span class="p">]</span>
-<span class="o">**</span><span class="n">Dependencies</span><span class="o">:**</span><span class="w"> </span><span class="p">[</span><span class="n">None</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">first</span><span class="p">]</span>
+**Priority:** High/Medium/Low
+**Estimated Time:** [X hours]
+**Dependencies:** [None / Task X must complete first]
 
-<span class="o">**</span><span class="n">Description</span><span class="o">:**</span>
-<span class="p">[</span><span class="n">What</span><span class="w"> </span><span class="n">needs</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">done</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">why</span><span class="p">]</span>
+**Description:**
+[What needs to be done and why]
 
-<span class="o">**</span><span class="n">Investigation</span><span class="w"> </span><span class="n">Steps</span><span class="o">:**</span>
-<span class="mf">1.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">Read</span><span class="w"> </span><span class="p">[</span><span class="n">specific</span><span class="w"> </span><span class="n">file</span><span class="o">/</span><span class="n">section</span><span class="p">]</span>
-<span class="mf">2.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">[</span><span class="n">pattern</span><span class="o">/</span><span class="n">usage</span><span class="p">]</span>
-<span class="mf">3.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="n">Test</span><span class="w"> </span><span class="p">[</span><span class="n">specific</span><span class="w"> </span><span class="n">behavior</span><span class="p">]</span>
-<span class="mf">4.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">Other</span><span class="w"> </span><span class="n">investigation</span><span class="p">]</span>
+**Investigation Steps:**
+1. [ ] Read [specific file/section]
+2. [ ] Search for [pattern/usage]
+3. [ ] Test [specific behavior]
+4. [ ] [Other investigation]
 
-<span class="o">**</span><span class="n">Implementation</span><span class="w"> </span><span class="n">Steps</span><span class="o">:**</span>
-<span class="mf">1.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">Specific</span><span class="w"> </span><span class="n">implementation</span><span class="w"> </span><span class="n">step</span><span class="p">]</span>
-<span class="mf">2.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">Specific</span><span class="w"> </span><span class="n">implementation</span><span class="w"> </span><span class="n">step</span><span class="p">]</span>
-<span class="mf">3.</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">Specific</span><span class="w"> </span><span class="n">implementation</span><span class="w"> </span><span class="n">step</span><span class="p">]</span>
+**Implementation Steps:**
+1. [ ] [Specific implementation step]
+2. [ ] [Specific implementation step]
+3. [ ] [Specific implementation step]
 
-<span class="o">**</span><span class="n">Testing</span><span class="o">:**</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="n">Test</span><span class="w"> </span><span class="k">case</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="no">Test</span><span class="w"> </span><span class="no">case</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="no">Build</span><span class="w"> </span><span class="no">passes</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="no">Integration</span><span class="w"> </span><span class="no">test</span>
+**Testing:**
+- [ ] [Test case 1]
+- [ ] [Test case 2]
+- [ ] Build passes
+- [ ] Integration test
 
-<span class="o">**</span><span class="no">Success</span><span class="w"> </span><span class="no">Criteria</span><span class="p">:</span><span class="o">**</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">Measurable</span><span class="w"> </span><span class="n">outcome</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">Measurable</span><span class="w"> </span><span class="n">outcome</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span>
+**Success Criteria:**
+- [Measurable outcome 1]
+- [Measurable outcome 2]
 
-<span class="o">---</span>
+---
 
-<span class="cp">### Task 2: [Name]</span>
+### Task 2: [Name]
 
-<span class="p">[</span><span class="n">Same</span><span class="w"> </span><span class="n">structure</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span>
+[Same structure as Task 1]
 
-<span class="o">---</span>
+---
 
-<span class="cp">## Known Blockers</span>
+## Known Blockers
 
-<span class="cp">### Blocker: [Name]</span>
-<span class="o">**</span><span class="n">Impact</span><span class="o">:**</span><span class="w"> </span><span class="p">[</span><span class="n">What</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">blocks</span><span class="p">]</span>
-<span class="o">**</span><span class="n">Proposed</span><span class="w"> </span><span class="n">Solution</span><span class="o">:**</span><span class="w"> </span><span class="p">[</span><span class="n">How</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">resolve</span><span class="p">]</span>
-<span class="o">**</span><span class="n">Owner</span><span class="o">:**</span><span class="w"> </span><span class="p">[</span><span class="n">Who</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">resolve</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">needs</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">input</span><span class="p">]</span>
+### Blocker: [Name]
+**Impact:** [What it blocks]
+**Proposed Solution:** [How to resolve]
+**Owner:** [Who can resolve this / needs user input]
 
-<span class="o">---</span>
+---
 
-<span class="cp">## Questions for User</span>
+## Questions for User
 
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">Question</span><span class="w"> </span><span class="n">needing</span><span class="w"> </span><span class="n">clarification</span><span class="p">]</span>
-<span class="o">-</span><span class="w"> </span><span class="p">[</span><span class="n">Decision</span><span class="w"> </span><span class="n">needing</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">input</span><span class="p">]</span>
+- [Question needing clarification]
+- [Decision needing user input]
 
-<span class="o">---</span>
+---
 
-<span class="cp">## Time Estimates</span>
+## Time Estimates
 
-<span class="o">|</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Estimate</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Notes</span><span class="w"> </span><span class="o">|</span>
-<span class="o">|------|----------|-------|</span>
-<span class="o">|</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">hours</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="n">Any</span><span class="w"> </span><span class="n">caveats</span><span class="p">]</span><span class="w"> </span><span class="o">|</span>
-<span class="o">|</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="n">hours</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="p">[</span><span class="n">Any</span><span class="w"> </span><span class="n">caveats</span><span class="p">]</span><span class="w"> </span><span class="o">|</span>
-<span class="o">|</span><span class="w"> </span><span class="o">**</span><span class="n">Total</span><span class="o">**</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">**</span><span class="n">X</span><span class="w"> </span><span class="n">hours</span><span class="o">**</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">|</span>
-</code></pre></div>
+| Task | Estimate | Notes |
+|------|----------|-------|
+| Task 1 | X hours | [Any caveats] |
+| Task 2 | X hours | [Any caveats] |
+| **Total** | **X hours** | |
+</code></pre>
 
 <hr />
 <h2 id="project-specific-additions">Project-Specific Additions</h2>
 <p>The two mandatory documents (CONTINUATION_PROMPT and AGENT_PLAN) work for any project. Some projects benefit from additional handoff documents. These are optional - add them when they serve your workflow.</p>
 <h3 id="3-features-template">FEATURES Template</h3>
 <p><strong>Purpose:</strong> New features implemented this session, for external consumers like website or marketing.</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Features - [Date]</span>
+<pre><code># Features - [Date]
 
-<span class="gu">## New Features</span>
+## New Features
 
-<span class="gu">### [Feature Name]</span>
+### [Feature Name]
 
-<span class="gs">**What it does:**</span>
+**What it does:**
 [User-facing description of the feature]
 
-<span class="gs">**How to use it:**</span>
+**How to use it:**
 [Instructions or examples for end users]
 
-<span class="gs">**Technical details:**</span>
+**Technical details:**
 [Brief technical notes if relevant]
 
 ---
 
-<span class="gu">### [Feature Name 2]</span>
+### [Feature Name 2]
 
-<span class="gs">**What it does:**</span>
+**What it does:**
 [User-facing description]
 
-<span class="gs">**How to use it:**</span>
+**How to use it:**
 [Instructions or examples]
 
 ---
 
-<span class="gu">## Improvements</span>
+## Improvements
 
-<span class="k">-</span><span class="w"> </span>[<span class="nl">Improvement 1</span>]: <span class="na">[Brief description of what got better]</span>
-<span class="k">-</span><span class="w"> </span>[<span class="nl">Improvement 2</span>]: <span class="na">[Brief description of what got better]</span>
-
----
-
-<span class="gu">## Bug Fixes (User-Facing)</span>
-
-<span class="k">-</span><span class="w"> </span>[<span class="nl">Bug fix 1</span>]: <span class="na">[What was broken and is now fixed]</span>
-<span class="k">-</span><span class="w"> </span>[<span class="nl">Bug fix 2</span>]: <span class="na">[What was broken and is now fixed]</span>
+- [Improvement 1]: [Brief description of what got better]
+- [Improvement 2]: [Brief description of what got better]
 
 ---
 
-<span class="gu">## Documentation Updates</span>
+## Bug Fixes (User-Facing)
 
-<span class="k">-</span><span class="w"> </span>[<span class="nl">New doc 1</span>]: <span class="na">[Brief description]</span>
-<span class="k">-</span><span class="w"> </span>[<span class="nl">Updated doc 1</span>]: <span class="na">[What changed]</span>
-</code></pre></div>
+- [Bug fix 1]: [What was broken and is now fixed]
+- [Bug fix 2]: [What was broken and is now fixed]
+
+---
+
+## Documentation Updates
+
+- [New doc 1]: [Brief description]
+- [Updated doc 1]: [What changed]
+</code></pre>
 
 <hr />
 <h3 id="4-changelog-template">CHANGELOG Template</h3>
 <p><strong>Purpose:</strong> User-facing summary of changes (for release notes, website, etc.).</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Changelog - [Date]</span>
+<pre><code># Changelog - [Date]
 
-<span class="gu">## [Version or Date Range]</span>
+## [Version or Date Range]
 
-<span class="gu">### Added</span>
-<span class="k">-</span><span class="w"> </span>[New feature description]
-<span class="k">-</span><span class="w"> </span>[New feature description]
+### Added
+- [New feature description]
+- [New feature description]
 
-<span class="gu">### Changed</span>
-<span class="k">-</span><span class="w"> </span>[Change description]
-<span class="k">-</span><span class="w"> </span>[Change description]
+### Changed
+- [Change description]
+- [Change description]
 
-<span class="gu">### Fixed</span>
-<span class="k">-</span><span class="w"> </span>[Bug fix description]
-<span class="k">-</span><span class="w"> </span>[Bug fix description]
+### Fixed
+- [Bug fix description]
+- [Bug fix description]
 
-<span class="gu">### Removed</span>
-<span class="k">-</span><span class="w"> </span>[Removed feature/code description]
+### Removed
+- [Removed feature/code description]
 
-<span class="gu">### Security</span>
-<span class="k">-</span><span class="w"> </span>[Security-related change]
+### Security
+- [Security-related change]
 
-<span class="gu">### Breaking Changes</span>
-<span class="k">-</span><span class="w"> </span>[Breaking change with migration notes]
+### Breaking Changes
+- [Breaking change with migration notes]
 
 ---
 
-<span class="gu">## Detailed Changes</span>
+## Detailed Changes
 
-<span class="gu">### [Feature Name]</span>
+### [Feature Name]
 
 [Longer description for documentation/marketing purposes]
 
-<span class="gs">**What it does:**</span>
+**What it does:**
 [User-facing description]
 
-<span class="gs">**How to use it:**</span>
+**How to use it:**
 [Instructions or examples]
 
 ---
 
-<span class="gu">## Migration Notes</span>
+## Migration Notes
 
 [If there are breaking changes, explain how users should update]
 
 ---
 
-<span class="gu">## Contributors</span>
+## Contributors
 
-<span class="k">-</span><span class="w"> </span>[Name/handle] - [Contribution]
-</code></pre></div>
+- [Name/handle] - [Contribution]
+</code></pre>
 
 <hr />
 <h2 id="usage-tips">Usage Tips</h2>
@@ -609,13 +386,13 @@
 </ul>
 <h3 id="organizing-handoffs">Organizing Handoffs</h3>
 <p>Recommended directory structure:</p>
-<div class="codehilite"><pre><span></span><code>ai-assisted/
+<pre><code>ai-assisted/
 ├── YYYYMMDD/
 │   └── HHMM/
 │       ├── CONTINUATION_PROMPT.md   # Mandatory
 │       ├── AGENT_PLAN.md            # Mandatory
 │       └── NOTES.md                 # Optional
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="related-templates">Related Templates</h2>
@@ -628,51 +405,11 @@
 </ul>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../../index.html">SAM</a></li>
-                        <li><a href="../../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../../js/main.js?v=15"></script>
+    <script src="../../../../js/include.js"></script>
 </body>
 </html>

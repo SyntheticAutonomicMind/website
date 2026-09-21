@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAM Architecture | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: SAM Architecture">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/developer/architecture.html">
+    <title>SAM Architecture | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/developer/architecture.html">
+    <meta property="og:title" content="SAM Architecture | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/developer/architecture.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/architecture.html" data-prev="docs/SAM/developer/developers-guide.html|Architecture" data-next="docs/SAM/developer/api-reference.html|API Reference">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Architecture
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Developer</span><span class="breadcrumb-separator">/</span><span>SAM Architecture</span></nav>
         
         <div class="doc-content">
             <h1 id="sam-architecture">SAM Architecture</h1>
@@ -286,82 +63,80 @@
 - <strong>Privacy</strong>: Local-first design with optional cloud integration
 - <strong>Performance</strong>: Native Swift with Metal acceleration for local models</p>
 <p><strong>High-Level Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">graph</span><span class="w"> </span><span class="n">TB</span>
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;User Interface Layer&quot;</span>
-<span class="w">        </span><span class="n">UI</span><span class="p">[</span><span class="n">SwiftUI</span><span class="w"> </span><span class="n">User</span><span class="w"> </span><span class="n">Interface</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">ChatWidget</span><span class="p">,</span><span class="w"> </span><span class="n">Preferences</span><span class="p">,</span><span class="w"> </span><span class="n">Help</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+<pre><code>graph TB
+    subgraph "User Interface Layer"
+        UI[SwiftUI User Interface<br/>ChatWidget, Preferences, Help]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Conversation Management&quot;</span>
-<span class="w">        </span><span class="n">CM</span><span class="p">[</span><span class="n">ConversationManager</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Lifecycle</span><span class="p">,</span><span class="w"> </span><span class="n">Persistence</span><span class="p">,</span><span class="w"> </span><span class="n">State</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Topics</span><span class="p">[</span><span class="n">Shared</span><span class="w"> </span><span class="n">Topics</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Cross</span><span class="o">-</span><span class="n">Conversation</span><span class="w"> </span><span class="n">Memory</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Conversation Management"
+        CM[ConversationManager<br/>Lifecycle, Persistence, State]
+        Topics[Shared Topics<br/>Cross-Conversation Memory]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Voice Framework&quot;</span>
-<span class="w">        </span><span class="n">VoiceMgr</span><span class="p">[</span><span class="n">VoiceManager</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">TTS</span><span class="p">,</span><span class="w"> </span><span class="n">Wake</span><span class="w"> </span><span class="n">Word</span><span class="p">,</span><span class="w"> </span><span class="n">Speech</span><span class="w"> </span><span class="n">Input</span><span class="p">]</span>
-<span class="w">        </span><span class="n">AudioMgr</span><span class="p">[</span><span class="n">AudioDeviceManager</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Device</span><span class="w"> </span><span class="n">Selection</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Voice Framework"
+        VoiceMgr[VoiceManager<br/>TTS, Wake Word, Speech Input]
+        AudioMgr[AudioDeviceManager<br/>Device Selection]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;API Framework&quot;</span>
-<span class="w">        </span><span class="n">EO</span><span class="p">[</span><span class="n">EndpointManager</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">RESTful</span><span class="w"> </span><span class="n">API</span><span class="w"> </span><span class="n">Server</span><span class="p">]</span>
-<span class="w">        </span><span class="n">AO</span><span class="p">[</span><span class="n">AgentOrchestrator</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Request</span><span class="w"> </span><span class="n">Processing</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "API Framework"
+        EO[EndpointManager<br/>RESTful API Server]
+        AO[AgentOrchestrator<br/>Request Processing]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Provider Layer&quot;</span>
-<span class="w">        </span><span class="n">OpenAI</span><span class="p">[</span><span class="n">OpenAI</span><span class="w"> </span><span class="n">Provider</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">GPT</span><span class="mi">-4</span><span class="p">,</span><span class="w"> </span><span class="n">GPT</span><span class="mf">-3.5</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Copilot</span><span class="p">[</span><span class="n">GitHub</span><span class="w"> </span><span class="n">Copilot</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">GPT</span><span class="mi">-4</span><span class="p">,</span><span class="w"> </span><span class="n">o1</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Anthropic</span><span class="p">[</span><span class="n">Anthropic</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Claude</span><span class="w"> </span><span class="mf">3.5</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Gemini</span><span class="p">[</span><span class="n">Google</span><span class="w"> </span><span class="n">Gemini</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Local</span><span class="p">[</span><span class="n">Local</span><span class="w"> </span><span class="n">Models</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">MLX</span><span class="p">,</span><span class="w"> </span><span class="n">GGUF</span><span class="p">]</span>
-<span class="w">        </span><span class="n">ALICE</span><span class="p">[</span><span class="n">ALICE</span><span class="w"> </span><span class="n">Provider</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Remote</span><span class="w"> </span><span class="n">Stable</span><span class="w"> </span><span class="n">Diffusion</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Provider Layer"
+        OpenAI[OpenAI Provider<br/>GPT-4, GPT-3.5]
+        Copilot[GitHub Copilot<br/>GPT-4, Claude, o1]
+        Gemini[Google Gemini<br/>Gemini 2.5 Pro, Flash]
+        Local[Local Models<br/>MLX, GGUF]
+        ALICE[ALICE Provider<br/>Remote Stable Diffusion]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;MCP Tool Execution&quot;</span>
-<span class="w">        </span><span class="n">Think</span><span class="p">[</span><span class="n">think</span><span class="p">]</span>
-<span class="w">        </span><span class="n">FileOps</span><span class="p">[</span><span class="n">file_operations</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Terminal</span><span class="p">[</span><span class="n">terminal_operations</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Memory</span><span class="p">[</span><span class="n">memory_operations</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Web</span><span class="p">[</span><span class="n">web_operations</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Docs</span><span class="p">[</span><span class="n">document_operations</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Build</span><span class="p">[</span><span class="n">build_and_version_control</span><span class="p">]</span>
-<span class="w">        </span><span class="n">Subagent</span><span class="p">[</span><span class="n">run_subagent</span><span class="p">]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "MCP Tool Execution"
+        Think[think]
+        FileOps[file_operations]
+        Terminal[terminal_operations]
+        Memory[memory_operations]
+        Web[web_operations]
+        Docs[document_operations]
+        Build[version_control]
+        Subagent[agent_operations]
+    end
 
-<span class="w">    </span><span class="n">subgraph</span><span class="w"> </span><span class="s">&quot;Memory &amp; Intelligence&quot;</span>
-<span class="w">        </span><span class="n">VectorRAG</span><span class="p">[</span><span class="n">Vector</span><span class="w"> </span><span class="n">RAG</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Semantic</span><span class="w"> </span><span class="n">Search</span><span class="p">]</span>
-<span class="w">        </span><span class="n">YaRN</span><span class="p">[</span><span class="n">YaRN</span><span class="w"> </span><span class="n">Context</span><span class="w"> </span><span class="n">Processor</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Dynamic</span><span class="w"> </span><span class="n">Scaling</span><span class="p">]</span>
-<span class="w">        </span><span class="n">MemDB</span><span class="p">[(</span><span class="n">SQLite</span><span class="w"> </span><span class="n">Memory</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span><span class="n">Conversation</span><span class="o">/</span><span class="n">Topic</span><span class="w"> </span><span class="n">Scoped</span><span class="p">)]</span>
-<span class="w">    </span><span class="n">end</span>
+    subgraph "Memory & Intelligence"
+        VectorRAG[Vector RAG<br/>Semantic Search]
+        YaRN[YaRN Context Processor<br/>Dynamic Scaling]
+        MemDB[(SQLite Memory<br/>Conversation/Topic Scoped)]
+    end
 
-<span class="w">    </span><span class="n">UI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">User</span><span class="w"> </span><span class="n">Input</span><span class="o">|</span><span class="w"> </span><span class="n">CM</span>
-<span class="w">    </span><span class="n">UI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Voice</span><span class="w"> </span><span class="n">Input</span><span class="o">|</span><span class="w"> </span><span class="n">VoiceMgr</span>
-<span class="w">    </span><span class="n">VoiceMgr</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Transcribed</span><span class="w"> </span><span class="n">Text</span><span class="o">|</span><span class="w"> </span><span class="n">CM</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Stream</span><span class="w"> </span><span class="n">Response</span><span class="o">|</span><span class="w"> </span><span class="n">VoiceMgr</span>
-<span class="w">    </span><span class="n">VoiceMgr</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Use</span><span class="w"> </span><span class="n">Settings</span><span class="o">|</span><span class="w"> </span><span class="n">AudioMgr</span>
-<span class="w">    </span><span class="n">CM</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Manage</span><span class="w"> </span><span class="n">State</span><span class="o">|</span><span class="w"> </span><span class="n">Topics</span>
-<span class="w">    </span><span class="n">CM</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Process</span><span class="o">|</span><span class="w"> </span><span class="n">AO</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Select</span><span class="w"> </span><span class="n">Provider</span><span class="o">|</span><span class="w"> </span><span class="n">OpenAI</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Select</span><span class="w"> </span><span class="n">Provider</span><span class="o">|</span><span class="w"> </span><span class="n">Copilot</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Select</span><span class="w"> </span><span class="n">Provider</span><span class="o">|</span><span class="w"> </span><span class="n">Anthropic</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Select</span><span class="w"> </span><span class="n">Provider</span><span class="o">|</span><span class="w"> </span><span class="n">Gemini</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Select</span><span class="w"> </span><span class="n">Provider</span><span class="o">|</span><span class="w"> </span><span class="n">Local</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Think</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">FileOps</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Terminal</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Memory</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Web</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Docs</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Build</span>
-<span class="w">    </span><span class="n">OpenAI</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Request</span><span class="w"> </span><span class="n">Tools</span><span class="o">|</span><span class="w"> </span><span class="n">Subagent</span>
-<span class="w">    </span><span class="n">Memory</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Store</span><span class="o">/</span><span class="n">Retrieve</span><span class="o">|</span><span class="w"> </span><span class="n">VectorRAG</span>
-<span class="w">    </span><span class="n">VectorRAG</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Persist</span><span class="o">|</span><span class="w"> </span><span class="n">MemDB</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Context</span><span class="w"> </span><span class="n">Processing</span><span class="o">|</span><span class="w"> </span><span class="n">YaRN</span>
-<span class="w">    </span><span class="n">YaRN</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Enhanced</span><span class="w"> </span><span class="n">Context</span><span class="o">|</span><span class="w"> </span><span class="n">VectorRAG</span>
-<span class="w">    </span><span class="n">Topics</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Shared</span><span class="w"> </span><span class="n">Memory</span><span class="o">|</span><span class="w"> </span><span class="n">MemDB</span>
-<span class="w">    </span><span class="n">Subagent</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Create</span><span class="w"> </span><span class="n">New</span><span class="o">|</span><span class="w"> </span><span class="n">AO</span>
-<span class="w">    </span><span class="n">AO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Stream</span><span class="w"> </span><span class="n">Response</span><span class="o">|</span><span class="w"> </span><span class="n">CM</span>
-<span class="w">    </span><span class="n">CM</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">Display</span><span class="o">|</span><span class="w"> </span><span class="n">UI</span>
-<span class="w">    </span><span class="n">EO</span><span class="w"> </span><span class="o">--&gt;|</span><span class="n">HTTP</span><span class="w"> </span><span class="n">API</span><span class="o">|</span><span class="w"> </span><span class="n">AO</span>
-</code></pre></div>
+    UI -->|User Input| CM
+    UI -->|Voice Input| VoiceMgr
+    VoiceMgr -->|Transcribed Text| CM
+    AO -->|Stream Response| VoiceMgr
+    VoiceMgr -->|Use Settings| AudioMgr
+    CM -->|Manage State| Topics
+    CM -->|Process| AO
+    AO -->|Select Provider| OpenAI
+    AO -->|Select Provider| Copilot
+    AO -->|Select Provider| Gemini
+    AO -->|Select Provider| Local
+    OpenAI -->|Request Tools| Think
+    OpenAI -->|Request Tools| FileOps
+    OpenAI -->|Request Tools| Terminal
+    OpenAI -->|Request Tools| Memory
+    OpenAI -->|Request Tools| Web
+    OpenAI -->|Request Tools| Docs
+    OpenAI -->|Request Tools| Build
+    OpenAI -->|Request Tools| Subagent
+    Memory -->|Store/Retrieve| VectorRAG
+    VectorRAG -->|Persist| MemDB
+    AO -->|Context Processing| YaRN
+    YaRN -->|Enhanced Context| VectorRAG
+    Topics -->|Shared Memory| MemDB
+    Subagent -->|Create New| AO
+    AO -->|Stream Response| CM
+    CM -->|Display| UI
+    EO -->|HTTP API| AO
+</code></pre>
 
 <hr />
 <h2 id="core-components">Core Components</h2>
@@ -378,22 +153,22 @@
 - <code>EnhancedMessage</code>: Message with metadata
 - <code>MessageBus</code>: Single source of truth for messages</p>
 <p><strong>State Management</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="n">Published</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">conversations</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">ConversationModel</span><span class="p">]</span>
-<span class="p">@</span><span class="n">Published</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">activeConversation</span><span class="p">:</span><span class="w"> </span><span class="n">ConversationModel</span><span class="p">?</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">memoryManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">MemoryManager</span><span class="p">()</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">vectorRAGService</span><span class="p">:</span><span class="w"> </span><span class="n">VectorRAGService</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">yarnContextProcessor</span><span class="p">:</span><span class="w"> </span><span class="n">YaRNContextProcessor</span>
-</code></pre></div>
+<pre><code>@Published public var conversations: [ConversationModel]
+@Published public var activeConversation: ConversationModel?
+public let memoryManager = MemoryManager()
+public let vectorRAGService: VectorRAGService
+public let yarnContextProcessor: YaRNContextProcessor
+</code></pre>
 
 <p><strong>Per-Conversation Storage Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code>~/Library/Application Support/SAM/conversations/
+<pre><code>~/Library/Application Support/SAM/conversations/
 ├── {UUID}/
 │   ├── conversation.json    # Single conversation data
 │   ├── tasks.json           # Agent todo list
 │   └── .vectorrag/          # Conversation-scoped RAG
 ├── active-conversation.json
 └── backups/
-</code></pre></div>
+</code></pre>
 
 <p>Each conversation is stored in its own directory, providing:
 - O(1) save time per conversation (vs O(n) with monolithic file)
@@ -403,32 +178,32 @@
 <p><strong>Location</strong>: Sources/ConversationEngine/MessageBus.swift</p>
 <p>The MessageBus implements the <strong>Single Source of Truth</strong> pattern for all message operations.</p>
 <p><strong>Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">classDiagram</span>
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="n">MessageBus</span><span class="w"> </span><span class="err">{</span>
-<span class="w">        </span><span class="o">+</span><span class="nl">messages</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">EnhancedMessage</span><span class="o">]</span>
-<span class="w">        </span><span class="o">-</span><span class="nl">messageCache</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">UUID: Int</span><span class="o">]</span>
-<span class="w">        </span><span class="o">+</span><span class="n">addUserMessage</span><span class="p">()</span><span class="w"> </span><span class="n">UUID</span>
-<span class="w">        </span><span class="o">+</span><span class="n">addAssistantMessage</span><span class="p">()</span><span class="w"> </span><span class="n">UUID</span>
-<span class="w">        </span><span class="o">+</span><span class="n">updateStreamingMessage</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">)</span>
-<span class="w">        </span><span class="o">+</span><span class="n">completeStreamingMessage</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
-<span class="w">        </span><span class="o">-</span><span class="n">scheduleSave</span><span class="p">()</span>
-<span class="w">        </span><span class="o">-</span><span class="n">notifyConversationOfChanges</span><span class="p">()</span>
-<span class="w">    </span><span class="err">}</span>
+<pre><code>classDiagram
+    class MessageBus {
+        +messages: [EnhancedMessage]
+        -messageCache: [UUID: Int]
+        +addUserMessage() UUID
+        +addAssistantMessage() UUID
+        +updateStreamingMessage(id, content)
+        +completeStreamingMessage(id)
+        -scheduleSave()
+        -notifyConversationOfChanges()
+    }
 
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="n">ConversationModel</span><span class="w"> </span><span class="err">{</span>
-<span class="w">        </span><span class="o">+</span><span class="nl">messages</span><span class="p">:</span><span class="w"> </span><span class="o">[</span><span class="n">EnhancedMessage</span><span class="o">]</span>
-<span class="w">        </span><span class="o">+</span><span class="nl">messageBus</span><span class="p">:</span><span class="w"> </span><span class="n">MessageBus</span><span class="vm">?</span>
-<span class="w">        </span><span class="o">+</span><span class="n">syncMessagesFromMessageBus</span><span class="p">()</span>
-<span class="w">    </span><span class="err">}</span>
+    class ConversationModel {
+        +messages: [EnhancedMessage]
+        +messageBus: MessageBus?
+        +syncMessagesFromMessageBus()
+    }
 
-<span class="w">    </span><span class="k">class</span><span class="w"> </span><span class="n">ChatWidget</span><span class="w"> </span><span class="err">{</span>
-<span class="w">        </span><span class="o">+</span><span class="n">observes</span><span class="w"> </span><span class="n">messages</span>
-<span class="w">        </span><span class="o">+</span><span class="n">displays</span><span class="w"> </span><span class="nc">real</span><span class="o">-</span><span class="nc">time</span><span class="w"> </span><span class="n">updates</span>
-<span class="w">    </span><span class="err">}</span>
+    class ChatWidget {
+        +observes messages
+        +displays real-time updates
+    }
 
-<span class="w">    </span><span class="n">MessageBus</span><span class="w"> </span><span class="c1">--&gt; ConversationModel : syncs to</span>
-<span class="w">    </span><span class="n">ConversationModel</span><span class="w"> </span><span class="c1">--&gt; ChatWidget : observes</span>
-</code></pre></div>
+    MessageBus --> ConversationModel : syncs to
+    ConversationModel --> ChatWidget : observes
+</code></pre>
 
 <p><strong>Key Principles</strong>:
 - All message creation/updates go through MessageBus
@@ -452,14 +227,14 @@
 - Dynamic iteration adjustment
 - Subagent spawning</p>
 <p><strong>Workflow Loop</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Receive</span><span class="w"> </span><span class="n">user</span><span class="w"> </span><span class="n">message</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Add</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">context</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Call</span><span class="w"> </span><span class="n">LLM</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="n">tools</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Parse</span><span class="w"> </span><span class="n">tool</span><span class="w"> </span><span class="n">calls</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Execute</span><span class="w"> </span><span class="n">tools</span>
-<span class="mf">6.</span><span class="w"> </span><span class="n">Inject</span><span class="w"> </span><span class="n">results</span>
-<span class="mf">7.</span><span class="w"> </span><span class="n">Continue</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">completion</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">iteration</span><span class="w"> </span><span class="n">limit</span>
-</code></pre></div>
+<pre><code>1. Receive user message
+2. Add to context
+3. Call LLM with available tools
+4. Parse tool calls
+5. Execute tools
+6. Inject results
+7. Continue until completion or iteration limit
+</code></pre>
 
 <h3 id="4-memorymanager">4. MemoryManager</h3>
 <p><strong>Location</strong>: Sources/ConversationEngine/MemoryManager.swift</p>
@@ -472,17 +247,17 @@
 - Lazy loading on-demand
 - Automatic cleanup</p>
 <p><strong>Operations</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">storeMemory</span><span class="p">(</span><span class="n">content</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">conversationId</span><span class="p">:</span><span class="w"> </span><span class="n">UUID</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
-<span class="kd">func</span><span class="w"> </span><span class="nf">retrieveRelevantMemories</span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="n">query</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
-<span class="kd">func</span><span class="w"> </span><span class="nf">searchAllConversations</span><span class="p">(</span><span class="n">query</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
-</code></pre></div>
+<pre><code>func storeMemory(content: String, conversationId: UUID, ...)
+func retrieveRelevantMemories(for query: String, ...)
+func searchAllConversations(query: String, ...)
+</code></pre>
 
 <hr />
 <h2 id="memory-intelligence-layer">Memory &amp; Intelligence Layer</h2>
 <h3 id="vector-rag-service">Vector RAG Service</h3>
 <p><strong>Location</strong>: Sources/ConversationEngine/VectorRAGService.swift</p>
 <p><strong>Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Document Input
+<pre><code>Document Input
     ↓
 DocumentChunker (semantic chunking)
     ↓
@@ -493,7 +268,7 @@ MemoryManager (SQLite storage with vectors)
 Semantic Search (cosine similarity)
     ↓
 Ranked Results
-</code></pre></div>
+</code></pre>
 
 <p><strong>Components</strong>:
 - <strong>DocumentChunker</strong>: Intelligent content segmentation
@@ -501,66 +276,66 @@ Ranked Results
 - <strong>ProcessedChunk</strong>: Container for chunks + embeddings
 - <strong>SemanticSearchResult</strong>: Search results with scoring</p>
 <p><strong>Key Algorithms</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">chunkDocument</span><span class="p">(</span><span class="kc">_</span><span class="w"> </span><span class="n">document</span><span class="p">:</span><span class="w"> </span><span class="n">RAGDocument</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">DocumentChunk</span><span class="p">]</span>
-<span class="kd">func</span><span class="w"> </span><span class="nf">generateEmbedding</span><span class="p">(</span><span class="k">for</span><span class="w"> </span><span class="n">text</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="nb">Double</span><span class="p">]</span>
-<span class="kd">func</span><span class="w"> </span><span class="nf">semanticSearch</span><span class="p">(</span><span class="n">query</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">threshold</span><span class="p">:</span><span class="w"> </span><span class="nb">Double</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="n">Result</span><span class="p">]</span>
-</code></pre></div>
+<pre><code>func chunkDocument(_ document: RAGDocument) -> [DocumentChunk]
+func generateEmbedding(for text: String) -> [Double]
+func semanticSearch(query: String, threshold: Double) -> [Result]
+</code></pre>
 
 <h3 id="yarn-context-processor">YaRN Context Processor</h3>
 <p><strong>Location</strong>: Sources/ConversationEngine/YaRNContextProcessor.swift</p>
 <p><strong>Purpose</strong>: Dynamic context window management with intelligent compression</p>
 <p><strong>Profiles</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="p">`</span><span class="k">default</span><span class="p">`</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">YaRNConfig</span><span class="p">(</span>
-<span class="w">    </span><span class="n">baseContextLength</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span><span class="p">,</span>
-<span class="w">    </span><span class="n">extendedContextLength</span><span class="p">:</span><span class="w"> </span><span class="mi">32768</span><span class="p">,</span>
-<span class="w">    </span><span class="n">scalingFactor</span><span class="p">:</span><span class="w"> </span><span class="mf">4.0</span><span class="p">,</span>
-<span class="w">    </span><span class="n">attentionFactor</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
-<span class="w">    </span><span class="n">compressionThreshold</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8</span>
-<span class="p">)</span>
+<pre><code>public static let `default` = YaRNConfig(
+    baseContextLength: 8192,
+    extendedContextLength: 32768,
+    scalingFactor: 4.0,
+    attentionFactor: 0.1,
+    compressionThreshold: 0.8
+)
 
-<span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">mega</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">YaRNConfig</span><span class="p">(</span>
-<span class="w">    </span><span class="n">baseContextLength</span><span class="p">:</span><span class="w"> </span><span class="mi">65536</span><span class="p">,</span>
-<span class="w">    </span><span class="n">extendedContextLength</span><span class="p">:</span><span class="w"> </span><span class="mi">134217728</span><span class="p">,</span><span class="w"> </span><span class="c1">// 128M</span>
-<span class="w">    </span><span class="n">scalingFactor</span><span class="p">:</span><span class="w"> </span><span class="mf">2048.0</span><span class="p">,</span>
-<span class="w">    </span><span class="n">attentionFactor</span><span class="p">:</span><span class="w"> </span><span class="mf">0.001</span><span class="p">,</span>
-<span class="w">    </span><span class="n">compressionThreshold</span><span class="p">:</span><span class="w"> </span><span class="mf">0.95</span>
-<span class="p">)</span>
-</code></pre></div>
+public static let mega = YaRNConfig(
+    baseContextLength: 65536,
+    extendedContextLength: 134217728, // 128M
+    scalingFactor: 2048.0,
+    attentionFactor: 0.001,
+    compressionThreshold: 0.95
+)
+</code></pre>
 
 <p><strong>Processing Pipeline</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="n">Analyze</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="n">importance</span>
-<span class="mf">2.</span><span class="w"> </span><span class="n">Identify</span><span class="w"> </span><span class="n">preservation</span><span class="w"> </span><span class="n">candidates</span>
-<span class="mf">3.</span><span class="w"> </span><span class="n">Apply</span><span class="w"> </span><span class="n">semantic</span><span class="w"> </span><span class="n">clustering</span>
-<span class="mf">4.</span><span class="w"> </span><span class="n">Calculate</span><span class="w"> </span><span class="n">compression</span><span class="w"> </span><span class="n">targets</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Generate</span><span class="w"> </span><span class="n">compressed</span><span class="w"> </span><span class="kr">cont</span><span class="n">ext</span>
-<span class="mf">6.</span><span class="w"> </span><span class="n">Archive</span><span class="w"> </span><span class="n">rolled</span><span class="o">-</span><span class="n">off</span><span class="w"> </span><span class="n">messages</span><span class="w"> </span><span class="kr">to</span><span class="w"> </span><span class="kr">Cont</span><span class="n">extArchiveManager</span>
-<span class="mf">7.</span><span class="w"> </span><span class="n">Cache</span><span class="w"> </span><span class="n">result</span>
-</code></pre></div>
+<pre><code>1. Analyze message importance
+2. Identify preservation candidates
+3. Apply semantic clustering
+4. Calculate compression targets
+5. Generate compressed context
+6. Archive rolled-off messages to ContextArchiveManager
+7. Cache result
+</code></pre>
 
 <h3 id="context-archive-system">Context Archive System</h3>
 <p><strong>Location</strong>: Sources/ConversationEngine/ContextArchiveManager.swift</p>
 <p>When YaRN compresses conversations, older messages are archived rather than discarded.</p>
 <p><strong>Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Active Context (Fits model window)
+<pre><code>Active Context (Fits model window)
     ↓ YaRN Compression
 Rolled-Off Messages
     ↓
 ContextArchiveManager (SQLite)
     ↓
-recall_history Tool (MCP)
+memory_operations (recall_history operation)
     ↓
 Agent retrieves archived context on demand
-</code></pre></div>
+</code></pre>
 
 <p><strong>Key Features</strong>:
 - SQLite-backed storage for archived context
 - Topic-wide search capability for shared topics
 - Preserves rolled-off messages with summaries and key topics
-- On-demand retrieval via <code>recall_history</code> tool</p>
+- On-demand retrieval via <code>recall_history</code> operation (memory_operations)</p>
 <h3 id="shared-topics">Shared Topics</h3>
 <p><strong>Location</strong>: Sources/SharedData/SharedTopicManager.swift</p>
 <p><strong>Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Topic Storage (SQLite shared-data.db)
+<pre><code>Topic Storage (SQLite shared-data.db)
     ↓
 Topic Metadata (id, name, description)
     ↓
@@ -569,36 +344,36 @@ Workspace Directory (~/SAM/{topic-name}/)
 Effective Scope Resolution
     ↓
 Memory/File/Terminal Operations
-</code></pre></div>
+</code></pre>
 
 <p><strong>Effective Scope Pattern</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">let</span><span class="w"> </span><span class="nv">effectiveScopeId</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">sharedTopicEnabled</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">topic</span><span class="p">.</span><span class="n">id</span>
-<span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">conversation</span><span class="p">.</span><span class="n">id</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>let effectiveScopeId = if sharedTopicEnabled {
+    topic.id
+} else {
+    conversation.id
+}
+</code></pre>
 
 <hr />
 <h2 id="tool-system-architecture">Tool System Architecture</h2>
 <h3 id="mcp-framework">MCP Framework</h3>
 <p><strong>Location</strong>: Sources/MCPFramework/</p>
 <p><strong>Tool Interface</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">protocol</span><span class="w"> </span><span class="nc">MCPTool</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">name</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">description</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">parameters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolParameter</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
+<pre><code>public protocol MCPTool {
+    var name: String { get }
+    var description: String { get }
+    var parameters: [String: MCPToolParameter] { get }
 
-<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="n">parameters</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="nb">Any</span><span class="p">],</span><span class="w"> </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">MCPExecutionContext</span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">MCPToolResult</span>
-<span class="p">}</span>
-</code></pre></div>
+    func execute(parameters: [String: Any], context: MCPExecutionContext) async -> MCPToolResult
+}
+</code></pre>
 
 <p><strong>Consolidated Tools</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">protocol</span><span class="w"> </span><span class="nc">ConsolidatedMCP</span><span class="p">:</span><span class="w"> </span><span class="n">MCPTool</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">var</span><span class="w"> </span><span class="nv">supportedOperations</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kr">get</span><span class="w"> </span><span class="p">}</span>
-<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">route</span><span class="p">(</span><span class="n">operation</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">,</span><span class="w"> </span><span class="n">params</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nb">String</span><span class="p">:</span><span class="w"> </span><span class="nb">Any</span><span class="p">],</span><span class="w"> </span><span class="n">context</span><span class="p">:</span><span class="w"> </span><span class="n">MCPExecutionContext</span><span class="p">)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">MCPToolResult</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>public protocol ConsolidatedMCP: MCPTool {
+    var supportedOperations: [String] { get }
+    func route(operation: String, params: [String: Any], context: MCPExecutionContext) async -> MCPToolResult
+}
+</code></pre>
 
 <p><strong>Core MCP Tools</strong>:
 1. <code>think</code> - Planning and analysis
@@ -606,130 +381,137 @@ Memory/File/Terminal Operations
 3. <code>read_tool_result</code> - Large result retrieval
 4. <code>user_collaboration</code> - User input requests
 5. <code>file_operations</code> - File operations (read, search, write)
-6. <code>terminal_operations</code> - Terminal operations and session management
-7. <code>memory_operations</code> - Memory operations (store, search, list)
-8. <code>recall_history</code> - Search archived conversation context
-9. <code>build_and_version_control</code> - Build and git operations
-10. <code>web_operations</code> - Web operations
-11. <code>document_operations</code> - Document operations
-12. <code>run_subagent</code> - Subagent spawning
-14. <code>list_system_prompts</code> - Prompt discovery
-15. <code>list_mini_prompts</code> - Mini prompt discovery</p>
+6. <code>terminal_operations</code> - Execute shell commands
+7. <code>memory_operations</code> - Memory operations (store, search, recall, LTM)
+8. <code>web_operations</code> - Web research, search, fetch
+9. <code>document_operations</code> - Import, create, and manage documents
+10. <code>calendar_operations</code> - macOS Calendar integration
+11. <code>contacts_operations</code> - macOS Contacts integration
+12. <code>notes_operations</code> - Apple Notes integration
+13. <code>spotlight_search</code> - macOS Spotlight search
+14. <code>weather_operations</code> - Current weather and forecast
+15. <code>image_generation</code> - Generate images via remote ALICE
+16. <code>math_operations</code> - Calculate, convert, and run formula math
+17. <code>code_intelligence</code> - Find symbol usages and search commit history
+18. <code>version_control</code> - Git version control operations
+19. <code>remote_execution</code> - Run tasks on remote systems over SSH
+20. <code>apply_patch</code> - Apply multi-file patches
+21. <code>agent_operations</code> - Spawn and coordinate sub-agents</p>
 <h3 id="tool-execution-flow">Tool Execution Flow</h3>
-<div class="codehilite"><pre><span></span><code><span class="n">sequenceDiagram</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">User</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">ChatWidget</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">ConversationManager</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">AgentOrchestrator</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">LLM</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">Provider</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">MCPManager</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">Tool</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">MCP</span><span class="w"> </span><span class="n">Tool</span>
-<span class="w">    </span><span class="n">participant</span><span class="w"> </span><span class="n">System</span>
+<pre><code>sequenceDiagram
+    participant User
+    participant ChatWidget
+    participant ConversationManager
+    participant AgentOrchestrator
+    participant LLM as AI Provider
+    participant MCPManager
+    participant Tool as MCP Tool
+    participant System
 
-<span class="w">    </span><span class="n">User</span><span class="o">-&gt;&gt;</span><span class="n">ChatWidget</span><span class="p">:</span><span class="w"> </span><span class="n">Send</span><span class="w"> </span><span class="n">message</span>
-<span class="w">    </span><span class="n">ChatWidget</span><span class="o">-&gt;&gt;</span><span class="n">ConversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">Process</span><span class="w"> </span><span class="n">message</span>
-<span class="w">    </span><span class="n">ConversationManager</span><span class="o">-&gt;&gt;</span><span class="n">AgentOrchestrator</span><span class="p">:</span><span class="w"> </span><span class="n">Orchestrate</span><span class="w"> </span><span class="n">request</span>
-<span class="w">    </span><span class="n">AgentOrchestrator</span><span class="o">-&gt;&gt;</span><span class="n">LLM</span><span class="p">:</span><span class="w"> </span><span class="n">Send</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="k">tool</span><span class="w"> </span><span class="n">schemas</span>
+    User->>ChatWidget: Send message
+    ChatWidget->>ConversationManager: Process message
+    ConversationManager->>AgentOrchestrator: Orchestrate request
+    AgentOrchestrator->>LLM: Send with tool schemas
 
-<span class="w">    </span><span class="n">loop</span><span class="w"> </span><span class="n">Tool</span><span class="w"> </span><span class="n">Execution</span><span class="w"> </span><span class="n">Loop</span>
-<span class="w">        </span><span class="n">LLM</span><span class="o">-&gt;&gt;</span><span class="n">MCPManager</span><span class="p">:</span><span class="w"> </span><span class="n">Request</span><span class="w"> </span><span class="k">tool</span><span class="w"> </span><span class="n">call</span>
-<span class="w">        </span><span class="n">MCPManager</span><span class="o">-&gt;&gt;</span><span class="n">Tool</span><span class="p">:</span><span class="w"> </span><span class="n">Route</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="k">tool</span>
-<span class="w">        </span><span class="n">Tool</span><span class="o">-&gt;&gt;</span><span class="n">System</span><span class="p">:</span><span class="w"> </span><span class="n">Execute</span><span class="w"> </span><span class="n">operation</span>
-<span class="w">        </span><span class="n">System</span><span class="o">-&gt;&gt;</span><span class="n">Tool</span><span class="p">:</span><span class="w"> </span><span class="n">Return</span><span class="w"> </span><span class="n">result</span>
-<span class="w">        </span><span class="n">Tool</span><span class="o">-&gt;&gt;</span><span class="n">MCPManager</span><span class="p">:</span><span class="w"> </span><span class="n">MCPToolResult</span>
-<span class="w">        </span><span class="n">MCPManager</span><span class="o">-&gt;&gt;</span><span class="n">LLM</span><span class="p">:</span><span class="w"> </span><span class="n">Inject</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">context</span>
+    loop Tool Execution Loop
+        LLM->>MCPManager: Request tool call
+        MCPManager->>Tool: Route to specific tool
+        Tool->>System: Execute operation
+        System->>Tool: Return result
+        Tool->>MCPManager: MCPToolResult
+        MCPManager->>LLM: Inject result into context
 
-<span class="w">        </span><span class="n">alt</span><span class="w"> </span><span class="n">More</span><span class="w"> </span><span class="n">iterations</span><span class="w"> </span><span class="n">needed</span>
-<span class="w">            </span><span class="n">LLM</span><span class="o">-&gt;&gt;</span><span class="n">MCPManager</span><span class="p">:</span><span class="w"> </span><span class="n">Request</span><span class="w"> </span><span class="n">another</span><span class="w"> </span><span class="k">tool</span>
-<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="n">Task</span><span class="w"> </span><span class="n">complete</span>
-<span class="w">            </span><span class="n">LLM</span><span class="o">-&gt;&gt;</span><span class="n">AgentOrchestrator</span><span class="p">:</span><span class="w"> </span><span class="n">Final</span><span class="w"> </span><span class="n">response</span>
-<span class="w">        </span><span class="n">end</span>
-<span class="w">    </span><span class="n">end</span>
+        alt More iterations needed
+            LLM->>MCPManager: Request another tool
+        else Task complete
+            LLM->>AgentOrchestrator: Final response
+        end
+    end
 
-<span class="w">    </span><span class="n">AgentOrchestrator</span><span class="o">-&gt;&gt;</span><span class="n">ConversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">Stream</span><span class="w"> </span><span class="n">response</span>
-<span class="w">    </span><span class="n">ConversationManager</span><span class="o">-&gt;&gt;</span><span class="n">ChatWidget</span><span class="p">:</span><span class="w"> </span><span class="n">Update</span><span class="w"> </span><span class="n">UI</span>
-<span class="w">    </span><span class="n">ChatWidget</span><span class="o">-&gt;&gt;</span><span class="n">User</span><span class="p">:</span><span class="w"> </span><span class="n">Display</span><span class="w"> </span><span class="n">response</span>
-</code></pre></div>
+    AgentOrchestrator->>ConversationManager: Stream response
+    ConversationManager->>ChatWidget: Update UI
+    ChatWidget->>User: Display response
+</code></pre>
 
 <hr />
 <h2 id="api-server-architecture">API Server Architecture</h2>
 <h3 id="endpointmanager">EndpointManager</h3>
 <p><strong>Location</strong>: Sources/APIFramework/EndpointManager.swift</p>
 <p><strong>OpenAI-Compatible Endpoints</strong>:</p>
-<div class="codehilite"><pre><span></span><code>POST /api/chat/completions
+<pre><code>POST /api/chat/completions
 POST /api/chat/autonomous
 GET  /api/models
 GET  /v1/conversations
 POST /v1/conversations
 GET  /v1/conversations/{id}
-</code></pre></div>
+</code></pre>
 
 <p><strong>SSE Streaming</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">streamResponse</span><span class="p">()</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">AsyncThrowingStream</span><span class="p">&lt;</span><span class="n">ChatResponseChunk</span><span class="p">,</span><span class="w"> </span><span class="n">Error</span><span class="p">&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">AsyncThrowingStream</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">continuation</span><span class="w"> </span><span class="k">in</span>
-<span class="w">        </span><span class="c1">// Stream chunks as they arrive</span>
-<span class="w">        </span><span class="n">continuation</span><span class="p">.</span><span class="n">yield</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-<span class="w">        </span><span class="n">continuation</span><span class="p">.</span><span class="n">finish</span><span class="p">()</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>func streamResponse() -> AsyncThrowingStream<ChatResponseChunk, Error> {
+    AsyncThrowingStream { continuation in
+        // Stream chunks as they arrive
+        continuation.yield(chunk)
+        continuation.finish()
+    }
+}
+</code></pre>
 
 <p><strong>Architecture</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">graph</span><span class="w"> </span><span class="nt">TB</span>
-<span class="w">    </span><span class="nt">Client</span><span class="cp">[</span><span class="nx">API</span><span class="w"> </span><span class="nx">Client</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">HTTP</span><span class="w"> </span><span class="nx">POST</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">Router</span><span class="cp">[</span><span class="nx">EndpointManager</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">Route</span><span class="w"> </span><span class="nx">Handler</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">Validate</span><span class="cp">[</span><span class="nx">Request</span><span class="w"> </span><span class="nx">Validation</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">Check</span><span class="w"> </span><span class="nx">conversationId</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">Check</span><span class="p">{</span><span class="err">Has</span><span class="w"> </span><span class="err">conversationId?</span><span class="p">}</span>
-<span class="w">    </span><span class="nt">LoadConv</span><span class="cp">[</span><span class="nx">Load</span><span class="w"> </span><span class="nx">Existing</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">Conversation</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">Memory</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">NewConv</span><span class="cp">[</span><span class="nx">Create</span><span class="w"> </span><span class="nb">New</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">Conversation</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">Orchestrator</span><span class="cp">[</span><span class="nx">AgentOrchestrator</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nb">Process</span><span class="w"> </span><span class="nx">Request</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">Tools</span><span class="cp">[</span><span class="nx">Tool</span><span class="w"> </span><span class="nx">Execution</span><span class="w"> </span><span class="k">Loop</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">MCP</span><span class="w"> </span><span class="nx">Tools</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">StreamCheck</span><span class="p">{</span><span class="err">Streaming?</span><span class="p">}</span>
-<span class="w">    </span><span class="nt">SSE</span><span class="cp">[</span><span class="nx">Server</span><span class="na">-Sent</span><span class="w"> </span><span class="nx">Events</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;</span><span class="nx">data</span><span class="p">:</span><span class="w"> </span><span class="o">&amp;</span><span class="vi">#123</span><span class="p">;</span><span class="nx">...</span><span class="o">&amp;</span><span class="vi">#125</span><span class="p">;</span><span class="cp">]</span>
-<span class="w">    </span><span class="nt">JSON</span><span class="cp">[</span><span class="nx">JSON</span><span class="w"> </span><span class="nx">Response</span><span class="o">&lt;</span><span class="nx">br</span><span class="o">/&gt;&amp;</span><span class="vi">#123</span><span class="p">;</span><span class="nx">...</span><span class="o">&amp;</span><span class="vi">#125</span><span class="p">;</span><span class="cp">]</span>
+<pre><code>graph TB
+    Client[API Client<br/>HTTP POST]
+    Router[EndpointManager<br/>Route Handler]
+    Validate[Request Validation<br/>Check conversationId]
+    Check{Has conversationId?}
+    LoadConv[Load Existing<br/>Conversation + Memory]
+    NewConv[Create New<br/>Conversation]
+    Orchestrator[AgentOrchestrator<br/>Process Request]
+    Tools[Tool Execution Loop<br/>MCP Tools]
+    StreamCheck{Streaming?}
+    SSE[Server-Sent Events<br/>data: &#123;...&#125;]
+    JSON[JSON Response<br/>&#123;...&#125;]
 
-<span class="w">    </span><span class="nt">Client</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">POST</span><span class="w"> </span><span class="o">/</span><span class="nt">api</span><span class="o">/</span><span class="nt">chat</span><span class="o">/</span><span class="nt">completions</span><span class="o">|</span><span class="w"> </span><span class="nt">Router</span>
-<span class="w">    </span><span class="nt">Router</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">Validate</span>
-<span class="w">    </span><span class="nt">Validate</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">Check</span>
-<span class="w">    </span><span class="nt">Check</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">Yes</span><span class="o">|</span><span class="w"> </span><span class="nt">LoadConv</span>
-<span class="w">    </span><span class="nt">Check</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">No</span><span class="o">|</span><span class="w"> </span><span class="nt">NewConv</span>
-<span class="w">    </span><span class="nt">LoadConv</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">With</span><span class="w"> </span><span class="nt">context</span><span class="o">|</span><span class="w"> </span><span class="nt">Orchestrator</span>
-<span class="w">    </span><span class="nt">NewConv</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">No</span><span class="w"> </span><span class="nt">context</span><span class="o">|</span><span class="w"> </span><span class="nt">Orchestrator</span>
-<span class="w">    </span><span class="nt">Orchestrator</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">Execute</span><span class="o">|</span><span class="w"> </span><span class="nt">Tools</span>
-<span class="w">    </span><span class="nt">Tools</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">Results</span><span class="o">|</span><span class="w"> </span><span class="nt">Orchestrator</span>
-<span class="w">    </span><span class="nt">Orchestrator</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;</span><span class="w"> </span><span class="nt">StreamCheck</span>
-<span class="w">    </span><span class="nt">StreamCheck</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">stream</span><span class="o">=</span><span class="nt">true</span><span class="o">|</span><span class="w"> </span><span class="nt">SSE</span>
-<span class="w">    </span><span class="nt">StreamCheck</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">stream</span><span class="o">=</span><span class="nt">false</span><span class="o">|</span><span class="w"> </span><span class="nt">JSON</span>
-<span class="w">    </span><span class="nt">SSE</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">Stream</span><span class="w"> </span><span class="nt">chunks</span><span class="o">|</span><span class="w"> </span><span class="nt">Client</span>
-<span class="w">    </span><span class="nt">JSON</span><span class="w"> </span><span class="nt">--</span><span class="o">&gt;|</span><span class="nt">Complete</span><span class="w"> </span><span class="nt">response</span><span class="o">|</span><span class="w"> </span><span class="nt">Client</span>
-</code></pre></div>
+    Client -->|POST /api/chat/completions| Router
+    Router --> Validate
+    Validate --> Check
+    Check -->|Yes| LoadConv
+    Check -->|No| NewConv
+    LoadConv -->|With context| Orchestrator
+    NewConv -->|No context| Orchestrator
+    Orchestrator -->|Execute| Tools
+    Tools -->|Results| Orchestrator
+    Orchestrator --> StreamCheck
+    StreamCheck -->|stream=true| SSE
+    StreamCheck -->|stream=false| JSON
+    SSE -->|Stream chunks| Client
+    JSON -->|Complete response| Client
+</code></pre>
 
 <hr />
 <h2 id="data-flow">Data Flow</h2>
 <h3 id="message-flow">Message Flow</h3>
-<div class="codehilite"><pre><span></span><code><span class="nv">User</span><span class="w"> </span><span class="nv">Input</span>
-<span class="w">    </span>↓
-<span class="nv">ChatWidget</span><span class="w"> </span><span class="ss">(</span><span class="nv">UI</span><span class="ss">)</span>
-<span class="w">    </span>↓
-<span class="nv">ConversationManager</span>.<span class="nv">addMessage</span><span class="ss">()</span>
-<span class="w">    </span>↓
-<span class="nv">Persistence</span><span class="w"> </span><span class="ss">(</span><span class="nv">debounced</span><span class="ss">)</span>
-<span class="w">    </span>↓
-<span class="nv">EndpointManager</span>.<span class="nv">processMessage</span><span class="ss">()</span>
-<span class="w">    </span>↓
-<span class="nv">AgentOrchestrator</span>.<span class="nv">executeAutonomousWorkflow</span><span class="ss">()</span>
-<span class="w">    </span>↓
-<span class="nv">LLM</span><span class="w"> </span><span class="nv">API</span><span class="w"> </span><span class="nv">Call</span><span class="w"> </span><span class="ss">(</span><span class="nv">streaming</span><span class="ss">)</span>
-<span class="w">    </span>↓
-<span class="nv">Tool</span><span class="w"> </span><span class="nv">Execution</span><span class="w"> </span><span class="ss">(</span><span class="k">if</span><span class="w"> </span><span class="nv">needed</span><span class="ss">)</span>
-<span class="w">    </span>↓
-<span class="nv">Response</span><span class="w"> </span><span class="nv">Assembly</span>
-<span class="w">    </span>↓
-<span class="nv">UI</span><span class="w"> </span><span class="nv">Update</span>
-</code></pre></div>
+<pre><code>User Input
+    ↓
+ChatWidget (UI)
+    ↓
+ConversationManager.addMessage()
+    ↓
+Persistence (debounced)
+    ↓
+EndpointManager.processMessage()
+    ↓
+AgentOrchestrator.executeAutonomousWorkflow()
+    ↓
+LLM API Call (streaming)
+    ↓
+Tool Execution (if needed)
+    ↓
+Response Assembly
+    ↓
+UI Update
+</code></pre>
 
 <h3 id="memory-storage-flow">Memory Storage Flow</h3>
-<div class="codehilite"><pre><span></span><code>Content to Store
+<pre><code>Content to Store
     ↓
 MemoryManager.storeMemory()
     ↓
@@ -740,24 +522,24 @@ SQLite INSERT with vector
 Tags + Metadata
     ↓
 Success
-</code></pre></div>
+</code></pre>
 
 <h3 id="memory-retrieval-flow">Memory Retrieval Flow</h3>
-<div class="codehilite"><pre><span></span><code><span class="nv">Search</span><span class="w"> </span><span class="nv">Query</span>
-<span class="w">    </span>↓
-<span class="nv">EmbeddingGenerator</span>.<span class="nv">generate</span><span class="ss">()</span>
-<span class="w">    </span>↓
-<span class="nv">SQLite</span><span class="w"> </span><span class="nv">Vector</span><span class="w"> </span><span class="nv">Search</span><span class="w"> </span><span class="ss">(</span><span class="nv">cosine</span><span class="w"> </span><span class="nv">similarity</span><span class="ss">)</span>
-<span class="w">    </span>↓
-<span class="nv">Filter</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">threshold</span>
-<span class="w">    </span>↓
-<span class="nv">Rank</span><span class="w"> </span><span class="nv">by</span><span class="w"> </span><span class="nv">similarity</span>
-<span class="w">    </span>↓
-<span class="k">Return</span><span class="w"> </span><span class="nv">top</span><span class="w"> </span><span class="nv">N</span><span class="w"> </span><span class="nv">results</span>
-</code></pre></div>
+<pre><code>Search Query
+    ↓
+EmbeddingGenerator.generate()
+    ↓
+SQLite Vector Search (cosine similarity)
+    ↓
+Filter by threshold
+    ↓
+Rank by similarity
+    ↓
+Return top N results
+</code></pre>
 
 <h3 id="document-import-flow">Document Import Flow</h3>
-<div class="codehilite"><pre><span></span><code>File Drop/Selection
+<pre><code>File Drop/Selection
     ↓
 DocumentImportSystem
     ↓
@@ -774,7 +556,7 @@ EmbeddingGenerator (per chunk)
 MemoryManager.storeMemory()
     ↓
 Indexed and searchable
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="technology-stack">Technology Stack</h2>
@@ -797,7 +579,7 @@ Indexed and searchable
 </ul>
 <h3 id="ai-integration">AI Integration</h3>
 <ul>
-<li><strong>OpenAI SDK</strong>: GPT-4, GPT-3.5-turbo</li>
+<li><strong>OpenAI SDK</strong>: GPT-4 and compatible models</li>
 <li><strong>GitHub Copilot</strong>: OAuth + API integration</li>
 <li><strong>MLX</strong>: Apple Silicon local inference</li>
 <li><strong>llama.cpp</strong>: Cross-platform GGUF models</li>
@@ -818,39 +600,39 @@ Indexed and searchable
 <hr />
 <h2 id="design-patterns">Design Patterns</h2>
 <h3 id="dependency-injection">Dependency Injection</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">init</span><span class="p">(</span>
-<span class="w">    </span><span class="n">endpointManager</span><span class="p">:</span><span class="w"> </span><span class="n">EndpointManager</span><span class="p">,</span>
-<span class="w">    </span><span class="n">conversationService</span><span class="p">:</span><span class="w"> </span><span class="n">SharedConversationService</span><span class="p">,</span>
-<span class="w">    </span><span class="n">conversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">ConversationManager</span><span class="p">,</span>
-<span class="w">    </span><span class="n">maxIterations</span><span class="p">:</span><span class="w"> </span><span class="nb">Int</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">300</span>
-<span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kc">self</span><span class="p">.</span><span class="n">endpointManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">endpointManager</span>
-<span class="w">    </span><span class="kc">self</span><span class="p">.</span><span class="n">conversationService</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">conversationService</span>
-<span class="w">    </span><span class="kc">self</span><span class="p">.</span><span class="n">conversationManager</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">conversationManager</span>
-<span class="w">    </span><span class="kc">self</span><span class="p">.</span><span class="n">maxIterations</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">maxIterations</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>public init(
+    endpointManager: EndpointManager,
+    conversationService: SharedConversationService,
+    conversationManager: ConversationManager,
+    maxIterations: Int = 300
+) {
+    self.endpointManager = endpointManager
+    self.conversationService = conversationService
+    self.conversationManager = conversationManager
+    self.maxIterations = maxIterations
+}
+</code></pre>
 
 <h3 id="protocol-oriented-design">Protocol-Oriented Design</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">protocol</span><span class="w"> </span><span class="nc">AIProviderProtocol</span><span class="p">:</span><span class="w"> </span><span class="nb">AnyObject</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">func</span><span class="w"> </span><span class="nf">processStreamingChatCompletion</span><span class="p">(...)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="n">AsyncThrowingStream</span><span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>public protocol AIProviderProtocol: AnyObject {
+    func processStreamingChatCompletion(...) async throws -> AsyncThrowingStream<...>
+}
+</code></pre>
 
 <h3 id="observable-objects">Observable Objects</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">@</span><span class="n">MainActor</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span><span class="w"> </span><span class="nc">ConversationManager</span><span class="p">:</span><span class="w"> </span><span class="n">ObservableObject</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">@</span><span class="n">Published</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">conversations</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="n">ConversationModel</span><span class="p">]</span>
-<span class="w">    </span><span class="p">@</span><span class="n">Published</span><span class="w"> </span><span class="kd">public</span><span class="w"> </span><span class="kd">var</span><span class="w"> </span><span class="nv">activeConversation</span><span class="p">:</span><span class="w"> </span><span class="n">ConversationModel</span><span class="p">?</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>@MainActor
+public class ConversationManager: ObservableObject {
+    @Published public var conversations: [ConversationModel]
+    @Published public var activeConversation: ConversationModel?
+}
+</code></pre>
 
 <h3 id="asyncawait">Async/Await</h3>
-<div class="codehilite"><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">func</span><span class="w"> </span><span class="nf">executeAutonomousWorkflow</span><span class="p">(...)</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">response</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">provider</span><span class="p">.</span><span class="n">processChatCompletion</span><span class="p">(...)</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">response</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>public func executeAutonomousWorkflow(...) async throws -> String {
+    let response = try await provider.processChatCompletion(...)
+    return response
+}
+</code></pre>
 
 <hr />
 <h2 id="security-architecture">Security Architecture</h2>
@@ -911,51 +693,11 @@ Indexed and searchable
 <p><strong>Understand SAM's architecture to extend and customize effectively!</strong></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

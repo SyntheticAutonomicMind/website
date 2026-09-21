@@ -3,277 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAM Tools Reference | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: SAM Tools Reference">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/tools-reference.html">
+    <title>SAM Tools Reference | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/power-user/tools-reference.html">
+    <meta property="og:title" content="SAM Tools Reference | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/power-user/tools-reference.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/tools-reference.html" data-prev="docs/SAM/power-user/configuration.html|Tools Reference" data-next="docs/SAM/power-user/advanced-workflows.html|Advanced Workflows">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Tools Reference
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Power User</span><span class="breadcrumb-separator">/</span><span>SAM Tools Reference</span></nav>
         
         <div class="doc-content">
             <h1 id="sam-tools-reference">SAM Tools Reference</h1>
-<p><strong>16 tools. 49+ operations. Infinite possibilities.</strong></p>
-<p>This is how SAM gets things done. While most AI assistants just talk, SAM takes action: reading your files, executing commands, searching the web, managing git, and more. All through the Model Context Protocol (MCP).</p>
+<p><strong>14 tools. Infinite possibilities.</strong></p>
+<p>This is how SAM gets things done. While most AI assistants just talk, SAM takes action: reading your files, searching the web, managing memory, generating images, and more.</p>
 <p><strong>You don't call tools directly.</strong> Just describe what you need in natural language, and SAM automatically invokes the right tools. Say "read that config file" and SAM uses <code>file_operations</code>. Ask "what did we discuss about auth?" and SAM searches memory.</p>
 <p><strong>This reference covers:</strong>
-- All 16 tools with every operation documented
-- Real-world examples and parameter details
+- All 14 tools with their operations documented
 - When to use each tool (and when not to)
 - Security model and authorization</p>
 <p><strong>Who needs this:</strong>
 - Power users pushing SAM's limits
-- Developers integrating SAM via API
 - System prompt authors designing workflows
 - Anyone curious about what's possible</p>
 <hr />
 <h2 id="overview">Overview</h2>
-<p>SAM provides MCP tools that enable the AI to perform complex operations. Tools are invoked automatically - you don't call them directly.</p>
-<p><strong>Tool Categories:</strong>
-- <strong>Core Tools</strong> (4): think, increase_max_iterations, read_tool_result, user_collaboration
-- <strong>File &amp; Terminal</strong> (2): file_operations (16 ops), terminal_operations (11 ops)
-- <strong>Memory &amp; Planning</strong> (2): memory_operations (4 ops), todo_operations (4 ops)
-- <strong>Build &amp; VCS</strong> (1): build_and_version_control (5 ops)
-- <strong>Web &amp; Documents</strong> (2): web_operations (6 ops), document_operations (3 ops)
-- <strong>Context Recall</strong> (1): recall_history (search archived conversation context)
+<p>SAM provides a consolidated tool system that lets the AI take action instead of only replying with text. Tools are invoked automatically - you don't call them directly. You see tool activity through tool cards in the conversation UI.</p>
 
-- <strong>Subagent &amp; Discovery</strong> (3): run_subagent, list_system_prompts, list_mini_prompts</p>
-<p>For an authoritative, up-to-date inventory and availability details, see the repository <code>user-docs/TOOLS_REFERENCE.md</code> (this document provides usage examples, parameters, and workflows).</p>
-<p><strong>Security Note:</strong> All tools implement proper authorization. Operations outside the working directory require user approval.</p>
+<p><strong>Tool Categories:</strong></p>
+<ul>
+    <li><strong>Collaboration</strong>: <code>user_collaboration</code>, <code>todo_operations</code></li>
+    <li><strong>Memory</strong>: <code>memory_operations</code></li>
+    <li><strong>Files &amp; Documents</strong>: <code>file_operations</code>, <code>document_operations</code></li>
+    <li><strong>Web &amp; Research</strong>: <code>web_operations</code></li>
+    <li><strong>Computation</strong>: <code>math_operations</code></li>
+    <li><strong>macOS Integration</strong>: <code>calendar_operations</code>, <code>contacts_operations</code>, <code>notes_operations</code>, <code>spotlight_search</code>, <code>weather_operations</code></li>
+    <li><strong>Image Generation</strong>: <code>image_generation</code> (requires ALICE)</li>
+    <li><strong>Terminal</strong>: <code>terminal_operations</code></li>
+</ul>
+
+<p>For an authoritative, up-to-date inventory, see the repository's <code>docs/TOOLS.md</code>. This document provides usage examples and workflows.</p>
+
+<p><strong>Security Note:</strong> All tools implement proper authorization. Operations outside the working directory require user approval. macOS integration tools require explicit macOS permission grants.</p>
 <hr />
 <h2 id="core-tools">Core Tools</h2>
 <h3 id="1-think">1. think</h3>
@@ -293,14 +73,14 @@ Enables the AI to think through complex problems, plan multi-step solutions, and
 - <code>thoughts</code> (string, required): Planning, analysis, or reasoning process
 - <code>requested_tools</code> (array[string], optional): List of tool names for subsequent iterations</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;think&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;thoughts&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;To refactor the authentication system: 1) Analyze current implementation 2) Design new architecture 3) Implement changes 4) Test thoroughly&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;requested_tools&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;terminal_operations&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "think",
+  "arguments": {
+    "thoughts": "To refactor the authentication system: 1) Analyze current implementation 2) Design new architecture 3) Implement changes 4) Test thoroughly",
+    "requested_tools": ["file_operations", "terminal_operations"]
+  }
+}
+</code></pre>
 
 <p><strong>Critical Rule:</strong> Think once, then execute. Do NOT get stuck in thinking loops.</p>
 <hr />
@@ -320,14 +100,14 @@ Allows agents to request additional iterations when approaching the limit. Requi
 - <code>requested_iterations</code> (integer, required): Total iterations needed (must be greater than current max)
 - <code>reason</code> (string, required): Clear explanation of why more iterations are needed</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;increase_max_iterations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;requested_iterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Need more iterations to complete refactoring of remaining files. Making steady progress.&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "increase_max_iterations",
+  "arguments": {
+    "requested_iterations": 500,
+    "reason": "Need more iterations to complete refactoring of remaining files. Making steady progress."
+  }
+}
+</code></pre>
 
 <hr />
 <h3 id="3-read_tool_result">3. read_tool_result</h3>
@@ -346,15 +126,15 @@ Large tool results are automatically saved to disk to avoid provider errors. Thi
 - <code>offset</code> (integer, optional): Character offset to start reading from (default: 0)
 - <code>length</code> (integer, optional): Number of characters to read</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_tool_result&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;toolCallId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;call_abc123&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;length&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8192</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "read_tool_result",
+  "arguments": {
+    "toolCallId": "call_abc123",
+    "offset": 0,
+    "length": 8192
+  }
+}
+</code></pre>
 
 <p><strong>Example Workflow:</strong>
 1. Tool returns: "Preview: ... [TOOL_RESULT_STORED: toolCallId=abc123, totalLength=150000]"
@@ -381,15 +161,15 @@ Enables SAM to request user input, clarification, or decisions mid-stream withou
 - <code>context</code> (string, optional): Context explaining why you're asking
 - <code>authorize_operation</code> (string, optional): Tool operation to authorize if user approves (format: 'tool_name.operation')</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;user_collaboration&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Found 500 files matching pattern. Rename all with timestamp prefix?&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This will modify all .log files in the directory permanently&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;authorize_operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations.rename_file&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "user_collaboration",
+  "arguments": {
+    "prompt": "Found 500 files matching pattern. Rename all with timestamp prefix?",
+    "context": "This will modify all .log files in the directory permanently",
+    "authorize_operation": "file_operations.rename_file"
+  }
+}
+</code></pre>
 
 <p><strong>Security:</strong> Blocks execution indefinitely until user responds. User has full control.</p>
 <hr />
@@ -397,7 +177,7 @@ Enables SAM to request user input, clarification, or decisions mid-stream withou
 <h3 id="5-file_operations">5. file_operations</h3>
 <p><strong>Purpose:</strong> Read, write, search, and manage files</p>
 <p><strong>Description:</strong><br />
-Comprehensive file system operations including reading, writing, searching (glob, regex, semantic), and file management. <strong>16 operations total.</strong></p>
+Comprehensive file system operations including reading, writing, searching (glob, regex, semantic), and file management. <strong>18 operations total.</strong></p>
 <p><strong>Authorization:</strong>
 - Inside working directory: AUTO-APPROVED ✅
 - Outside working directory: Requires user approval ⚠️
@@ -411,16 +191,16 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>limit</code> (number, optional): Max lines to read
 - <code>offset</code> (number, optional): Starting line (1-indexed)</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;read_file&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;filePath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/andrew/project/src/main.swift&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;offset&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "file_operations",
+  "arguments": {
+    "operation": "read_file",
+    "filePath": "/Users/andrew/project/src/main.swift",
+    "limit": 100,
+    "offset": 1
+  }
+}
+</code></pre>
 
 <h4 id="list_dir">list_dir</h4>
 <p>List directory contents.</p>
@@ -432,11 +212,20 @@ Comprehensive file system operations including reading, writing, searching (glob
 <p><strong>Parameters:</strong>
 - <code>operation</code>: <code>"get_errors"</code> (required)
 - <code>filePaths</code> (array, optional): Specific files to check</p>
-<h4 id="get_search_results">get_search_results</h4>
-<p>Fetch workspace search view results.</p>
+<h4 id="get_file_info">get_file_info</h4>
+<p>Get file metadata (size, type, modified time).</p>
 <p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"get_search_results"</code> (required)</p>
-<p><strong>SEARCH Operations (5):</strong></p>
+- <code>operation</code>: <code>"get_file_info"</code> (required)
+- <code>path</code> (string, required): File path</p>
+
+<h4 id="read_tool_result">read_tool_result</h4>
+<p>Retrieve large persisted tool results in chunks.</p>
+<p><strong>Parameters:</strong>
+- <code>operation</code>: <code>"read_tool_result"</code> (required)
+- <code>toolCallId</code> (string, required): Tool call ID from stored result message
+- <code>offset</code> (integer, optional): Character offset (default: 0)
+- <code>length</code> (integer, optional): Number of characters to read</p>
+<p><strong>SEARCH Operations (4):</strong></p>
 <h4 id="file_search">file_search</h4>
 <p>Search for files by glob pattern.</p>
 <p><strong>Parameters:</strong>
@@ -444,15 +233,15 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>query</code> (string, required): Glob pattern (e.g., <code>"**/*.swift"</code>)
 - <code>maxResults</code> (number, optional): Limit results</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_search&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;**/*.{js,ts}&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;maxResults&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "file_operations",
+  "arguments": {
+    "operation": "file_search",
+    "query": "**/*.{js,ts}",
+    "maxResults": 50
+  }
+}
+</code></pre>
 
 <h4 id="grep_search">grep_search</h4>
 <p>Search file contents using regex.</p>
@@ -463,16 +252,16 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>includePattern</code> (string, optional): File pattern to search within
 - <code>maxResults</code> (number, optional): Limit results</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;grep_search&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;class\\s+\\w+Controller&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isRegexp&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;includePattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;src/**/*.swift&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "file_operations",
+  "arguments": {
+    "operation": "grep_search",
+    "query": "class\\s+\\w+Controller",
+    "isRegexp": true,
+    "includePattern": "src/**/*.swift"
+  }
+}
+</code></pre>
 
 <h4 id="semantic_search">semantic_search</h4>
 <p>AI-powered code/text search across workspace.</p>
@@ -480,14 +269,14 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>operation</code>: <code>"semantic_search"</code> (required)
 - <code>query</code> (string, required): Natural language query</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;semantic_search&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;function that validates email addresses&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "file_operations",
+  "arguments": {
+    "operation": "semantic_search",
+    "query": "function that validates email addresses"
+  }
+}
+</code></pre>
 
 <h4 id="list_usages">list_usages</h4>
 <p>Find all references to a symbol (variable, function, class).</p>
@@ -495,9 +284,7 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>operation</code>: <code>"list_usages"</code> (required)
 - <code>symbolName</code> (string, required): Symbol to find
 - <code>filePaths</code> (array, optional): Files to search within</p>
-<h4 id="search_index">search_index</h4>
-<p>Search working directory file index for fast file discovery by name, path, or extension.</p>
-<p><strong>WRITE Operations (7):</strong></p>
+<p><strong>WRITE Operations (9):</strong></p>
 <h4 id="create_file">create_file</h4>
 <p>Create new file with content.</p>
 <p><strong>Parameters:</strong>
@@ -505,15 +292,15 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>filePath</code> (string, required): Absolute path for new file
 - <code>content</code> (string, required): File content</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;create_file&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;filePath&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/andrew/project/README.md&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;# My Project\n\nDescription here...&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "file_operations",
+  "arguments": {
+    "operation": "create_file",
+    "filePath": "/Users/andrew/project/README.md",
+    "content": "# My Project\n\nDescription here..."
+  }
+}
+</code></pre>
 
 <h4 id="replace_string">replace_string</h4>
 <p>Replace text in file (single occurrence).</p>
@@ -529,10 +316,10 @@ Comprehensive file system operations including reading, writing, searching (glob
 - <code>operation</code>: <code>"multi_replace_string"</code> (required)
 - <code>filePath</code> (string, required): File to modify
 - <code>replacements</code> (array, required): Array of <code>{oldString, newString}</code> objects</p>
-<h4 id="insert_edit">insert_edit</h4>
+<h4 id="insert_at_line">insert_at_line</h4>
 <p>Insert or replace text at specific line.</p>
 <p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"insert_edit"</code> (required)
+- <code>operation</code>: <code>"insert_at_line"</code> (required)
 - <code>filePath</code> (string, required): File to modify
 - <code>lineNumber</code> (number, required): Line number (1-indexed)
 - <code>newText</code> (string, required): Text to insert/replace
@@ -548,12 +335,25 @@ Comprehensive file system operations including reading, writing, searching (glob
 <p><strong>Parameters:</strong>
 - <code>operation</code>: <code>"delete_file"</code> (required)
 - <code>filePath</code> (string, required): File to delete</p>
-<h4 id="apply_patch">apply_patch</h4>
-<p>Apply unified diff patch to file.</p>
+<h4 id="write_file">write_file</h4>
+<p>Write content to a file (overwrites if exists).</p>
 <p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"apply_patch"</code> (required)
-- <code>filePath</code> (string, required): File to patch
-- <code>patchContent</code> (string, required): Unified diff format patch</p>
+- <code>operation</code>: <code>"write_file"</code> (required)
+- <code>path</code> (string, required): File path
+- <code>content</code> (string, required): File content</p>
+
+<h4 id="append_file">append_file</h4>
+<p>Append content to an existing file.</p>
+<p><strong>Parameters:</strong>
+- <code>operation</code>: <code>"append_file"</code> (required)
+- <code>path</code> (string, required): File path
+- <code>content</code> (string, required): Content to append</p>
+
+<h4 id="create_directory">create_directory</h4>
+<p>Create a directory (with parents).</p>
+<p><strong>Parameters:</strong>
+- <code>operation</code>: <code>"create_directory"</code> (required)
+- <code>path</code> (string, required): Directory path to create</p>
 <p><strong>Note on Working Directories:</strong></p>
 <p>File operations use the conversation's effective working directory:</p>
 <p><strong>Without Shared Topic:</strong>
@@ -571,127 +371,48 @@ Comprehensive file system operations including reading, writing, searching (glob
 <h3 id="6-terminal_operations">6. terminal_operations</h3>
 <p><strong>Purpose:</strong> Execute shell commands and manage terminal sessions</p>
 <p><strong>Description:</strong><br />
-Execute terminal commands and manage persistent PTY (pseudo-terminal) sessions. <strong>11 operations total.</strong></p>
-<p><strong>Command Execution (6):</strong>
-- <code>run_command</code> - Execute shell command
-- <code>get_terminal_output</code> - Get output from background process
-- <code>get_terminal_buffer</code> - Get current visible terminal contents
-- <code>get_last_command</code> - Get last executed command
-- <code>get_terminal_selection</code> - Get selected terminal text
-- <code>create_directory</code> - Create directory recursively</p>
-<p><strong>PTY Session Management (5):</strong>
-- <code>create_session</code> - Start new persistent terminal session
-- <code>send_input</code> - Send command to existing session
-- <code>get_output</code> - Read session output
-- <code>get_history</code> - Get full session history
-- <code>close_session</code> - Close terminal session</p>
-<p><strong>Critical: send_input Requirements:</strong>
-- Shell commands MUST end with <code>\r\n</code> (carriage return + newline)
-- Interactive keystrokes send as-is WITHOUT <code>\r\n</code>
-- Examples:
-  - Shell command: <code>{"input": "ls -la\r\n"}</code>
-  - Vim keystroke: <code>{"input": ":wq\r"}</code> or <code>{"input": "\u001b"}</code> (escape)</p>
+Execute shell commands with safety validation and timeout support. Commands are classified by intent (network access, credential reading, system destruction) and confirmed with the user based on risk level. <strong>1 operation total.</strong></p>
+<p><strong>Operations:</strong>
+- <code>exec</code> - Run command and capture output (aliases: <code>shell</code>, <code>run_command</code>, <code>terminal_exec</code>)</p>
+<p><strong>Key Features:</strong>
+- Commands run in captured mode by default (output to file, no PTY)
+- Use <code>passthrough</code> parameter for interactive TTY access
+- Idle timeout: 300s default, 600s hard ceiling
+- Shell-specific handling: Windows <code>cmd /c</code> wrappers, bash detection</p>
 <p><strong>Common Parameters:</strong>
-- <code>operation</code> (string, required): Terminal operation to perform
-- <code>command</code> (string): Shell command to execute
-- <code>explanation</code> (string): What command does
-- <code>isBackground</code> (boolean): Run as background process (USE SPARINGLY)
-- <code>session_id</code> (string): PTY session ID</p>
-<p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;terminal_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run_command&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;npm install&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Install Node.js dependencies&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;isBackground&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;terminal_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;create_session&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;working_directory&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/andrew/project&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;terminal_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;send_input&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;conv-uuid&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;input&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;git status\r\n&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Critical: isBackground Usage</strong>
-- ✓ Long-running servers (web servers, dev servers)
-- ✓ Watch mode processes (file watchers, auto-rebuild)
-- ✗ SSH commands (must wait for response)
-- ✗ File operations (must confirm completion)
-- ✗ Installation commands (must verify success)
-- ✗ ANY command where you need the output</p>
-<p><strong>System Context Awareness:</strong>
-- ALWAYS verify current system before SSH operations
-- Use <code>echo $HOSTNAME</code> to confirm current system
-- NEVER SSH from a system to itself
-- Best practice: Check hostname before every SSH command</p>
-<p><strong>Security:</strong> Command authorization based on working directory. PTY sessions scoped to conversation.</p>
+- <code>operation</code> (string, required): Tool operation to perform
+- <code>command</code> (string, required): Shell command to execute
+- <code>passthrough</code> (boolean, optional): Use interactive TTY mode
+- <code>timeout</code> (integer, optional): Idle timeout in seconds
+- <code>working_directory</code> (string, optional): Working directory</p>
 <hr />
 <h2 id="memory-rag-tools">Memory &amp; RAG Tools</h2>
 <h3 id="7-memory_operations">7. memory_operations</h3>
-<p><strong>Purpose:</strong> Search, store conversation memory and manage todo lists</p>
+<p><strong>Purpose:</strong> Store, search, and recall memories across sessions</p>
 <p><strong>Description:</strong><br />
-Consolidated tool for semantic search across stored memories, persistent storage, and task management. <strong>4 operations total.</strong></p>
+Consolidated tool for semantic search across stored memories, persistent storage, and task management. <strong>14 operations total.</strong></p>
 <p><strong>Operations:</strong></p>
-<h4 id="search_memory">search_memory</h4>
-<p>Semantic search across stored memories.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"search_memory"</code> (required)
-- <code>query</code> (string, required): Search query
-- <code>similarity_threshold</code> (string, optional): Minimum similarity (0.0-1.0, default: 0.3)
-- <code>limit</code> (integer, optional): Maximum results</p>
-<p><strong>Similarity Threshold Guide:</strong>
-- Document/RAG: 0.15-0.25 (embeddings produce lower scores)
-- Conversation memory: 0.3-0.5
-- No results? Lower threshold incrementally (0.3→0.2→0.15)</p>
-<p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;memory_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;search_memory&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;previous API keys&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;similarity_threshold&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.3&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<h4 id="store_memory">store_memory</h4>
-<p>Save information to memory.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"store_memory"</code> (required)
-- <code>content</code> (string, required): Content to store
-- <code>content_type</code> (string, optional): Type categorization</p>
-<p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;memory_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;store_memory&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;User prefers JSON format for API responses&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;content_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;preference&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<h4 id="list_collections">list_collections</h4>
-<p>View memory statistics.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"list_collections"</code> (required)</p>
-<p><strong>Security:</strong> Memory scoped to conversation or shared topic.</p>
+<table>
+<thead>
+<tr><th>Operation</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>search</code></td><td>Semantic search across stored memories</td></tr>
+<tr><td><code>store</code></td><td>Save information to memory</td></tr>
+<tr><td><code>retrieve</code></td><td>Retrieve stored value by key</td></tr>
+<tr><td><code>list</code></td><td>List all memory keys</td></tr>
+<tr><td><code>delete</code></td><td>Delete a memory entry</td></tr>
+<tr><td><code>recall_history</code></td><td>Search archived YaRN-compressed context</td></tr>
+<tr><td><code>add_discovery</code></td><td>Add a discovery fact to LTM</td></tr>
+<tr><td><code>add_solution</code></td><td>Add an error+solution pair to LTM</td></tr>
+<tr><td><code>add_pattern</code></td><td>Add a reusable pattern to LTM</td></tr>
+<tr><td><code>update_ltm</code></td><td>Update an existing LTM entry</td></tr>
+<tr><td><code>prune_ltm</code></td><td>Remove old LTM entries</td></tr>
+<tr><td><code>ltm_stats</code></td><td>Get LTM statistics</td></tr>
+<tr><td><code>recall_sessions</code></td><td>Search previous sessions in LTM</td></tr>
+</tbody>
+</table>
+<p><strong>Session Memory vs. LTM:</strong> Session memory (<code>store</code>, <code>retrieve</code>, <code>search</code>, <code>list</code>, <code>delete</code>) persists within conversation scope. LTM operations (<code>add_discovery</code>, <code>add_solution</code>, <code>add_pattern</code>, <code>recall_sessions</code>, <code>ltm_stats</code>) persist across sessions in <code>.clio/ltm.json</code>.</p>
 <hr />
 <h3 id="8-todo_operations">8. todo_operations</h3>
 <p><strong>Purpose:</strong> Track progress and plan tasks through structured todo lists</p>
@@ -719,17 +440,17 @@ Dedicated tool for managing todo lists during multi-step workflows. Use VERY fre
 - <code>todoUpdates</code> (array[object]): Partial updates for update operation
 - <code>newTodos</code> (array[object]): New todos to add (for add operation)</p>
 <p><strong>Todo Item Structure:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Implement authentication&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add JWT-based auth to API endpoints&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in-progress&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;priority&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;high&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
-<span class="w">  </span><span class="nt">&quot;canRunParallel&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;progress&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.5&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "id": 1,
+  "title": "Implement authentication",
+  "description": "Add JWT-based auth to API endpoints",
+  "status": "in-progress",
+  "priority": "high",
+  "dependencies": [],
+  "canRunParallel": false,
+  "progress": "0.5"
+}
+</code></pre>
 
 <p><strong>Status Values:</strong> <code>not-started</code> | <code>in-progress</code> (max 1 at a time) | <code>completed</code> | <code>blocked</code></p>
 <p><strong>Critical Workflow:</strong>
@@ -739,53 +460,53 @@ Dedicated tool for managing todo lists during multi-step workflows. Use VERY fre
 4. Mark that todo as <code>completed</code> IMMEDIATELY after finishing
 5. Move to next todo and repeat</p>
 <p><strong>Example - Create Todo List:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;todo_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;write&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;todoList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Research options&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Explore available authentication libraries&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not-started&quot;</span>
-<span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Implement solution&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Add chosen auth library to the project&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;not-started&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "todo_operations",
+  "arguments": {
+    "operation": "write",
+    "todoList": [
+      {
+        "id": 1,
+        "title": "Research options",
+        "description": "Explore available authentication libraries",
+        "status": "not-started"
+      },
+      {
+        "id": 2,
+        "title": "Implement solution",
+        "description": "Add chosen auth library to the project",
+        "status": "not-started"
+      }
+    ]
+  }
+}
+</code></pre>
 
 <p><strong>Example - Update Status:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;todo_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;update&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;todoUpdates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;completed&quot;</span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;in-progress&quot;</span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "todo_operations",
+  "arguments": {
+    "operation": "update",
+    "todoUpdates": [
+      {"id": 1, "status": "completed"},
+      {"id": 2, "status": "in-progress"}
+    ]
+  }
+}
+</code></pre>
 
 <p><strong>Example - Add New Tasks (after completing initial list):</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;todo_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;add&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;newTodos&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">      </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Additional task&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;New work requested by user&quot;</span><span class="p">},</span>
-<span class="w">      </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Another task&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;More details here&quot;</span><span class="p">}</span>
-<span class="w">    </span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "todo_operations",
+  "arguments": {
+    "operation": "add",
+    "newTodos": [
+      {"title": "Additional task", "description": "New work requested by user"},
+      {"title": "Another task", "description": "More details here"}
+    ]
+  }
+}
+</code></pre>
 
 <p>The <code>add</code> operation automatically:
 - Preserves all existing todos (including completed ones)
@@ -794,17 +515,20 @@ Dedicated tool for managing todo lists during multi-step workflows. Use VERY fre
 <p><strong>Important:</strong> Describing progress in your response is NOT the same as updating - you MUST call this tool to update todo status.</p>
 <hr />
 <h2 id="version-control">Version Control</h2>
-<h3 id="8-build_and_version_control">8. build_and_version_control</h3>
+<h3 id="9-version_control">9. version_control</h3>
 <p><strong>Purpose:</strong> Build tasks and version control operations</p>
 <p><strong>Description:</strong><br />
-Consolidated tool for creating/running build tasks and git operations. <strong>5 operations total.</strong></p>
-<p><strong>Task Management (3):</strong>
-- <code>create_and_run_task</code> - Create and execute SAM task
-- <code>run_task</code> - Run existing SAM task by label
-- <code>get_task_output</code> - Get task execution output</p>
-<p><strong>Git Operations (2):</strong>
-- <code>git_commit</code> - Commit changes to repository
-- <code>get_changed_files</code> - Get changed files in repo</p>
+Git version control operations for repository management. <strong>9 operations total.</strong></p>
+<p><strong>Operations:</strong>
+- <code>status</code> - Show repository status
+- <code>log</code> - Show commit history
+- <code>diff</code> - Show file differences
+- <code>commit</code> - Stage and commit changes
+- <code>push</code> - Push to remote
+- <code>pull</code> - Pull from remote
+- <code>branch</code> - Branch operations
+- <code>stash</code> - Stash changes
+- <code>tag</code> - Tag operations</p>
 <p><strong>Common Parameters:</strong>
 - <code>operation</code> (string, required): Build/VCS operation to perform
 - <code>task</code> (object): Task definition for create_and_run_task
@@ -812,129 +536,49 @@ Consolidated tool for creating/running build tasks and git operations. <strong>5
 - <code>message</code> (string): Commit message for git_commit
 - <code>files</code> (array[string]): Files to commit</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build_and_version_control&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;create_and_run_task&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;task&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Build Debug&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;shell&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;make build-debug&quot;</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;workspaceFolder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/andrew/project&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "version_control",
+  "arguments": {
+    "operation": "create_and_run_task",
+    "task": {
+      "label": "Build Debug",
+      "type": "shell",
+      "command": "make build-debug"
+    },
+    "workspaceFolder": "/Users/andrew/project"
+  }
+}
+</code></pre>
 
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build_and_version_control&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;git_commit&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;feat: Add authentication system&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;files&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;Sources/Auth.swift&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Tests/AuthTests.swift&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "version_control",
+  "arguments": {
+    "operation": "git_commit",
+    "message": "feat: Add authentication system",
+    "files": ["Sources/Auth.swift", "Tests/AuthTests.swift"]
+  }
+}
+</code></pre>
 
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;build_and_version_control&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;get_changed_files&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;sourceControlState&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;staged&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;unstaged&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "version_control",
+  "arguments": {
+    "operation": "get_changed_files",
+    "sourceControlState": ["staged", "unstaged"]
+  }
+}
+</code></pre>
 
 <p><strong>Security:</strong> Git operations require authorization. Task output captured and retrievable.</p>
-<hr />
-<h2 id="context-recall">Context Recall</h2>
-<h3 id="9-recall_history">9. recall_history</h3>
-<p><strong>Purpose:</strong> Search and retrieve archived conversation context</p>
-<p><strong>Description:</strong>
-When YaRN compression archives older messages to fit model context limits, this tool allows agents to recall that archived context when needed. Also supports topic-wide search across multiple agent conversations in shared topics.</p>
-<p><strong>When to use:</strong>
-- You need context from earlier in a long conversation
-- The user references something discussed previously
-- You see "[Memory Status]" indicating archived context exists
-- You need to remember decisions or information from earlier
-- You want to see what other agents discussed in a shared topic</p>
-<p><strong>When NOT to use:</strong>
-- Recent context still in the conversation window
-- Information stored via memory_operations (use search_memory instead)
-- Current conversation is short and complete</p>
-<p><strong>Parameters:</strong>
-- <code>query</code> (string, required): Search term or topic to find relevant history
-- <code>topic_id</code> (string, optional): UUID of shared topic to search across ALL conversations in the topic
-- <code>time_hint</code> (string, optional): 'recent' for latest archived, 'early' for oldest, or leave empty for relevance-based search
-- <code>limit</code> (integer, optional): Number of chunks to retrieve (1-10, default: 3)</p>
-<p><strong>Example - Single Conversation:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recall_history&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database schema decisions&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Example - Topic-Wide Search:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recall_history&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;authentication implementation&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;topic_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Example - Time-Based Retrieval:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;recall_history&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;project setup&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;time_hint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;early&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Output Format:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="gh">#</span> Recalled History for: &quot;database schema&quot;
-
-Found 2 relevant archive chunks.
-
----
-<span class="gu">##</span> Chunk 1: 10:30-11:15
-
-**Summary:** Discussed database schema for user management system.
-
-**Key Topics:** PostgreSQL, foreign keys, indexes, user table
-
-**Messages (5):**
-[User - 10:32] What database should we use?
-[Assistant - 10:33] I recommend PostgreSQL for relational data...
-</code></pre></div>
-
-<p><strong>Topic-Wide Benefits:</strong>
-- Search history from ALL agents in a shared topic
-- Find what specialized agents (frontend, backend, testing) discussed
-- Maintain continuity across agent handoffs
-- Get full project context from multiple perspectives</p>
-<p><strong>Security:</strong> Archived context scoped to conversation or shared topic. Cannot access archives from other conversations/topics.</p>
-<hr />
 <h2 id="web-documents">Web &amp; Documents</h2>
-<h3 id="10-web_operations">10. web_operations</h3>
+<h3 id="11-web_operations">10. web_operations</h3>
 <p><strong>Purpose:</strong> Web research, search, scraping, and content retrieval</p>
 <p><strong>Description:</strong><br />
 Comprehensive web operations tool combining research, search, scraping, and content extraction. Includes professional search via SerpAPI when configured.</p>
-<p><strong>Supported Operations:</strong>
-- <code>research</code> - Comprehensive multi-source research + memory storage
-- <code>retrieve</code> - Access previously stored research from memory
-- <code>web_search</code> - Quick web search for top results
-- <code>serpapi</code> - Professional search via SerpAPI (Google, Bing, Amazon, etc.) [if enabled]
-- <code>scrape</code> - Extract content from websites (WebKit rendering with JavaScript)
-- <code>fetch</code> - Retrieve main content from webpage (basic HTTP, faster)</p>
+<p><strong>Operations (3):</strong>
+- <code>fetch_url</code> - Fetch content from a URL (with WebKit rendering)
+- <code>search_web</code> - Web search (SerpAPI when configured, DuckDuckGo fallback)
+- <code>research</code> - Comprehensive multi-source research with memory storage</p>
 <p><strong>When to use:</strong>
 - Current events, news, live information
 - Documentation lookup
@@ -945,36 +589,36 @@ Comprehensive web operations tool combining research, search, scraping, and cont
 - Questions answerable from conversation history
 - Local file content (use file_operations)</p>
 <p><strong>Parameters:</strong>
-- <code>operation</code> (string, required): Operation type (research, retrieve, web_search, serpapi, scrape, fetch)
+- <code>operation</code> (string, required): Operation type (fetch_url, search_web, research)
 - <code>query</code> (string): Search query or research question
 - <code>url</code> (string): Target URL for scrape/fetch operations (MUST use HTTPS)
 - <code>depth</code> (string): Research depth - shallow/standard/comprehensive
 - <code>engine</code> (string): Search engine for serpapi - google/bing/amazon/ebay/walmart
 - <code>location</code> (string): Search location for serpapi (optional)</p>
 <p><strong>Examples:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;web_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;research&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Latest developments in quantum computing&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;depth&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;comprehensive&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "web_operations",
+  "arguments": {
+    "operation": "research",
+    "query": "Latest developments in quantum computing",
+    "depth": "comprehensive"
+  }
+}
+</code></pre>
 
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;web_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;serpapi&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;query&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;best laptops 2025&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;engine&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;amazon&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "web_operations",
+  "arguments": {
+    "operation": "serpapi",
+    "query": "best laptops 2025",
+    "engine": "amazon"
+  }
+}
+</code></pre>
 
 <p><strong>Important:</strong> All URLs must use HTTPS. Research operation stores results in memory for later retrieval via retrieve operation.</p>
 <hr />
-<h3 id="11-document_operations">11. document_operations</h3>
+<h3 id="12-document_operations">12. document_operations</h3>
 <p><strong>Purpose:</strong> Import documents, create formatted files, and get document info</p>
 <p><strong>Description:</strong><br />
 Comprehensive document handling for importing PDFs/DOCX/TXT/MD/XLSX into memory and creating formatted documents.</p>
@@ -1008,34 +652,42 @@ Comprehensive document handling for importing PDFs/DOCX/TXT/MD/XLSX into memory 
 - Both absolute paths and <code>file://</code> URLs accepted
 - URLs validated before import attempt</p>
 <p><strong>Examples:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_import&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/andrew/Documents/report.pdf&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;research&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Q1-2025&quot;</span><span class="p">]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "document_operations",
+  "arguments": {
+    "operation": "document_import",
+    "path": "/Users/andrew/Documents/report.pdf",
+    "tags": ["research", "Q1-2025"]
+  }
+}
+</code></pre>
 
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_operations&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_create&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;# Project Report\n\nFindings...&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;docx&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;output_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;project_report.docx&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "document_operations",
+  "arguments": {
+    "operation": "document_create",
+    "content": "# Project Report\n\nFindings...",
+    "format": "docx",
+    "output_path": "project_report.docx"
+  }
+}
+</code></pre>
 
 <hr />
 <hr />
 <h2 id="subagent-tools">Subagent Tools</h2>
-<h3 id="13-run_subagent">13. run_subagent</h3>
+<h3 id="10-agent_operations">10. agent_operations</h3>
 <p><strong>Purpose:</strong> Spawn isolated subagent workflows</p>
 <p><strong>Description:</strong><br />
 Delegate subtasks to specialized subagents for research, parallel work, or chunking large tasks. Subagents run in isolated conversations with fresh iteration budgets.</p>
+<p><strong>Operations (7):</strong>
+- <code>spawn</code> - Spawn a new isolated subagent
+- <code>list</code> - List active subagents
+- <code>inbox</code> - Check subagent inbox for messages
+- <code>status</code> - Get subagent status
+- <code>kill</code> - Terminate a subagent
+- <code>send</code> - Send message to a subagent
+- <code>broadcast</code> - Broadcast message to all subagents</p>
 <p><strong>Subagent Characteristics:</strong>
 - Runs in isolated conversation (no context pollution)
 - Fresh iteration budget (doesn't burn main agent's iterations)
@@ -1065,93 +717,20 @@ Delegate subtasks to specialized subagents for research, parallel work, or chunk
 - <code>enableWorkflowMode</code> (boolean, optional): Allow nested workflows (default: false)
 - <code>sharedTopicId</code> (string, optional): Shared topic UUID (default: isolated)</p>
 <p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;run_subagent&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;task&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Review chapters 1-5 of programming book&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;instructions&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Analyze code examples, identify patterns, note any errors, create summary of key concepts&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;maxIterations&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;enableTerminalAccess&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;systemPromptId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;research-analyst-uuid&quot;</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "name": "agent_operations",
+  "arguments": {
+    "task": "Review chapters 1-5 of programming book",
+    "instructions": "Analyze code examples, identify patterns, note any errors, create summary of key concepts",
+    "maxIterations": 20,
+    "enableTerminalAccess": false,
+    "system_prompt_id": "research-analyst-uuid"
+  }
+}
+</code></pre>
 
 <p><strong>Security:</strong> Terminal access disabled by default. Workflow mode disabled to prevent recursion. Isolated conversation prevents context pollution.</p>
 <hr />
-<h3 id="14-list_system_prompts">14. list_system_prompts</h3>
-<p><strong>Purpose:</strong> Discover available system prompts</p>
-<p><strong>Description:</strong><br />
-List all available system prompts with IDs, names, and descriptions. Enables agents to discover prompts for use with run_subagent tool.</p>
-<p><strong>Use Case:</strong>
-- Discover available prompts before creating subagents
-- Find appropriate prompt for specialized tasks
-- Get prompt IDs for run_subagent systemPromptId parameter</p>
-<p><strong>Workflow:</strong>
-1. Agent: "What system prompts are available?"
-2. Uses list_system_prompts tool
-3. Gets list with IDs and descriptions
-4. Agent: "Create subagent with [prompt name]"
-5. Uses run_subagent with systemPromptId from discovery</p>
-<p><strong>Parameters:</strong>
-- None (no parameters required)</p>
-<p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list_system_prompts&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Example Output:</strong></p>
-<div class="codehilite"><pre><span></span><code>Available System Prompts:
-
-ID: 550E8400-E29B-41D4-A716-446655440000
-Name: Code Reviewer
-Description: Specialized in code review and quality analysis
-
-ID: 6BA7B810-9DAD-11D1-80B4-00C04FD430C8
-Name: Research Analyst
-Description: Focused on information gathering and synthesis
-</code></pre></div>
-
-<hr />
-<h3 id="15-list_mini_prompts">15. list_mini_prompts</h3>
-<p><strong>Purpose:</strong> Discover available mini-prompts</p>
-<p><strong>Description:</strong><br />
-List all available mini-prompts with IDs, names, and content. Mini-prompts are reusable contextual information snippets that can be enabled per-conversation.</p>
-<p><strong>What Are Mini-Prompts:</strong>
-Mini-prompts contain:
-- Personal info (location, system specs)
-- Project details (tech stack, architecture)
-- Code preferences (style, patterns)
-- Technical specs (hardware, software)</p>
-<p><strong>Use Case:</strong>
-- Discover contextual information available
-- Learn about user preferences and project details
-- Understand conversation context</p>
-<p><strong>Parameters:</strong>
-- None (no parameters required)</p>
-<p><strong>Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;list_mini_prompts&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p><strong>Example Output:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="n">Available</span><span class="w"> </span><span class="n">Mini</span><span class="o">-</span><span class="n">Prompts</span><span class="p">:</span>
-
-<span class="n">ID</span><span class="p">:</span><span class="w"> </span><span class="mf">123E4567</span><span class="o">-</span><span class="n">E89B</span><span class="o">-</span><span class="mi">12</span><span class="n">D3</span><span class="o">-</span><span class="n">A456</span><span class="o">-</span><span class="mi">426614174000</span>
-<span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="n">Personal</span><span class="w"> </span><span class="n">Context</span>
-<span class="n">Content</span><span class="p">:</span><span class="w"> </span><span class="n">Based</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Orlando</span><span class="p">,</span><span class="w"> </span><span class="n">FL</span><span class="o">.</span><span class="w"> </span><span class="n">Uses</span><span class="w"> </span><span class="n">macOS</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">M1</span><span class="w"> </span><span class="n">Pro</span><span class="o">.</span><span class="w"> </span><span class="n">Prefers</span><span class="w"> </span><span class="n">Swift</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">system</span><span class="w"> </span><span class="n">tools</span><span class="o">.</span>
-
-<span class="o">---</span>
-
-<span class="n">ID</span><span class="p">:</span><span class="w"> </span><span class="mi">987</span><span class="n">F6543</span><span class="o">-</span><span class="n">E21C</span><span class="o">-</span><span class="mi">32</span><span class="n">F1</span><span class="o">-</span><span class="n">B654</span><span class="o">-</span><span class="mi">426614174001</span>
-<span class="n">Name</span><span class="p">:</span><span class="w"> </span><span class="n">SAM</span><span class="w"> </span><span class="n">Project</span>
-<span class="n">Content</span><span class="p">:</span><span class="w"> </span><span class="n">Working</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">SAM</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">Swift</span><span class="o">/</span><span class="n">SwiftUI</span><span class="w"> </span><span class="n">AI</span><span class="w"> </span><span class="n">assistant</span><span class="o">.</span><span class="w"> </span><span class="n">Architecture</span><span class="p">:</span><span class="w"> </span><span class="n">MCP</span><span class="w"> </span><span class="n">tools</span><span class="p">,</span><span class="w"> </span><span class="n">streaming</span><span class="w"> </span><span class="n">API</span><span class="p">,</span><span class="w"> </span><span class="n">conversation</span><span class="w"> </span><span class="n">management</span><span class="o">.</span>
-</code></pre></div>
-
 <hr />
 <h2 id="multi-tool-execution">Multi-Tool Execution</h2>
 <h3 id="multi_tool_useparallel">multi_tool_use.parallel</h3>
@@ -1165,47 +744,47 @@ Read 3 files simultaneously instead of sequentially, reducing latency from 3 rou
 <h2 id="tool-invocation-format">Tool Invocation Format</h2>
 <p>Tools are invoked using JSON format. GitHub Copilot and OpenAI use slightly different formats:</p>
 <h3 id="github-copilot-format">GitHub Copilot Format</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;finish_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool_calls&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;tool_calls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;call_abc123&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;file_operations&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;operation\&quot;:\&quot;read_file\&quot;,\&quot;filePath\&quot;:\&quot;/path/to/file.txt\&quot;}&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "finish_reason": "tool_calls",
+  "message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [{
+      "id": "call_abc123",
+      "type": "function",
+      "function": {
+        "name": "file_operations",
+        "arguments": "{\"operation\":\"read_file\",\"filePath\":\"/path/to/file.txt\"}"
+      }
+    }]
+  }
+}
+</code></pre>
 
 <h3 id="openai-format">OpenAI Format</h3>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;finish_reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool_calls&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;tool_calls&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
-<span class="w">      </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;call_xyz789&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;function&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;function&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;memory_operations&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;arguments&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;operation\&quot;:\&quot;search_memory\&quot;,\&quot;query\&quot;:\&quot;authentication\&quot;}&quot;</span>
-<span class="w">      </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}]</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "finish_reason": "tool_calls",
+  "message": {
+    "role": "assistant",
+    "tool_calls": [{
+      "id": "call_xyz789",
+      "type": "function",
+      "function": {
+        "name": "memory_operations",
+        "arguments": "{\"operation\":\"search_memory\",\"query\":\"authentication\"}"
+      }
+    }]
+  }
+}
+</code></pre>
 
 <p>Tool results are returned as:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;role&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tool&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;tool_call_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;call_abc123&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;content&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{\&quot;success\&quot;:true,\&quot;output\&quot;:{\&quot;content\&quot;:\&quot;...\&quot;,\&quot;mimeType\&quot;:\&quot;text/plain\&quot;}}&quot;</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>{
+  "role": "tool",
+  "tool_call_id": "call_abc123",
+  "content": "{\"success\":true,\"output\":{\"content\":\"...\",\"mimeType\":\"text/plain\"}}"
+}
+</code></pre>
 
 <hr />
 <h2 id="best-practices">Best Practices</h2>
@@ -1228,7 +807,7 @@ Read 3 files simultaneously instead of sequentially, reducing latency from 3 rou
 </ul>
 <hr />
 <h2 id="summary">Summary</h2>
-<p>SAM provides 16 comprehensive MCP tools:</p>
+<p>SAM provides 14 tools:</p>
 <table>
 <thead>
 <tr>
@@ -1260,114 +839,108 @@ Read 3 files simultaneously instead of sequentially, reducing latency from 3 rou
 </tr>
 <tr>
 <td>file_operations</td>
-<td>16</td>
-<td>File &amp; Terminal</td>
+<td>18</td>
+<td>Files</td>
 </tr>
 <tr>
 <td>terminal_operations</td>
-<td>11</td>
-<td>File &amp; Terminal</td>
+<td>1</td>
+<td>Files</td>
 </tr>
 <tr>
 <td>memory_operations</td>
-<td>4</td>
-<td>Memory &amp; RAG</td>
+<td>14</td>
+<td>Memory</td>
 </tr>
 <tr>
 <td>todo_operations</td>
 <td>4</td>
-<td>Memory &amp; Planning</td>
-</tr>
-<tr>
-<td>recall_history</td>
-<td>1</td>
-<td>Context Recall</td>
-</tr>
-<tr>
-<td>build_and_version_control</td>
-<td>5</td>
-<td>Version Control</td>
-</tr>
-<tr>
-<td>web_operations</td>
-<td>6</td>
-<td>Web &amp; Documents</td>
+<td>Planning</td>
 </tr>
 <tr>
 <td>document_operations</td>
 <td>3</td>
-<td>Web &amp; Documents</td>
-</tr>
-
-<tr>
-<td>run_subagent</td>
-<td>1</td>
-<td>Subagent</td>
+<td>Documents</td>
 </tr>
 <tr>
-<td>list_system_prompts</td>
-<td>1</td>
-<td>Subagent</td>
+<td>web_operations</td>
+<td>3</td>
+<td>Research</td>
 </tr>
 <tr>
-<td>list_mini_prompts</td>
+<td>calendar_operations</td>
+<td>9</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>contacts_operations</td>
+<td>6</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>notes_operations</td>
+<td>6</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>spotlight_search</td>
+<td>5</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>weather_operations</td>
+<td>3</td>
+<td>macOS</td>
+</tr>
+<tr>
+<td>image_generation</td>
+<td>2</td>
+<td>Media</td>
+</tr>
+<tr>
+<td>math_operations</td>
+<td>4</td>
+<td>Computation</td>
+</tr>
+<tr>
+<td>code_intelligence</td>
+<td>2</td>
+<td>Development</td>
+</tr>
+<tr>
+<td>version_control</td>
+<td>9</td>
+<td>Development</td>
+</tr>
+<tr>
+<td>remote_execution</td>
+<td>5</td>
+<td>Infrastructure</td>
+</tr>
+<tr>
+<td>apply_patch</td>
 <td>1</td>
-<td>Subagent</td>
+<td>Development</td>
+</tr>
+<tr>
+<td>agent_operations</td>
+<td>7</td>
+<td>Infrastructure</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Total:</strong> 57 operations across 16 tools</p>
+<p><strong>Total:</strong> 78 operations across 22 tools</p>
 <p>For additional help:
 - <a href="../developer/api-reference.html">API Reference</a> - REST API documentation
 - <a href="../end-user/getting-started.html">Getting Started</a> - Usage tutorials
 - <a href="../developer/architecture.html">Architecture</a> - Technical details</p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

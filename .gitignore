@@ -71,6 +71,7 @@ yarn.lock
 logs
 *.log
 log-*.txt
+link-validation-report.json
 
 # Temporary files
 tmp/

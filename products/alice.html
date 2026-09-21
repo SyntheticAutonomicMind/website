@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALICE: Local Image & Audio Generation | Synthetic Autonomic Mind</title>
+    <meta name="description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/products/alice.html">
+    <meta property="og:title" content="ALICE: Local Image & Audio Generation | Synthetic Autonomic Mind">
+    <meta property="og:description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/products/alice.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ALICE: Local Image & Audio Generation | Synthetic Autonomic Mind">
+    <meta name="twitter:description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <link rel="stylesheet" href="../css/styles.css?v=15">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BGNMWS5QRM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BGNMWS5QRM');
+    </script>
+</head>
+<body>
+        <div id="nav-placeholder"></div>
+
+    <main>
+
+    <!-- Hero Section -->
+    <section class="hero-modern">
+        <div class="container-wide">
+            <div class="hero-modern-content">
+                <div class="eyebrow alice">
+                    <span class="product-badge alice">ALICE</span>
+                </div>
+                <h1>Unlimited image and audio generation on your hardware.</h1>
+                <p class="hero-lead">ALICE runs Stable Diffusion and audio generation models locally. No subscription, no cloud upload, no cost per image or track. Generate whatever you want - your prompts and media never leave your machine.</p>
+                <div class="hero-cta">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank" rel="noopener noreferrer">
+                        Download ALICE
+                    </a>
+                    <a href="../docs/ALICE/index.html" class="btn-large btn-outline">
+                        Read the Docs
+                    </a>
+                </div>
+                <p class="hero-note">Free and open source. macOS (MPS), Linux (CUDA, ROCm, Vulkan), and Steam Deck. Deploy standalone or via Docker.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Image -->
+    <section class="feature-highlight">
+        <div class="container">
+            <div class="text-center">
+                <img src="../images/alice.png" alt="ALICE" class="product-screenshot">
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Capabilities -->
+    <section class="feature-highlight alt">
+        <div class="container">
+            <h2 class="section-title-centered">Everything you need to create.</h2>
+            
+            <div class="features-grid-modern">
+                <div class="feature-item-modern">
+                    <h3>Generation studio</h3>
+                    <p>Text-to-image and image-to-image with full parameter control. LoRA models, negative prompts, multiple schedulers, seed control, and resolution presets.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Private gallery</h3>
+                    <p>Masonry grid gallery with per-image privacy controls. Optional time-limited public sharing. Regenerate from any image, view metadata, batch manage your collection.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Model marketplace</h3>
+                    <p>Browse, search, and download models from CivitAI and HuggingFace directly in the UI. SDXL, SD 1.5, FLUX, GGUF, and custom fine-tunes all supported.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Real-time dashboard</h3>
+                    <p>GPU memory, system metrics, generation history, and quick actions. Monitor everything from a single view.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                   <h3>Multi-GPU support</h3>
+                    <p>NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, and CPU fallback. Dual backend architecture: PyTorch for full diffusers pipeline support, and stable-diffusion.cpp with Vulkan for universal GPU acceleration without vendor drivers.</p>
+                </div>
+                
+                <div class="feature-item-modern">
+                    <h3>Admin and authentication</h3>
+                    <p>User management, API key generation, role-based access. Deploy for yourself or share with your team.</p>
+                </div>
+
+                <div class="feature-item-modern">
+                    <h3>Steam Deck ready</h3>
+                    <p>Dedicated SteamOS installer with user-level systemd service. Run Stable Diffusion on your Steam Deck's AMD GPU via ROCm or Vulkan - no desktop Linux required.</p>
+                </div>
+
+                <div class="feature-item-modern">
+                    <h3>Docker deployment</h3>
+                    <p>Pre-built containers for CPU, CUDA, and ROCm on GitHub Container Registry. One command to run: <code>docker compose --profile cuda up -d</code>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feature Highlights -->
+    <section class="feature-highlight">
+        <div class="container">
+            <div class="feature-split">
+                <div class="feature-text">
+                    <h2>A prompting guide built right in.</h2>
+                    <p>ALICE includes model-specific prompting guidance so you get better results from the start. Learn what works for SD 1.5, SDXL, and FLUX without leaving the app.</p>
+                    <p>Adjust steps, guidance scale, denoising strength, samplers, and schedulers. Use LoRA models for style transfer. Full Stable Diffusion capabilities without compromise.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div class="placeholder-label">Prompting Guide</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-highlight alt">
+        <div class="container">
+            <div class="feature-split reverse">
+                <div class="feature-text">
+                    <h2>Your images, your rules.</h2>
+                    <p>Every image is private by default. Share individual images with optional time-limited public links that expire automatically. NSFW filtering is built in and configurable.</p>
+                    <p>All generation happens on your hardware. No cloud services, no data collection, no usage tracking. Run on macOS or Linux - your GPU, your data, your creations.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div class="placeholder-label">Privacy Controls</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="feature-highlight">
+        <div class="container">
+            <div class="feature-split">
+                <div class="feature-text">
+                    <h2>Deploy anywhere.</h2>
+                    <p>Run standalone, as a systemd or launchd service, or in Docker. Self-update system keeps ALICE current automatically. Built-in SteamOS/Steam Deck installer for AMD GPUs.</p>
+                    <p>OpenAI-compatible REST API for integration with SAM, scripts, or any tool. Generate images and audio from conversations, automate workflows, or build on top of the API.</p>
+                </div>
+                <div class="feature-visual">
+                    <div class="feature-placeholder">
+                        <div class="placeholder-label">Deployment Options</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Integration -->
+    <section class="feature-highlight alt">
+        <div class="container">
+            <h2 class="section-title-centered">Part of the ecosystem</h2>
+            <div class="integration-grid">
+                <div class="integration-card">
+                    <h3><span class="product-badge alice">ALICE + SAM</span> Chat-Driven Generation</h3>
+                    <p>SAM connects to ALICE for image and audio generation. Ask SAM to "create an image" or "generate a song" and ALICE handles it via OpenAI-compatible API. Seamless, private, local.</p>
+                </div>
+                <div class="integration-card">
+                    <h3><span class="product-badge alice">ALICE + CLIO</span> Automated Deployment</h3>
+                    <p>CLIO orchestrates ALICE deployments across fleets. Remote GPU provisioning, model management, benchmarking, Docker/ROCm configuration - all automated from your terminal.</p>
+                </div>
+                <div class="integration-card">
+                    <h3><span class="product-badge alice">OpenAI-Compatible API</span> Universal Integration</h3>
+                    <p>Any client that speaks the OpenAI image or audio API can use ALICE. Plug into existing workflows, custom scripts, or third-party tools without modification.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Get started with ALICE.</h2>
+                <p>Download for macOS or Linux. Generate images locally.</p>
+                <div class="cta-buttons">
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/releases/latest" class="btn-large btn-primary" target="_blank" rel="noopener noreferrer">
+                        Download ALICE
+                    </a>
+                    <a href="../docs/ALICE/index.html" class="btn-large btn-outline">
+                        Read the Docs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../js/main.js?v=15"></script>
+    <script src="../js/include.js"></script>
+</body>
+</html>

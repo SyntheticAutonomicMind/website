@@ -3,339 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Providers | CLIO Documentation</title>
-    <meta name="description" content="CLIO Documentation: AI Provider Configuration">
-    <link rel="stylesheet" href="../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
+    <title>AI Providers | CLIO</title>
+    <meta name="description" content="Configure and use different AI providers with CLIO. Models change frequently — use /api models inside CLIO to see current availability.">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/api-providers.html">
+    <meta property="og:title" content="AI Providers | CLIO">
+    <meta property="og:description" content="Configure and use different AI providers with CLIO. Models change frequently — use /api models inside CLIO to see current availability.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/api-providers.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/api-providers.html" data-prev="docs/CLIO/configuration.html|AI Providers" data-next="docs/CLIO/workflows.html|Workflows">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="index.html">CLIO Documentation</a> / AI Providers
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>AI Providers</span></nav>
         
         <div class="doc-content">
 <h1>AI Providers</h1>
-<p class="lead">Configure and use different AI providers with CLIO</p>
+<p class="lead">Configure and use different AI providers with CLIO. Models change frequently — use <code>/api models</code> inside CLIO to see current availability.</p>
 
 <h2>Supported Providers</h2>
-<p>CLIO supports multiple AI providers for maximum flexibility:</p>
+<p>CLIO supports 16+ AI providers. All API providers are OpenAI-compatible; Anthropic, Google, and NVIDIA have native protocol adapters.</p>
 
-<h3>GitHub Copilot (Recommended)</h3>
-<p><strong>Models:</strong> GPT-4o, Claude 3.5 Sonnet, o1-preview, o1-mini</p>
-<p><strong>Cost:</strong> $10/month (Individual) or $19/month (Business)</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api login
-# Follow browser prompts to authorize</code></pre>
-
-<h3>OpenAI</h3>
-<p><strong>Models:</strong> GPT-4o, GPT-4 Turbo, GPT-3.5 Turbo, o1 models</p>
-<p><strong>Cost:</strong> Pay-as-you-go</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api set provider openai
-: /api set key YOUR_OPENAI_API_KEY
-: /api set model gpt-4o</code></pre>
-
-<h3>Anthropic Claude</h3>
-<p><strong>Models:</strong> Claude 3.5 Sonnet, Claude 3 Opus, Claude 3 Haiku</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api set provider anthropic
-: /api set key YOUR_ANTHROPIC_API_KEY
-: /api set model claude-3-5-sonnet-20241022</code></pre>
-
-<h3>DeepSeek</h3>
-<p><strong>Models:</strong> DeepSeek Coder, DeepSeek Chat</p>
-<p><strong>Cost:</strong> Very cost-effective for coding tasks</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api set provider deepseek
-: /api set key YOUR_DEEPSEEK_API_KEY
-: /api set model deepseek-coder</code></pre>
-
-<h3>OpenRouter</h3>
-<p><strong>Models:</strong> Access to 200+ models from multiple providers</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api set provider openrouter
-: /api set key YOUR_OPENROUTER_API_KEY
-: /api set model anthropic/claude-3.5-sonnet</code></pre>
-
-<h3>llama.cpp (Local)</h3>
-<p><strong>Models:</strong> Any GGUF model</p>
-<p><strong>Cost:</strong> Free (runs locally)</p>
-<p><strong>Setup:</strong></p>
-<pre><code># Start llama.cpp server
-./llama-server -m model.gguf --port 8080
-
-# Configure CLIO
-: /api set provider llamacpp
-: /api set endpoint http://localhost:8080
-: /api set model local-model</code></pre>
-
-<h3>SAM (Local)</h3>
-<p><strong>Models:</strong> MLX and GGUF models via SAM</p>
-<p><strong>Cost:</strong> Free (runs locally)</p>
-<p><strong>Setup:</strong></p>
-<pre><code>: /api set provider sam
-: /api set endpoint http://localhost:8000
-: /api set model sam-default</code></pre>
+<table>
+    <tr>
+        <th>Provider</th>
+        <th>Short Name</th>
+        <th>Auth</th>
+    </tr>
+    <tr>
+        <td><strong>GitHub Copilot</strong></td>
+        <td><code>github_copilot</code></td>
+        <td>OAuth</td>
+    </tr>
+    <tr>
+        <td><strong>Anthropic</strong></td>
+        <td><code>anthropic</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>OpenAI</strong></td>
+        <td><code>openai</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>Google Gemini</strong></td>
+        <td><code>google</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>DeepSeek</strong></td>
+        <td><code>deepseek</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>Charm Hyper</strong></td>
+        <td><code>hyper</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>OpenRouter</strong></td>
+        <td><code>openrouter</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>OrcaRouter</strong></td>
+        <td><code>orca</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>KiloCode</strong></td>
+        <td><code>kilo</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>Ollama Cloud</strong></td>
+        <td><code>ollama_cloud</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>MiniMax</strong></td>
+        <td><code>minimax</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>Z.AI</strong></td>
+        <td><code>zai</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>NVIDIA NIM</strong></td>
+        <td><code>nvidia</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>Vercel AI Gateway</strong></td>
+        <td><code>vercel</code></td>
+        <td>API Key</td>
+    </tr>
+    <tr>
+        <td><strong>llama.cpp</strong> (Local)</td>
+        <td><code>llama.cpp</code></td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td><strong>LM Studio</strong> (Local)</td>
+        <td><code>lmstudio</code></td>
+        <td>None</td>
+    </tr>
+    <tr>
+        <td><strong>SAM</strong> (Local)</td>
+        <td><code>sam</code></td>
+        <td>API Key</td>
+    </tr>
+</table>
 
 <h2>Configuration Commands</h2>
-<pre><code># Set provider
-: /api set provider <name>
+<p>All provider configuration is done with the <code>/api</code> command inside CLIO:</p>
+<pre><code># See all providers
+/api providers
+
+# Get details for a specific provider
+/api providers github_copilot
+
+# Switch provider
+/api set provider <name>
 
 # Set API key
-: /api set key <value>
+/api set key <your-key>
 
 # Set model
-: /api set model <name>
+/api set model <model-name>
 
-# List available models for current provider
-: /api models
+# List available models for your provider
+/api models
+
+# View current configuration
+/api show
 
 # Save configuration
-: /config save
-
-# Show current configuration
-: /config show</code></pre>
+/config save</code></pre>
 
 <h2>Model Selection Tips</h2>
 <ul>
-    <li><strong>For coding:</strong> GPT-4o, Claude 3.5 Sonnet, DeepSeek Coder</li>
-    <li><strong>For reasoning:</strong> o1-preview, o1-mini</li>
-    <li><strong>For speed:</strong> GPT-3.5 Turbo, Claude 3 Haiku</li>
+    <li><strong>For coding:</strong> Latest GPT-4, Claude, or DeepSeek Coder models</li>
+    <li><strong>For reasoning:</strong> o1 or comparable reasoning models</li>
+    <li><strong>For speed:</strong> Faster, smaller models</li>
     <li><strong>For privacy:</strong> llama.cpp or SAM (local models)</li>
-    <li><strong>For cost:</strong> DeepSeek, GPT-3.5 Turbo</li>
+    <li><strong>For cost:</strong> DeepSeek or smaller cloud models</li>
 </ul>
+<p>Models change frequently. After configuring your provider, use <code>/api models</code> to see the current list of available models.</p>
 
 <h2>Next Steps</h2>
 <ul>
@@ -345,51 +166,11 @@
 </ul>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../index.html">SAM</a></li>
-                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
 </body>
 </html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIO + SAM Integration | CLIO</title>
+    <meta name="description" content="CLIO develops SAM. Both implement the Unbroken Method. Shared methodology, persistent memory, and seamless collaboration between terminal and GUI.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/integration-sam.html">
+    <meta property="og:title" content="CLIO + SAM Integration | CLIO">
+    <meta property="og:description" content="CLIO develops SAM. Both implement the Unbroken Method. Shared methodology, persistent memory, and seamless collaboration between terminal and GUI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/integration-sam.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
+</head>
+<body>
+        <div id="nav-placeholder"></div>
+
+    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/integration-sam.html" data-prev="docs/CLIO/remote-execution.html|CLIO + SAM Integration" data-next="docs/CLIO/integration-alice.html|CLIO + ALICE Integration">
+    <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>CLIO + SAM Integration</span></nav>
+        
+        <div class="doc-content">
+            <h1>CLIO + SAM Integration</h1>
+<p class="lead">CLIO develops SAM. Both implement the Unbroken Method. Shared methodology, persistent memory, and seamless collaboration between terminal and GUI.</p>
+
+<h2 id="overview">Overview</h2>
+<p>The relationship between CLIO and SAM is unique in the ecosystem: CLIO was built to implement the Unbroken Method, then used to build SAM, and now maintains SAM. This creates a reflexive loop where the tool builds the product that inspired the tool's methodology.</p>
+
+<h2 id="shared-methodology">Shared Methodology: The Unbroken Method</h2>
+<p>Both CLIO and SAM embody the <a href="../shared/the-unbroken-method.html">Unbroken Method</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Pillar</th>
+<th>CLIO Implementation</th>
+<th>SAM Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Continuous Context</td>
+<td><code>interact</code> checkpoints, LTM, session memory</td>
+<td>Conversation history, Shared Topics, YaRN context profiles</td>
+</tr>
+<tr>
+<td>Complete Ownership</td>
+<td>Agent authority model, bug-fix ownership</td>
+<td>Tool execution with user approval, autonomous agents</td>
+</tr>
+<tr>
+<td>Investigation First</td>
+<td><code>file_operations</code>, <code>grep_search</code>, <code>code_intelligence</code></td>
+<td>Document search, codebase indexing, semantic RAG</td>
+</tr>
+<tr>
+<td>Root Cause Focus</td>
+<td>LTM solutions with trust tiers</td>
+<td>Error analysis, debugging tools</td>
+</tr>
+<tr>
+<td>Complete Deliverables</td>
+<td>No TODOs, checkpoint-enforced completion</td>
+<td>Feature-complete releases, no partial features</td>
+</tr>
+<tr>
+<td>Structured Handoffs</td>
+<td><code>/session export</code>, <code>ai-assisted/</code> structure</td>
+<td>Conversation export, Shared Topic persistence</td>
+</tr>
+<tr>
+<td>Learning from Failure</td>
+<td>LTM trust tiers ([UNVERIFIED] -> [TRUSTED])</td>
+<td>Error reporting, crash analytics (opt-in)</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="development-workflow">Development Workflow</h2>
+<h3 id="clio-develops-sam">CLIO Develops SAM</h3>
+<p>Since January 2026, all SAM development has been done through CLIO:</p>
+<ol>
+<li>Developer opens CLIO in the SAM repository</li>
+<li>CLIO investigates the Swift/SwiftUI codebase</li>
+<li>CLIO proposes implementation plan (checkpoint)</li>
+<li>Developer approves or redirects</li>
+<li>CLIO implements: Swift files, SwiftUI views, tests</li>
+<li>CLIO runs tests, verifies build passes</li>
+<li>Developer reviews changes, commits</li>
+<li>Session exported to <code>ai-assisted/YYYYMMDD/HHMM/</code></li>
+</ol>
+
+<p>This workflow means SAM's codebase reflects CLIO's patterns: structured error handling, investigation-before-modification, comprehensive test coverage, and architectural consistency.</p>
+
+<h3 id="cross-system-memory">Cross-System Memory</h3>
+<p>CLIO's Long-Term Memory (<code>.clio/ltm.json</code>) stores patterns learned while developing SAM:</p>
+<ul>
+<li>Swift/SwiftUI patterns specific to SAM's architecture</li>
+<li>Provider integration patterns (MLX, GGUF, cloud APIs)</li>
+<li>YaRN context management implementation details</li>
+<li>Voice interface integration patterns</li>
+</ul>
+<p>When CLIO works on CLIO itself, it applies these learned patterns. When it works on ALICE, it transfers applicable patterns. The memory is portable across the ecosystem.</p>
+
+<h2 id="using-clio-and-sam-together">Using CLIO and SAM Together</h2>
+<h3 id="complementary-workflows">Complementary Workflows</h3>
+<p>Use each tool for what it excels at:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Use CLIO</th>
+<th>Use SAM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Code implementation, refactoring</td>
+<td>✓ Primary</td>
+<td></td>
+</tr>
+<tr>
+<td>Architecture exploration, code search</td>
+<td>✓ Semantic search</td>
+<td>✓ Document RAG</td>
+</tr>
+<tr>
+<td>Long-form writing, planning</td>
+<td></td>
+<td>✓ Native UI</td>
+</tr>
+<tr>
+<td>Voice interaction</td>
+<td></td>
+<td>✓ "Hey SAM"</td>
+</tr>
+<tr>
+<td>Remote server work</td>
+<td>✓ SSH, fleet execution</td>
+<td></td>
+</tr>
+<tr>
+<td>Image/audio generation</td>
+<td></td>
+<td>✓ ALICE integration</td>
+</tr>
+<tr>
+<td>Multi-agent parallel work</td>
+<td>✓ Native support</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="shared-context">Shared Context</h3>
+<p>When working on SAM-related tasks:</p>
+<ul>
+<li>Open SAM for high-level planning and research</li>
+<li>Open CLIO for implementation and terminal work</li>
+<li>Both share the Unbroken Method vocabulary and checkpoints</li>
+<li>CLIO's LTM informs SAM development patterns</li>
+</ul>
+
+<h2 id="technical-integration">Technical Integration</h2>
+<h3 id="sam-web-clio">SAM Web + CLIO</h3>
+<p>SAM-Web provides browser access to SAM. You can use SAM-Web on an iPad while running CLIO on your development machine - both connected to the same SAM instance, sharing conversation context.</p>
+
+<h3 id="provider-consistency">Provider Consistency</h3>
+<p>Both tools support the same AI providers:</p>
+<ul>
+<li>GitHub Copilot, OpenAI, Anthropic (via Copilot/OpenRouter)</li>
+<li>Google Gemini, DeepSeek, MiniMax</li>
+<li>Local: MLX (SAM), llama.cpp (both), LM Studio (both)</li>
+<li>Custom OpenAI-compatible endpoints</li>
+</ul>
+<p>Configure once, use in both tools.</p>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../shared/the-unbroken-method.html">The Unbroken Method</a> - The shared methodology</li>
+<li><a href="../shared/the-reflexive-ecosystem.html">The Reflexive Ecosystem</a> - Self-building case study</li>
+<li><a href="../SAM/index.html">SAM Documentation</a> - SAM user guide</li>
+<li><a href="index.html">CLIO Documentation</a> - CLIO user guide</li>
+</ul>
+        </div>
+    </div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
+</body>
+</html>

@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
             navMenu.classList.toggle('active');
-            
+
             // Animate hamburger icon
             const spans = hamburger.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
@@ -35,13 +35,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scrolling for anchor links (fallback for older browsers)
+    // Products Dropdown Navigation
+    const navDropdown = document.querySelector('.nav-dropdown');
+    const navDropdownToggle = document.querySelector('.nav-dropdown-toggle');
+
+    if (navDropdown && navDropdownToggle) {
+        navDropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            navDropdown.classList.toggle('open');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navDropdown.contains(e.target)) {
+                navDropdown.classList.remove('open');
+            }
+        });
+
+        // Close dropdown on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                navDropdown.classList.remove('open');
+            }
+        });
+    }
+
+    // Smooth scrolling for anchor links
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
     anchorLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 e.preventDefault();
@@ -53,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add fade-in animation on scroll
+    // Fade-in animation on scroll
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
@@ -69,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for fade-in
-    const fadeElements = document.querySelectorAll('.feature-card, .capability, .doc-card, .community-card, .step');
+    const fadeElements = document.querySelectorAll('.doc-card, .product-card, .integration-card, .doc-panel-card');
     fadeElements.forEach(element => {
         element.style.opacity = '0';
         element.style.transform = 'translateY(20px)';
@@ -77,13 +103,37 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(element);
     });
 
-    // Add parallax effect to hero section
+    // Parallax effect on hero sections
     window.addEventListener('scroll', function() {
-        const hero = document.querySelector('.hero');
+        const hero = document.querySelector('.hero-modern');
         if (hero) {
             const scrolled = window.pageYOffset;
             const rate = scrolled * 0.5;
             hero.style.transform = `translateY(${rate}px)`;
         }
     });
+
+    // Homepage Docs Product Tabs
+    const docTabs = document.querySelectorAll('.doc-tab');
+    const docPanels = document.querySelectorAll('.docs-content-panel');
+
+    if (docTabs.length && docPanels.length) {
+        docTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const product = this.dataset.product;
+
+                // Update tabs
+                docTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                // Update panels
+                docPanels.forEach(panel => {
+                    panel.classList.remove('active');
+                    if (panel.id === 'docs-' + product) {
+                        panel.classList.add('active');
+                    }
+                });
+            });
+        });
+    }
 });

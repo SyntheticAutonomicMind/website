@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commands | CLIO</title>
-    <meta name="description" content="CLIO commands">
-    <link rel="stylesheet" href="../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
+    <title>Slash Commands Reference | CLIO</title>
+    <meta name="description" content="Complete reference for CLIO's slash commands">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/slash-commands.html">
+    <meta property="og:title" content="Slash Commands Reference | CLIO">
+    <meta property="og:description" content="Complete reference for CLIO's slash commands">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/slash-commands.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/slash-commands.html" data-prev="docs/CLIO/tools-reference.html|Slash Commands" data-next="docs/CLIO/configuration.html|Configuration">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="index.html">Documentation</a> / Commands
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Slash Commands Reference</span></nav>
         
         <div class="doc-content">
 <h1>Slash Commands Reference</h1>
@@ -277,6 +54,7 @@
 </table>
 
 <h2>API & Configuration</h2>
+<p>Configure AI providers, models, and all CLIO settings.</p>
 <table>
     <tr>
         <th>Command</th>
@@ -288,7 +66,7 @@
     </tr>
     <tr>
         <td><code>/api set provider NAME</code></td>
-        <td>Set AI provider (openai, anthropic, deepseek, etc.)</td>
+        <td>Set AI provider (openai, anthropic, deepseek, google, etc.)</td>
     </tr>
     <tr>
         <td><code>/api set key VALUE</code></td>
@@ -296,11 +74,19 @@
     </tr>
     <tr>
         <td><code>/api set model NAME</code></td>
-        <td>Set model (gpt-4o, claude-3-5-sonnet, etc.)</td>
+        <td>Set model (run <code>/api models</code> to list available)</td>
     </tr>
     <tr>
         <td><code>/api models</code></td>
         <td>List available models for current provider</td>
+    </tr>
+    <tr>
+        <td><code>/api providers</code></td>
+        <td>List all configured providers</td>
+    </tr>
+    <tr>
+        <td><code>/api logout</code></td>
+        <td>Clear stored API credentials</td>
     </tr>
     <tr>
         <td><code>/config show</code></td>
@@ -309,6 +95,10 @@
     <tr>
         <td><code>/config save</code></td>
         <td>Save configuration to disk</td>
+    </tr>
+    <tr>
+        <td><code>/config set KEY VALUE</code></td>
+        <td>Set a configuration value</td>
     </tr>
 </table>
 
@@ -334,9 +124,14 @@
         <td><code>/session export ID</code></td>
         <td>Export session to file</td>
     </tr>
+    <tr>
+        <td><code>/session new [TITLE]</code></td>
+        <td>Create a new session</td>
+    </tr>
 </table>
 
 <h2>Memory Commands</h2>
+<p>CLIO persists key-value memory and long-term memory across sessions.</p>
 <table>
     <tr>
         <th>Command</th>
@@ -362,6 +157,14 @@
         <td><code>/memory delete KEY</code></td>
         <td>Delete memory entry</td>
     </tr>
+    <tr>
+        <td><code>/memory ltm</code></td>
+        <td>View long-term memory entries</td>
+    </tr>
+    <tr>
+        <td><code>/memory prune</code></td>
+        <td>Clean up old memory entries</td>
+    </tr>
 </table>
 
 <h2>Todo Management</h2>
@@ -383,8 +186,121 @@
         <td>Mark todo as complete</td>
     </tr>
     <tr>
+        <td><code>/todo delete ID</code></td>
+        <td>Delete a todo</td>
+    </tr>
+    <tr>
         <td><code>/todo clear</code></td>
         <td>Clear completed todos</td>
+    </tr>
+</table>
+
+<h2>Development Commands</h2>
+<p>Code understanding, file operations, and project management.</p>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>/file read PATH</code></td>
+        <td>Read a file from the working directory</td>
+    </tr>
+    <tr>
+        <td><code>/file edit PATH</code></td>
+        <td>Edit a file interactively</td>
+    </tr>
+    <tr>
+        <td><code>/git status</code></td>
+        <td>Show git status</td>
+    </tr>
+    <tr>
+        <td><code>/git diff [FILE]</code></td>
+        <td>Show git diff</td>
+    </tr>
+    <tr>
+        <td><code>/git log [N]</code></td>
+        <td>Show recent commits</td>
+    </tr>
+    <tr>
+        <td><code>/git commit MESSAGE</code></td>
+        <td>Stage and commit changes</td>
+    </tr>
+    <tr>
+        <td><code>/git push [REMOTE] [BRANCH]</code></td>
+        <td>Push changes</td>
+    </tr>
+    <tr>
+        <td><code>/git pull [REMOTE] [BRANCH]</code></td>
+        <td>Pull changes</td>
+    </tr>
+    <tr>
+        <td><code>/log [N]</code></td>
+        <td>Show conversation log</td>
+    </tr>
+    <tr>
+        <td><code>/context</code></td>
+        <td>Show current context stats and length</td>
+    </tr>
+    <tr>
+        <td><code>/mux</code></td>
+        <td>Multiplexer pane management</td>
+    </tr>
+    <tr>
+        <td><code>/stats</code></td>
+        <td>Show token, cost, and conversation statistics</td>
+    </tr>
+    <tr>
+        <td><code>/project init</code></td>
+        <td>Initialize a new project</td>
+    </tr>
+    <tr>
+        <td><code>/project design</code></td>
+        <td>Create a product requirements document</td>
+    </tr>
+    <tr>
+        <td><code>/spec</code></td>
+        <td>List and run spec tests</td>
+    </tr>
+    <tr>
+        <td><code>/skills</code></td>
+        <td>List and manage skills</td>
+    </tr>
+    <tr>
+        <td><code>/prompt</code></td>
+        <td>List and set prompts</td>
+    </tr>
+    <tr>
+        <td><code>/profile</code></td>
+        <td>Show or set user profile</td>
+    </tr>
+    <tr>
+        <td><code>/billing</code></td>
+        <td>Show API usage and billing info</td>
+    </tr>
+    <tr>
+        <td><code>/update</code></td>
+        <td>Check for and apply CLIO updates</td>
+    </tr>
+</table>
+
+<h2>AI Commands</h2>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>/ai explain</code></td>
+        <td>Explain selected code</td>
+    </tr>
+    <tr>
+        <td><code>/ai review</code></td>
+        <td>Review code for issues</td>
+    </tr>
+    <tr>
+        <td><code>/ai test</code></td>
+        <td>Generate tests for code</td>
     </tr>
 </table>
 
@@ -416,51 +332,11 @@
 </ul>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../index.html">SAM</a></li>
-                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
 </body>
 </html>

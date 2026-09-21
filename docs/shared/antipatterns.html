@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Antipatterns | Shared</title>
+    <meta name="description" content="Common antipatterns that break consistency, maintainability, and user experience.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/shared/antipatterns.html">
+    <meta property="og:title" content="Website Antipatterns | Shared">
+    <meta property="og:description" content="Common antipatterns that break consistency, maintainability, and user experience.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/shared/antipatterns.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="shared" data-doc-path="docs/shared/antipatterns.html" data-prev="docs/shared/contributing.html|Antipatterns">
+    <div class="doc-container">
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Website Antipatterns</span></nav>
+
+        <div class="doc-content">
+            <h1 id="website-antipatterns">Website Antipatterns</h1>
+<p class="lead">Common antipatterns that break consistency, maintainability, and user experience.</p>
+
+<h2 id="what-is-an-antipattern">What Is an Antipattern?</h2>
+<p>An antipattern is a common approach that seems helpful but causes more problems than it solves. These documents catalog the antipatterns to avoid and the right way to do things.</p>
+
+<h2 id="1-copy-pasting-navigation-and-footers">1. Copy-Pasting Navigation and Footers</h2>
+<p><strong>Antipattern:</strong> Every page contains a full copy of the navbar (40+ lines) and footer (85+ lines) as inline HTML. When you need to update the nav, you must edit 60+ files.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>Changes require editing every page individually — error-prone and time-consuming</li>
+<li>Inconsistencies creep in: different pages link to different destinations, use different badge spacing, etc.</li>
+<li>A single typo in one page's footer goes unnoticed</li>
+<li>The site grows stale because updates are too tedious to apply everywhere</li>
+</ul>
+<p><strong>Right way:</strong> Extract shared components (navbar, footer, scripts) into fragment files and load them via JavaScript. Define the nav and footer in ONE place.</p>
+<div class="codehilight"><pre><code>&lt;!-- Page only contains placeholders --&gt;
+&lt;div id="nav-placeholder"&gt;&lt;/div&gt;
+... page content ...
+&lt;div id="footer-placeholder"&gt;&lt;/div&gt;
+&lt;script src="js/include.js"&gt;&lt;/script&gt;
+
+&lt;!-- includes/nav.html defines the nav once --&gt;
+<!-- includes/footer.html defines the footer once --></pre></div>
+
+<h2 id="2-hand-calculating-relative-paths">2. Hand-Calculating Relative Paths</h2>
+<p><strong>Antipattern:</strong> Each page manually computes paths like `../../../css/styles.css` or `../../products/sam.html` based on its directory depth. When pages move or a new directory level is added, all paths break.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>A page at depth 3 uses `../../../` but gets moved to depth 2 — now all paths 404</li>
+<li>Developers copy a page from one directory to another and forget to adjust paths</li>
+<li>Inconsistencies: some pages use `../docs/index.html`, others use `../../index.html` for the same destination</li>
+<li>External links like GitHub URLs are easy to get right; relative paths are error-prone</li>
+</ul>
+<p><strong>Right way:</strong> Calculate paths at runtime based on the page's URL depth. A single JS function handles all depth levels.</p>
+<div class="codehilight"><pre><code>// js/include.js calculates the correct root prefix
+function calculatePaths() {
+    var parts = window.location.pathname.split('/');
+    var dirParts = parts.slice(1, -1); // remove filename and leading empty
+    var root = '../'.repeat(dirParts.length);
+    return { root: root, docs: root + 'docs/' };
+}</code></pre></div>
+
+<h2 id="3-inline-styles-in-html">3. Inline <code>&lt;style&gt;</code> Blocks in HTML</h2>
+<p><strong>Antipattern:</strong> Pages define their typography, layout, and component styles inside <code>&lt;style&gt;</code> tags in the <code>&lt;head&gt;</code>. Each page has its own copy.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>Styles diverge between pages — same element looks different on different pages</li>
+<li>When you want to change a heading size or color, you must edit 60+ files</li>
+<li>Bloat: the same CSS is shipped on every page, just duplicated</li>
+<li>Impossible to maintain a consistent design system</li>
+</ul>
+<p><strong>Right way:</strong> All shared styles live in <code>css/styles.css</code>. Pages only include the external stylesheet.</p>
+
+<h2 id="4-redundant-ui-elements">4. Redundant UI Elements</h2>
+<p><strong>Antipattern:</strong> Adding elements that duplicate information already present. For example, a "product switcher" dropdown on the docs hub page when the page already has product cards below it. Or a "Better Together" section when the hero already explains the ecosystem.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>Cognitive overload: users see the same information twice</li>
+<li>Maintenance burden: when one copy is updated, the other is forgotten</li>
+<li>Visual noise: the page feels cluttered and unfocused</li>
+</ul>
+<p><strong>Right way:</strong> One element per piece of information. If the docs hub has product cards, don't also add a product switcher dropdown.</p>
+
+<h2 id="5-having-two-sources-of-truth">5. Having Two Sources of Truth</h2>
+<p><strong>Antipattern:</strong> Writing documentation that duplicates or contradicts the source code. For example, listing 10 tools when the source has 11, or showing a model name that's been deprecated.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>Documentation drifts from reality — users follow docs that don't match the software</li>
+<li>Trust erodes: when docs are wrong, users stop believing them</li>
+<li>Maintaining two copies means updating both when changes happen</li>
+</ul>
+<p><strong>Right way:</strong> Read source code before writing documentation. Verify every fact against <code>../SAM/Sources/</code>, <code>../CLIO/lib/CLIO/</code>, or <code>../ALICE/src/</code>. If a fact can't be verified, label it <code>[NEEDS VERIFICATION]</code>.</p>
+
+<h2 id="6-specific-model-names-in-docs">6. Specific Model Names in Docs</h2>
+<p><strong>Antipattern:</strong> Listing specific LLM model names like "GPT-4o" or "Claude 3.5 Sonnet" in documentation examples.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>Model names change frequently — "GPT-4o" becomes "o1" or "GPT-5"</li>
+<li>Docs become stale within months, misleading users</li>
+<li>Different providers offer different models at different times</li>
+</ul>
+<p><strong>Right way:</strong> Use provider-level descriptions. Say "Set model (run <code>/api models</code> to list available)" instead of "Set model (gpt-4o, claude-3-5-sonnet, etc.)".</p>
+
+<h2 id="7-es-module-scripts-in-simple-html">7. ES Module Scripts in Simple HTML</h2>
+<p><strong>Antipattern:</strong> Using <code>&lt;script type="module"&gt;</code> with import statements for libraries in simple static HTML pages.</p>
+<p><strong>Why it fails:</strong></p>
+<ul>
+<li>ES module imports require CORS headers that <code>python3 -m http.server</code> doesn't set</li>
+<li>Breaks in production if the CDN is unreachable</li>
+<li>Simpler script tags work everywhere without configuration</li>
+</ul>
+<p><strong>Right way:</strong> Use standard <code>&lt;script src="..."&gt;</code> tags for CDN libraries like Mermaid.js.</p>
+
+<h2 id="prevention">Prevention</h2>
+<p>To avoid these antipatterns in future sessions:</p>
+<ol>
+<li><strong>Always read the .doc-template.html first</strong> — it defines the intended page structure</li>
+<li><strong>Check if a fragment already exists</strong> in <code>includes/</code> before copy-pasting markup</li>
+<li><strong>Run the link validator</strong> (<code>python3 scripts/validate-links.py</code>) before committing</li>
+<li><strong>Verify against source code</strong> — read <code>../CLIO/lib/CLIO/</code>, <code>../SAM/Sources/</code>, <code>../ALICE/src/</code></li>
+<li><strong>Test in the browser</strong> — don't just check HTTP 200, actually inspect the rendered page</li>
+</ol>
+        </div>
+    </div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
+</body>
+</html>

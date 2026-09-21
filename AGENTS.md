@@ -45,7 +45,7 @@ No package install, no build step. Edit HTML, refresh browser.
 graph TB
     subgraph "Repository"
         IDX[index.html<br/>Landing page]
-        VIEW[viewer.html<br/>Markdown viewer]
+        PROD[products/*.html<br/>Product pages]
         CSS[css/styles.css<br/>Global styles]
         JS[js/main.js<br/>Client-side logic]
     end
@@ -63,7 +63,7 @@ graph TB
 
     IDX --> CSS
     IDX --> JS
-    VIEW --> CSS
+    PROD --> CSS
     SAM --> CSS
     CLIO --> CSS
     ALICE --> CSS
@@ -75,7 +75,7 @@ graph TB
 
 **Key facts:**
 - No build pipeline. Files are deployed as-is.
-- The site uses **HTML files directly** for documentation, not a markdown + viewer pipeline (despite what older README sections describe).
+- The site uses **HTML files directly** for documentation, no markdown-to-HTML build step.
 - External libraries via CDN: Marked.js (markdown rendering), Mermaid.js (diagrams), DOMPurify (sanitization).
 - Auto-deploy: push to `main` -> live in 2-3 minutes.
 
@@ -86,8 +86,8 @@ graph TB
 | Path | Purpose |
 |------|---------|
 | `index.html` | Landing page with feature showcase |
-| `viewer.html` | Markdown viewer (client-side rendering) |
-| `*.html` (root) | Per-product landing pages (`clio-terminal-ai.html`, `local-ai-assistant-macos.html`, `stable-diffusion-macos.html`, `ai-coding-assistant-macos.html`) |
+| `products/*.html` | Per-product pages (`sam.html`, `clio.html`, `alice.html`) |
+| `*.html` (root) | SEO redirect stubs (`clio-terminal-ai.html`, `local-ai-assistant-macos.html`, `stable-diffusion-macos.html`, `ai-coding-assistant-macos.html`) |
 | `css/` | Stylesheets (`styles.css`) |
 | `js/` | Client-side scripts (`main.js`) |
 | `images/` | All image assets (PNG, JPG) |
@@ -128,8 +128,8 @@ graph TB
 ### JavaScript Conventions
 
 - **Vanilla JS:** No frameworks or build tools.
-- **Single entry:** `js/main.js` is the main script.
-- **Libraries via CDN:** Marked.js for markdown, Mermaid.js for diagrams, DOMPurify for sanitization.
+- **Three scripts:** `js/main.js` (UI interactions), `js/include.js` (loads nav/footer fragments via fetch, generates prev/next nav, dynamically loads `js/docs.js` on doc pages), `js/docs.js` (TOC, code copy buttons, Mermaid.js loading, audience tab switching).
+- **Libraries via CDN:** Mermaid.js for diagrams (loaded conditionally by `js/docs.js`).
 - **No globals:** Wrap in IIFEs or modules.
 
 ### Markdown Conventions (in HTML)
@@ -137,7 +137,7 @@ graph TB
 - Headings start at `<h1>` for the page title.
 - Code blocks: `<pre><code class="language-XXX">`.
 - Tables: standard HTML `<table>` with `<thead>` and `<tbody>`.
-- Blockquotes for callouts: `<blockquote>` with a class for type (info, warning, success).
+- Callouts: `<blockquote class="callout note|warning|error|success">` for notes and warnings.
 
 ### Python Script Conventions
 

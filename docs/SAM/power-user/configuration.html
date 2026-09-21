@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration Guide | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Configuration Guide">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/configuration.html">
+    <title>Configuration Guide | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/power-user/configuration.html">
+    <meta property="og:title" content="Configuration Guide | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/power-user/configuration.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/configuration.html" data-next="docs/SAM/power-user/tools-reference.html|Tools Reference">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Configuration
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Power User</span><span class="breadcrumb-separator">/</span><span>Configuration Guide</span></nav>
         
         <div class="doc-content">
             <h1 id="configuration-guide">Configuration Guide</h1>
@@ -361,24 +138,12 @@
 - More secure than manual key entry</p>
 <p><strong>Available Models</strong>:
 - GPT-4, GPT-4 Turbo
-- Claude 3.5 Sonnet (via Copilot)
-- o1-preview, o1-mini</p>
+- Claude (via Copilot)
+- o1 reasoning models</p>
 <p><strong>Features</strong>:
 - Integrated authentication
 - Automatic token refresh
 - Free tier support</p>
-<h3 id="anthropic-claude">Anthropic Claude</h3>
-<p><strong>Setup</strong>:
-1. Get API key from <a href="https://console.anthropic.com">console.anthropic.com</a>
-2. Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
-3. Select <strong>Anthropic</strong> from dropdown
-4. Paste key (starts with <code>sk-ant-</code>)
-5. Click <strong>Save Provider</strong></p>
-<p><strong>Available Models</strong>:
-- Claude 3.5 Sonnet
-- Claude 3 Opus
-- Claude 3 Sonnet
-- Claude 3 Haiku</p>
 <h3 id="deepseek">DeepSeek</h3>
 <p><strong>Setup</strong>:
 1. Get API key from <a href="https://platform.deepseek.com">platform.deepseek.com</a>
@@ -394,9 +159,9 @@
 4. Paste API key
 5. Click <strong>Save Provider</strong></p>
 <p><strong>Available Models</strong>:
-- Gemini 1.5 Pro (up to 2M token context)
-- Gemini 1.5 Flash
-- Gemini 2.0 Flash Thinking Experimental</p>
+- Gemini Pro (large context)
+- Gemini Flash
+- Gemini Flash (experimental)</p>
 <p><strong>Features</strong>:
 - Function calling with automatic tool filtering
 - Vision support for image analysis
@@ -470,14 +235,14 @@ Choose from filter dropdown:
 - Metal-capable GPU</p>
 <p><strong>Downloading via SAM</strong> (see Download Tab section above) is the recommended method.</p>
 <p><strong>Manual Installation</strong> (optional):</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Models are stored in:</span>
+<pre><code># Models are stored in:
 ~/Library/Caches/sam/models/
 
-<span class="c1"># To manually add a model:</span>
-<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
-git<span class="w"> </span>lfs<span class="w"> </span>install
-git<span class="w"> </span>clone<span class="w"> </span>https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
-</code></pre></div>
+# To manually add a model:
+cd ~/Library/Caches/sam/models/
+git lfs install
+git clone https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
+</code></pre>
 
 <p><strong>Recommended Models</strong>:
 - <code>mlx-community/Qwen2.5-7B-Instruct-8bit</code> (16k context)
@@ -498,13 +263,13 @@ git<span class="w"> </span>clone<span class="w"> </span>https://huggingface.co/m
 - macOS 14.0+</p>
 <p><strong>Downloading via SAM</strong> (see Download Tab section above) is the recommended method.</p>
 <p><strong>Manual Installation</strong> (optional):</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Models are stored in:</span>
+<pre><code># Models are stored in:
 ~/Library/Caches/sam/models/
 
-<span class="c1"># To manually add a .gguf file:</span>
-<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
-wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
-</code></pre></div>
+# To manually add a .gguf file:
+cd ~/Library/Caches/sam/models/
+wget https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+</code></pre>
 
 <p><strong>Recommended Sources</strong>:
 - <a href="https://huggingface.co/TheBloke">TheBloke on Hugging Face</a></p>
@@ -525,9 +290,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>Creative &amp; Writing:</strong>
 - <strong>Muse</strong>: Brainstorming and ideation partner
 - <strong>Wordsmith</strong>: Encouraging writing assistant
-- <strong>Document Assistant</strong>: Document formatting and organization
-- <strong>Image Architect</strong>: Transforms ideas into visual descriptions
-- <strong>Artist</strong>: Creative soul with artistic appreciation</p>
+- <strong>Document Assistant</strong>: Document formatting and organization</p>
 <p><strong>Tech:</strong>
 - <strong>Tech Buddy</strong>: Friendly tech support for all levels
 - <strong>Tinkerer</strong>: Hands-on problem solver with community-first mentorship
@@ -559,11 +322,11 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <li>Click <strong>Create Personality</strong></li>
 </ol>
 <p><strong>Custom Instructions Example:</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="nx">You</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">senior</span><span class="w"> </span><span class="nx">Swift</span><span class="w"> </span><span class="nx">developer</span><span class="w"> </span><span class="nx">specializing</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">iOS</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">macOS</span><span class="p">.</span>
-<span class="nx">Always</span><span class="w"> </span><span class="nx">suggest</span><span class="w"> </span><span class="nx">modern</span><span class="w"> </span><span class="nx">Swift</span><span class="w"> </span><span class="nx">patterns</span><span class="w"> </span><span class="p">(</span><span class="nx">async</span><span class="o">/</span><span class="nx">await</span><span class="p">,</span><span class="w"> </span><span class="nx">SwiftUI</span><span class="p">).</span>
-<span class="nx">Avoid</span><span class="w"> </span><span class="nx">deprecated</span><span class="w"> </span><span class="nx">APIs</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">explain</span><span class="w"> </span><span class="nx">technical</span><span class="w"> </span><span class="nx">decisions</span><span class="w"> </span><span class="nx">briefly</span><span class="p">.</span>
-<span class="nx">Prefer</span><span class="w"> </span><span class="nx">value</span><span class="w"> </span><span class="nx">types</span><span class="w"> </span><span class="nx">over</span><span class="w"> </span><span class="nx">reference</span><span class="w"> </span><span class="nx">types</span><span class="w"> </span><span class="nx">when</span><span class="w"> </span><span class="nx">appropriate</span><span class="p">.</span>
-</code></pre></div>
+<pre><code>You are a senior Swift developer specializing in iOS and macOS.
+Always suggest modern Swift patterns (async/await, SwiftUI).
+Avoid deprecated APIs and explain technical decisions briefly.
+Prefer value types over reference types when appropriate.
+</code></pre>
 
 <h3 id="setting-default-personality">Setting Default Personality</h3>
 <ol>
@@ -693,10 +456,10 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 - <code>{{date}}</code>: Current date
 - <code>{{user_name}}</code>: User name (if set)</p>
 <p><strong>Example</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="x">You are a Python expert helping with </span><span class="cp">{{</span><span class="nv">conversation_title</span><span class="cp">}}</span><span class="x">.</span>
-<span class="x">Working directory: </span><span class="cp">{{</span><span class="nv">working_directory</span><span class="cp">}}</span>
-<span class="x">Focus on clean, maintainable code following PEP 8.</span>
-</code></pre></div>
+<pre><code>You are a Python expert helping with {{conversation_title}}.
+Working directory: {{working_directory}}
+Focus on clean, maintainable code following PEP 8.
+</code></pre>
 
 <h3 id="mini-prompts">Mini Prompts</h3>
 <p><strong>Purpose</strong>: Quick prompt snippets for workflows</p>
@@ -764,8 +527,8 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 2. Delete: <code>~/Library/Application Support/SAM/config.json</code>
 3. Restart SAM</p>
 <p><strong>Backup Configuration</strong>:</p>
-<div class="codehilite"><pre><span></span><code>cp<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM/config.json<span class="w"> </span>~/SAM-config-backup.json
-</code></pre></div>
+<pre><code>cp ~/Library/Application\ Support/SAM/config.json ~/SAM-config-backup.json
+</code></pre>
 
 <p><strong>Export/Import</strong>:
 - Use Preferences → Advanced → Export/Import
@@ -781,51 +544,11 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>Master SAM's configuration for optimal performance!</strong></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

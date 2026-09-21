@@ -3,261 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API | ALICE</title>
-    <meta name="description" content="ALICE API">
-    <link rel="stylesheet" href="../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
+    <title>API Reference | ALICE</title>
+    <meta name="description" content="OpenAI-compatible API for image generation, audio generation, model management, authentication, and gallery operations">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/ALICE/api-reference.html">
+    <meta property="og:title" content="API Reference | ALICE">
+    <meta property="og:description" content="OpenAI-compatible API for image generation, audio generation, model management, authentication, and gallery operations">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/api-reference.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/api-reference.html" data-prev="docs/ALICE/authentication.html|API Reference" data-next="docs/ALICE/integration-sam.html|ALICE + SAM Integration">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="index.html">Documentation</a> / API
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>API Reference</span></nav>
         
         <div class="doc-content">
 <h1>API Reference</h1>
-<p class="lead">OpenAI-compatible image generation API</p>
+<p class="lead">OpenAI-compatible API for image generation, audio generation, model management, authentication, and gallery operations</p>
 
-<h2>Chat Completions Endpoint</h2>
+<h2>Authentication</h2>
+<p>All API endpoints accept an API key via the <code>Authorization</code> header:</p>
+<pre><code>Authorization: Bearer YOUR_API_KEY</code></pre>
+<p>Some endpoints require additional authentication for admin operations. See <a href="authentication.html">Authentication</a> for details.</p>
+
+<h2>Image Generation</h2>
 <p><strong>Endpoint:</strong> <code>POST /v1/chat/completions</code></p>
+<p>The chat completions endpoint accepts messages with image generation requests.</p>
 
-<h3>Headers</h3>
-<pre><code>Content-Type: application/json
-Authorization: Bearer YOUR_API_KEY</code></pre>
+<h3>Request Format</h3>
+<pre><code>{
+  "model": "sdxl",
+  "messages": [
+    {"role": "user", "content": "A serene mountain landscape at sunset"}
+  ],
+  "samConfig": {
+    "steps": 30,
+    "guidance_scale": 7.5,
+    "width": 1024,
+    "height": 1024,
+    "negative_prompt": "low quality, blurry",
+    "seed": 12345,
+    "scheduler": "dpm++_sde_karras"
+  }
+}</code></pre>
 
-<h3>Request Example</h3>
-<p>Generate an image by sending a POST request with the prompt in the messages array and optional parameters in samConfig:</p>
+<h3>Response Format</h3>
+<p>Returns JSON with image URLs in the choices array.</p>
+
+<h2>Generation Defaults</h2>
+<p><strong>Endpoint:</strong> <code>GET /v1/generation/defaults</code></p>
+<p>Returns the default generation parameters for the configured models.</p>
+
+<h2>Models API</h2>
+
+<h3>List Models</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models</code></p>
+<p>Returns a list of all available image and audio models.</p>
+
+<h3>List Cached Models</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models/cached</code></p>
+<p>Returns models currently loaded in GPU memory.</p>
+
+<h3>Model Info</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models/{model_id}/info</code></p>
+<p>Returns detailed information about a specific model.</p>
+
+<h3>Evict Model</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/{model_id}/evict</code></p>
+<p>Evicts a model from GPU cache to free memory.</p>
+
+<h3>Refresh Models</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/refresh</code></p>
+<p>Rescans the model directory and updates the model list.</p>
+
+<h3>List LoRAs</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/loras</code></p>
+<p>Returns all LoRA adapters available.</p>
+
+<h3>List Audio Models</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models/audio</code></p>
+<p>Returns all installed audio generation models.</p>
+
+<h2>Model Search and Download</h2>
+
+<h3>Search CivitAI</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/search/civitai</code></p>
+<p>Search for models on CivitAI.</p>
+
+<h3>Search HuggingFace</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/search/huggingface</code></p>
+<p>Search for models on HuggingFace.</p>
+
+<h3>Download from CivitAI</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/download/civitai</code></p>
+<p>Download a model from CivitAI.</p>
+
+<h3>Download from HuggingFace</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/download/huggingface</code></p>
+<p>Download a model from HuggingFace.</p>
+
+<h3>Download Audio Model</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/download/audio</code></p>
+<p>Download an audio generation model.</p>
+
+<h3>Download from URL</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/models/download/url</code></p>
+<p>Download a model from any URL.</p>
+
+<h3>Download Status</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models/download/status</code></p>
+<p>Returns status of all download tasks.</p>
+
+<p><strong>Endpoint:</strong> <code>GET /v1/models/download/status/{task_id}</code></p>
+<p>Returns status of a specific download task.</p>
+
+<h3>Cancel Delete</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/models/download/{task_id}</code></p>
+<p>Cancel an active download.</p>
+
+<h2>Model Cache</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/models/cache/status</code></p>
+<p>Returns cache status and configuration.</p>
+
+<h2>Audio Generation</h2>
+
+<h3>List Audio Models</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/audio/models</code></p>
+<p>Returns all available audio generation models.</p>
+
+<h3>Generate Audio</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/audio/generations</code></p>
+<p>Generate audio from a text prompt (stable audio, music generation).</p>
+
+<h3>Audio Statistics</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/audio/stats</code></p>
+<p>Returns audio generation statistics.</p>
+
+<h3>Get Audio File</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/audio/{filename}</code></p>
+<p>Retrieves a generated audio file.</p>
+
+<h3>Delete Audio Model</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/models/audio/{model_id}</code></p>
+<p>Remove an audio model from disk.</p>
+
+<h2>Gallery API</h2>
+
+<h3>List Gallery</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/gallery</code></p>
+<p>Returns all images in the gallery.</p>
+
+<h3>List Audio Gallery</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/gallery/audio</code></p>
+<p>Returns all audio generations in the gallery.</p>
+
+<h3>Gallery Config</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/gallery/config</code></p>
+<p>Returns gallery configuration settings.</p>
+
+<h3>Gallery Stats</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/gallery/stats</code></p>
+<p>Returns gallery statistics.</p>
+
+<h3>Gallery Tags</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/gallery/tags</code></p>
+<p>Returns all tags used in the gallery.</p>
+
+<h3>Cleanup Gallery</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/gallery/cleanup</code></p>
+<p>Clean up temporary files and thumbnails.</p>
+
+<h3>Delete Gallery Image</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/gallery/{image_id}</code></p>
+<p>Delete an image from the gallery.</p>
+
+<h3>Delete Gallery Audio</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/gallery/audio/{audio_id}</code></p>
+<p>Delete an audio entry from the gallery.</p>
+
+<h3>Update Image Privacy</h3>
+<p><strong>Endpoint:</strong> <code>PATCH /v1/gallery/{image_id}/privacy</code></p>
+<p>Update the privacy setting of a gallery image.</p>
+
+<h3>Update Image Tags</h3>
+<p><strong>Endpoint:</strong> <code>PATCH /v1/gallery/{image_id}/tags</code></p>
+<p>Update tags on a gallery image.</p>
+
+<h2>Authentication API</h2>
+
+<h3>Generate API Key</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/auth/keys/generate</code></p>
+<p>Generate a new API key.</p>
+
+<h3>List API Keys</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/auth/keys</code></p>
+<p>Returns all API keys.</p>
+
+<h3>Delete API Key</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/auth/keys/{key_id}</code></p>
+<p>Delete an API key.</p>
+
+<h3>Revoke API Key</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/auth/keys/{key_id}/revoke</code></p>
+<p>Revoke an API key (marks as revoked but keeps record).</p>
+
+<h3>Create Session</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/auth/sessions</code></p>
+<p>Create a web authentication session.</p>
+
+<h3>List Sessions</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/auth/sessions</code></p>
+<p>Returns all active sessions.</p>
+
+<h3>Delete Session</h3>
+<p><strong>Endpoint:</strong> <code>DELETE /v1/auth/sessions/{session_id}</code></p>
+<p>Delete a session.</p>
+
+<h3>Get Current User</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/auth/me</code></p>
+<p>Returns information about the current authenticated user.</p>
+
+<h3>Authentication Stats</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/auth/stats</code></p>
+<p>Returns authentication statistics.</p>
+
+<h3>Bootstrap Registration</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/auth/bootstrap</code></p>
+<p>Bootstrap the first admin user on a fresh installation.</p>
+
+<h3>Registration Mode</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/auth/registration-mode</code></p>
+<p>Check if registration mode is enabled.</p>
+
+<h3>Register User</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/auth/register</code></p>
+<p>Register a new user (requires registration mode).</p>
+
+<h3>Invitations</h3>
+<p><strong>Endpoints:</strong></p>
+<ul>
+    <li><code>POST /v1/auth/invites</code> - Create an invitation</li>
+    <li><code>GET /v1/auth/invites</code> - List invitations</li>
+    <li><code>DELETE /v1/auth/invites/{code}</code> - Delete an invitation</li>
+</ul>
+
+<h3>Pending Registrations</h3>
+<p><strong>Endpoints:</strong></p>
+<ul>
+    <li><code>GET /v1/auth/pending</code> - List pending registrations</li>
+    <li><code>POST /v1/auth/pending/{reg_id}/approve</code> - Approve a pending registration</li>
+    <li><code>POST /v1/auth/pending/{reg_id}/reject</code> - Reject a pending registration</li>
+    <li><code>DELETE /v1/auth/pending/{reg_id}</code> - Delete a pending registration</li>
+</ul>
+
+<h2>Admin API</h2>
+
+<h3>Get Config</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/admin/config</code></p>
+<p>Returns the current server configuration (admin only).</p>
+
+<h3>Update Config</h3>
+<p><strong>Endpoint:</strong> <code>PUT /v1/admin/config</code></p>
+<p>Update server configuration (admin only).</p>
+
+<h3>Sync Model Cache</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/admin/cache/sync</code></p>
+<p>Sync model cache between filesystem and database (admin only).</p>
+
+<h3>Restart Server</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/admin/restart</code></p>
+<p>Restart the ALICE server (admin only).</p>
+
+<h2>Update API</h2>
+
+<h3>Update Status</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/update/status</code></p>
+<p>Returns current update status.</p>
+
+<h3>Check for Updates</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/update/check</code></p>
+<p>Check for available updates.</p>
+
+<h3>Apply Update</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/update/apply</code></p>
+<p>Apply a pending update.</p>
+
+<h3>Rollback Update</h3>
+<p><strong>Endpoint:</strong> <code>POST /v1/update/rollback</code></p>
+<p>Rollback to a previous version.</p>
+
+<h3>List Backups</h3>
+<p><strong>Endpoint:</strong> <code>GET /v1/update/backups</code></p>
+<p>Returns available backups.</p>
+
+<h2>Image Serving</h2>
+<p><strong>Endpoint:</strong> <code>GET /images/{filename}</code></p>
+<p>Serves generated images by filename.</p>
 
 <h2>SAM Config Parameters</h2>
 <p>All fields are optional - server uses defaults if omitted.</p>
@@ -312,12 +358,6 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
     <li><code>ddim</code>, <code>pndm</code>, <code>lms</code>, <code>heun</code></li>
 </ul>
 
-<h2>Usage Example</h2>
-<p>Use cURL, Python requests, or any HTTP client to generate images.</p>
-
-<h2>Response Format</h2>
-<p>Returns JSON with image URLs in the choices array.</p>
-
 <h2>Next Steps</h2>
 <ul>
     <li><a href="authentication.html">Authentication</a> - API key setup</li>
@@ -326,51 +366,11 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
 </ul>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../index.html">SAM</a></li>
-                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
 </body>
 </html>

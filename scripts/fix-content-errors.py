@@ -41,22 +41,22 @@ fixes_map = {
     'docs/CLIO/tools-reference.html': [
         ('href="../index.html">Docs</a>', 'href="index.html">Docs</a>'),
     ],
-    'docs/CLIO/clio-quick-start.html': [
-        ('../SAM/developer/clio.html', '../CLIO/clio.html'),
+    'docs/CLIO/getting-started.html': [
+        ('../SAM/developer/clio.html', '../CLIO/index.html'),
         ('../SAM/developer/the-unbroken-method.html', '../shared/the-unbroken-method.html'),
     ],
-    'docs/CLIO/clio.html': [
+    'docs/CLIO/index.html': [
         ('../shared/developers-guide.html', '../SAM/developer/developers-guide.html'),
     ],
     'docs/SAM/index.html': [
-        ('developer/clio.html', '../CLIO/clio.html'),
+        ('developer/clio.html', '../CLIO/index.html'),
         ('developer/the-unbroken-method.html', '../shared/the-unbroken-method.html'),
     ],
     'docs/SAM/end-user/getting-started.html': [
         ('../developer/contributing.html', '../../shared/contributing.html'),
     ],
     'docs/shared/contributing.html': [
-        ('clio.html', '../CLIO/clio.html'),
+        ('clio.html', '../CLIO/index.html'),
     ],
 }
 

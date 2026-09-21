@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIO + ALICE Integration | CLIO</title>
+    <meta name="description" content="Use CLIO's remote execution and multi-agent capabilities to deploy, manage, and orchestrate ALICE across GPU fleets.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/integration-alice.html">
+    <meta property="og:title" content="CLIO + ALICE Integration | CLIO">
+    <meta property="og:description" content="Use CLIO's remote execution and multi-agent capabilities to deploy, manage, and orchestrate ALICE across GPU fleets.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/integration-alice.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
+</head>
+<body>
+        <div id="nav-placeholder"></div>
+
+    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/integration-alice.html" data-prev="docs/CLIO/integration-sam.html|CLIO + ALICE Integration">
+    <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>CLIO + ALICE Integration</span></nav>
+        
+        <div class="doc-content">
+            <h1>CLIO + ALICE Integration</h1>
+<p class="lead">Use CLIO's remote execution and multi-agent capabilities to deploy, manage, and orchestrate ALICE across GPU fleets.</p>
+
+<h2 id="overview">Overview</h2>
+<p>CLIO excels at infrastructure automation. ALICE provides local GPU-accelerated generation. Together, they enable programmatic deployment and management of generation infrastructure - from a single Steam Deck to a fleet of GPU servers.</p>
+
+<h2 id="use-cases">Use Cases</h2>
+<h3 id="remote-deployment">Remote ALICE Deployment</h3>
+<p>Deploy ALICE to any machine via SSH:</p>
+<pre><code># From your local machine
+clio --new
+> Deploy ALICE to gpu-server-1 via SSH, install Docker, pull ROCm image, start service
+</code></pre>
+
+<p>CLIO will:</p>
+<ol>
+<li>SSH into the target machine</li>
+<li>Check GPU hardware (NVIDIA/AMD/Apple Silicon)</li>
+<li>Install Docker and pull the appropriate ALICE image</li>
+<li>Configure config.yaml for the detected GPU backend</li>
+<li>Start the systemd/Docker service</li>
+<li>Verify health endpoint responds</li>
+</ol>
+
+<h3 id="fleet-orchestration">GPU Fleet Orchestration</h3>
+<p>Deploy ALICE across multiple machines in parallel:</p>
+<pre><code># Parallel deployment to fleet
+clio --new
+> Deploy ALICE to all machines in gpu-cluster: [gpu-1, gpu-2, gpu-3, gpu-4] using Puppeteer mode
+</code></pre>
+
+<p>CLIO's Puppeteer mode coordinates the deployment across all targets with rate limiting and progress tracking.</p>
+
+<h3 id="model-management">Automated Model Management</h3>
+<p>Use CLIO to manage models across ALICE instances:</p>
+<pre><code># Download and distribute models
+clio --new
+> On all ALICE servers: download Juggernaut XL and DreamShaper XL from CivitAI, verify checksums, update model index
+</code></pre>
+
+<h3 id="benchmarking">Automated Benchmarking</h3>
+<p>Run generation benchmarks across your fleet:</p>
+<pre><code># Benchmark suite
+clio --new
+> Run ALICE benchmark on all GPUs: 10 generations each at 1024x1024, 30 steps, collect timing and VRAM usage, generate report
+</code></pre>
+
+<h2 id="clio-tools-for-alice">CLIO Tools for ALICE Operations</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>ALICE Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>remote_execution</code></td>
+<td>SSH into GPU servers, run deployment scripts</td>
+</tr>
+<tr>
+<td><code>terminal_operations</code></td>
+<td>Run ALICE CLI commands, Docker commands</td>
+</tr>
+<tr>
+<td><code>file_operations</code></td>
+<td>Edit config.yaml, manage model files</td>
+</tr>
+<tr>
+<td><code>web_operations</code></td>
+<td>Download models from CivitAI/HuggingFace APIs</td>
+</tr>
+<tr>
+<td><code>multi_agent</code></td>
+<td>Parallel deployment across fleet</td>
+</tr>
+<tr>
+<td><code>remote_execution</code> + <code>terminal_operations</code></td>
+<td>Puppeteer mode for orchestration</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="deployment-patterns">Deployment Patterns</h2>
+<h3 id="docker-deployment">Docker Deployment (Recommended)</h3>
+<p>CLIO can deploy ALICE via Docker Compose profiles:</p>
+<pre><code># CLIO generates and runs:
+docker compose --profile cuda up -d      # NVIDIA
+docker compose --profile rocm up -d      # AMD
+docker compose --profile cpu up -d       # CPU only
+</code></pre>
+
+<h3 id="systemd-deployment">systemd/launchd Deployment</h3>
+<p>For bare-metal or macOS:</p>
+<pre><code># Linux systemd
+sudo cp alice.service /etc/systemd/system/
+sudo systemctl enable --now alice
+
+# macOS launchd
+./scripts/install_macos.sh
+</code></pre>
+
+<h3 id="steam-deck">Steam Deck / SteamOS</h3>
+<p>CLIO can run the SteamOS installer remotely:</p>
+<pre><code>clio --new
+> SSH into Steam Deck, run ALICE SteamOS installer, configure ROCm, start user service
+</code></pre>
+
+<h2 id="alice-api-from-clio">Calling ALICE API from CLIO</h2>
+<p>CLIO can call ALICE's OpenAI-compatible API directly for testing:</p>
+<pre><code># Test generation via API
+clio --new
+> POST to http://gpu-server:8080/v1/images/generations with prompt "test image", verify response, check image URL
+</code></pre>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="remote-execution.html">CLIO Remote Execution</a> - SSH and fleet execution</li>
+<li><a href="multi-agent.html">Multi-Agent Coordination</a> - Parallel agent patterns</li>
+<li><a href="../ALICE/deployment.html">ALICE Deployment</a> - All deployment options</li>
+<li><a href="../ALICE/api-reference.html">ALICE API Reference</a> - Complete API docs</li>
+<li><a href="../ALICE/performance.html">ALICE Performance</a> - GPU optimization, benchmarks</li>
+</ul>
+        </div>
+    </div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
+</body>
+</html>

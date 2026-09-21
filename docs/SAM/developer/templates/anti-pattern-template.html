@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anti-Pattern Template | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Anti-Pattern Template">
-    <link rel="stylesheet" href="../../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/developer/templates/anti-pattern-template.html">
+    <title>Anti-Pattern Template | SAM</title>
+    <meta name="description" content="SAM templates for human-AI collaboration: prompts, handoffs, and tools.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/developer/templates/anti-pattern-template.html">
+    <meta property="og:title" content="Anti-Pattern Template | SAM">
+    <meta property="og:description" content="SAM templates for human-AI collaboration: prompts, handoffs, and tools.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/developer/templates/anti-pattern-template.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../../" class="nav-brand">
-                <img src="../../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/templates/anti-pattern-template.html">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../../index.html">Documentation</a> / Anti Pattern Template
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><a href="../../../SAM/index.html">SAM</a><span class="breadcrumb-separator">/</span><span>Developer</span><span class="breadcrumb-separator">/</span><span>Anti-Pattern Template</span></nav>
         
         <div class="doc-content">
             <h1 id="anti-pattern-template">Anti-Pattern Template</h1>
@@ -254,24 +31,24 @@
 </blockquote>
 <hr />
 <h2 id="the-anti-pattern-structure">The Anti-Pattern Structure</h2>
-<div class="codehilite"><pre><span></span><code><span class="gu">### Anti-Pattern: [Descriptive Name]</span>
+<pre><code>### Anti-Pattern: [Descriptive Name]
 
-<span class="gs">**Category:**</span> [Architecture / Process / Communication / Code Quality]
+**Category:** [Architecture / Process / Communication / Code Quality]
 
-<span class="gs">**What It Looks Like:**</span>
+**What It Looks Like:**
 [Concrete example of the bad pattern - be specific]
 
-<span class="gs">**Why It&#39;s Wrong:**</span>
+**Why It's Wrong:**
 [Explanation of the problems this causes]
 
-<span class="gs">**What To Do Instead:**</span>
+**What To Do Instead:**
 [The correct approach with example]
 
-<span class="gs">**Real Example:**</span>
+**Real Example:**
 [Actual instance from your project history]
 
-<span class="gs">**Date Discovered:**</span> [When this was learned]
-</code></pre></div>
+**Date Discovered:** [When this was learned]
+</code></pre>
 
 <hr />
 <h2 id="example-anti-patterns">Example Anti-Patterns</h2>
@@ -279,9 +56,9 @@
 <p><strong>Category:</strong> Process</p>
 <p><strong>What It Looks Like:</strong>
 Starting to write code based on what you think the system does without reading the actual implementation.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// Assuming there&#39;s a shared topics API based on a comment</span>
-<span class="kd">let</span><span class="w"> </span><span class="nv">topics</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="n">SharedTopicsAPI</span><span class="p">.</span><span class="n">getAll</span><span class="p">()</span><span class="w">  </span><span class="c1">// API doesn&#39;t exist!</span>
-</code></pre></div>
+<pre><code>// Assuming there's a shared topics API based on a comment
+let topics = try await SharedTopicsAPI.getAll()  // API doesn't exist!
+</code></pre>
 
 <p><strong>Why It's Wrong:</strong>
 - Assumptions are frequently wrong
@@ -293,10 +70,10 @@ Starting to write code based on what you think the system does without reading t
 2. Search for similar patterns in the codebase
 3. Test current behavior to confirm understanding
 4. THEN propose and implement changes</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Before implementing, search for the API</span>
-grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;SharedTopics&quot;</span><span class="w"> </span>Sources/
-<span class="c1"># Finding: No results. API was planned but never implemented.</span>
-</code></pre></div>
+<pre><code># Before implementing, search for the API
+grep -r "SharedTopics" Sources/
+# Finding: No results. API was planned but never implemented.
+</code></pre>
 
 <p><strong>Real Example:</strong>
 Agent assumed SharedTopics API existed based on a TODO comment. Spent 2 hours implementing feature against non-existent API. Discovery: The API was a future plan, never built.</p>
@@ -306,18 +83,18 @@ Agent assumed SharedTopics API existed based on a TODO comment. Spent 2 hours im
 <p><strong>Category:</strong> Code Quality</p>
 <p><strong>What It Looks Like:</strong>
 Adding workarounds to hide errors instead of fixing the root cause.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// BAD: Suppress the error</span>
-<span class="k">do</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="n">riskyOperation</span><span class="p">()</span>
-<span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="c1">// Ignore it, usually works</span>
-<span class="p">}</span>
+<pre><code>// BAD: Suppress the error
+do {
+    try riskyOperation()
+} catch {
+    // Ignore it, usually works
+}
 
-<span class="c1">// BAD: Add delay to &quot;fix&quot; race condition</span>
-<span class="n">DispatchQueue</span><span class="p">.</span><span class="n">main</span><span class="p">.</span><span class="n">asyncAfter</span><span class="p">(</span><span class="n">deadline</span><span class="p">:</span><span class="w"> </span><span class="p">.</span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="n">updateUI</span><span class="p">()</span><span class="w">  </span><span class="c1">// Hope the data is ready now</span>
-<span class="p">}</span>
-</code></pre></div>
+// BAD: Add delay to "fix" race condition
+DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+    updateUI()  // Hope the data is ready now
+}
+</code></pre>
 
 <p><strong>Why It's Wrong:</strong>
 - Original bug remains, will resurface
@@ -326,16 +103,16 @@ Adding workarounds to hide errors instead of fixing the root cause.</p>
 - Technical debt compounds</p>
 <p><strong>What To Do Instead:</strong>
 Trace the error to its source and fix the actual cause.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// GOOD: Fix the validation</span>
-<span class="k">guard</span><span class="w"> </span><span class="n">isValid</span><span class="p">(</span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="n">ValidationError</span><span class="p">.</span><span class="n">invalidInput</span><span class="p">(</span><span class="n">input</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="k">try</span><span class="w"> </span><span class="n">operation</span><span class="p">(</span><span class="n">validated</span><span class="p">:</span><span class="w"> </span><span class="n">input</span><span class="p">)</span>
+<pre><code>// GOOD: Fix the validation
+guard isValid(input) else {
+    throw ValidationError.invalidInput(input)
+}
+try operation(validated: input)
 
-<span class="c1">// GOOD: Fix the race condition with proper synchronization</span>
-<span class="k">await</span><span class="w"> </span><span class="n">dataLoader</span><span class="p">.</span><span class="n">waitForCompletion</span><span class="p">()</span>
-<span class="n">updateUI</span><span class="p">()</span><span class="w">  </span><span class="c1">// Data is guaranteed ready</span>
-</code></pre></div>
+// GOOD: Fix the race condition with proper synchronization
+await dataLoader.waitForCompletion()
+updateUI()  // Data is guaranteed ready
+</code></pre>
 
 <p><strong>Real Example:</strong>
 UI flickered during updates. Initial "fix" added 100ms delay. Root cause investigation revealed duplicate refresh calls. Proper fix: remove the duplicate call.</p>
@@ -345,9 +122,9 @@ UI flickered during updates. Initial "fix" added 100ms delay. Root cause investi
 <p><strong>Category:</strong> Process</p>
 <p><strong>What It Looks Like:</strong>
 Discovering an issue during work and labeling it "out of scope" or "separate issue."</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Agent</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;I noticed the model picker also shows the Downloads folder,</span>
-<span class="n">but</span><span class="w"> </span><span class="n">that</span><span class="s1">&#39;s a separate issue from what we&#39;</span><span class="n">re</span><span class="w"> </span><span class="n">working</span><span class="w"> </span><span class="n">on</span><span class="o">.</span><span class="s2">&quot;</span>
-</code></pre></div>
+<pre><code>Agent: "I noticed the model picker also shows the Downloads folder,
+but that's a separate issue from what we're working on."
+</code></pre>
 
 <p><strong>Why It's Wrong:</strong>
 - Issues are discovered when context is fresh
@@ -356,11 +133,11 @@ Discovering an issue during work and labeling it "out of scope" or "separate iss
 - Quality standards erode</p>
 <p><strong>What To Do Instead:</strong>
 Own everything you discover. Fix it now while you have context.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Agent</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;While implementing X, I discovered the model picker shows </span>
-<span class="n">the</span><span class="w"> </span><span class="n">Downloads</span><span class="w"> </span><span class="n">folder</span><span class="o">.</span><span class="w"> </span><span class="n">Root</span><span class="w"> </span><span class="n">cause</span><span class="p">:</span><span class="w"> </span><span class="n">downloads</span><span class="w"> </span><span class="n">directory</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">inside</span><span class="w"> </span>
-<span class="n">the</span><span class="w"> </span><span class="n">models</span><span class="w"> </span><span class="n">directory</span><span class="o">.</span><span class="w"> </span><span class="n">I</span><span class="s1">&#39;ll move the staging location to fix this </span>
-<span class="n">before</span><span class="w"> </span><span class="n">completing</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">task</span><span class="o">.</span><span class="s2">&quot;</span>
-</code></pre></div>
+<pre><code>Agent: "While implementing X, I discovered the model picker shows 
+the Downloads folder. Root cause: downloads directory is inside 
+the models directory. I'll move the staging location to fix this 
+before completing the original task."
+</code></pre>
 
 <p><strong>Real Example:</strong>
 Five "separate issues" were discovered and deferred during a feature implementation. None were ever addressed. All five caused user-reported bugs within two weeks.</p>
@@ -370,13 +147,13 @@ Five "separate issues" were discovered and deferred during a feature implementat
 <p><strong>Category:</strong> Code Quality</p>
 <p><strong>What It Looks Like:</strong>
 Delivering "basic" or "MVP" implementations that handle only the happy path.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">getImageSize</span><span class="p">(</span><span class="n">model</span><span class="p">:</span><span class="w"> </span><span class="nb">String</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">Int</span><span class="p">,</span><span class="w"> </span><span class="nb">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="bp">contains</span><span class="p">(</span><span class="s">&quot;xl&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span><span class="p">)</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="mi">512</span><span class="p">)</span><span class="w">  </span><span class="c1">// TODO: Handle other sizes</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>func getImageSize(model: String) -> (Int, Int) {
+    if model.contains("xl") {
+        return (1024, 1024)
+    }
+    return (512, 512)  // TODO: Handle other sizes
+}
+</code></pre>
 
 <p><strong>Why It's Wrong:</strong>
 - TODOs rarely get addressed
@@ -385,15 +162,15 @@ Delivering "basic" or "MVP" implementations that handle only the happy path.</p>
 - Technical debt from day one</p>
 <p><strong>What To Do Instead:</strong>
 Implement completely within scope. Query actual data when possible.</p>
-<div class="codehilite"><pre><span></span><code><span class="kd">func</span><span class="w"> </span><span class="nf">getSupportedSizes</span><span class="p">(</span><span class="n">modelPath</span><span class="p">:</span><span class="w"> </span><span class="n">URL</span><span class="p">)</span><span class="w"> </span><span class="kr">throws</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="p">[(</span><span class="nb">Int</span><span class="p">,</span><span class="w"> </span><span class="nb">Int</span><span class="p">)]</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="nv">model</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="bp">MLModel</span><span class="p">(</span><span class="n">contentsOf</span><span class="p">:</span><span class="w"> </span><span class="n">modelPath</span><span class="p">)</span>
-<span class="w">    </span><span class="k">guard</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nv">inputDesc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">model</span><span class="p">.</span><span class="n">modelDescription</span><span class="p">.</span><span class="n">inputDescriptionsByName</span><span class="p">[</span><span class="s">&quot;sample&quot;</span><span class="p">],</span>
-<span class="w">          </span><span class="kd">let</span><span class="w"> </span><span class="nv">shape</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">inputDesc</span><span class="p">.</span><span class="n">multiArrayConstraint</span><span class="p">?.</span><span class="n">shape</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">ModelError</span><span class="p">.</span><span class="n">invalidStructure</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">calculateSupportedSizes</span><span class="p">(</span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">shape</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div>
+<pre><code>func getSupportedSizes(modelPath: URL) throws -> [(Int, Int)] {
+    let model = try MLModel(contentsOf: modelPath)
+    guard let inputDesc = model.modelDescription.inputDescriptionsByName["sample"],
+          let shape = inputDesc.multiArrayConstraint?.shape else {
+        throw ModelError.invalidStructure
+    }
+    return calculateSupportedSizes(from: shape)
+}
+</code></pre>
 
 <p><strong>Real Example:</strong>
 "Basic" image size function was shipped. Three months later, new model released with different dimensions. Function returned wrong sizes. Users generated corrupted images before bug was caught.</p>
@@ -440,57 +217,57 @@ Implement completely within scope. Query actual data when possible.</p>
 - Should any be promoted to your main instructions?</p>
 <h3 id="sharing">Sharing</h3>
 <p>Include relevant anti-patterns in your collaboration prompt:</p>
-<div class="codehilite"><pre><span></span><code><span class="gu">## Project-Specific Anti-Patterns</span>
+<pre><code>## Project-Specific Anti-Patterns
 
-See <span class="sb">`docs/anti-patterns.md`</span> for the full catalog. Key ones:
+See `docs/anti-patterns.md` for the full catalog. Key ones:
 
-❌ Don&#39;t assume APIs exist - search first
-❌ Don&#39;t add delays to fix race conditions - fix the race
-❌ Don&#39;t defer &quot;separate issues&quot; - own everything
-</code></pre></div>
+❌ Don't assume APIs exist - search first
+❌ Don't add delays to fix race conditions - fix the race
+❌ Don't defer "separate issues" - own everything
+</code></pre>
 
 <hr />
 <h2 id="catalog-template">Catalog Template</h2>
 <p>Start your anti-pattern catalog with this structure:</p>
-<div class="codehilite"><pre><span></span><code><span class="gh"># Anti-Pattern Catalog</span>
+<pre><code># Anti-Pattern Catalog
 
-<span class="gs">**Project:**</span> [Your Project Name]
-<span class="gs">**Last Updated:**</span> [Date]
+**Project:** [Your Project Name]
+**Last Updated:** [Date]
 
-<span class="gu">## Table of Contents</span>
-<span class="k">1.</span> [<span class="nt">Anti-Pattern Name</span>](<span class="na">#anti-pattern-name</span>)
-<span class="k">2.</span> [<span class="nt">Anti-Pattern Name</span>](<span class="na">#anti-pattern-name</span>)
+## Table of Contents
+1. [Anti-Pattern Name](#anti-pattern-name)
+2. [Anti-Pattern Name](#anti-pattern-name)
 
 ---
 
-<span class="gu">## Architecture Anti-Patterns</span>
+## Architecture Anti-Patterns
 
-<span class="gu">### [Pattern Name]</span>
+### [Pattern Name]
 [Use the template structure above]
 
 ---
 
-<span class="gu">## Process Anti-Patterns</span>
+## Process Anti-Patterns
 
-<span class="gu">### [Pattern Name]</span>
+### [Pattern Name]
 [Use the template structure above]
 
 ---
 
-<span class="gu">## Code Quality Anti-Patterns</span>
+## Code Quality Anti-Patterns
 
-<span class="gu">### [Pattern Name]</span>
+### [Pattern Name]
 [Use the template structure above]
 
 ---
 
-<span class="gu">## Changelog</span>
+## Changelog
 
 | Date | Change |
 |------|--------|
 | YYYY-MM-DD | Added [pattern name] |
 | YYYY-MM-DD | Updated [pattern name] |
-</code></pre></div>
+</code></pre>
 
 <hr />
 <h2 id="related-templates">Related Templates</h2>
@@ -502,51 +279,11 @@ See <span class="sb">`docs/anti-patterns.md`</span> for the full catalog. Key on
 </ul>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../../index.html">SAM</a></li>
-                        <li><a href="../../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../../js/main.js?v=15"></script>
+    <script src="../../../../js/include.js"></script>
 </body>
 </html>

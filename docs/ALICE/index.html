@@ -3,359 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALICE Documentation | Artificial Latent Interpretive Creation Engine</title>
-    <meta name="description" content="ALICE - Artificial Latent Interpretive Creation Engine documentation">
-    <link rel="stylesheet" href="../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/ALICE/">
+    <title>ALICE Documentation | Synthetic Autonomic Mind</title>
+    <meta name="description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/ALICE/index.html">
+    <meta property="og:title" content="ALICE Documentation | Synthetic Autonomic Mind">
+    <meta property="og:description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/index.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ALICE Documentation | Synthetic Autonomic Mind">
+    <meta name="twitter:description" content="Local Stable Diffusion and audio generation server with web UI, OpenAI-compatible API, and multi-GPU support.">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
-    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/index.html">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="index.html">ALICE Documentation</a>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a></nav>
+        
+        <!-- Product Header -->
+        <div class="doc-product-header">
+            <span class="product-badge alice large">ALICE</span>
+            <h1>ALICE Documentation</h1>
+            <p class="product-tagline">Artificial Latent Interpretive Creation Engine</p>
+            <div class="audience-tabs">
+                <a href="#user" class="active">User</a>
+                <a href="#operator">Operator</a>
+                <a href="#developer">Developer</a>
+            </div>
         </div>
         
         <div class="doc-content">
-<h1>ALICE Documentation</h1>
-<p class="lead">Artificial Latent Interpretive Creation Engine - Local Stable Diffusion and audio generation server for macOS and Linux</p>
-
-<h2>What is ALICE?</h2>
-<p>ALICE is a local image and audio generation server that runs Stable Diffusion and Stable Audio on your hardware. It provides an OpenAI-compatible HTTP API, a web-based generation studio, a private gallery, and a model marketplace. No subscription, no cloud upload, no per-image or per-track cost. Your prompts and media never leave your machine.</p>
-
-<h3>Why Choose ALICE?</h3>
-<ul>
-    <li><strong>Runs locally</strong> - All generation happens on your GPU. No cloud dependency.</li>
-    <li><strong>Full studio</strong> - Web interface with text-to-image, image-to-image, LoRA support, and parameter control.</li>
-    <li><strong>Model marketplace</strong> - Browse and download models from CivitAI and HuggingFace directly in the UI.</li>
-    <li><strong>Privacy-first</strong> - Private gallery with per-image sharing controls. Time-limited public links.</li>
-    <li><strong>Multi-GPU</strong> - NVIDIA CUDA, AMD Vulkan/ROCm, Apple MPS, CPU fallback, and Steam Deck.</li>
-    <li><strong>Integrates with SAM</strong> - Generate images from SAM conversations via the API.</li>
-</ul>
-
-<h2>Documentation Index</h2>
-
-<h3>Getting Started</h3>
-<ul>
-    <li><a href="installation.html">Installation Guide</a> - System requirements, install steps, verification</li>
-    <li><a href="getting-started.html">Quick Start</a> - Generate your first image</li>
-    <li><a href="configuration.html">Configuration</a> - Backend selection, GPU setup, model paths</li>
-</ul>
-
-<h3>Core Features</h3>
-<ul>
-    <li><a href="generation-parameters.html">Generation Parameters</a> - Steps, guidance scale, samplers, schedulers</li>
-    <li><a href="model-management.html">Model Management</a> - Download, manage, and switch between SD models</li>
-    <li><a href="web-interface.html">Web Interface</a> - Studio, gallery, marketplace, and admin dashboard</li>
-    <li><a href="gallery.html">Gallery &amp; Privacy</a> - Image gallery and sharing controls</li>
-</ul>
-
-<h3>Advanced Topics</h3>
-<ul>
-    <li><a href="api-reference.html">API Reference</a> - OpenAI-compatible REST API</li>
-    <li><a href="integration.html">Integration Guide</a> - Connect SAM, scripts, or any OpenAI-compatible client</li>
-    <li><a href="deployment.html">Deployment</a> - Standalone, Docker, systemd, launchd, Steam Deck</li>
-    <li><a href="authentication.html">Authentication</a> - User management and API keys</li>
-    <li><a href="performance.html">Performance</a> - GPU optimization, memory tuning, benchmarks</li>
-</ul>
-
-<h3>Reference</h3>
-<ul>
-    <li><a href="supported-models.html">Supported Models</a> - SD 1.5, SDXL, FLUX, GGUF, and custom fine-tunes</li>
-    <li><a href="privacy-controls.html">Privacy Controls</a> - Image sharing, NSFW filtering, data retention</li>
-    <li><a href="troubleshooting.html">Troubleshooting</a> - Common issues and solutions</li>
-</ul>
-
-<h3>Ecosystem</h3>
-<ul>
-    <li><a href="../shared/the-unbroken-method.html">The Unbroken Method</a> - Human-AI collaboration methodology</li>
-    <li><a href="../shared/the-reflexive-ecosystem.html">The Reflexive Ecosystem</a> - Self-building AI development case study</li>
-    <li><a href="../shared/contributing.html">Contributing</a> - How to contribute to ALICE</li>
-    <li><a href="https://github.com/SyntheticAutonomicMind/ALICE">GitHub Repository</a> - Source code and issue tracking</li>
-</ul>
-
-<h2>Quick Links</h2>
-<ul>
-    <li><a href="https://github.com/SyntheticAutonomicMind/ALICE">GitHub Repository</a></li>
-    <li><a href="https://github.com/SyntheticAutonomicMind/ALICE/issues">Report Issues</a></li>
-    <li><a href="https://www.patreon.com/fewtarius">Support Development</a></li>
-</ul>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../index.html">SAM</a></li>
-                        <li><a href="../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
+            <!-- User Section -->
+            <section id="user" class="audience-section">
+                <h2>For Users</h2>
+                <p>Generate images and audio with ALICE's web interface.</p>
+                <div class="doc-card-grid">
+                    <a href="installation.html" class="doc-card">
+                        <h3>Installation</h3>
+                        <p>macOS, Linux, Docker, Steam Deck setup</p>
+                    </a>
+                    <a href="getting-started.html" class="doc-card">
+                        <h3>Quick Start</h3>
+                        <p>Generate your first image in minutes</p>
+                    </a>
+                    <a href="configuration.html" class="doc-card">
+                        <h3>Configuration</h3>
+                        <p>Backend selection, GPU setup, model paths</p>
+                    </a>
+                    <a href="web-interface.html" class="doc-card">
+                        <h3>Web Interface</h3>
+                        <p>Studio, gallery, marketplace, admin dashboard</p>
+                    </a>
+                    <a href="generation-parameters.html" class="doc-card">
+                        <h3>Generation Parameters</h3>
+                        <p>Steps, guidance, samplers, schedulers, LoRA</p>
+                    </a>
+                    <a href="model-management.html" class="doc-card">
+                        <h3>Model Management</h3>
+                        <p>Download, organize, switch between SD models</p>
+                    </a>
+                    <a href="gallery.html" class="doc-card">
+                        <h3>Gallery & Privacy</h3>
+                        <p>Private gallery, sharing controls, metadata</p>
+                    </a>
+                    <a href="supported-models.html" class="doc-card">
+                        <h3>Supported Models</h3>
+                        <p>SD 1.5, SDXL, FLUX, GGUF, custom fine-tunes</p>
+                    </a>
+                    <a href="troubleshooting.html" class="doc-card">
+                        <h3>Troubleshooting</h3>
+                        <p>Common issues and solutions</p>
+                    </a>
                 </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../SAM/end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../../docs/SAM/index.html">SAM Docs</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
+            </section>
             
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
+            <!-- Operator Section -->
+            <section id="operator" class="audience-section">
+                <h2>For Operators</h2>
+                <p>Deploy, manage, and scale ALICE in production.</p>
+                <div class="doc-card-grid">
+                    <a href="deployment.html" class="doc-card">
+                        <h3>Deployment Guide</h3>
+                        <p>Standalone, Docker, systemd, launchd, Steam Deck</p>
+                    </a>
+                    <a href="authentication.html" class="doc-card">
+                        <h3>Authentication</h3>
+                        <p>User management, API keys, role-based access</p>
+                    </a>
+                    <a href="performance.html" class="doc-card">
+                        <h3>Performance</h3>
+                        <p>GPU optimization, memory tuning, benchmarks</p>
+                    </a>
+                    <a href="privacy-controls.html" class="doc-card">
+                        <h3>Privacy Controls</h3>
+                        <p>Image sharing, NSFW filtering, data retention</p>
+                    </a>
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/blob/main/docs/AMD-DEPLOYMENT-GUIDE.md" class="doc-card" target="_blank" rel="noopener noreferrer">
+                        <h3>AMD/ROCm Deployment</h3>
+                        <p>Steam Deck, Radeon, ROCm 6.2+ setup</p>
+                    </a>
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/blob/main/docs/AUDIO-GENERATION.md" class="doc-card" target="_blank" rel="noopener noreferrer">
+                        <h3>Audio Generation</h3>
+                        <p>Stable Audio Open 1.0, MiniMax Music 3</p>
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Developer Section -->
+            <section id="developer" class="audience-section">
+                <h2>For Developers</h2>
+                <p>Integrate with ALICE's API or extend the platform.</p>
+                <div class="doc-card-grid">
+                    <a href="api-reference.html" class="doc-card">
+                        <h3>API Reference</h3>
+                        <p>OpenAI-compatible REST API for images & audio</p>
+                    </a>
 
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+                    <a href="integration-sam.html" class="doc-card">
+                        <h3>SAM Integration</h3>
+                        <p>SAM calls ALICE for local image & audio generation</p>
+                    </a>
+                    <a href="integration-clio.html" class="doc-card">
+                        <h3>CLIO Integration</h3>
+                        <p>Deploy and manage ALICE across GPU fleets from terminal</p>
+                    </a>
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/blob/main/docs/ARCHITECTURE.md" class="doc-card" target="_blank" rel="noopener noreferrer">
+                        <h3>Architecture</h3>
+                        <p>System design and internals</p>
+                    </a>
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE/blob/main/docs/IMPLEMENTATION_GUIDE.md" class="doc-card" target="_blank" rel="noopener noreferrer">
+                        <h3>Implementation Guide</h3>
+                        <p>Development guide for contributors</p>
+                    </a>
+                    <a href="../shared/the-unbroken-method.html" class="doc-card">
+                        <h3>The Unbroken Method</h3>
+                        <p>Human-AI collaboration methodology</p>
+                    </a>
+                    <a href="../shared/contributing.html" class="doc-card">
+                        <h3>Contributing</h3>
+                        <p>How to contribute to ALICE</p>
+                    </a>
+                    <a href="https://github.com/SyntheticAutonomicMind/ALICE" class="doc-card" target="_blank" rel="noopener noreferrer">
+                        <h3>GitHub Repository</h3>
+                        <p>Source code, issues, and discussions</p>
+                    </a>
+                </div>
+            </section>
+        </div></div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
 </body>
 </html>

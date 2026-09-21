@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALICE + SAM Integration | ALICE</title>
+    <meta name="description" content="SAM uses ALICE as its local image and audio generation backend through ALICE's OpenAI-compatible API.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/ALICE/integration-sam.html">
+    <meta property="og:title" content="ALICE + SAM Integration | ALICE">
+    <meta property="og:description" content="SAM uses ALICE as its local image and audio generation backend through ALICE's OpenAI-compatible API.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/integration-sam.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
+    <link rel="stylesheet" href="../../css/styles.css?v=15">
+</head>
+<body>
+        <div id="nav-placeholder"></div>
+
+    <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-sam.html" data-prev="docs/ALICE/api-reference.html|ALICE + SAM Integration" data-next="docs/ALICE/integration-clio.html|ALICE + CLIO Integration">
+    <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>ALICE + SAM Integration</span></nav>
+        
+        <div class="doc-content">
+            <h1>ALICE + SAM Integration</h1>
+<p class="lead">SAM uses ALICE as its local image and audio generation backend through ALICE's OpenAI-compatible API.</p>
+
+<h2 id="overview">Overview</h2>
+<p>When you ask SAM to "generate an image" or "create a song," SAM calls ALICE's REST API endpoints. This integration is seamless, private, and requires no cloud services.</p>
+
+<h2 id="how-it-works">How It Works</h2>
+<ol>
+<li>User asks SAM to generate media in a conversation</li>
+<li>SAM parses the request for generation parameters (model, dimensions, steps, etc.)</li>
+<li>SAM calls ALICE's API (<code>POST /v1/images/generations</code> or <code>/v1/audio/generations</code>)</li>
+<li>ALICE processes the generation on local GPU</li>
+<li>ALICE returns the generated media URL or base64 data</li>
+<li>SAM displays the result inline in the conversation</li>
+</ol>
+
+<h2 id="setup">Setup</h2>
+<ol>
+<li>Ensure ALICE is running: <code>http://localhost:8080/health</code> returns <code>{"status": "ok"}</code></li>
+<li>In SAM: Settings -> Image Generation -> Server URL: <code>http://localhost:8080</code></li>
+<li>Test connection in SAM settings</li>
+<li>Download at least one SD model in ALICE's web interface</li>
+</ol>
+
+<h2 id="supported-generations">Supported Generations</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>ALICE Endpoint</th>
+<th>Models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Text-to-Image</td>
+<td><code>POST /v1/images/generations</code></td>
+<td>SDXL, SD 1.5, FLUX, GGUF</td>
+</tr>
+<tr>
+<td>Image-to-Image</td>
+<td><code>POST /v1/images/edits</code></td>
+<td>All SD models with img2img support</td>
+</tr>
+<tr>
+<td>Text-to-Audio</td>
+<td><code>POST /v1/audio/generations</code></td>
+<td>Stable Audio Open 1.0, MiniMax Music 3</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="parameters">Parameters SAM Passes to ALICE</h2>
+<p>SAM automatically extracts these parameters from natural language:</p>
+<ul>
+<li><strong>Model:</strong> "using SDXL", "with FLUX"</li>
+<li><strong>Dimensions:</strong> "1024x1024", "portrait orientation"</li>
+<li><strong>Steps:</strong> "30 steps", "high quality"</li>
+<li><strong>Guidance Scale:</strong> "guidance 7.5"</li>
+<li><strong>Sampler:</strong> "Euler a", "DPM++ 2M"</li>
+<li><strong>LoRA:</strong> "anime style LoRA", "with character LoRA"</li>
+<li><strong>Seed:</strong> "seed 42", "reproducible"</li>
+</ul>
+
+<h2 id="privacy">Privacy & Security</h2>
+<ul>
+<li><strong>No cloud:</strong> All generation happens on your hardware</li>
+<li><strong>No logging:</strong> ALICE doesn't log prompts or generations by default</li>
+<li><strong>Local API:</strong> Communication over localhost only</li>
+<li><strong>Your models:</strong> Use any model you've downloaded</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SAM says "ALICE not connected"</td>
+<td>Verify <code>http://localhost:8080/health</code> returns OK</td>
+</tr>
+<tr>
+<td>Generation fails silently</td>
+<td>Check ALICE logs: <code>tail -f ~/Library/Logs/alice/alice.log</code> (macOS)</td>
+</tr>
+<tr>
+<td>Out of memory</td>
+<td>Use smaller model (SD 1.5), reduce dimensions, enable CPU offload</td>
+</tr>
+<tr>
+<td>Wrong model used</td>
+<td>Set default model in ALICE settings; specify model in SAM request</td>
+</tr>
+<tr>
+<td>Slow generation</td>
+<td>Check GPU utilization; try different sampler; reduce steps</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../SAM/integration-alice.html">SAM + ALICE Integration</a> - SAM perspective</li>
+<li><a href="web-interface.html">ALICE Web Interface</a> - Studio, gallery, marketplace</li>
+<li><a href="model-management.html">Model Management</a> - Downloading and organizing models</li>
+<li><a href="api-reference.html">ALICE API Reference</a> - Complete API documentation</li>
+</ul>
+        </div>
+    </div>
+    </article>
+</main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/include.js"></script>
+</body>
+</html>

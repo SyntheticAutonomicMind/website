@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Troubleshooting Guide | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Troubleshooting Guide">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
-    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/power-user/troubleshooting.html">
+    <title>Troubleshooting Guide | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/power-user/troubleshooting.html">
+    <meta property="og:title" content="Troubleshooting Guide | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/power-user/troubleshooting.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/troubleshooting.html" data-prev="docs/SAM/power-user/advanced-workflows.html|Troubleshooting Guide">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Troubleshooting
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Power User</span><span class="breadcrumb-separator">/</span><span>Troubleshooting Guide</span></nav>
         
         <div class="doc-content">
             <h1 id="troubleshooting-guide">Troubleshooting Guide</h1>
@@ -254,12 +31,12 @@
 <h3 id="samapp-is-damaged-and-cant-be-opened">"SAM.app is damaged and can't be opened"</h3>
 <p><strong>Cause</strong>: macOS Gatekeeper blocking unsigned app</p>
 <p><strong>Solution</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Remove quarantine attribute</span>
-xattr<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>/Applications/SAM.app
+<pre><code># Remove quarantine attribute
+xattr -d com.apple.quarantine /Applications/SAM.app
 
-<span class="c1"># Or allow in System Settings</span>
-<span class="c1"># System Settings → Privacy &amp; Security → Allow anyway</span>
-</code></pre></div>
+# Or allow in System Settings
+# System Settings → Privacy & Security → Allow anyway
+</code></pre>
 
 <h3 id="samapp-cant-be-opened-because-apple-cannot-check-it">"SAM.app can't be opened because Apple cannot check it"</h3>
 <p><strong>Cause</strong>: First launch security check</p>
@@ -420,42 +197,42 @@ xattr<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span
 2. Search for "SAM" in search box
 3. Filter by subsystem: <code>com.sam</code></p>
 <p><strong>Terminal</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># View real-time logs</span>
-log<span class="w"> </span>stream<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;subsystem == &quot;com.sam&quot;&#39;</span><span class="w"> </span>--level<span class="w"> </span>debug
+<pre><code># View real-time logs
+log stream --predicate 'subsystem == "com.sam"' --level debug
 
-<span class="c1"># View recent logs</span>
-log<span class="w"> </span>show<span class="w"> </span>--predicate<span class="w"> </span><span class="s1">&#39;subsystem == &quot;com.sam&quot;&#39;</span><span class="w"> </span>--last<span class="w"> </span>1h
-</code></pre></div>
+# View recent logs
+log show --predicate 'subsystem == "com.sam"' --last 1h
+</code></pre>
 
 <h3 id="export-diagnostic-information">Export diagnostic information</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># System info</span>
-system_profiler<span class="w"> </span>SPSoftwareDataType<span class="w"> </span>SPHardwareDataType
+<pre><code># System info
+system_profiler SPSoftwareDataType SPHardwareDataType
 
-<span class="c1"># SAM version</span>
-defaults<span class="w"> </span><span class="nb">read</span><span class="w"> </span>/Applications/SAM.app/Contents/Info<span class="w"> </span>CFBundleShortVersionString
+# SAM version
+defaults read /Applications/SAM.app/Contents/Info CFBundleShortVersionString
 
-<span class="c1"># Check running processes</span>
-ps<span class="w"> </span>aux<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAM
+# Check running processes
+ps aux | grep SAM
 
-<span class="c1"># Check network connections</span>
-lsof<span class="w"> </span>-i<span class="w"> </span>-P<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>SAM
-</code></pre></div>
+# Check network connections
+lsof -i -P | grep SAM
+</code></pre>
 
 <hr />
 <h2 id="database-issues">Database Issues</h2>
 <h3 id="reset-sam-completely">Reset SAM completely</h3>
 <p><strong>⚠️ Warning: This deletes all conversations, settings, and downloaded models</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Backup first!</span>
-cp<span class="w"> </span>-r<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM<span class="w"> </span>~/Desktop/SAM-Backup
-cp<span class="w"> </span>-r<span class="w"> </span>~/Library/Caches/sam<span class="w"> </span>~/Desktop/SAM-Cache-Backup
+<pre><code># Backup first!
+cp -r ~/Library/Application\ Support/SAM ~/Desktop/SAM-Backup
+cp -r ~/Library/Caches/sam ~/Desktop/SAM-Cache-Backup
 
-<span class="c1"># Remove all data</span>
-rm<span class="w"> </span>-rf<span class="w"> </span>~/Library/Application<span class="se">\ </span>Support/SAM
-rm<span class="w"> </span>-rf<span class="w"> </span>~/Library/Caches/sam
-defaults<span class="w"> </span>delete<span class="w"> </span>com.sam.SAM
+# Remove all data
+rm -rf ~/Library/Application\ Support/SAM
+rm -rf ~/Library/Caches/sam
+defaults delete com.sam.SAM
 
-<span class="c1"># Restart SAM (creates fresh data)</span>
-</code></pre></div>
+# Restart SAM (creates fresh data)
+</code></pre>
 
 <h3 id="export-conversations-before-reset">Export conversations before reset</h3>
 <p>Use SAM's built-in export feature:
@@ -466,51 +243,11 @@ defaults<span class="w"> </span>delete<span class="w"> </span>com.sam.SAM
 <p>Repeat for each important conversation before resetting.</p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="../end-user/getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>

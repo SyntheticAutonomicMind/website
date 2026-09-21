@@ -3,247 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Getting Started with SAM | SAM Documentation</title>
-    <meta name="description" content="SAM Documentation: Getting Started with SAM">
-    <link rel="stylesheet" href="../../../css/styles.css?v=7">
-    <style>
-        /* Documentation styles - Apple-inspired */
-        .doc-container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-4xl) var(--spacing-md);
-        }
-        
-        .doc-breadcrumb {
-            margin-bottom: var(--spacing-2xl);
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-        
-        .doc-breadcrumb a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-breadcrumb a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Typography */
-        .doc-content h1 {
-            font-size: 48px;
-            font-weight: 700;
-            letter-spacing: -0.025em;
-            line-height: 1.08;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h2 {
-            font-size: 32px;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.125;
-            margin-top: var(--spacing-3xl);
-            margin-bottom: var(--spacing-md);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h3 {
-            font-size: 24px;
-            font-weight: 600;
-            letter-spacing: -0.015em;
-            line-height: 1.2;
-            margin-top: var(--spacing-2xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content h4 {
-            font-size: 19px;
-            font-weight: 600;
-            line-height: 1.3;
-            margin-top: var(--spacing-xl);
-            margin-bottom: var(--spacing-sm);
-            color: var(--text-primary);
-        }
-        
-        .doc-content p {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            color: var(--text-primary);
-        }
-        
-        .doc-content ul,
-        .doc-content ol {
-            font-size: 17px;
-            line-height: 1.6;
-            margin-bottom: var(--spacing-lg);
-            padding-left: 28px;
-        }
-        
-        .doc-content li {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        .doc-content li p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Links */
-        .doc-content a {
-            color: var(--primary-blue);
-            text-decoration: none;
-        }
-        
-        .doc-content a:hover {
-            text-decoration: underline;
-        }
-        
-        /* Code */
-        .doc-content code {
-            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', 'Courier New', monospace;
-            font-size: 15px;
-            background: var(--bg-light);
-            padding: 3px 7px;
-            border-radius: 5px;
-            color: var(--text-primary);
-        }
-        
-        .doc-content pre {
-            background: var(--bg-light);
-            border: 1px solid var(--border-subtle);
-            border-radius: 12px;
-            padding: var(--spacing-lg);
-            overflow-x: auto;
-            margin: var(--spacing-lg) 0;
-        }
-        
-        .doc-content pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        /* Blockquotes */
-        .doc-content blockquote {
-            border-left: 4px solid var(--primary-blue);
-            padding-left: var(--spacing-lg);
-            margin: var(--spacing-lg) 0;
-            color: var(--text-secondary);
-            font-style: italic;
-        }
-        
-        .doc-content blockquote p {
-            margin-bottom: var(--spacing-sm);
-        }
-        
-        /* Tables */
-        .doc-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: var(--spacing-lg) 0;
-            font-size: 15px;
-        }
-        
-        .doc-content th,
-        .doc-content td {
-            border: 1px solid var(--border-subtle);
-            padding: 12px 16px;
-            text-align: left;
-        }
-        
-        .doc-content th {
-            background: var(--bg-light);
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .doc-content td {
-            color: var(--text-primary);
-        }
-        
-        /* Strong and emphasis */
-        .doc-content strong {
-            font-weight: 600;
-        }
-        
-        .doc-content em {
-            font-style: italic;
-        }
-        
-        /* Horizontal rule */
-        .doc-content hr {
-            border: none;
-            border-top: 1px solid var(--border-subtle);
-            margin: var(--spacing-2xl) 0;
-        }
-        
-        /* Images */
-        .doc-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: var(--spacing-lg) 0;
-        }
-    </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true, theme: 'base' });
-        
-        // Convert mermaid code blocks to renderable divs
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('pre code').forEach(block => {
-                const text = block.textContent;
-                if (text.match(/^(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram)/)) {
-                    // This is a mermaid diagram
-                    const mermaidCode = text.trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                } else if (text.includes('```mermaid') || block.classList.contains('language-mermaid')) {
-                    const mermaidCode = text.replace(/```mermaid\n?/g, '').replace(/```\s*$/g, '').trim();
-                    const div = document.createElement('div');
-                    div.className = 'mermaid';
-                    div.textContent = mermaidCode;
-                    block.closest('pre').replaceWith(div);
-                }
-            });
-        });
-    </script>
+    <title>Getting Started with SAM | SAM</title>
+    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/end-user/getting-started.html">
+    <meta property="og:title" content="Getting Started with SAM | SAM">
+    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/end-user/getting-started.html">
+    <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
+    <link rel="stylesheet" href="../../../css/styles.css?v=15">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../../" class="nav-brand">
-                <img src="../../../images/sam4.png" alt="SAM" class="nav-logo">
-                <span class="logo">Synthetic Autonomic Mind</span>
-            </a>
-            <div class="nav-menu" id="navMenu">
-                <a href="/#features">Features</a>
-                <a href="../index.html">Docs</a>
-                <a href="/#community">Community</a>
-                <a href="https://github.com/SyntheticAutonomicMind/SAM/releases/latest" class="btn-download" target="_blank" rel="noopener noreferrer">Download</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </nav>
+        <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
+    <main>
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/getting-started.html" data-next="docs/SAM/end-user/features-overview.html|Features Overview">
     <div class="doc-container">
-        <div class="doc-breadcrumb">
-            <a href="../index.html">Documentation</a> / Getting Started
-        </div>
+        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>End User</span><span class="breadcrumb-separator">/</span><span>Getting Started with SAM</span></nav>
         
         <div class="doc-content">
             <h1 id="getting-started-with-sam">Getting Started with SAM</h1>
@@ -277,9 +54,8 @@
 <li><strong>Internet connection</strong> (for cloud providers and downloads)</li>
 </ul>
 <p><strong>For cloud AI providers (optional)</strong>:
-- <a href="https://platform.openai.com/api-keys">OpenAI API key</a> - GPT-4, GPT-3.5-turbo, and more
-- <a href="https://github.com/features/copilot">GitHub Copilot subscription</a> - GitHub Copilot integration
-- Anthropic Claude API key - Claude models
+- <a href="https://platform.openai.com/api-keys">OpenAI API key</a> - GPT-4 and other models
+- <a href="https://github.com/features/copilot">GitHub Copilot subscription</a> - GitHub Copilot integration (includes Claude models)
 - Google Gemini API key - Gemini models
 - DeepSeek API key - DeepSeek models</p>
 <p><strong>For local models (optional)</strong>:
@@ -298,8 +74,8 @@
 2. You'll get <code>SAM.app</code></p>
 <p><strong>Step 3: Move to Applications</strong>
 Drag <code>SAM.app</code> to your Applications folder, or use Terminal:</p>
-<div class="codehilite"><pre><span></span><code>mv<span class="w"> </span>~/Downloads/SAM.app<span class="w"> </span>/Applications/
-</code></pre></div>
+<pre><code>mv ~/Downloads/SAM.app /Applications/
+</code></pre>
 
 <p><strong>Step 4: First Launch (Important)</strong>
 macOS Gatekeeper will block unsigned apps on first launch. To open SAM:</p>
@@ -311,8 +87,8 @@ macOS Gatekeeper will block unsigned apps on first launch. To open SAM:</p>
 </ol>
 <p><strong>Alternative: Command Line</strong>
 If you get a "damaged app" error, remove the quarantine attribute:</p>
-<div class="codehilite"><pre><span></span><code>xattr<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>/Applications/SAM.app
-</code></pre></div>
+<pre><code>xattr -d com.apple.quarantine /Applications/SAM.app
+</code></pre>
 
 <h3 id="method-2-build-from-source">Method 2: Build from Source</h3>
 <p>For developers or advanced users who want to build SAM from source.</p>
@@ -321,24 +97,24 @@ If you get a "damaged app" error, remove the quarantine attribute:</p>
 - Git
 - Homebrew (optional, for dependencies)</p>
 <p><strong>Build Steps</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Clone the repository</span>
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SyntheticAutonomicMind/SAM.git
-<span class="nb">cd</span><span class="w"> </span>SAM
+<pre><code># Clone the repository
+git clone https://github.com/SyntheticAutonomicMind/SAM.git
+cd SAM
 
-<span class="c1"># Initialize submodules (llama.cpp for local models)</span>
-git<span class="w"> </span>submodule<span class="w"> </span>update<span class="w"> </span>--init<span class="w"> </span>--recursive
+# Initialize submodules (llama.cpp for local models)
+git submodule update --init --recursive
 
-<span class="c1"># Build debug version (faster, includes debug symbols)</span>
-make<span class="w"> </span>build-debug
+# Build debug version (faster, includes debug symbols)
+make build-debug
 
-<span class="c1"># Or build release version (optimized)</span>
-make<span class="w"> </span>build-release
+# Or build release version (optimized)
+make build-release
 
-<span class="c1"># Launch SAM</span>
-open<span class="w"> </span>.build/Build/Products/Debug/SAM.app
-<span class="c1"># or</span>
-open<span class="w"> </span>.build/Build/Products/Release/SAM.app
-</code></pre></div>
+# Launch SAM
+open .build/Build/Products/Debug/SAM.app
+# or
+open .build/Build/Products/Release/SAM.app
+</code></pre>
 
 <p>For complete build instructions, see <a href="../developer/building.html">Building from Source</a>.</p>
 <hr />
@@ -410,38 +186,38 @@ Click the personality selector next to the model picker:
 <h3 id="step-3-send-your-first-message">Step 3: Send Your First Message</h3>
 <p>Type a message in the input field at the bottom and press Enter:</p>
 <p><strong>Example First Message</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Hello</span><span class="o">!</span><span class="w"> </span><span class="nv">Can</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">explain</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">can</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">what</span><span class="w"> </span><span class="nv">makes</span><span class="w"> </span><span class="nv">you</span><span class="w"> </span><span class="nv">special</span>?
-</code></pre></div>
+<pre><code>Hello! Can you explain what you can do and what makes you special?
+</code></pre>
 
 <p>SAM will respond in real-time, explaining its capabilities and unique features.</p>
 <h3 id="step-4-try-some-basic-tasks">Step 4: Try Some Basic Tasks</h3>
 <p>Once SAM responds, try these tasks to see its capabilities:</p>
 <p><strong>Ask for Information</strong>:</p>
-<div class="codehilite"><pre><span></span><code>What are the main features that make SAM different from other AI assistants?
-</code></pre></div>
+<pre><code>What are the main features that make SAM different from other AI assistants?
+</code></pre>
 
 <p><strong>Request File Operations</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Create a file called hello.txt with &quot;Hello from SAM!&quot; in my home directory
-</code></pre></div>
+<pre><code>Create a file called hello.txt with "Hello from SAM!" in my home directory
+</code></pre>
 
 <p><strong>Test Memory</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Remember that my favorite programming language is Python
-</code></pre></div>
+<pre><code>Remember that my favorite programming language is Python
+</code></pre>
 
 <p>Then in a new message:</p>
-<div class="codehilite"><pre><span></span><code>What&#39;s my favorite programming language?
-</code></pre></div>
+<pre><code>What's my favorite programming language?
+</code></pre>
 
 <p>SAM will retrieve this from memory and respond correctly.</p>
 <p><strong>Work with Attached Files</strong>:
 Click the paperclip button in the chat input area, select a file (PDF, text, code, etc.), and ask:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Summarize</span><span class="w"> </span><span class="nv">this</span><span class="w"> </span><span class="nv">document</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">me</span>
-</code></pre></div>
+<pre><code>Summarize this document for me
+</code></pre>
 
 <p>Files are automatically imported before your message is sent, so SAM can access their content immediately.</p>
 <p><strong>Web Research</strong> (requires API provider):</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Search</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">web</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">latest</span><span class="w"> </span><span class="nv">news</span><span class="w"> </span><span class="nv">about</span><span class="w"> </span><span class="nv">AI</span><span class="w"> </span><span class="nv">developments</span>
-</code></pre></div>
+<pre><code>Search the web for the latest news about AI developments
+</code></pre>
 
 <hr />
 <h2 id="configuring-ai-providers">Configuring AI Providers</h2>
@@ -481,18 +257,14 @@ Click the paperclip button in the chat input area, select a file (PDF, text, cod
 9. Return to SAM - authentication completes automatically</p>
 <p><strong>Step 3: Use Copilot Models</strong>
 - Select a Copilot model from the dropdown
-- Available models: GPT-4, Claude 3.5 Sonnet, o1-preview, o1-mini</p>
+- Available models: Latest models from GPT-4, Claude, and o1 providers</p>
 <p><strong>Note</strong>: Tokens refresh automatically - no need to re-authenticate frequently.</p>
 <p><strong>Other Providers</strong></p>
-<p><strong>Anthropic Claude</strong>:
-1. Get API key from <a href="https://console.anthropic.com">console.anthropic.com</a>
-2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
-3. Select <strong>Anthropic</strong>, paste key, and click <strong>Save Provider</strong></p>
 <p><strong>Google Gemini</strong>:
 1. Get API key from <a href="https://ai.google.dev">ai.google.dev</a>
 2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
 3. Select <strong>Google Gemini</strong>, paste key, and click <strong>Save Provider</strong>
-4. Available models: Gemini 1.5 Pro, Gemini 1.5 Flash, Gemini 2.0 Flash Thinking Experimental</p>
+4. Available models: Current models from the Gemini 2.5 family</p>
 <p><strong>DeepSeek</strong>:
 1. Get API key from <a href="https://platform.deepseek.com">platform.deepseek.com</a>
 2. Go to Preferences → <strong>Remote Providers</strong> → click <strong>Add Provider</strong>
@@ -545,23 +317,23 @@ Click the paperclip button in the chat input area, select a file (PDF, text, cod
 <h3 id="manual-model-installation">Manual Model Installation</h3>
 <p>If you prefer to download models manually:</p>
 <p><strong>MLX Models (Apple Silicon Only)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create directory</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/Library/Caches/sam/models/
+<pre><code># Create directory
+mkdir -p ~/Library/Caches/sam/models/
 
-<span class="c1"># Download from HuggingFace</span>
-<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
-git<span class="w"> </span>lfs<span class="w"> </span>install
-git<span class="w"> </span>clone<span class="w"> </span>https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
-</code></pre></div>
+# Download from HuggingFace
+cd ~/Library/Caches/sam/models/
+git lfs install
+git clone https://huggingface.co/mlx-community/Qwen2.5-7B-Instruct-8bit
+</code></pre>
 
 <p><strong>GGUF Models (All Macs)</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Create directory</span>
-mkdir<span class="w"> </span>-p<span class="w"> </span>~/Library/Caches/sam/models/
+<pre><code># Create directory
+mkdir -p ~/Library/Caches/sam/models/
 
-<span class="c1"># Download model file</span>
-<span class="nb">cd</span><span class="w"> </span>~/Library/Caches/sam/models/
-wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
-</code></pre></div>
+# Download model file
+cd ~/Library/Caches/sam/models/
+wget https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+</code></pre>
 
 <p><strong>Model Recommendations by RAM:</strong>
 - <strong>8GB RAM</strong>: Qwen3-4B, small 4-bit quantized models
@@ -593,7 +365,7 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p>The bottom toolbar sits below the text input and is divided into two sides:</p>
 <p><strong>Left side - Pickers:</strong></p>
 <ul>
-<li><strong>Model Picker</strong>: Choose from cloud providers (OpenAI, Anthropic, GitHub Copilot, DeepSeek) or local models (MLX, GGUF). When a local model is selected, Load/Eject buttons appear here too.</li>
+<li><strong>Model Picker</strong>: Choose from cloud providers (OpenAI, GitHub Copilot, DeepSeek) or local models (MLX, GGUF). When a local model is selected, Load/Eject buttons appear here too.</li>
 <li><strong>System Prompt Picker</strong>: Select a system prompt for this conversation (only shown when prompts are configured for the working directory)</li>
 <li><strong>Personality Picker</strong>: Choose a personality to shape SAM's communication style</li>
 </ul>
@@ -661,82 +433,82 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 4. Context is automatically added to every message when enabled</p>
 <p><strong>Example Mini-Prompts:</strong></p>
 <p><strong>SAM's Gazette</strong> - Automated local news aggregation:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Name</span><span class="o">:</span><span class="w"> </span><span class="n">SAM</span><span class="s1">&#39;s Gazette</span>
+<pre><code>Name: SAM's Gazette
 
-<span class="s1">Content:</span>
-<span class="s1">**Develop a plan to create &quot;SAM&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">Gazette</span><span class="err">&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">serving</span><span class="w"> </span><span class="o">{</span><span class="n">LOCATION</span><span class="o">}.**</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Your</span><span class="w"> </span><span class="n">ONLY</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="o">(</span><span class="n">no</span><span class="w"> </span><span class="n">summaries</span><span class="o">,</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="n">lists</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">explanations</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">complete</span><span class="w"> </span><span class="n">newspaper</span><span class="o">).</span>
-<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">encounter</span><span class="w"> </span><span class="n">issues</span><span class="w"> </span><span class="n">fetching</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">scraping</span><span class="w"> </span><span class="n">articles</span><span class="o">,</span><span class="w"> </span><span class="n">ADAPT</span><span class="w"> </span><span class="n">AND</span><span class="w"> </span><span class="n">OVERCOME</span><span class="o">:</span><span class="w">  </span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Try</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">sources</span><span class="o">,</span><span class="w"> </span><span class="n">deeper</span><span class="w"> </span><span class="n">searches</span><span class="o">,</span><span class="w"> </span><span class="n">local</span><span class="w"> </span><span class="n">blogs</span><span class="o">,</span><span class="w"> </span><span class="n">government</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">community</span><span class="w"> </span><span class="n">pages</span><span class="o">,</span><span class="w"> </span><span class="n">social</span><span class="w"> </span><span class="n">media</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">official</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">.</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">available</span><span class="w"> </span><span class="n">tools</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="n">genuine</span><span class="o">,</span><span class="w"> </span><span class="n">detailed</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">section</span><span class="o">.</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Do</span><span class="w"> </span><span class="n">not</span><span class="w"> </span><span class="n">stop</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">give</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">due</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">errors</span><span class="err">-</span><span class="n">investigate</span><span class="o">,</span><span class="w"> </span><span class="n">retry</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">exhaust</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">reasonable</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">gather</span><span class="w"> </span><span class="n">information</span><span class="o">.</span>
-<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">cannot</span><span class="w"> </span><span class="n">be</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">populated</span><span class="w"> </span><span class="n">despite</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="n">efforts</span><span class="o">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">MUST</span><span class="o">:</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Clearly</span><span class="w"> </span><span class="n">state</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">incomplete</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">g</span><span class="o">.,</span><span class="w"> </span><span class="n">site</span><span class="w"> </span><span class="n">inaccessible</span><span class="o">,</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="n">available</span><span class="o">).</span>
-<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">omit</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">skip</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">missing</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
+Content:
+**Develop a plan to create "SAM's Gazette", a newspaper serving {LOCATION}.**
+- Your ONLY output must be the fully formatted newspaper (no summaries, bullet lists, or explanations before the complete newspaper).
+- If you encounter issues fetching or scraping articles, ADAPT AND OVERCOME:  
+    - Try alternative sources, deeper searches, local blogs, government or community pages, social media, or official press releases.
+    - Use all available tools and methods to extract genuine, detailed news content for each section.
+    - Do not stop or give up on a section due to initial errors-investigate, retry, and exhaust all reasonable options to gather information.
+- If any section cannot be fully populated despite all possible efforts, you MUST:
+    - Clearly state at the end which sections are incomplete and provide a specific explanation for each (e.g., site inaccessible, no current articles available).
+    - Never omit or skip this explanation if there is missing content.
 
-<span class="err">##</span><span class="w"> </span><span class="n">REQUIRED</span><span class="w"> </span><span class="n">OUTPUT</span><span class="w"> </span><span class="n">FORMAT</span>
+## REQUIRED OUTPUT FORMAT
 
-<span class="w">    </span><span class="err">#</span><span class="w"> </span><span class="n">SAM</span><span class="s1">&#39;s Gazette - Daily Edition for {LOCATION}  </span>
-<span class="s1">    **Date: {DATE}**</span>
+    # SAM's Gazette - Daily Edition for {LOCATION}  
+    **Date: {DATE}**
 
-<span class="s1">    ---</span>
+    ---
 
-<span class="s1">    ## Top Headlines</span>
-<span class="s1">    - 3-6 most important stories from all sections.  </span>
-<span class="s1">        ### **{TITLE}**  </span>
-<span class="s1">        *[{SOURCE NAME}]({SOURCE LINK}) - {DATE}*  </span>
-<span class="s1">        {Concise, factual summary with detail.}</span>
+    ## Top Headlines
+    - 3-6 most important stories from all sections.  
+        ### **{TITLE}**  
+        *[{SOURCE NAME}]({SOURCE LINK}) - {DATE}*  
+        {Concise, factual summary with detail.}
 
-<span class="s1">    ## Local/{CITY} News </span>
-<span class="s1">    - At least 3 local news articles.</span>
+    ## Local/{CITY} News 
+    - At least 3 local news articles.
 
-<span class="s1">    ## {STATE} Statewide News</span>
-<span class="s1">    - At least 3 statewide articles.</span>
+    ## {STATE} Statewide News
+    - At least 3 statewide articles.
 
-<span class="s1">    ## Community Alerts</span>
-<span class="s1">    - At least 3 public safety, health, or event articles.</span>
+    ## Community Alerts
+    - At least 3 public safety, health, or event articles.
 
-<span class="s1">    ## Weather Updates</span>
-<span class="s1">    - At least 3 items: forecast, warnings, or notable events.</span>
+    ## Weather Updates
+    - At least 3 items: forecast, warnings, or notable events.
 
-<span class="s1">    ## Crime &amp; Public Safety</span>
-<span class="s1">    - At least 3 crime/public safety articles.</span>
+    ## Crime & Public Safety
+    - At least 3 crime/public safety articles.
 
-<span class="s1">    ## Politics &amp; Government </span>
-<span class="s1">    - At least 3 politics/government articles.</span>
+    ## Politics & Government 
+    - At least 3 politics/government articles.
 
-<span class="s1">    ## Major Events (Technology, Business, Sports, etc.)</span>
-<span class="s1">    - At least 3 major tech, business, or sports events.</span>
+    ## Major Events (Technology, Business, Sports, etc.)
+    - At least 3 major tech, business, or sports events.
 
-<span class="s1">    ---</span>
-<span class="s1">    **Thank you for reading SAM&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">Gazette</span><span class="o">!**</span>
+    ---
+    **Thank you for reading SAM's Gazette!**
 
-<span class="o">---</span>
+---
 
-<span class="err">##</span><span class="w"> </span><span class="n">INSTRUCTIONS</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">RULES</span>
+## INSTRUCTIONS & RULES
 
-<span class="o">-</span><span class="w"> </span><span class="n">For</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">section</span><span class="o">,</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">MUST</span><span class="o">:</span>
-<span class="w">    </span><span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Search</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">current</span><span class="o">,</span><span class="w"> </span><span class="n">live</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">articles</span><span class="w"> </span><span class="o">(</span><span class="n">not</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">headlines</span><span class="o">,</span><span class="w"> </span><span class="n">timelines</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">aggregators</span><span class="o">).</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">initial</span><span class="w"> </span><span class="n">sources</span><span class="w"> </span><span class="n">fail</span><span class="o">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">alternative</span><span class="w"> </span><span class="n">sources</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">methods</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">you</span><span class="w"> </span><span class="n">have</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
-<span class="w">    </span><span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Scrape</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">fetch</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">news</span><span class="w"> </span><span class="n">links</span><span class="o">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">site</span><span class="w"> </span><span class="n">blocks</span><span class="w"> </span><span class="n">scraping</span><span class="o">,</span><span class="w"> </span><span class="k">try</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">fetch</span><span class="o">,</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="n">alternate</span><span class="w"> </span><span class="n">sites</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">seek</span><span class="w"> </span><span class="n">official</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">.</span>
-<span class="w">    </span><span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Extract</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">synthesize</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">detailed</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">based</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">actual</span><span class="w"> </span><span class="n">body</span><span class="w"> </span><span class="o">(</span><span class="n">not</span><span class="w"> </span><span class="n">just</span><span class="w"> </span><span class="n">snippets</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">headlines</span><span class="o">).</span>
-<span class="w">    </span><span class="mi">4</span><span class="o">.</span><span class="w"> </span><span class="n">Format</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">entire</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="n">strictly</span><span class="w"> </span><span class="n">according</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="n">markdown</span><span class="w"> </span><span class="n">template</span><span class="o">,</span><span class="w"> </span><span class="n">including</span><span class="w"> </span><span class="n">icons</span><span class="o">,</span><span class="w"> </span><span class="n">bold</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">headers</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">HRULE</span><span class="w"> </span><span class="o">(</span><span class="err">`</span><span class="o">---</span><span class="err">`</span><span class="o">)</span><span class="w"> </span><span class="n">separators</span><span class="o">.</span>
-<span class="w">    </span><span class="mi">5</span><span class="o">.</span><span class="w"> </span><span class="n">Each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">unique</span><span class="o">,</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">story</span><span class="w"> </span><span class="o">(</span><span class="n">never</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">homepage</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">generic</span><span class="w"> </span><span class="n">timeline</span><span class="o">).</span>
-<span class="w">    </span><span class="mi">6</span><span class="o">.</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">unable</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">fully</span><span class="w"> </span><span class="n">populate</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">reasonable</span><span class="w"> </span><span class="n">attempts</span><span class="o">,</span><span class="w"> </span><span class="n">explain</span><span class="w"> </span><span class="n">exactly</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">incomplete</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">why</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">newspaper</span><span class="w"> </span><span class="o">(</span><span class="n">never</span><span class="w"> </span><span class="n">omit</span><span class="w"> </span><span class="k">this</span><span class="w"> </span><span class="n">step</span><span class="o">).</span>
+- For every newspaper section, you MUST:
+    1. Search for current, live news articles (not just headlines, timelines, or aggregators). If initial sources fail, use alternative sources and methods until you have content.
+    2. Scrape or fetch the full article content from direct news links. If a site blocks scraping, try to fetch, use alternate sites, or seek official press releases.
+    3. Extract and synthesize a detailed summary for each article based on its actual body (not just snippets or headlines).
+    4. Format the entire newspaper strictly according to the provided markdown template, including icons, bold section headers, and HRULE (`---`) separators.
+    5. Each article must include a unique, direct source link to the full story (never a homepage or generic timeline).
+    6. If unable to fully populate a section after all reasonable attempts, explain exactly which sections are incomplete and why at the end of the newspaper (never omit this step).
 
-<span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="n">summaries</span><span class="o">,</span><span class="w"> </span><span class="n">bullet</span><span class="w"> </span><span class="n">lists</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">generic</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">lists</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">place</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="n">newspaper</span><span class="o">.</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Never</span><span class="w"> </span><span class="n">rely</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">homepage</span><span class="o">,</span><span class="w"> </span><span class="n">timeline</span><span class="o">,</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">snippet</span><span class="o">-</span><span class="n">only</span><span class="w"> </span><span class="n">links</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">summaries</span><span class="err">-</span><span class="n">always</span><span class="w"> </span><span class="n">extract</span><span class="w"> </span><span class="n">full</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">content</span><span class="o">.</span>
-<span class="o">-</span><span class="w"> </span><span class="n">Review</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">compliance</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">publishing</span><span class="o">.</span>
-<span class="o">-</span><span class="w"> </span><span class="n">If</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">sections</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">complete</span><span class="o">,</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="n">NOT</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">any</span><span class="w"> </span><span class="n">explanation</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="o">.</span>
-</code></pre></div>
+- Never output summaries, bullet lists, or generic link lists in place of the formatted newspaper.
+- Never rely on homepage, timeline, or snippet-only links for summaries-always extract full article content.
+- Review every section for compliance before publishing.
+- If all sections are complete, do NOT include any explanation at the end.
+</code></pre>
 
 <p><strong>Cruise News</strong> - Specialized industry news aggregation:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">Name</span><span class="o">:</span><span class="w"> </span><span class="n">Cruise</span><span class="w"> </span><span class="n">News</span>
+<pre><code>Name: Cruise News
 
-<span class="n">Content</span><span class="o">:</span>
-<span class="n">Develop</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">plan</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">create</span><span class="w"> </span><span class="s2">&quot;Cruise Life&quot;</span><span class="o">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">cruise</span><span class="w"> </span><span class="n">enthusiasts</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="n">must</span><span class="w"> </span><span class="k">include</span><span class="w"> </span><span class="n">today</span><span class="err">&#39;</span><span class="n">s</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="n">headlines</span><span class="w"> </span><span class="n">related</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">Norwegian</span><span class="w"> </span><span class="o">(</span><span class="n">NCL</span><span class="o">),</span><span class="w"> </span><span class="n">Royal</span><span class="w"> </span><span class="n">Caribbean</span><span class="w"> </span><span class="o">(</span><span class="n">RCCI</span><span class="o">),</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">MSC</span><span class="w"> </span><span class="n">Cruises</span><span class="o">.</span><span class="w"> </span><span class="n">For</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">article</span><span class="w"> </span><span class="n">provide</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">concise</span><span class="w"> </span><span class="n">summary</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">story</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">direct</span><span class="w"> </span><span class="n">link</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">original</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="n">page</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="n">can</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="n">directly</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">more</span><span class="w"> </span><span class="n">information</span><span class="o">.</span><span class="w"> </span><span class="n">Use</span><span class="w"> </span><span class="n">proper</span><span class="w"> </span><span class="n">emojis</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="n">section</span><span class="w"> </span><span class="n">header</span><span class="o">.</span>
+Content:
+Develop a plan to create "Cruise Life", a magazine for cruise enthusiasts. The magazine must include today's top headlines related to Norwegian (NCL), Royal Caribbean (RCCI), and MSC Cruises. For each article provide a concise summary of each story with a direct link to the original source page so the reader can go directly to the source for more information. Use proper emojis for each section header.
 
-<span class="n">Focus</span><span class="w"> </span><span class="n">company</span><span class="w"> </span><span class="n">press</span><span class="w"> </span><span class="n">releases</span><span class="o">,</span><span class="w"> </span><span class="n">significant</span><span class="w"> </span><span class="n">events</span><span class="o">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">general</span><span class="w"> </span><span class="n">industry</span><span class="w"> </span><span class="n">news</span><span class="o">.</span><span class="w"> </span><span class="n">Research</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">identify</span><span class="w"> </span><span class="n">specific</span><span class="w"> </span><span class="n">locations</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">details</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">unique</span><span class="w"> </span><span class="n">stories</span><span class="o">.</span><span class="w"> </span><span class="n">Provide</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">markdown</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">style</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">magazine</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">relevant</span><span class="w"> </span><span class="n">sections</span><span class="o">.</span>
-</code></pre></div>
+Focus company press releases, significant events, and general industry news. Research and identify specific locations or details for unique stories. Provide the response in markdown in the style of a magazine with all of the relevant sections.
+</code></pre>
 
 <p><strong>Use Cases for Mini-Prompts:</strong>
 - <strong>Location-Based</strong>: Automatically include your location for weather, local search, or news
@@ -802,12 +574,12 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 </ul>
 <h3 id="try-these-use-cases">Try These Use Cases</h3>
 <p><strong>For Coding</strong>:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Read</span><span class="w"> </span><span class="nv">my</span><span class="w"> </span><span class="nv">Python</span><span class="w"> </span><span class="nv">project</span><span class="w"> </span><span class="nv">in</span><span class="w"> </span><span class="o">~/</span><span class="nv">my</span><span class="o">-</span><span class="nv">project</span><span class="w"> </span><span class="nv">and</span><span class="w"> </span><span class="nv">help</span><span class="w"> </span><span class="nv">me</span><span class="w"> </span><span class="nv">add</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="nv">new</span><span class="w"> </span><span class="nv">feature</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">user</span><span class="w"> </span><span class="nv">authentication</span>
-</code></pre></div>
+<pre><code>Read my Python project in ~/my-project and help me add a new feature for user authentication
+</code></pre>
 
 <p><strong>For Research</strong>:</p>
-<div class="codehilite"><pre><span></span><code>Research the latest developments in quantum computing and create a summary document
-</code></pre></div>
+<pre><code>Research the latest developments in quantum computing and create a summary document
+</code></pre>
 
 <p><strong>For Document Analysis</strong>:
 1. Drag a PDF file into the chat window
@@ -830,51 +602,11 @@ wget<span class="w"> </span>https://huggingface.co/TheBloke/Mistral-7B-Instruct-
 <p><strong>What's Next?</strong> → <a href="features-overview.html">Features Overview</a></p>
         </div>
     </div>
+    </article>
+</main>
 
-    <!-- Footer -->
-    <footer class="footer-modern">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Products</h4>
-                    <ul>
-                        <li><a href="../../../index.html">SAM</a></li>
-                        <li><a href="../../../clio-terminal-ai.html">CLIO</a></li>
-                        <li><a href="../../../stable-diffusion-macos.html">ALICE</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="getting-started.html">Getting Started</a></li>
-                        <li><a href="../index.html">Documentation</a></li>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Community</h4>
-                    <ul>
-                        <li><a href="https://github.com/SyntheticAutonomicMind/SAM/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom-modern">
-                <p>&copy; 2026 Synthetic Autonomic Mind. Software licensed under GPLv3. Website and documentation licensed under CC BY-NC 4.0.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Mobile Menu Script -->
-    <script>
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
-        
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    </script>
+    <div id="footer-placeholder"></div>
+    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/include.js"></script>
 </body>
 </html>
