@@ -32,7 +32,7 @@ collection of open source AI tools that are built and maintained through
 a pair-programming workflow between a human developer and CLIO, using a
 methodology called the Unbroken Method. The ecosystem consists of <a
 href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a>, a
-terminal-based AI coding assistant written in Perl; <a
+terminal-native AI development agent and extensible agent harness written in Perl; <a
 href="https://github.com/SyntheticAutonomicMind/SAM">SAM</a>, a native
 macOS AI assistant built in Swift; and <a
 href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a>, a
@@ -70,8 +70,7 @@ separate concerns. Each session with the AI is treated as a partial
 reset - prior context is lost, decisions must be re-explained, and
 architectural knowledge evaporates between interactions.</p>
 <p>The SAM ecosystem challenges this separation. <a
-href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> is a
-terminal-based AI coding assistant that has been used to build and
+href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> is a terminal-native AI development agent and extensible agent harness that has been used to build and
 maintain itself, alongside two other production systems, since January
 2026. The tool is not separate from the artifact - it is part of the
 artifact. The development methodology is not separate from the tool - it
@@ -148,14 +147,19 @@ Mind</a> organization. It consists of three primary systems:</p>
 <p><strong><a
 href="https://github.com/SyntheticAutonomicMind/CLIO">CLIO</a> - Command
 Line Intelligence Orchestrator</strong></p>
-<p>CLIO is a terminal-first AI coding assistant written in Perl. It runs
-on anything from a ClockworkPi uConsole to an M4 Mac, starting at
-approximately 50 MB of RAM. The codebase spans over a hundred Perl
-modules organized into subsystems for memory, sessions, tools, security,
-coordination, and UI. It supports 17+ AI providers (GitHub Copilot, OpenAI, Anthropic, Google Gemini, DeepSeek, OpenRouter, MiniMax, Z.AI, NVIDIA NIM, Vercel AI Gateway, OrcaRouter, KiloCode, Ollama Cloud, llama.cpp, LM Studio, and SAM itself), provides 11 tools for
-autonomous operation, and includes a three-tier memory system,
-multi-agent coordination, remote execution over SSH, and terminal
-multiplexer integration.</p>
+<p>CLIO is a terminal-native AI development agent and extensible agent
+harness written in Perl. It runs on anything from a ClockworkPi uConsole
+to an M4 Mac, starting at approximately 50 MB of RAM. The codebase spans
+over a hundred Perl modules organized into subsystems for memory,
+sessions, tools, security, coordination, and UI. It supports 20 AI
+providers (GitHub Copilot, OpenAI, Anthropic, Google Gemini, DeepSeek,
+OpenRouter, MiniMax, Z.AI, NVIDIA NIM, Vercel AI Gateway, OrcaRouter,
+KiloCode, Opper, Ollama Cloud, Charm Hyper, llama.cpp, LM Studio, and
+SAM itself), provides 9 default tools plus 3 conditional tools (remote
+execution, sub-agents, skills) and dynamically loaded MCP and plugin
+tools, and includes a three-tier memory system, multi-agent
+coordination, remote execution over SSH, and terminal multiplexer
+integration.</p>
 <p>CLIO has been self-building since version 20260119.1. Every feature
 added after that date was developed through CLIO itself.</p>
 <p><strong><a
@@ -173,7 +177,7 @@ SAM is both the oldest system in the ecosystem and the origin of the
 methodology that now drives all development.</p>
 <p><strong><a
 href="https://github.com/SyntheticAutonomicMind/ALICE">ALICE</a> -
-Artificial Latent Interpretive Creation Engine</strong></p>
+Local image and audio generation service</strong></p>
 <p>ALICE is a local image and audio generation service written in Python. It wraps
 Stable Diffusion and Stable Audio behind a FastAPI interface, providing GPU-accelerated
 image and audio generation on Apple Silicon with no cloud dependency, no per-image
