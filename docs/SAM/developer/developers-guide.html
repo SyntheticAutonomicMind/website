@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/developer/developers-guide.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/developers-guide.html" data-next="docs/SAM/developer/architecture.html|Architecture">
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/developers-guide.html" data-next="docs/SAM/developer/architecture.html|SAM Architecture">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Developer</span><span class="breadcrumb-separator">/</span><span>Developers Guide</span></nav>
         
@@ -256,11 +256,14 @@ make build-release
 │   │   ├── MCPManager.swift          # MCP protocol manager
 │   │   ├── MCPTypes.swift            # MCP data types
 │   │   └── Tools/                    # MCP tool implementations
-│   │       ├── ThinkTool.swift
+│   │       ├── UserCollaborationTool.swift
 │   │       ├── FileOperationsTool.swift
-│   │       ├── TerminalOperationsTool.swift
 │   │       ├── MemoryOperationsTool.swift
-│   │       ├── RunSubagentTool.swift
+│   │       ├── TodoOperationsTool.swift
+│   │       ├── MathOperationsTool.swift
+│   │       ├── CalendarTool.swift   (+ Contacts, Notes,
+│   │       │   Spotlight, Weather)
+│   │       ├── ImageGenerationTool.swift (+ MusicGenerationTool)
 │   │       └── ...
 │   │
 │   ├── ConversationEngine/           # Conversation Management
@@ -282,17 +285,14 @@ make build-release
 │   │   ├── MLXModelCache.swift
 │   │   └── HuggingFaceAPIClient.swift
 │   │
-│   ├── StableDiffusionIntegration/   # Image Generation
-│   │   └── ...
-│   │
 │   ├── SharedData/                   # Shared Topics
 │   │   └── SharedStorage.swift
 │   │
-│   ├── VoiceFramework/               # Voice Features
-│   │   └── SpeechRecognitionService.swift
+│   ├── SecurityFramework/            # Keychain, redaction,
+│   │   └── SecurityPipeline.swift    #   input filtering
 │   │
-│   └── Utilities/                    # Helper utilities
-│       └── ...
+│   └── VoiceFramework/               # Voice Features
+│       └── SpeechRecognitionService.swift
 │
 ├── external/
 │   └── llama.cpp/                    # Submodule for GGUF support
@@ -865,7 +865,7 @@ xcrun stapler staple SAM.app
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/main.js?v=16"></script>
     <script src="../../../js/include.js"></script>
 </body>
 </html>

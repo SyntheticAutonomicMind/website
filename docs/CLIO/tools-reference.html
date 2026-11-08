@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tools Reference | CLIO</title>
-    <meta name="description" content="Complete guide to CLIO's built-in tools">
+    <meta name="description" content="Reference for CLIO's built-in tools: files, terminal, git, memory, todos, web, code intelligence, sub-agents, and more.">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/tools-reference.html">
     <meta property="og:title" content="Tools Reference | CLIO">
-    <meta property="og:description" content="Complete guide to CLIO's built-in tools">
+    <meta property="og:description" content="Reference for CLIO's built-in tools: files, terminal, git, memory, todos, web, code intelligence, sub-agents, and more.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/tools-reference.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/tools-reference.html" data-prev="docs/CLIO/sessions.html|Tools Reference" data-next="docs/CLIO/slash-commands.html|Slash Commands">
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/tools-reference.html" data-prev="docs/CLIO/sessions.html|Sessions & Memory" data-next="docs/CLIO/slash-commands.html|Slash Commands Reference">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Tools Reference</span></nav>
         
@@ -92,6 +92,7 @@
     <li><code>add_discovery</code> - Store discovered facts with confidence levels</li>
     <li><code>add_solution</code> - Store problem-solution pairs with example file paths</li>
     <li><code>add_pattern</code> - Store code/workflow patterns</li>
+    <li><code>add_corroboration</code> - Add independent corroboration to an existing LTM entry (promotes unverified entries to trusted)</li>
     <li><code>update_ltm</code> - Update existing LTM entries (correct outdated information)</li>
     <li><code>prune_ltm</code> - Remove old/low-confidence entries</li>
     <li><code>ltm_stats</code> - Get LTM statistics</li>
@@ -162,6 +163,7 @@
     <li><code>spawn</code> - Create a new sub-agent with a specific task</li>
     <li><code>list</code> - List all active sub-agents and their status</li>
     <li><code>status</code> - Get detailed status of a specific agent</li>
+    <li><code>wait</code> - Block until an agent completes or times out</li>
     <li><code>inbox</code> - Check for unread messages from sub-agents</li>
     <li><code>acknowledge</code> - Mark messages as read</li>
     <li><code>history</code> - View all messages from the session</li>
@@ -169,8 +171,19 @@
     <li><code>broadcast</code> - Send message to all agents</li>
     <li><code>kill</code> - Terminate a specific agent</li>
     <li><code>killall</code> - Terminate all agents</li>
+    <li><code>report</code> - Submit a completion report to the parent agent</li>
 </ul>
 <p>Sub-agents run as separate processes and communicate with the parent agent via a message-passing system. The parent acts as a manager - spawning tasks, monitoring progress, and validating results.</p>
+
+<h2>skill_operations</h2>
+<p><strong>Purpose:</strong> Discover, load, and create reusable skills</p>
+<h3>Operations:</h3>
+<ul>
+    <li><code>list</code> - Return the catalog of installed skills</li>
+    <li><code>load</code> - Return the full prompt template for one skill</li>
+    <li><code>create</code> - Write a new freeform skill (project or user scope)</li>
+</ul>
+<p>Skills are reusable prompt templates that CLIO discovers automatically when a request matches them. The catalog lives in <code>.clio/skills/</code> (project) or <code>~/.clio/skills/</code> (user).</p>
 
 <h2>Tool Transparency</h2>
 <p>When CLIO uses tools, you see real-time notifications showing what's happening:</p>
@@ -191,7 +204,7 @@ SYSTEM: [terminal_operations] - Executing: npm install</code></pre>
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>

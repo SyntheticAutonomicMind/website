@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/end-user/shared-topics.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/shared-topics.html" data-prev="docs/SAM/end-user/memory-and-rag.html|Shared Topics" data-next="docs/SAM/end-user/use-cases.html|Use Cases">
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/shared-topics.html" data-prev="docs/SAM/end-user/memory-and-rag.html|Memory & RAG in SAM" data-next="docs/SAM/end-user/use-cases.html|Real-World Use Cases">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>End User</span><span class="breadcrumb-separator">/</span><span>Shared Topics Guide</span></nav>
         
@@ -384,17 +384,17 @@ Easy to find later across conversations
 3. <strong>Delete Unused</strong>: Remove old topics to avoid confusion</p>
 <hr />
 <h2 id="advanced-patterns">Advanced Patterns</h2>
-<h3 id="subagents-shared-topics">Subagents + Shared Topics</h3>
+<h3 id="workflow-shared-topics">Workflow Mode + Shared Topics</h3>
 <p><strong>A Strong Combination</strong>:
-Enable a shared topic, then spawn subagents. All subagents automatically work in the same workspace.</p>
-<pre><code>Main Conversation: "My App" shared topic enabled
+Enable a shared topic, then run workflow-mode conversations against it. Each conversation works autonomously in the same workspace.</p>
+<pre><code>Shared Topic: "My App"
 
-Spawn subagents that collaborate:
-├── "API Development" subagent → works in ~/SAM/My App/api/
-├── "UI Design" subagent → works in ~/SAM/My App/ui/
-└── "Testing" subagent → reads both api/ and ui/
+Conversations with workflow mode enabled:
+├── "API Development" → works in ~/SAM/My App/api/
+├── "UI Design" → works in ~/SAM/My App/ui/
+└── "Testing" → reads both api/ and ui/
 
-All subagents share the same workspace and knowledge!
+All conversations share the same workspace and knowledge!
 </code></pre>
 
 <h3 id="topic-hierarchies-manual">Topic Hierarchies (Manual)</h3>
@@ -436,16 +436,16 @@ Context 3: Isolated Experiment
 1. Create your first shared topic
 2. Set up 2-3 specialized conversations
 3. Work on a small project together
-4. Experience the collaboration power!</p>
+4. Watch the shared memory and workspace carry context between them</p>
 <hr />
-<p><strong>Unlock SAM's full collaborative potential with Shared Topics!</strong></p>
+<p>Shared Topics turn separate conversations into one project workspace.</p>
         </div>
     </div>
     </article>
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/main.js?v=16"></script>
     <script src="../../../js/include.js"></script>
 </body>
 </html>

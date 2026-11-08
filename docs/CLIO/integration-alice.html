@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/integration-alice.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/integration-alice.html" data-prev="docs/CLIO/integration-sam.html|CLIO + ALICE Integration">
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/integration-alice.html" data-prev="docs/CLIO/integration-sam.html|CLIO + SAM Integration">
     <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>CLIO + ALICE Integration</span></nav>
         
         <div class="doc-content">
@@ -134,7 +134,7 @@ sudo systemctl enable --now alice
 <p>CLIO can call ALICE's OpenAI-compatible API directly for testing:</p>
 <pre><code># Test generation via API
 clio --new
-> POST to http://gpu-server:8080/v1/images/generations with prompt "test image", verify response, check image URL
+> POST to http://gpu-server:8080/v1/chat/completions with prompt "test image", verify response, check image URL
 </code></pre>
 
 <h2 id="see-also">See Also</h2>
@@ -151,7 +151,7 @@ clio --new
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>

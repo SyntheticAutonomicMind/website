@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/integration-alice.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
@@ -32,7 +32,7 @@
 <ul>
 <li><strong>Zero configuration:</strong> Works automatically when both are running locally</li>
 <li><strong>Private by default:</strong> No cloud services involved, everything stays on your machine</li>
-<li><strong>Seamless workflow:</strong> No context switching between apps</li>
+<li><strong>One-app workflow:</strong> No context switching between apps</li>
 <li><strong>Full parameter control:</strong> Access ALICE's generation parameters through SAM</li>
 </ul>
 
@@ -60,7 +60,7 @@
 <blockquote>
 <p>"Create an image of a cyberpunk city at sunset"</p>
 </blockquote>
-<p>SAM will call ALICE's <code>/v1/images/generations</code> endpoint and display the result in the conversation.</p>
+<p>SAM will call ALICE's <code>/v1/chat/completions</code> endpoint and display the result in the conversation.</p>
 
 <h3 id="audio-generation">Audio Generation</h3>
 <p>Ask SAM to generate music or sound effects:</p>
@@ -87,12 +87,12 @@
 </thead>
 <tbody>
 <tr>
-<td><code>POST /v1/images/generations</code></td>
+<td><code>POST /v1/chat/completions</code></td>
 <td>Text-to-image generation</td>
 </tr>
 <tr>
-<td><code>POST /v1/images/edits</code></td>
-<td>Image-to-image (img2img)</td>
+<td><code>POST /v1/chat/completions</code></td>
+<td>Image-to-image (img2img, with input image and strength)</td>
 </tr>
 <tr>
 <td><code>POST /v1/audio/generations</code></td>
@@ -145,7 +145,7 @@
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>

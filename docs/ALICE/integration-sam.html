@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/integration-sam.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-sam.html" data-prev="docs/ALICE/api-reference.html|ALICE + SAM Integration" data-next="docs/ALICE/integration-clio.html|ALICE + CLIO Integration">
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-sam.html" data-prev="docs/ALICE/api-reference.html|API Reference" data-next="docs/ALICE/integration-clio.html|ALICE + CLIO Integration">
     <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>ALICE + SAM Integration</span></nav>
         
         <div class="doc-content">
@@ -26,13 +26,13 @@
 <p class="lead">SAM uses ALICE as its local image and audio generation backend through ALICE's OpenAI-compatible API.</p>
 
 <h2 id="overview">Overview</h2>
-<p>When you ask SAM to "generate an image" or "create a song," SAM calls ALICE's REST API endpoints. This integration is seamless, private, and requires no cloud services.</p>
+<p>When you ask SAM to "generate an image" or "create a song," SAM calls ALICE's API endpoints. The integration runs entirely on your local network - no cloud services involved.</p>
 
 <h2 id="how-it-works">How It Works</h2>
 <ol>
 <li>User asks SAM to generate media in a conversation</li>
 <li>SAM parses the request for generation parameters (model, dimensions, steps, etc.)</li>
-<li>SAM calls ALICE's API (<code>POST /v1/images/generations</code> or <code>/v1/audio/generations</code>)</li>
+<li>SAM calls ALICE's API (<code>POST /v1/chat/completions</code> for images, <code>POST /v1/audio/generations</code> for audio)</li>
 <li>ALICE processes the generation on local GPU</li>
 <li>ALICE returns the generated media URL or base64 data</li>
 <li>SAM displays the result inline in the conversation</li>
@@ -58,12 +58,12 @@
 <tbody>
 <tr>
 <td>Text-to-Image</td>
-<td><code>POST /v1/images/generations</code></td>
+<td><code>POST /v1/chat/completions</code></td>
 <td>SDXL, SD 1.5, FLUX, GGUF</td>
 </tr>
 <tr>
 <td>Image-to-Image</td>
-<td><code>POST /v1/images/edits</code></td>
+<td><code>POST /v1/chat/completions</code> (with input image and strength)</td>
 <td>All SD models with img2img support</td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>

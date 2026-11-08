@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/ALICE/integration-clio.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/alice.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=13">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-clio.html" data-prev="docs/ALICE/integration-sam.html|ALICE + CLIO Integration" data-next="docs/ALICE/deployment.html|Deployment Guide">
+        <article class="doc-page" data-product="ALICE" data-doc-path="docs/ALICE/integration-clio.html" data-prev="docs/ALICE/integration-sam.html|ALICE + SAM Integration" data-next="docs/ALICE/deployment.html|Deployment">
     <div class="doc-container">        <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>ALICE + CLIO Integration</span></nav>
         
         <div class="doc-content">
@@ -116,7 +116,7 @@
 <h2 id="api-integration">CLIO Calling ALICE API</h2>
 <p>CLIO can call ALICE's API for testing and validation:</p>
 <pre><code>clio --new
-> POST http://alice-server:8080/v1/images/generations with test prompt, verify response structure, download and validate image
+> POST http://alice-server:8080/v1/chat/completions with test prompt, verify response structure, download and validate image
 </code></pre>
 
 <h2 id="see-also">See Also</h2>
@@ -133,7 +133,7 @@
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=13"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>

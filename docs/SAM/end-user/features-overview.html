@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/end-user/features-overview.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/features-overview.html" data-prev="docs/SAM/end-user/getting-started.html|Features Overview" data-next="docs/SAM/end-user/memory-and-rag.html|Memory & RAG Guide">
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/end-user/features-overview.html" data-prev="docs/SAM/end-user/getting-started.html|Getting Started with SAM" data-next="docs/SAM/end-user/memory-and-rag.html|Memory & RAG in SAM">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>End User</span><span class="breadcrumb-separator">/</span><span>SAM Features Overview</span></nav>
         
@@ -38,16 +38,14 @@
 <li><a href="#core-features">Core Features</a></li>
 <li><a href="#voice-input-and-output">Voice Input and Output</a></li>
 <li><a href="#personality-system">Personality System</a></li>
-<li><a href="#memory--intelligence">Memory &amp; Intelligence</a></li>
-<li><a href="#context-archive--recall">Context Archive &amp; Recall</a></li>
+<li><a href="#memory-intelligence">Memory &amp; Intelligence</a></li>
+<li><a href="#context-archive-recall">Context Archive &amp; Recall</a></li>
 <li><a href="#document-understanding">Document Understanding</a></li>
 <li><a href="#multi-conversation-collaboration">Multi-Conversation Collaboration</a></li>
 <li><a href="#autonomous-workflows">Autonomous Workflows</a></li>
-<li><a href="#file--code-operations">File &amp; Code Operations</a></li>
+<li><a href="#file-code-operations">File &amp; Code Operations</a></li>
 <li><a href="#web-research">Web Research</a></li>
-<li><a href="#terminal-integration">Terminal Integration</a></li>
 <li><a href="#location-awareness">Location Awareness</a></li>
-<li><a href="#api--integration">API &amp; Integration</a></li>
 <li><a href="#image-and-audio-generation-with-alice">Image &amp; Audio Generation with ALICE</a></li>
 </ol>
 <hr />
@@ -125,7 +123,7 @@
 - Voice settings are per-conversation customizable</p>
 <hr />
 <h3 id="conversation-management">Conversation Management</h3>
-<p>SAM provides powerful conversation organization features to help you manage your work.</p>
+<p>SAM organizes conversations to keep long-running work manageable.</p>
 <p><strong>Sidebar Organization:</strong>
 - <strong>Collapsible Folders</strong>: Organize conversations into folders that expand/collapse
 - <strong>Conversation Filter</strong>: Type to instantly filter conversations by title
@@ -683,11 +681,10 @@ Named workspaces where multiple conversations can collaborate on the same projec
 2. Turn it <strong>On</strong> to enable cross-conversation memory
 3. Select your topic from the dropdown that appears
 4. All file operations now use the shared workspace</p>
-<p><strong>Note</strong>: The Shared Topic toggle appears in the toolbar alongside Tools, Terminal, and Workflow toggles.</p>
+<p><strong>Note</strong>: The Shared Topic toggle appears in the toolbar alongside the Reasoning, Tools, and Workflow toggles.</p>
 <p><strong>What Gets Shared</strong>:
 - Files and folders
-- Memory and stored information
-- Terminal sessions</p>
+- Memory and stored information</p>
 <p><strong>FYI - Storage Location</strong>:
 Topics create directories at <code>~/SAM/{topic-name}/</code>, but you don't need to manage them directly. SAM handles everything through the UI.</p>
 <p><strong>Real-World Scenario</strong>:</p>
@@ -724,23 +721,16 @@ ELSE
 <p><strong>Applies To</strong>:
 - File operations (all read/write operations)
 - Memory operations (store/search)
-- Terminal sessions (working directory)
 - Document imports (storage location)</p>
 <hr />
 <h2 id="autonomous-workflows">Autonomous Workflows</h2>
-<h3 id="sequential-thinking">Sequential Thinking</h3>
+<h3 id="workflow-mode">Workflow Mode</h3>
 <p><strong>What It Is</strong>:
-SAM can plan, think through problems, and execute multi-step workflows autonomously.</p>
-<p><strong>Think Tool</strong>:
-- Explicit planning before action
-- Break down complex tasks
-- Analyze problems systematically
-- Transparent thought process</p>
+Flip the Workflow toggle in the conversation toolbar and SAM plans and executes multi-step tasks autonomously. Workflow mode adds agent-style guidance to the system prompt: plan before acting, iterate until done, and keep working until the task is complete.</p>
 <p><strong>Example</strong>:</p>
 <pre><code>You: Refactor my authentication system to use JWT tokens
 
-SAM: [Using think tool]
-Let me plan this refactoring:
+SAM: Here's my plan:
 1. Analyze current authentication implementation
 2. Design JWT token structure
 3. Implement token generation/validation
@@ -750,66 +740,22 @@ Let me plan this refactoring:
 
 [Proceeds to execute each step]
 </code></pre>
-
-<h3 id="subagent-delegation">Subagent Delegation</h3>
-<p><strong>What It Is</strong>:
-SAM can spawn specialized sub-agents to handle different aspects of complex tasks.</p>
-<p><strong>How It Works</strong>:
-1. Main conversation identifies need for specialized work
-2. Spawns subagent with specific task
-3. Subagent has fresh iteration budget
-4. Subagent works independently
-5. Results returned to main conversation</p>
-<p><strong>Benefits</strong>:
-- <strong>Isolation</strong>: Each subagent has clean, focused context
-- <strong>Parallelism</strong>: Multiple subagents can work simultaneously
-- <strong>Fresh Thinking</strong>: New iteration budget for each complex subtask
-- <strong>Specialization</strong>: Each subagent focuses on one specific aspect</p>
-<p><strong>Use Cases</strong>:
-- <strong>Code Review</strong>: Spawn subagent to review security, another for performance
-- <strong>Research</strong>: Multiple subagents research different aspects
-- <strong>Testing</strong>: Dedicated subagent for comprehensive testing
-- <strong>Documentation</strong>: Specialized subagent for docs while main works on code</p>
-<p><strong>Example</strong>:</p>
-<pre><code>You: Build a complete web application with authentication, database, and API
-
-SAM: I'll delegate this to specialized subagents:
-1. Spawning "Database Schema" subagent...
-2. Spawning "Authentication System" subagent...
-3. Spawning "REST API" subagent...
-
-[Each subagent works independently, reports back with results]
-</code></pre>
-
-<h3 id="shared-topics-subagents">Shared Topics + Subagents</h3>
+<h3 id="shared-topics-workflow">Shared Topics + Workflow Mode</h3>
 <p><strong>Strong Combination</strong>:
-Enable shared topic, then spawn subagents. All subagents work in the same shared workspace.</p>
-<p><strong>Example Workflow</strong>:</p>
+Enable a shared topic, then run workflow-mode conversations against it. Each conversation works autonomously in the same shared workspace, reading and writing the same files and memory.</p>
+<p><strong>Example Pattern</strong>:</p>
 <pre><code>Shared Topic: "Full Stack App"
 
-Main Conversation:
-├── Subagent: "Backend API" → works in ~/SAM/Full Stack App/backend/
-├── Subagent: "Frontend React" → works in ~/SAM/Full Stack App/frontend/
-├── Subagent: "Database Schema" → creates ~/SAM/Full Stack App/schema.sql
-└── Subagent: "Integration Tests" → reads all code, writes tests
+Conversation: "Backend API"       -> works in ~/SAM/Full Stack App/backend/
+Conversation: "Frontend React"    -> works in ~/SAM/Full Stack App/frontend/
+Conversation: "Database Schema"   -> creates ~/SAM/Full Stack App/schema.sql
+Conversation: "Integration Tests" -> reads all code, writes tests
 </code></pre>
-
-<p>All subagents access the same files and memory!</p>
+<p>All conversations access the same files and memory. See the <a href="shared-topics.html">Shared Topics Guide</a>.</p>
 <h3 id="iteration-management">Iteration Management</h3>
-<p><strong>Default Limits</strong>:
-- Configurable iteration limits per conversation
-- Can be increased dynamically as needed</p>
-<p><strong>Dynamic Iteration Increase</strong>:
-SAM can request more iterations if needed:</p>
-<pre><code>SAM: I'm approaching my iteration limit and still have files to refactor.
-Requesting an increase to complete this task properly.
-</code></pre>
-
-<p><strong>Requirements</strong>:
-- Must enable "Dynamic Iterations" in conversation settings
-- Must provide clear reason for increase
-- Must specify total needed (not additional)</p>
-<hr />
+<p><strong>Iteration Budget</strong>:
+Workflow mode operates within an iteration budget - the number of tool-calling cycles SAM may use for one request. The default is 300, configurable from 1 to 1000 under <strong>Preferences -&gt; General -&gt; Workflow Settings</strong>.</p>
+<p>When SAM reaches 80% of the budget, it pauses and asks whether to continue or stop, so long-running tasks never burn tokens without your consent.</p>
 <h2 id="file-code-operations">File &amp; Code Operations</h2>
 <h3 id="file-operations">File Operations</h3>
 <p>SAM has comprehensive file operation capabilities:</p>
@@ -939,50 +885,6 @@ Retrieved research about AI safety from memory:
 </code></pre>
 
 <hr />
-<h2 id="terminal-integration">Terminal Integration</h2>
-<h3 id="11-terminal-operations">11 Terminal Operations</h3>
-<p><strong>Execution</strong>:
-- <code>run_command</code>: Execute shell commands
-- <code>get_output</code>: Get command output
-- <code>get_last_command</code>: Get last executed command</p>
-<p><strong>Session Management</strong>:
-- <code>create_session</code>: Create new terminal session
-- <code>attach_session</code>: Attach to existing session
-- <code>detach_session</code>: Detach from session
-- <code>switch_session</code>: Switch between sessions
-- <code>close_session</code>: Close terminal session
-- <code>list_sessions</code>: List all sessions</p>
-<p><strong>Interaction</strong>:
-- <code>send_input</code>: Send input to running command
-- <code>get_state</code>: Get terminal state</p>
-<h3 id="persistent-terminals">Persistent Terminals</h3>
-<p><strong>Per-Conversation Terminals</strong>:
-- Each conversation has dedicated terminal
-- History persists across app restarts
-- Working directory matches conversation/topic workspace</p>
-<p><strong>Visible Terminal Integration</strong>:
-- Toggle terminal panel in the UI
-- Watch commands execute in real-time
-- See output as it happens
-- Interactive command support</p>
-<p><strong>Note</strong>: Press <strong>⌘T</strong> to toggle tools on/off (including terminal access).</p>
-<p><strong>Example Workflow</strong>:</p>
-<pre><code>You: Run my Python tests
-
-SAM: [Executes in terminal]
-$ pytest tests/
-====== test session starts ======
-collected 42 items
-
-tests/test_auth.py ........ [ 19%]
-tests/test_api.py ......... [ 40%]
-...
-====== 42 passed in 2.35s ======
-
-Tests passed! All 42 tests successful.
-</code></pre>
-
-<hr />
 <h2 id="location-awareness">Location Awareness</h2>
 <p>SAM can incorporate location context into conversations, enabling more relevant and personalized responses.</p>
 <h3 id="two-location-modes">Two Location Modes</h3>
@@ -1027,202 +929,6 @@ Would you like me to search for specific cuisines?
 <li><strong>Precise Location</strong>: In the same section, toggle <strong>Use Precise Location</strong>. SAM will request location permission the first time.</li>
 </ol>
 <hr />
-<h2 id="api-integration">API &amp; Integration</h2>
-<h3 id="restful-api">RESTful API</h3>
-<p>SAM includes a built-in REST API compatible with OpenAI's format.</p>
-<p><strong>Endpoints</strong>:
-- <code>POST /api/chat/completions</code> - Chat completions
-- <code>POST /api/chat/autonomous</code> - Autonomous workflows
-- <code>GET /api/models</code> - List available models
-- <code>GET /v1/conversations</code> - List conversations
-- <code>GET /v1/conversations/:conversationId</code> - Get conversation</p>
-<p><strong>Streaming Support</strong>:
-All chat endpoints support Server-Sent Events (SSE) for real-time streaming.</p>
-<p><strong>Enhanced Response Metadata</strong>:
-SAM enriches API responses with a <code>sam_metadata</code> field containing:
-- <strong>Provider Info</strong>: Which provider fulfilled the request, local vs remote
-- <strong>Model Info</strong>: Context window size, capabilities (tools, vision, streaming)
-- <strong>Workflow Info</strong>: Iterations, tool calls, duration (for autonomous requests)
-- <strong>Cost Estimate</strong>: Estimated USD cost with per-1K token rates</p>
-<p><strong>Example</strong>:</p>
-<pre><code>curl -X POST http://localhost:8080/api/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "gpt-4",
-    "messages": [{"role": "user", "content": "Hello!"}],
-    "stream": true
-  }'
-</code></pre>
-
-<p><strong>Use Cases</strong>:
-- Integrate SAM with other applications
-- Automate workflows via API
-- Build custom interfaces
-- Script complex operations
-- Monitor token usage and costs</p>
-<h3 id="configuration_1">Configuration</h3>
-<p><strong>API Server Settings</strong>:
-- <strong>Port</strong>: Default 8080 (configurable)
-- <strong>Authentication</strong>: Optional for localhost
-- <strong>CORS</strong>: Configurable for web access</p>
-<p>See <a href="../developer/api-reference.html">API Reference</a> for complete documentation.</p>
-<hr />
-<h2 id="remote-access-with-sam-web">Remote Access with SAM Web</h2>
-<p><strong>Access SAM from your iPad, iPhone, or any device with a browser.</strong></p>
-<p>SAM Web lets you chat with SAM from anywhere on your network. All of SAM's backend features are available through the chat interface file operations, terminal commands, memory, and more. You're controlling SAM remotely, so everything happens on your Mac.</p>
-<h3 id="what-is-sam-web">What is SAM Web?</h3>
-<p>SAM Web is a browser-based interface that connects to SAM's API. When you're on your iPad or another device, you can have full conversations with SAM and access all its capabilities.</p>
-<p><strong>What works:</strong>
-- Full chat with streaming responses
-- All conversation features (system prompts, personalities, mini-prompts, shared topics, folders)
-- All AI models and providers you've configured in SAM
-- All of SAM's tools: file operations, terminal, web research, memory/RAG, and more
-- Model parameter configuration</p>
-<p><strong>What's missing:</strong>
-- Document upload directly from browser (may be available in a future release)</p>
-<p><strong>Important:</strong> SAM Web requires SAM running on your Mac with API server enabled. When you ask SAM to edit a file or run a command, it happens on your Mac - SAM Web is just the remote control.</p>
-<h3 id="getting-started">Getting Started</h3>
-<p><strong>Requirements:</strong>
-1. SAM installed and running on your Mac
-2. API server enabled in SAM Preferences → API Server
-3. API token from SAM Preferences → API Server
-4. Network access to your Mac (same Wi-Fi network recommended)
-5. Modern web browser (Safari, Chrome, Firefox)</p>
-<p><strong>Quick Setup:</strong>
-1. Clone SAM Web repository: <code>git clone https://github.com/SyntheticAutonomicMind/SAM-web.git</code>
-2. Start a web server: <code>python3 -m http.server 8000</code> (from SAM-web directory)
-3. Open <code>http://localhost:8000</code> (same device) or <code>http://YOUR_MAC_IP:8000</code> (other devices)
-4. Enter your API token from SAM Preferences
-5. Click <strong>Connect to SAM</strong>
-6. Start chatting</p>
-<h3 id="use-cases">Use Cases</h3>
-<p><strong>iPad Access:</strong>
-- Chat with SAM while reading on your iPad
-- Quick questions without switching to your Mac
-- Touch-optimized interface for tablets</p>
-<p><strong>Multi-Device Workflow:</strong>
-- Access SAM from any device on your network
-- Continue conversations from different locations
-- Share SAM access with other devices</p>
-<p><strong>Remote Work:</strong>
-- Connect from other computers on your network
-- Use VPN for secure remote access (advanced)
-- Access SAM while away from your primary Mac</p>
-<h3 id="features-comparison">Features Comparison</h3>
-<p><strong>Key Concept:</strong> SAM Web is a remote interface to SAM on your Mac. All work happens on your Mac - you're controlling SAM remotely.</p>
-<table>
-<thead>
-<tr>
-<th>Feature</th>
-<th>Native SAM App</th>
-<th>SAM Web</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Chat interface</td>
-<td>✅ Full</td>
-<td>✅ Full</td>
-</tr>
-<tr>
-<td>Conversations</td>
-<td>✅ Full management</td>
-<td>✅ Full management</td>
-</tr>
-<tr>
-<td>Mini-prompts</td>
-<td>✅ Full management</td>
-<td>✅ Full management</td>
-</tr>
-<tr>
-<td>Model selection</td>
-<td>✅ All providers</td>
-<td>✅ All configured providers</td>
-</tr>
-<tr>
-<td>System prompts</td>
-<td>✅ Full selection</td>
-<td>✅ Full selection</td>
-</tr>
-<tr>
-<td>Personalities</td>
-<td>✅ Full selection</td>
-<td>✅ Full selection</td>
-</tr>
-<tr>
-<td>Shared topics</td>
-<td>✅ Full management</td>
-<td>✅ Full management</td>
-</tr>
-<tr>
-<td>Folders</td>
-<td>✅ Organize conversations</td>
-<td>✅ Organize conversations</td>
-</tr>
-
-<tr>
-<td>File operations</td>
-<td>✅ Full (Mac file system)</td>
-<td>✅ Full (Mac file system)</td>
-</tr>
-<tr>
-<td>Terminal access</td>
-<td>✅ Full shell access</td>
-<td>✅ Full (Mac terminal)</td>
-</tr>
-<tr>
-<td>Memory/RAG</td>
-<td>✅ Full (via tools)</td>
-<td>✅ Full (via tools)</td>
-</tr>
-<tr>
-<td>Document upload</td>
-<td>✅ Drag and drop</td>
-<td>⏳ Planned</td>
-</tr>
-<tr>
-<td>Voice input/output</td>
-<td>✅ Full support</td>
-<td>⏳ Planned</td>
-</tr>
-
-<tr>
-<td>Conversation export</td>
-<td>✅ JSON, MD, PDF, TXT</td>
-<td>❌ Not available</td>
-</tr>
-<tr>
-<td>Memory/RAG UI</td>
-<td>✅ Document management</td>
-<td>❌ Not available</td>
-</tr>
-<tr>
-<td>Offline mode</td>
-<td>✅ Local models</td>
-<td>❌ Requires network</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Legend:</strong>
-- ✅ = Available
-- ⏳ = Planned for future release
-- ❌ = Not available
-- "(Mac)" = Works via SAM's tools, affects your Mac where SAM runs</p>
-<p><strong>Summary:</strong> SAM Web provides full chat and configuration access. Features marked "(Mac)" work via SAM's tools but affect your Mac's file system, not the device you're browsing from. Missing: conversation export, document management UI.</p>
-<h3 id="technical-details">Technical Details</h3>
-<p><strong>Architecture:</strong>
-- Pure HTML5, CSS3, JavaScript (no build step required)
-- Zero dependencies, all assets self-hosted
-- Server-Sent Events (SSE) for real-time streaming
-- Bearer token authentication
-- LocalStorage for settings persistence</p>
-<p><strong>Repository:</strong>
-- Source code: <a href="https://github.com/SyntheticAutonomicMind/SAM-web">github.com/SyntheticAutonomicMind/SAM-web</a>
-- License: GNU GPL v3.0 (same as SAM)
-- Contributions welcome</p>
-<p><strong>Learn More</strong>: See the complete <a href="sam-web.html">SAM Web Guide</a> for setup instructions, troubleshooting, and detailed feature documentation.</p>
-<hr />
-<hr />
 <h2 id="image-and-audio-generation-with-alice">Image &amp; Audio Generation with ALICE</h2>
 <p>SAM can generate images and music when connected to an <strong>ALICE</strong> server - a GPU-accelerated Stable Diffusion and audio generation service that runs on your local network.</p>
 <p>Media generation is not built into SAM directly. It requires a separate ALICE server running on a machine with a capable GPU. Once connected, SAM uses the <code>image_generation</code> and <code>audio_generation</code> tools automatically when you ask it to create, draw, or generate an image or song.</p>
@@ -1255,13 +961,12 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 <p><strong>Essential Guides</strong>:
 - <strong><a href="memory-and-rag.html">Memory &amp; RAG</a></strong> - Master SAM's memory system
 - <strong><a href="shared-topics.html">Shared Topics</a></strong> - Multi-conversation workflows
-- <strong><a href="../power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Subagents and complex projects</p>
+- <strong><a href="../power-user/advanced-workflows.html">Advanced Workflows</a></strong> - Shared topics and complex projects</p>
 <p><strong>Power User</strong>:
 - <strong><a href="../power-user/tools-reference.html">Tools Reference</a></strong> - Complete tools reference
 - <strong><a href="../power-user/configuration.html">Configuration</a></strong> - Complete settings guide
 - <strong><a href="../power-user/troubleshooting.html">Troubleshooting</a></strong> - Common issues</p>
 <p><strong>Developer</strong>:
-- <strong><a href="../developer/api-reference.html">API Reference</a></strong> - REST API documentation
 - <strong><a href="../developer/architecture.html">Architecture</a></strong> - System internals</p>
 <hr />
 <p><strong>Ready to explore?</strong> Start with the feature that interests you most!</p>
@@ -1271,7 +976,7 @@ SAM enriches API responses with a <code>sam_metadata</code> field containing:
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/main.js?v=16"></script>
     <script src="../../../js/include.js"></script>
 </body>
 </html>

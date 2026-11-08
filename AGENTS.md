@@ -58,7 +58,7 @@ graph TB
     end
 
     subgraph "Utility Scripts (Python)"
-        SCRIPTS[scripts/*.py<br/>Link validation<br/>Content fixes]
+        SCRIPTS[scripts/validate-links.py<br/>Link validation]
     end
 
     IDX --> CSS
@@ -97,7 +97,7 @@ graph TB
 | `docs/ALICE/` | ALICE docs (flat structure) |
 | `docs/shared/` | Cross-cutting topics (the-unbroken-method, contributing, the-reflexive-ecosystem) |
 | `docs/link-validation.md` | Notes on link validation |
-| `scripts/` | Python utilities for link/content fixes |
+| `scripts/` | Link validation utility (`validate-links.py`) |
 | `scratch/` | Working documents (gitignored) |
 | `ai-assisted/` | Session handoff files (gitignored) |
 | `project-docs/` | Long-running session plans (gitignored) |
@@ -205,12 +205,8 @@ grep -r "href=\"" docs/ | grep -v "http" | grep -v "#"
 | Script | Purpose |
 |--------|---------|
 | `scripts/validate-links.py` | Check all internal links resolve |
-| `scripts/test-links.py` | Test specific link patterns |
-| `scripts/generate-docs.py` | Generate documentation pages |
-| `scripts/fix-all-links.py` | Bulk-fix link issues |
-| `scripts/fix-navigation-links.py` | Fix nav links specifically |
-| `scripts/fix-content-links.py` | Fix content links specifically |
-| `scripts/convert-docs.py` | Convert between formats |
+
+One-off migration scripts from past restructures are not kept in the deployed tree.
 
 ---
 

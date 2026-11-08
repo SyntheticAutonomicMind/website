@@ -4,40 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAM Tools Reference | SAM</title>
-    <meta name="description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta name="description" content="Complete reference for SAM's 14 built-in tools: files, documents, web research, memory, math, macOS integration, and ALICE media generation.">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/SAM/power-user/tools-reference.html">
     <meta property="og:title" content="SAM Tools Reference | SAM">
-    <meta property="og:description" content="Native macOS AI assistant with voice control, document RAG, autonomous agents, and multi-provider support.">
+    <meta property="og:description" content="Complete reference for SAM's 14 built-in tools: files, documents, web research, memory, math, macOS integration, and ALICE media generation.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/power-user/tools-reference.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/tools-reference.html" data-prev="docs/SAM/power-user/configuration.html|Tools Reference" data-next="docs/SAM/power-user/advanced-workflows.html|Advanced Workflows">
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/power-user/tools-reference.html" data-prev="docs/SAM/power-user/configuration.html|Configuration Guide" data-next="docs/SAM/power-user/advanced-workflows.html|Advanced Workflows">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Power User</span><span class="breadcrumb-separator">/</span><span>SAM Tools Reference</span></nav>
         
         <div class="doc-content">
             <h1 id="sam-tools-reference">SAM Tools Reference</h1>
-<p><strong>12 core tools (13 with ALICE). Infinite possibilities.</strong></p>
-<p>This is how SAM gets things done. While most AI assistants just talk, SAM takes action: reading your files, searching the web, managing memory, generating images, and more.</p>
+<p><strong>14 consolidated tools. 83 operations.</strong></p>
+<p>This is how SAM gets things done. While most AI assistants just talk, SAM takes action: reading your files, importing documents, researching the web, managing memory, working with Calendar and Notes, and generating images and music through ALICE.</p>
 <p><strong>You don't call tools directly.</strong> Just describe what you need in natural language, and SAM automatically invokes the right tools. Say "read that config file" and SAM uses <code>file_operations</code>. Ask "what did we discuss about auth?" and SAM searches memory.</p>
 <p><strong>This reference covers:</strong>
-- All 12 core tools (13 with ALICE) with their operations documented
-- When to use each tool (and when not to)
-- Security model and authorization</p>
-<p><strong>Who needs this:</strong>
-- Power users pushing SAM's limits
-- System prompt authors designing workflows
-- Anyone curious about what's possible</p>
+- All 14 tools with their operations documented
+- When each tool applies (and what it needs to be available)
+- The security model behind tool use</p>
 <hr />
 <h2 id="overview">Overview</h2>
-<p>SAM provides a consolidated tool system that lets the AI take action instead of only replying with text. Tools are invoked automatically - you don't call them directly. You see tool activity through tool cards in the conversation UI.</p>
+<p>SAM provides a consolidated tool system that lets the AI take action instead of only replying with text. Tools are invoked automatically - you don't call them directly. You see tool activity through tool cards in the conversation UI, each showing the tool name, operation, parameters, status, and result.</p>
 
 <p><strong>Tool Categories:</strong></p>
 <ul>
@@ -46,901 +42,220 @@
     <li><strong>Files &amp; Documents</strong>: <code>file_operations</code>, <code>document_operations</code></li>
     <li><strong>Web &amp; Research</strong>: <code>web_operations</code></li>
     <li><strong>Computation</strong>: <code>math_operations</code></li>
+    <li><strong>Media Generation</strong> (requires ALICE): <code>image_generation</code>, <code>music_operations</code></li>
     <li><strong>macOS Integration</strong>: <code>calendar_operations</code>, <code>contacts_operations</code>, <code>notes_operations</code>, <code>spotlight_search</code>, <code>weather_operations</code></li>
-    <li><strong>Image Generation</strong>: <code>image_generation</code> (requires ALICE)</li>
-    <li><strong>Terminal</strong>: <code>terminal_operations</code></li>
 </ul>
 
-<p>For an authoritative, up-to-date inventory, see the repository's <code>docs/TOOLS.md</code>. This document provides usage examples and workflows.</p>
+<p>Some tools are always present; others depend on configuration or service availability. <code>image_generation</code> and <code>music_operations</code> only become available when an ALICE server is configured and reachable.</p>
 
-<p><strong>Security Note:</strong> All tools implement proper authorization. Operations outside the working directory require user approval. macOS integration tools require explicit macOS permission grants.</p>
+<p><strong>Security Note:</strong> All tools implement proper authorization. File operations outside the working directory require user approval, macOS integration tools require explicit permission grants, and sensitive work pauses at collaboration checkpoints.</p>
 <hr />
-<h2 id="core-tools">Core Tools</h2>
-<h3 id="1-think">1. think</h3>
-<p><strong>Purpose:</strong> Strategic planning and problem decomposition</p>
-<p><strong>Description:</strong><br />
-Enables the AI to think through complex problems, plan multi-step solutions, and organize its approach before taking action. Implements the thinking pattern from VS Code Copilot.</p>
-<p><strong>When to use:</strong>
-- Planning complex multi-step workflows
-- Clarifying approach when uncertain
-- Breaking down large or ambiguous requests
-- Analyzing errors or unexpected results</p>
-<p><strong>When NOT to use:</strong>
-- Simple, single-step tasks
-- Repeated planning without action
-- Todo list management (use todo_operations instead)</p>
-<p><strong>Parameters:</strong>
-- <code>thoughts</code> (string, required): Planning, analysis, or reasoning process
-- <code>requested_tools</code> (array[string], optional): List of tool names for subsequent iterations</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "think",
-  "arguments": {
-    "thoughts": "To refactor the authentication system: 1) Analyze current implementation 2) Design new architecture 3) Implement changes 4) Test thoroughly",
-    "requested_tools": ["file_operations", "terminal_operations"]
-  }
-}
-</code></pre>
+<h2 id="collaboration-tools">Collaboration Tools</h2>
 
-<p><strong>Critical Rule:</strong> Think once, then execute. Do NOT get stuck in thinking loops.</p>
-<hr />
-<h3 id="2-increase_max_iterations">2. increase_max_iterations</h3>
-<p><strong>Purpose:</strong> Request more iterations for complex tasks</p>
-<p><strong>Description:</strong><br />
-Allows agents to request additional iterations when approaching the limit. Requires Dynamic Iterations to be enabled in conversation settings.</p>
-<p><strong>When to use:</strong>
-- Approaching iteration limit
-- Complex task requires more iterations than initially allocated
-- Making steady progress but need more time to complete</p>
-<p><strong>Requirements:</strong>
-- Dynamic Iterations must be ENABLED in conversation settings
-- Specify total iterations needed (not additional iterations)
-- Provide clear reason explaining the need</p>
-<p><strong>Parameters:</strong>
-- <code>requested_iterations</code> (integer, required): Total iterations needed (must be greater than current max)
-- <code>reason</code> (string, required): Clear explanation of why more iterations are needed</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "increase_max_iterations",
-  "arguments": {
-    "requested_iterations": 500,
-    "reason": "Need more iterations to complete refactoring of remaining files. Making steady progress."
-  }
-}
-</code></pre>
-
-<hr />
-<h3 id="3-read_tool_result">3. read_tool_result</h3>
-<p><strong>Purpose:</strong> Retrieve large tool results in chunks</p>
-<p><strong>Description:</strong><br />
-Large tool results are automatically saved to disk to avoid provider errors. This tool reads those saved results in manageable chunks.</p>
-<p><strong>When to use:</strong>
-- Tool response contains <code>[TOOL_RESULT_STORED]</code> marker
-- Tool response includes <code>toolCallId</code> and <code>totalLength</code> metadata
-- Need to access large web scraping or research results</p>
-<p><strong>Chunked Retrieval:</strong>
-- Configurable chunk sizes for efficient reading
-- Use <code>offset</code> + <code>length</code> to paginate through large results</p>
-<p><strong>Parameters:</strong>
-- <code>toolCallId</code> (string, required): Tool call ID from stored result message
-- <code>offset</code> (integer, optional): Character offset to start reading from (default: 0)
-- <code>length</code> (integer, optional): Number of characters to read</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "read_tool_result",
-  "arguments": {
-    "toolCallId": "call_abc123",
-    "offset": 0,
-    "length": 8192
-  }
-}
-</code></pre>
-
-<p><strong>Example Workflow:</strong>
-1. Tool returns: "Preview: ... [TOOL_RESULT_STORED: toolCallId=abc123, totalLength=150000]"
-2. Read first chunk: <code>read_tool_result(toolCallId: "abc123", offset: 0, length: 8192)</code>
-3. Read next chunk: <code>read_tool_result(toolCallId: "abc123", offset: 8192, length: 8192)</code>
-4. Continue until <code>hasMore=false</code></p>
-<hr />
-<h3 id="4-user_collaboration">4. user_collaboration</h3>
-<p><strong>Purpose:</strong> Request user input during task execution</p>
-<p><strong>Description:</strong><br />
-Enables SAM to request user input, clarification, or decisions mid-stream without breaking conversation flow. Blocks execution until user responds.</p>
-<p><strong>Critical Rule:</strong> Ask questions HERE, not in chat responses. If you have a question, call this tool.</p>
-<p><strong>When to use:</strong>
-- Ambiguous requests needing clarification
-- Multiple valid approaches - user should choose
-- Confirmation before destructive operations
-- Information only user knows (API keys, credentials, paths)</p>
-<p><strong>When NOT to use:</strong>
-- Questions answerable with other tools (use memory_operations, file_operations instead)
-- Optional confirmations (proceed unless operation is destructive)
-- Information already available in the conversation context</p>
-<p><strong>Parameters:</strong>
-- <code>prompt</code> (string, required): Question or request to show user
-- <code>context</code> (string, optional): Context explaining why you're asking
-- <code>authorize_operation</code> (string, optional): Tool operation to authorize if user approves (format: 'tool_name.operation')</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "user_collaboration",
-  "arguments": {
-    "prompt": "Found 500 files matching pattern. Rename all with timestamp prefix?",
-    "context": "This will modify all .log files in the directory permanently",
-    "authorize_operation": "file_operations.rename_file"
-  }
-}
-</code></pre>
-
-<p><strong>Security:</strong> Blocks execution indefinitely until user responds. User has full control.</p>
-<hr />
-<h2 id="file-terminal-operations">File &amp; Terminal Operations</h2>
-<h3 id="5-file_operations">5. file_operations</h3>
-<p><strong>Purpose:</strong> Read, write, search, and manage files</p>
-<p><strong>Description:</strong><br />
-Comprehensive file system operations including reading, writing, searching (glob, regex, semantic), and file management. <strong>18 operations total.</strong></p>
-<p><strong>Authorization:</strong>
-- Inside working directory: AUTO-APPROVED ✅
-- Outside working directory: Requires user approval ⚠️
-- Relative paths: Auto-resolve to working directory</p>
-<p><strong>READ Operations (4):</strong></p>
-<h4 id="read_file">read_file</h4>
-<p>Read file contents with optional line range.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"read_file"</code> (required)
-- <code>filePath</code> (string, required): Absolute path to file
-- <code>limit</code> (number, optional): Max lines to read
-- <code>offset</code> (number, optional): Starting line (1-indexed)</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "file_operations",
-  "arguments": {
-    "operation": "read_file",
-    "filePath": "/Users/andrew/project/src/main.swift",
-    "limit": 100,
-    "offset": 1
-  }
-}
-</code></pre>
-
-<h4 id="list_dir">list_dir</h4>
-<p>List directory contents.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"list_dir"</code> (required)
-- <code>path</code> (string, required): Directory path</p>
-<h4 id="get_errors">get_errors</h4>
-<p>Retrieve compilation or linting errors.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"get_errors"</code> (required)
-- <code>filePaths</code> (array, optional): Specific files to check</p>
-<h4 id="get_file_info">get_file_info</h4>
-<p>Get file metadata (size, type, modified time).</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"get_file_info"</code> (required)
-- <code>path</code> (string, required): File path</p>
-
-<h4 id="read_tool_result">read_tool_result</h4>
-<p>Retrieve large persisted tool results in chunks.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"read_tool_result"</code> (required)
-- <code>toolCallId</code> (string, required): Tool call ID from stored result message
-- <code>offset</code> (integer, optional): Character offset (default: 0)
-- <code>length</code> (integer, optional): Number of characters to read</p>
-<p><strong>SEARCH Operations (4):</strong></p>
-<h4 id="file_search">file_search</h4>
-<p>Search for files by glob pattern.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"file_search"</code> (required)
-- <code>query</code> (string, required): Glob pattern (e.g., <code>"**/*.swift"</code>)
-- <code>maxResults</code> (number, optional): Limit results</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "file_operations",
-  "arguments": {
-    "operation": "file_search",
-    "query": "**/*.{js,ts}",
-    "maxResults": 50
-  }
-}
-</code></pre>
-
-<h4 id="grep_search">grep_search</h4>
-<p>Search file contents using regex.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"grep_search"</code> (required)
-- <code>query</code> (string, required): Search pattern
-- <code>isRegexp</code> (boolean, required): true for regex
-- <code>includePattern</code> (string, optional): File pattern to search within
-- <code>maxResults</code> (number, optional): Limit results</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "file_operations",
-  "arguments": {
-    "operation": "grep_search",
-    "query": "class\\s+\\w+Controller",
-    "isRegexp": true,
-    "includePattern": "src/**/*.swift"
-  }
-}
-</code></pre>
-
-<h4 id="semantic_search">semantic_search</h4>
-<p>AI-powered code/text search across workspace.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"semantic_search"</code> (required)
-- <code>query</code> (string, required): Natural language query</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "file_operations",
-  "arguments": {
-    "operation": "semantic_search",
-    "query": "function that validates email addresses"
-  }
-}
-</code></pre>
-
-<h4 id="list_usages">list_usages</h4>
-<p>Find all references to a symbol (variable, function, class).</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"list_usages"</code> (required)
-- <code>symbolName</code> (string, required): Symbol to find
-- <code>filePaths</code> (array, optional): Files to search within</p>
-<p><strong>WRITE Operations (9):</strong></p>
-<h4 id="create_file">create_file</h4>
-<p>Create new file with content.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"create_file"</code> (required)
-- <code>filePath</code> (string, required): Absolute path for new file
-- <code>content</code> (string, required): File content</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "file_operations",
-  "arguments": {
-    "operation": "create_file",
-    "filePath": "/Users/andrew/project/README.md",
-    "content": "# My Project\n\nDescription here..."
-  }
-}
-</code></pre>
-
-<h4 id="replace_string">replace_string</h4>
-<p>Replace text in file (single occurrence).</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"replace_string"</code> (required)
-- <code>filePath</code> (string, required): File to modify
-- <code>oldString</code> (string, required): Exact text to replace (include context lines!)
-- <code>newString</code> (string, required): Replacement text</p>
-<p><strong>Important:</strong> Include 3-5 lines of context before/after to ensure unique match.</p>
-<h4 id="multi_replace_string">multi_replace_string</h4>
-<p>Multiple string replacements in one operation.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"multi_replace_string"</code> (required)
-- <code>filePath</code> (string, required): File to modify
-- <code>replacements</code> (array, required): Array of <code>{oldString, newString}</code> objects</p>
-<h4 id="insert_at_line">insert_at_line</h4>
-<p>Insert or replace text at specific line.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"insert_at_line"</code> (required)
-- <code>filePath</code> (string, required): File to modify
-- <code>lineNumber</code> (number, required): Line number (1-indexed)
-- <code>newText</code> (string, required): Text to insert/replace
-- <code>insertOperation</code> (string, required): <code>"insert"</code> or <code>"replace"</code></p>
-<h4 id="rename_file">rename_file</h4>
-<p>Rename or move file.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"rename_file"</code> (required)
-- <code>oldPath</code> (string, required): Current file path
-- <code>newPath</code> (string, required): New file path</p>
-<h4 id="delete_file">delete_file</h4>
-<p>Delete file.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"delete_file"</code> (required)
-- <code>filePath</code> (string, required): File to delete</p>
-<h4 id="write_file">write_file</h4>
-<p>Write content to a file (overwrites if exists).</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"write_file"</code> (required)
-- <code>path</code> (string, required): File path
-- <code>content</code> (string, required): File content</p>
-
-<h4 id="append_file">append_file</h4>
-<p>Append content to an existing file.</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"append_file"</code> (required)
-- <code>path</code> (string, required): File path
-- <code>content</code> (string, required): Content to append</p>
-
-<h4 id="create_directory">create_directory</h4>
-<p>Create a directory (with parents).</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code>: <code>"create_directory"</code> (required)
-- <code>path</code> (string, required): Directory path to create</p>
-<p><strong>Note on Working Directories:</strong></p>
-<p>File operations use the conversation's effective working directory:</p>
-<p><strong>Without Shared Topic:</strong>
-- Working Directory: <code>~/SAM/{conversation-uuid}/</code>
-- Creates: <code>~/SAM/{conversation-uuid}/file.txt</code></p>
-<p><strong>With Shared Topic "myproject":</strong>
-- Working Directory: <code>~/SAM/myproject/</code>
-- Creates: <code>~/SAM/myproject/file.txt</code></p>
-<p><strong>Benefits:</strong>
-- Multiple conversations share same workspace
-- Human-readable directory names
-- Easy to find files in Finder</p>
-<p>See <a href="../end-user/shared-topics.html">Shared Topics Documentation</a> for details.</p>
-<hr />
-<h3 id="6-terminal_operations">6. terminal_operations</h3>
-<p><strong>Purpose:</strong> Execute shell commands and manage terminal sessions</p>
-<p><strong>Description:</strong><br />
-Execute shell commands with safety validation and timeout support. Commands are classified by intent (network access, credential reading, system destruction) and confirmed with the user based on risk level. <strong>1 operation total.</strong></p>
-<p><strong>Operations:</strong>
-- <code>exec</code> - Run command and capture output (aliases: <code>shell</code>, <code>run_command</code>, <code>terminal_exec</code>)</p>
-<p><strong>Key Features:</strong>
-- Commands run in captured mode by default (output to file, no PTY)
-- Use <code>passthrough</code> parameter for interactive TTY access
-- Idle timeout: 300s default, 600s hard ceiling
-- Shell-specific handling: Windows <code>cmd /c</code> wrappers, bash detection</p>
-<p><strong>Common Parameters:</strong>
-- <code>operation</code> (string, required): Tool operation to perform
-- <code>command</code> (string, required): Shell command to execute
-- <code>passthrough</code> (boolean, optional): Use interactive TTY mode
-- <code>timeout</code> (integer, optional): Idle timeout in seconds
-- <code>working_directory</code> (string, optional): Working directory</p>
-<hr />
-<h2 id="memory-rag-tools">Memory &amp; RAG Tools</h2>
-<h3 id="7-memory_operations">7. memory_operations</h3>
-<p><strong>Purpose:</strong> Store, search, and recall memories across sessions</p>
-<p><strong>Description:</strong><br />
-Consolidated tool for semantic search across stored memories, persistent storage, and task management. <strong>14 operations total.</strong></p>
-<p><strong>Operations:</strong></p>
-<table>
-<thead>
-<tr><th>Operation</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td><code>search</code></td><td>Semantic search across stored memories</td></tr>
-<tr><td><code>store</code></td><td>Save information to memory</td></tr>
-<tr><td><code>retrieve</code></td><td>Retrieve stored value by key</td></tr>
-<tr><td><code>list</code></td><td>List all memory keys</td></tr>
-<tr><td><code>delete</code></td><td>Delete a memory entry</td></tr>
-<tr><td><code>recall_history</code></td><td>Search archived YaRN-compressed context</td></tr>
-<tr><td><code>add_discovery</code></td><td>Add a discovery fact to LTM</td></tr>
-<tr><td><code>add_solution</code></td><td>Add an error+solution pair to LTM</td></tr>
-<tr><td><code>add_pattern</code></td><td>Add a reusable pattern to LTM</td></tr>
-<tr><td><code>update_ltm</code></td><td>Update an existing LTM entry</td></tr>
-<tr><td><code>prune_ltm</code></td><td>Remove old LTM entries</td></tr>
-<tr><td><code>ltm_stats</code></td><td>Get LTM statistics</td></tr>
-<tr><td><code>recall_sessions</code></td><td>Search previous sessions in LTM</td></tr>
-</tbody>
-</table>
-<p><strong>Session Memory vs. LTM:</strong> Session memory (<code>store</code>, <code>retrieve</code>, <code>search</code>, <code>list</code>, <code>delete</code>) persists within conversation scope. LTM operations (<code>add_discovery</code>, <code>add_solution</code>, <code>add_pattern</code>, <code>recall_sessions</code>, <code>ltm_stats</code>) persist across sessions in <code>.clio/ltm.json</code>.</p>
-<hr />
-<h3 id="8-todo_operations">8. todo_operations</h3>
-<p><strong>Purpose:</strong> Track progress and plan tasks through structured todo lists</p>
-<p><strong>Description:</strong><br />
-Dedicated tool for managing todo lists during multi-step workflows. Use VERY frequently to ensure task visibility and proper planning. Separated from memory_operations for clearer usage.</p>
-<p><strong>When to Use:</strong>
-- Complex multi-step work requiring planning and tracking
-- User provides multiple tasks or requests (numbered/comma-separated)
-- After receiving new instructions requiring multiple steps
-- BEFORE starting work on any todo (mark as in-progress)
-- IMMEDIATELY after completing each todo (mark completed individually)
-- When user requests more work after completing initial tasks (use <code>add</code> operation)</p>
-<p><strong>When NOT to Use:</strong>
-- Single, trivial tasks completable in one step
-- Purely conversational/informational requests
-- Simple code samples or explanations</p>
-<p><strong>Operations (4):</strong>
-- <code>read</code> - Get current todo list
-- <code>write</code> - Create/replace todo list (requires todoList array)
-- <code>update</code> - Partial update (requires todoUpdates array)
-- <code>add</code> - Append new todos while preserving existing ones (requires newTodos array)</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code> (string, required): 'read', 'write', 'update', or 'add'
-- <code>todoList</code> (array[object]): Complete todo array for write operation
-- <code>todoUpdates</code> (array[object]): Partial updates for update operation
-- <code>newTodos</code> (array[object]): New todos to add (for add operation)</p>
-<p><strong>Todo Item Structure:</strong></p>
-<pre><code>{
-  "id": 1,
-  "title": "Implement authentication",
-  "description": "Add JWT-based auth to API endpoints",
-  "status": "in-progress",
-  "priority": "high",
-  "dependencies": [],
-  "canRunParallel": false,
-  "progress": "0.5"
-}
-</code></pre>
-
-<p><strong>Status Values:</strong> <code>not-started</code> | <code>in-progress</code> (max 1 at a time) | <code>completed</code> | <code>blocked</code></p>
-<p><strong>Critical Workflow:</strong>
-1. Plan tasks by writing todo list with specific, actionable items
-2. Mark ONE todo as <code>in-progress</code> BEFORE starting work
-3. Complete the work for that specific todo
-4. Mark that todo as <code>completed</code> IMMEDIATELY after finishing
-5. Move to next todo and repeat</p>
-<p><strong>Example - Create Todo List:</strong></p>
-<pre><code>{
-  "name": "todo_operations",
-  "arguments": {
-    "operation": "write",
-    "todoList": [
-      {
-        "id": 1,
-        "title": "Research options",
-        "description": "Explore available authentication libraries",
-        "status": "not-started"
-      },
-      {
-        "id": 2,
-        "title": "Implement solution",
-        "description": "Add chosen auth library to the project",
-        "status": "not-started"
-      }
-    ]
-  }
-}
-</code></pre>
-
-<p><strong>Example - Update Status:</strong></p>
-<pre><code>{
-  "name": "todo_operations",
-  "arguments": {
-    "operation": "update",
-    "todoUpdates": [
-      {"id": 1, "status": "completed"},
-      {"id": 2, "status": "in-progress"}
-    ]
-  }
-}
-</code></pre>
-
-<p><strong>Example - Add New Tasks (after completing initial list):</strong></p>
-<pre><code>{
-  "name": "todo_operations",
-  "arguments": {
-    "operation": "add",
-    "newTodos": [
-      {"title": "Additional task", "description": "New work requested by user"},
-      {"title": "Another task", "description": "More details here"}
-    ]
-  }
-}
-</code></pre>
-
-<p>The <code>add</code> operation automatically:
-- Preserves all existing todos (including completed ones)
-- Assigns IDs starting after the highest existing ID
-- Defaults to <code>not-started</code> status</p>
-<p><strong>Important:</strong> Describing progress in your response is NOT the same as updating - you MUST call this tool to update todo status.</p>
-<hr />
-<h2 id="version-control">Version Control</h2>
-<h3 id="9-version_control">9. version_control</h3>
-<p><strong>Purpose:</strong> Build tasks and version control operations</p>
-<p><strong>Description:</strong><br />
-Git version control operations for repository management. <strong>9 operations total.</strong></p>
-<p><strong>Operations:</strong>
-- <code>status</code> - Show repository status
-- <code>log</code> - Show commit history
-- <code>diff</code> - Show file differences
-- <code>commit</code> - Stage and commit changes
-- <code>push</code> - Push to remote
-- <code>pull</code> - Pull from remote
-- <code>branch</code> - Branch operations
-- <code>stash</code> - Stash changes
-- <code>tag</code> - Tag operations</p>
-<p><strong>Common Parameters:</strong>
-- <code>operation</code> (string, required): Build/VCS operation to perform
-- <code>task</code> (object): Task definition for create_and_run_task
-- <code>label</code> (string): Task label for run_task
-- <code>message</code> (string): Commit message for git_commit
-- <code>files</code> (array[string]): Files to commit</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "version_control",
-  "arguments": {
-    "operation": "create_and_run_task",
-    "task": {
-      "label": "Build Debug",
-      "type": "shell",
-      "command": "make build-debug"
-    },
-    "workspaceFolder": "/Users/andrew/project"
-  }
-}
-</code></pre>
-
-<pre><code>{
-  "name": "version_control",
-  "arguments": {
-    "operation": "git_commit",
-    "message": "feat: Add authentication system",
-    "files": ["Sources/Auth.swift", "Tests/AuthTests.swift"]
-  }
-}
-</code></pre>
-
-<pre><code>{
-  "name": "version_control",
-  "arguments": {
-    "operation": "get_changed_files",
-    "sourceControlState": ["staged", "unstaged"]
-  }
-}
-</code></pre>
-
-<p><strong>Security:</strong> Git operations require authorization. Task output captured and retrievable.</p>
-<h2 id="web-documents">Web &amp; Documents</h2>
-<h3 id="11-web_operations">10. web_operations</h3>
-<p><strong>Purpose:</strong> Web research, search, scraping, and content retrieval</p>
-<p><strong>Description:</strong><br />
-Comprehensive web operations tool combining research, search, scraping, and content extraction. Includes professional search via SerpAPI when configured.</p>
-<p><strong>Operations (3):</strong>
-- <code>fetch_url</code> - Fetch content from a URL (with WebKit rendering)
-- <code>search_web</code> - Web search (SerpAPI when configured, DuckDuckGo fallback)
-- <code>research</code> - Comprehensive multi-source research with memory storage</p>
-<p><strong>When to use:</strong>
-- Current events, news, live information
-- Documentation lookup
-- Multi-source research synthesis
-- Shopping/product research (serpapi with engine=amazon/ebay/walmart)</p>
-<p><strong>When NOT to use:</strong>
-- Information already in context
-- Questions answerable from conversation history
-- Local file content (use file_operations)</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code> (string, required): Operation type (fetch_url, search_web, research)
-- <code>query</code> (string): Search query or research question
-- <code>url</code> (string): Target URL for scrape/fetch operations (MUST use HTTPS)
-- <code>depth</code> (string): Research depth - shallow/standard/comprehensive
-- <code>engine</code> (string): Search engine for serpapi - google/bing/amazon/ebay/walmart
-- <code>location</code> (string): Search location for serpapi (optional)</p>
-<p><strong>Examples:</strong></p>
-<pre><code>{
-  "name": "web_operations",
-  "arguments": {
-    "operation": "research",
-    "query": "Latest developments in quantum computing",
-    "depth": "comprehensive"
-  }
-}
-</code></pre>
-
-<pre><code>{
-  "name": "web_operations",
-  "arguments": {
-    "operation": "serpapi",
-    "query": "best laptops 2025",
-    "engine": "amazon"
-  }
-}
-</code></pre>
-
-<p><strong>Important:</strong> All URLs must use HTTPS. Research operation stores results in memory for later retrieval via retrieve operation.</p>
-<hr />
-<h3 id="12-document_operations">12. document_operations</h3>
-<p><strong>Purpose:</strong> Import documents, create formatted files, and get document info</p>
-<p><strong>Description:</strong><br />
-Comprehensive document handling for importing PDFs/DOCX/TXT/MD/XLSX into memory and creating formatted documents.</p>
-<p><strong>Supported Operations:</strong>
-- <code>document_import</code> - Import PDF/DOCX/TXT/MD/XLSX into conversation memory
-- <code>document_create</code> - Create formatted DOCX/PDF/TXT/Markdown files
-- <code>get_doc_info</code> - List imported documents in current conversation</p>
-<p><strong>Supported Import Formats:</strong>
-- PDF files (text extraction)
-- Word documents (.docx)
-- Excel spreadsheets (.xlsx) - New in December 2025
-- Text files (.txt, .md, .rtf)
-- Code files (all programming languages)</p>
-<p><strong>When to use:</strong>
-- Extract content from PDFs, Word docs, Excel spreadsheets, text files
-- Generate formatted reports or documents
-- Track what documents were imported</p>
-<p><strong>When NOT to use:</strong>
-- Plain text file reading (use file_operations)
-- Web content (use web_operations)
-- Simple text creation (use file_operations write)</p>
-<p><strong>Parameters:</strong>
-- <code>operation</code> (string, required): Operation type (document_import, document_create, get_doc_info)
-- <code>path</code> (string): File path to import (for document_import) - must be valid file:// URL or absolute path
-- <code>tags</code> (array[string]): Tags to associate with imported document
-- <code>content</code> (string): Document content (for document_create)
-- <code>format</code> (string): Output format - docx/pdf/txt/markdown
-- <code>output_path</code> (string): Path where to save created document</p>
-<p><strong>File URL Handling:</strong>
-- Malformed <code>file://</code> URLs are automatically recovered using working directory
-- Both absolute paths and <code>file://</code> URLs accepted
-- URLs validated before import attempt</p>
-<p><strong>Examples:</strong></p>
-<pre><code>{
-  "name": "document_operations",
-  "arguments": {
-    "operation": "document_import",
-    "path": "/Users/andrew/Documents/report.pdf",
-    "tags": ["research", "Q1-2025"]
-  }
-}
-</code></pre>
-
-<pre><code>{
-  "name": "document_operations",
-  "arguments": {
-    "operation": "document_create",
-    "content": "# Project Report\n\nFindings...",
-    "format": "docx",
-    "output_path": "project_report.docx"
-  }
-}
-</code></pre>
-
-<hr />
-<hr />
-<h2 id="subagent-tools">Subagent Tools</h2>
-<h3 id="10-agent_operations">10. agent_operations</h3>
-<p><strong>Purpose:</strong> Spawn isolated subagent workflows</p>
-<p><strong>Description:</strong><br />
-Delegate subtasks to specialized subagents for research, parallel work, or chunking large tasks. Subagents run in isolated conversations with fresh iteration budgets.</p>
-<p><strong>Operations (7):</strong>
-- <code>spawn</code> - Spawn a new isolated subagent
-- <code>list</code> - List active subagents
-- <code>inbox</code> - Check subagent inbox for messages
-- <code>status</code> - Get subagent status
-- <code>kill</code> - Terminate a subagent
-- <code>send</code> - Send message to a subagent
-- <code>broadcast</code> - Broadcast message to all subagents</p>
-<p><strong>Subagent Characteristics:</strong>
-- Runs in isolated conversation (no context pollution)
-- Fresh iteration budget (doesn't burn main agent's iterations)
-- Returns summary only (not full transcript)
-- Cannot spawn more subagents (recursion prevented)</p>
-<p><strong>Use Cases:</strong>
-- Processing large documents (chunk into groups)
-- Research before implementation
-- Parallel work streams (multiple focused subagents)
-- Complex workflows needing decomposition</p>
-<p><strong>Example: 32-Chapter Book Review</strong>
-- Main agent: Plan chunking strategy
-- Subagent 1: Review chapters 1-5 (returns summary)
-- Subagent 2: Review chapters 6-10 (returns summary)
-- Continue for all groups
-- Main agent: Synthesize all summaries</p>
-<p><strong>Parameters:</strong>
-- <code>task</code> (string, required): Brief task description
-- <code>instructions</code> (string, optional): Detailed instructions for subagent
-- <code>model</code> (string, optional): Model to use (default: parent's model)
-- <code>maxIterations</code> (integer, optional): Iteration limit (default: 15)
-- <code>temperature</code> (string, optional): Sampling temperature (0.0-2.0)
-- <code>topP</code> (string, optional): Top-p sampling (0.0-1.0)
-- <code>enableTerminalAccess</code> (boolean, optional): Allow terminal commands (default: false)
-- <code>enableReasoning</code> (boolean, optional): Enable chain-of-thought (default: parent's setting)
-- <code>systemPromptId</code> (string, optional): System prompt UUID (default: parent's prompt)
-- <code>enableWorkflowMode</code> (boolean, optional): Allow nested workflows (default: false)
-- <code>sharedTopicId</code> (string, optional): Shared topic UUID (default: isolated)</p>
-<p><strong>Example:</strong></p>
-<pre><code>{
-  "name": "agent_operations",
-  "arguments": {
-    "task": "Review chapters 1-5 of programming book",
-    "instructions": "Analyze code examples, identify patterns, note any errors, create summary of key concepts",
-    "maxIterations": 20,
-    "enableTerminalAccess": false,
-    "system_prompt_id": "research-analyst-uuid"
-  }
-}
-</code></pre>
-
-<p><strong>Security:</strong> Terminal access disabled by default. Workflow mode disabled to prevent recursion. Isolated conversation prevents context pollution.</p>
-<hr />
-<hr />
-<h2 id="multi-tool-execution">Multi-Tool Execution</h2>
-<h3 id="multi_tool_useparallel">multi_tool_use.parallel</h3>
-<p><strong>Purpose:</strong> Execute multiple tools simultaneously</p>
-<p><strong>Description:</strong><br />
-GitHub Copilot's parallel tool execution feature. Allows calling multiple tools in a single turn for efficiency. Automatically handled by the AI.</p>
-<p><strong>Example Scenario:</strong><br />
-Read 3 files simultaneously instead of sequentially, reducing latency from 3 round-trips to 1.</p>
-<p><strong>Usage:</strong> Automatically handled - you don't invoke this directly.</p>
-<hr />
-<h2 id="tool-invocation-format">Tool Invocation Format</h2>
-<p>Tools are invoked using JSON format. GitHub Copilot and OpenAI use slightly different formats:</p>
-<h3 id="github-copilot-format">GitHub Copilot Format</h3>
-<pre><code>{
-  "finish_reason": "tool_calls",
-  "message": {
-    "role": "assistant",
-    "content": "",
-    "tool_calls": [{
-      "id": "call_abc123",
-      "type": "function",
-      "function": {
-        "name": "file_operations",
-        "arguments": "{\"operation\":\"read_file\",\"filePath\":\"/path/to/file.txt\"}"
-      }
-    }]
-  }
-}
-</code></pre>
-
-<h3 id="openai-format">OpenAI Format</h3>
-<pre><code>{
-  "finish_reason": "tool_calls",
-  "message": {
-    "role": "assistant",
-    "tool_calls": [{
-      "id": "call_xyz789",
-      "type": "function",
-      "function": {
-        "name": "memory_operations",
-        "arguments": "{\"operation\":\"search_memory\",\"query\":\"authentication\"}"
-      }
-    }]
-  }
-}
-</code></pre>
-
-<p>Tool results are returned as:</p>
-<pre><code>{
-  "role": "tool",
-  "tool_call_id": "call_abc123",
-  "content": "{\"success\":true,\"output\":{\"content\":\"...\",\"mimeType\":\"text/plain\"}}"
-}
-</code></pre>
-
-<hr />
-<h2 id="best-practices">Best Practices</h2>
-<h3 id="do">DO:</h3>
+<h3 id="user-collaboration">1. user_collaboration</h3>
+<p><strong>Purpose:</strong> Pause and ask you something directly</p>
+<p><strong>Typical uses:</strong></p>
 <ul>
-<li>Use <code>think</code> for complex multi-step tasks before taking action</li>
-<li>Use <code>semantic_search</code> when you need "code that does X" (not exact text match)</li>
-<li>Use <code>grep_search</code> for exact text or regex patterns</li>
-<li>Include context lines (3-5) when using <code>replace_string</code></li>
-<li>Tag memories for better retrieval</li>
-<li>Use appropriate similarity thresholds for memory search</li>
+    <li>Clarifying ambiguous requests</li>
+    <li>Asking for approval before destructive actions</li>
+    <li>Requesting information only you know</li>
+    <li>Reporting blockers and asking how to proceed</li>
 </ul>
-<h3 id="dont">DON'T:</h3>
+<p>Collaboration requests appear inline in the conversation. SAM keeps working the moment you answer.</p>
+
+<h3 id="todo-operations">2. todo_operations</h3>
+<p><strong>Purpose:</strong> Plan, track, and surface progress on multi-step tasks</p>
+<h4>Operations:</h4>
 <ul>
-<li>Use file_operations for web content</li>
-<li>Forget to commit changes with descriptive messages</li>
-<li>Use isBackground=true for commands where you need output</li>
-<li>Get stuck in thinking loops without taking action</li>
-<li>Spawn subagents for simple tasks</li>
+    <li><code>read</code> - Get the current todo list</li>
+    <li><code>write</code> - Create or replace the list</li>
+    <li><code>update</code> - Change the status of existing todos</li>
+    <li><code>add</code> - Append new todos</li>
+</ul>
+<p>This is how SAM keeps structured progress visible during longer workflows.</p>
+
+<h2 id="memory-tools">Memory</h2>
+
+<h3 id="memory-operations">3. memory_operations</h3>
+<p><strong>Purpose:</strong> Store and recall information within a conversation, across a shared topic, and long-term</p>
+<h4>Session Memory:</h4>
+<ul>
+    <li><code>search_memory</code> - Search stored memories semantically</li>
+    <li><code>store_memory</code> - Store a memory with metadata</li>
+    <li><code>recall_history</code> - Recall conversation history by time range</li>
+    <li><code>list_collections</code> - List memory collections</li>
+</ul>
+<h4>Key-Value Working Memory:</h4>
+<ul>
+    <li><code>store</code> - Store a key-value pair</li>
+    <li><code>retrieve</code> - Get a stored value by key</li>
+    <li><code>search_kv</code> - Find keys by keyword</li>
+    <li><code>list_keys</code> - List all keys</li>
+    <li><code>delete_key</code> - Remove a stored key</li>
+</ul>
+<h4>Long-Term Memory (LTM):</h4>
+<ul>
+    <li><code>add_discovery</code> - Store discovered facts with confidence levels</li>
+    <li><code>add_solution</code> - Store problem-solution pairs with example file paths</li>
+    <li><code>add_pattern</code> - Store code/workflow patterns</li>
+    <li><code>ltm_stats</code> - Get LTM statistics</li>
+    <li><code>prune_ltm</code> - Remove old or low-confidence entries</li>
+</ul>
+<p>Memory is scoped to the conversation or shared topic, so context stays relevant. LTM persists learned patterns across sessions.</p>
+
+<h2 id="file-document-tools">Files &amp; Documents</h2>
+
+<h3 id="file-operations">4. file_operations</h3>
+<p><strong>Purpose:</strong> Read, search, and manage files in the workspace</p>
+<h4>Read Operations:</h4>
+<ul>
+    <li><code>read_file</code> - Read file contents (with line ranges)</li>
+    <li><code>list_dir</code> - List directory contents</li>
+    <li><code>get_file_info</code> - File metadata (size, dates)</li>
+    <li><code>get_errors</code> - Compiler/linter errors for a file</li>
+    <li><code>read_tool_result</code> - Retrieve large results stored from earlier tool calls</li>
+</ul>
+<h4>Search Operations:</h4>
+<ul>
+    <li><code>file_search</code> - Find files by name pattern</li>
+    <li><code>grep_search</code> - Search file contents with regex</li>
+    <li><code>semantic_search</code> - Concept-based code search</li>
+    <li><code>list_usages</code> - Find all usages of a symbol</li>
+</ul>
+<h4>Write &amp; Management Operations:</h4>
+<ul>
+    <li><code>create_file</code>, <code>write_file</code>, <code>append_file</code> - Create and write files</li>
+    <li><code>replace_string</code>, <code>multi_replace_string</code> - Targeted find-and-replace</li>
+    <li><code>insert_at_line</code> - Insert content at a line</li>
+    <li><code>rename_file</code>, <code>delete_file</code>, <code>create_directory</code> - Manage files and folders</li>
+</ul>
+<p><strong>Authorization model:</strong> inside the working directory - auto-approved; outside it - requires your approval.</p>
+
+<h3 id="document-operations">5. document_operations</h3>
+<p><strong>Purpose:</strong> Import documents into conversation memory, create documents, and inspect the document inventory</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>document_import</code> - Import PDFs, DOCX, and more into memory and semantic retrieval</li>
+    <li><code>document_create</code> - Generate documents in <code>docx</code>, <code>pdf</code>, <code>txt</code>, <code>markdown</code>, <code>pptx</code>, <code>rtf</code>, and <code>xlsx</code></li>
+    <li><code>get_doc_info</code> - Inspect imported document metadata</li>
+</ul>
+
+<h2 id="web-tools">Web &amp; Research</h2>
+
+<h3 id="web-operations">6. web_operations</h3>
+<p><strong>Purpose:</strong> Web search, retrieval, and structured research</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>research</code> - Multi-source research with synthesis (the most comprehensive path)</li>
+    <li><code>retrieve</code> - Access stored research from memory</li>
+    <li><code>web_search</code> - Search the web</li>
+    <li><code>scrape</code> - Extract structured content from a page</li>
+    <li><code>fetch</code> - Pull content from a specific URL</li>
+    <li><code>serpapi</code> - Search via SerpAPI (when configured)</li>
+</ul>
+<p>Typical uses: current events, documentation lookup, product research, pulling content from specific URLs.</p>
+
+<h2 id="computation-tools">Computation &amp; Generation</h2>
+
+<h3 id="math-operations">7. math_operations</h3>
+<p><strong>Purpose:</strong> Real math, conversions, and structured formulas - Python-backed computation rather than model guesswork</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>calculate</code> - Evaluate expressions</li>
+    <li><code>compute</code> - Statistical and unit computation</li>
+    <li><code>convert</code> - Unit conversions</li>
+    <li><code>formula</code> - Run a named formula</li>
+</ul>
+<p><strong>Available formulas:</strong> tip, mortgage, bmi, compound_interest, percentage, markup, discount, area_circle, area_rectangle, volume_cylinder, speed_distance_time, sales_tax, gpa, fuel_cost, cooking, retirement, debt_payoff, debt_strategy, budget, loan_comparison, savings_goal, net_worth, paycheck, and inflation.</p>
+
+<h3 id="image-generation">8. image_generation (requires ALICE)</h3>
+<p><strong>Purpose:</strong> Generate images through a connected ALICE server</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>generate</code> - Text-to-image (and img2img with an input image)</li>
+    <li><code>list_models</code> - List models available on the server</li>
+</ul>
+<p>Available only when an ALICE server is configured in Preferences and reachable. See <a href="../integration-alice.html">SAM + ALICE Integration</a>.</p>
+
+<h3 id="music-operations">9. music_operations (requires ALICE)</h3>
+<p><strong>Purpose:</strong> Generate music and audio through a connected ALICE server</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>generate</code> - Text-to-audio (Stable Audio Open or MiniMax Music, depending on the server)</li>
+    <li><code>list_models</code> - List audio models available on the server</li>
+</ul>
+
+<h2 id="macos-tools">macOS Integration Tools</h2>
+<p>All macOS integration tools require explicit permission grants in System Settings the first time they're used.</p>
+
+<h3 id="calendar-operations">10. calendar_operations</h3>
+<p><strong>Purpose:</strong> Read and manage Calendar events and Reminders via EventKit</p>
+<h4>Calendar Operations:</h4>
+<ul>
+    <li><code>list_events</code>, <code>create_event</code>, <code>search_events</code>, <code>delete_event</code></li>
+</ul>
+<h4>Reminder Operations:</h4>
+<ul>
+    <li><code>list_reminders</code>, <code>create_reminder</code>, <code>complete_reminder</code>, <code>delete_reminder</code>, <code>list_reminder_lists</code></li>
+</ul>
+
+<h3 id="contacts-operations">11. contacts_operations</h3>
+<p><strong>Purpose:</strong> Work with the macOS Contacts database</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>search</code>, <code>get_contact</code>, <code>create_contact</code>, <code>update_contact</code>, <code>list_groups</code>, <code>search_group</code></li>
+</ul>
+
+<h3 id="notes-operations">12. notes_operations</h3>
+<p><strong>Purpose:</strong> Read and write Apple Notes</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>search</code>, <code>get_note</code>, <code>create_note</code>, <code>list_folders</code>, <code>list_notes</code>, <code>append_note</code></li>
+</ul>
+
+<h3 id="spotlight-search">13. spotlight_search</h3>
+<p><strong>Purpose:</strong> System-wide file and metadata search using macOS Spotlight</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>search</code> - Find files by name</li>
+    <li><code>search_content</code> - Full-text content search</li>
+    <li><code>search_metadata</code> - Search by metadata (type, date, author)</li>
+    <li><code>file_info</code> - Extended attributes for a file</li>
+    <li><code>recent_files</code> - Recently used files</li>
+</ul>
+
+<h3 id="weather-operations">14. weather_operations</h3>
+<p><strong>Purpose:</strong> Current conditions and forecasts via Open-Meteo, using SAM's configured location</p>
+<h4>Operations:</h4>
+<ul>
+    <li><code>current</code> - Current conditions</li>
+    <li><code>forecast</code> - Multi-day forecast</li>
+    <li><code>hourly</code> - Hourly forecast</li>
 </ul>
 <hr />
-<h2 id="summary">Summary</h2>
-<p>SAM provides 12 core tools (13 with ALICE):</p>
-<table>
-<thead>
-<tr>
-<th>Tool</th>
-<th>Operations</th>
-<th>Category</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>think</td>
-<td>1</td>
-<td>Core</td>
-</tr>
-<tr>
-<td>increase_max_iterations</td>
-<td>1</td>
-<td>Core</td>
-</tr>
-<tr>
-<td>read_tool_result</td>
-<td>1</td>
-<td>Core</td>
-</tr>
-<tr>
-<td>user_collaboration</td>
-<td>1</td>
-<td>Core</td>
-</tr>
-<tr>
-<td>file_operations</td>
-<td>18</td>
-<td>Files</td>
-</tr>
-<tr>
-<td>terminal_operations</td>
-<td>1</td>
-<td>Files</td>
-</tr>
-<tr>
-<td>memory_operations</td>
-<td>14</td>
-<td>Memory</td>
-</tr>
-<tr>
-<td>todo_operations</td>
-<td>4</td>
-<td>Planning</td>
-</tr>
-<tr>
-<td>document_operations</td>
-<td>3</td>
-<td>Documents</td>
-</tr>
-<tr>
-<td>web_operations</td>
-<td>3</td>
-<td>Research</td>
-</tr>
-<tr>
-<td>calendar_operations</td>
-<td>9</td>
-<td>macOS</td>
-</tr>
-<tr>
-<td>contacts_operations</td>
-<td>6</td>
-<td>macOS</td>
-</tr>
-<tr>
-<td>notes_operations</td>
-<td>6</td>
-<td>macOS</td>
-</tr>
-<tr>
-<td>spotlight_search</td>
-<td>5</td>
-<td>macOS</td>
-</tr>
-<tr>
-<td>weather_operations</td>
-<td>3</td>
-<td>macOS</td>
-</tr>
-<tr>
-<td>image_generation</td>
-<td>2</td>
-<td>Media</td>
-</tr>
-<tr>
-<td>math_operations</td>
-<td>4</td>
-<td>Computation</td>
-</tr>
-<tr>
-<td>code_intelligence</td>
-<td>2</td>
-<td>Development</td>
-</tr>
-<tr>
-<td>version_control</td>
-<td>9</td>
-<td>Development</td>
-</tr>
-<tr>
-<td>remote_execution</td>
-<td>5</td>
-<td>Infrastructure</td>
-</tr>
-<tr>
-<td>apply_patch</td>
-<td>1</td>
-<td>Development</td>
-</tr>
-<tr>
-<td>agent_operations</td>
-<td>7</td>
-<td>Infrastructure</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Total:</strong> 78 operations across 22 tools</p>
+<h2 id="safety-model">Safety Model</h2>
+<p>Tool use is constrained by:</p>
+<ul>
+    <li>File authorization boundaries (working directory vs. outside)</li>
+    <li>User collaboration checkpoints for sensitive work</li>
+    <li>Preferences-controlled capabilities</li>
+    <li>Service availability for optional integrations (ALICE)</li>
+    <li>macOS permission prompts for Calendar, Contacts, and Notes</li>
+</ul>
+<p>That means SAM can be useful without silently overreaching.</p>
+
+<h2 id="see-also">See Also</h2>
 <p>For additional help:
-- <a href="../developer/api-reference.html">API Reference</a> - REST API documentation
 - <a href="../end-user/getting-started.html">Getting Started</a> - Usage tutorials
-- <a href="../developer/architecture.html">Architecture</a> - Technical details</p>
+- <a href="../developer/architecture.html">Architecture</a> - Technical details
+- <a href="advanced-workflows.html">Advanced Workflows</a> - Shared topics and performance</p>
         </div>
     </div>
     </article>
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/main.js?v=16"></script>
     <script src="../../../js/include.js"></script>
 </body>
 </html>

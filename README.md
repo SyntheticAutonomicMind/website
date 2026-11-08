@@ -26,7 +26,7 @@ website/
 ├── css/styles.css          # Global stylesheet
 ├── js/main.js              # Client-side logic (navigation, tabs)
 ├── images/                 # All image assets (PNG, SVG)
-├── scripts/                # Python utilities for link validation and fixes
+├── scripts/                # Link validation utility
 ├── robots.txt              # Search engine crawl rules
 ├── sitemap.xml             # Sitemap for SEO
 ├── CNAME                   # Domain configuration (syntheticautonomicmind.org)

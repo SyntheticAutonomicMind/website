@@ -11,14 +11,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/SAM/developer/architecture.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/sam.png">
-    <link rel="stylesheet" href="../../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/architecture.html" data-prev="docs/SAM/developer/developers-guide.html|Architecture" data-next="docs/SAM/developer/api-reference.html|API Reference">
+        <article class="doc-page" data-product="SAM" data-doc-path="docs/SAM/developer/architecture.html" data-prev="docs/SAM/developer/developers-guide.html|Developers Guide" data-next="docs/SAM/developer/building.html|Building SAM from Source">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Developer</span><span class="breadcrumb-separator">/</span><span>SAM Architecture</span></nav>
         
@@ -30,7 +30,6 @@
 - High-level system architecture and design philosophy
 - How the memory system stores and retrieves context
 - Tool system implementation (MCP framework)
-- API server architecture and endpoints
 - Data flow through the entire stack
 - Technology choices and why they were made</p>
 <p><strong>Who this is for:</strong>
@@ -48,9 +47,8 @@
 <ol>
 <li><a href="#system-overview">System Overview</a></li>
 <li><a href="#core-components">Core Components</a></li>
-<li><a href="#memory--intelligence-layer">Memory &amp; Intelligence Layer</a></li>
+<li><a href="#memory-intelligence-layer">Memory &amp; Intelligence Layer</a></li>
 <li><a href="#tool-system-architecture">Tool System Architecture</a></li>
-<li><a href="#api-server-architecture">API Server Architecture</a></li>
 <li><a href="#data-flow">Data Flow</a></li>
 <li><a href="#technology-stack">Technology Stack</a></li>
 </ol>
@@ -79,7 +77,7 @@
     end
 
     subgraph "API Framework"
-        EO[EndpointManager<br/>RESTful API Server]
+        EO[EndpointManager<br/>Provider Routing, Load Balancing]
         AO[AgentOrchestrator<br/>Request Processing]
     end
 
@@ -92,14 +90,14 @@
     end
 
     subgraph "MCP Tool Execution"
-        Think[think]
         FileOps[file_operations]
-        Terminal[terminal_operations]
-        Memory[memory_operations]
-        Web[web_operations]
         Docs[document_operations]
-        Build[version_control]
-        Subagent[agent_operations]
+        Memory[memory_operations]
+        Todo[todo_operations]
+        Web[web_operations]
+        Math[math_operations]
+        MacOS[Calendar, Contacts, Notes,<br/>Spotlight, Weather]
+        Media[Image & Music Generation<br/>via ALICE]
     end
 
     subgraph "Memory & Intelligence"
@@ -119,20 +117,16 @@
     AO -->|Select Provider| Copilot
     AO -->|Select Provider| Gemini
     AO -->|Select Provider| Local
-    OpenAI -->|Request Tools| Think
     OpenAI -->|Request Tools| FileOps
-    OpenAI -->|Request Tools| Terminal
+    OpenAI -->|Request Tools| Docs
     OpenAI -->|Request Tools| Memory
     OpenAI -->|Request Tools| Web
-    OpenAI -->|Request Tools| Docs
-    OpenAI -->|Request Tools| Build
-    OpenAI -->|Request Tools| Subagent
+    OpenAI -->|Request Tools| Media
     Memory -->|Store/Retrieve| VectorRAG
     VectorRAG -->|Persist| MemDB
     AO -->|Context Processing| YaRN
     YaRN -->|Enhanced Context| VectorRAG
     Topics -->|Shared Memory| MemDB
-    Subagent -->|Create New| AO
     AO -->|Stream Response| CM
     CM -->|Display| UI
     EO -->|HTTP API| AO
@@ -225,7 +219,6 @@ public let yarnContextProcessor: YaRNContextProcessor
 - Sequential thinking architecture
 - Loop detection and prevention
 - Dynamic iteration adjustment
-- Subagent spawning</p>
 <p><strong>Workflow Loop</strong>:</p>
 <pre><code>1. Receive user message
 2. Add to context
@@ -343,7 +336,7 @@ Workspace Directory (~/SAM/{topic-name}/)
     ↓
 Effective Scope Resolution
     ↓
-Memory/File/Terminal Operations
+Memory/File Operations
 </code></pre>
 
 <p><strong>Effective Scope Pattern</strong>:</p>
@@ -376,27 +369,20 @@ Memory/File/Terminal Operations
 </code></pre>
 
 <p><strong>Core MCP Tools</strong>:
-1. <code>think</code> - Planning and analysis
-2. <code>increase_max_iterations</code> - Dynamic iteration management
-3. <code>read_tool_result</code> - Large result retrieval
-4. <code>user_collaboration</code> - User input requests
-5. <code>file_operations</code> - File operations (read, search, write)
-6. <code>terminal_operations</code> - Execute shell commands
-7. <code>memory_operations</code> - Memory operations (store, search, recall, LTM)
-8. <code>web_operations</code> - Web research, search, fetch
-9. <code>document_operations</code> - Import, create, and manage documents
+1. <code>user_collaboration</code> - User input requests
+2. <code>memory_operations</code> - Memory operations (store, search, recall, LTM)
+3. <code>todo_operations</code> - Structured task tracking
+4. <code>web_operations</code> - Web research, search, fetch
+5. <code>document_operations</code> - Import, create, and manage documents
+6. <code>file_operations</code> - File operations (read, search, write)
+7. <code>math_operations</code> - Calculate, convert, and run formula math
+8. <code>image_generation</code> - Generate images via remote ALICE
+9. <code>music_operations</code> - Generate audio via remote ALICE
 10. <code>calendar_operations</code> - macOS Calendar integration
 11. <code>contacts_operations</code> - macOS Contacts integration
 12. <code>notes_operations</code> - Apple Notes integration
 13. <code>spotlight_search</code> - macOS Spotlight search
-14. <code>weather_operations</code> - Current weather and forecast
-15. <code>image_generation</code> - Generate images via remote ALICE
-16. <code>math_operations</code> - Calculate, convert, and run formula math
-17. <code>code_intelligence</code> - Find symbol usages and search commit history
-18. <code>version_control</code> - Git version control operations
-19. <code>remote_execution</code> - Run tasks on remote systems over SSH
-20. <code>apply_patch</code> - Apply multi-file patches
-21. <code>agent_operations</code> - Spawn and coordinate sub-agents</p>
+14. <code>weather_operations</code> - Current weather and forecast</p>
 <h3 id="tool-execution-flow">Tool Execution Flow</h3>
 <pre><code>sequenceDiagram
     participant User
@@ -431,59 +417,6 @@ Memory/File/Terminal Operations
     AgentOrchestrator->>ConversationManager: Stream response
     ConversationManager->>ChatWidget: Update UI
     ChatWidget->>User: Display response
-</code></pre>
-
-<hr />
-<h2 id="api-server-architecture">API Server Architecture</h2>
-<h3 id="endpointmanager">EndpointManager</h3>
-<p><strong>Location</strong>: Sources/APIFramework/EndpointManager.swift</p>
-<p><strong>OpenAI-Compatible Endpoints</strong>:</p>
-<pre><code>POST /api/chat/completions
-POST /api/chat/autonomous
-GET  /api/models
-GET  /v1/conversations
-POST /v1/conversations
-GET  /v1/conversations/{id}
-</code></pre>
-
-<p><strong>SSE Streaming</strong>:</p>
-<pre><code>func streamResponse() -> AsyncThrowingStream<ChatResponseChunk, Error> {
-    AsyncThrowingStream { continuation in
-        // Stream chunks as they arrive
-        continuation.yield(chunk)
-        continuation.finish()
-    }
-}
-</code></pre>
-
-<p><strong>Architecture</strong>:</p>
-<pre><code>graph TB
-    Client[API Client<br/>HTTP POST]
-    Router[EndpointManager<br/>Route Handler]
-    Validate[Request Validation<br/>Check conversationId]
-    Check{Has conversationId?}
-    LoadConv[Load Existing<br/>Conversation + Memory]
-    NewConv[Create New<br/>Conversation]
-    Orchestrator[AgentOrchestrator<br/>Process Request]
-    Tools[Tool Execution Loop<br/>MCP Tools]
-    StreamCheck{Streaming?}
-    SSE[Server-Sent Events<br/>data: &#123;...&#125;]
-    JSON[JSON Response<br/>&#123;...&#125;]
-
-    Client -->|POST /api/chat/completions| Router
-    Router --> Validate
-    Validate --> Check
-    Check -->|Yes| LoadConv
-    Check -->|No| NewConv
-    LoadConv -->|With context| Orchestrator
-    NewConv -->|No context| Orchestrator
-    Orchestrator -->|Execute| Tools
-    Tools -->|Results| Orchestrator
-    Orchestrator --> StreamCheck
-    StreamCheck -->|stream=true| SSE
-    StreamCheck -->|stream=false| JSON
-    SSE -->|Stream chunks| Client
-    JSON -->|Complete response| Client
 </code></pre>
 
 <hr />
@@ -564,12 +497,11 @@ Indexed and searchable
 <ul>
 <li><strong>SwiftUI</strong>: Modern declarative UI framework</li>
 <li><strong>Combine</strong>: Reactive programming</li>
-<li><strong>AppKit Integration</strong>: Terminal, file pickers</li>
+<li><strong>AppKit Integration</strong>: File pickers and panels</li>
 </ul>
 <h3 id="backend">Backend</h3>
 <ul>
 <li><strong>Swift 5.9+</strong>: Type-safe, performant</li>
-<li><strong>Vapor</strong> (API Server): HTTP routing, SSE streaming</li>
 <li><strong>Logging</strong>: Swift Logging framework</li>
 </ul>
 <h3 id="storage">Storage</h3>
@@ -591,11 +523,6 @@ Indexed and searchable
 <li><strong>CoreAudio</strong>: Audio device enumeration and selection</li>
 <li><strong>AVAudioEngine</strong>: Voice input processing</li>
 <li><strong>Streaming TTS</strong>: Sentence-by-sentence speech during LLM streaming</li>
-</ul>
-<h3 id="terminal">Terminal</h3>
-<ul>
-<li><strong>PTY (pseudo-terminal)</strong>: Full terminal emulation</li>
-<li><strong>Process</strong>: Subprocess management</li>
 </ul>
 <hr />
 <h2 id="design-patterns">Design Patterns</h2>
@@ -648,7 +575,7 @@ public class ConversationManager: ObservableObject {
 - HTTP URLs auto-converted to HTTPS</p>
 <p><strong>Sandboxing</strong>:
 - File operations respect authorization
-- Terminal operations require approval
+- macOS integrations gated by system permission prompts
 - Tool permissions configurable</p>
 <hr />
 <h2 id="performance-considerations">Performance Considerations</h2>
@@ -684,10 +611,9 @@ public class ConversationManager: ObservableObject {
 <hr />
 <h2 id="further-reading">Further Reading</h2>
 <ul>
-<li><strong><a href="api-reference.html">API Reference</a></strong> - REST API documentation</li>
 <li><strong><a href="../../shared/contributing.html">Contributing</a></strong> - How to contribute</li>
 <li><strong><a href="building.html">Building</a></strong> - Build from source</li>
-<li><strong><a href="templates/">Templates</a></strong> - Ready-to-use prompts, handoffs, and tools</li>
+<li><strong><a href="../../shared/templates/">Unbroken Method Templates</a></strong> - Ready-to-use prompts, handoffs, and tools</li>
 </ul>
 <hr />
 <p><strong>Understand SAM's architecture to extend and customize effectively!</strong></p>
@@ -697,7 +623,7 @@ public class ConversationManager: ObservableObject {
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../../js/main.js?v=15"></script>
+    <script src="../../../js/main.js?v=16"></script>
     <script src="../../../js/include.js"></script>
 </body>
 </html>

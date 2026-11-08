@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slash Commands Reference | CLIO</title>
-    <meta name="description" content="Complete reference for CLIO's slash commands">
+    <meta name="description" content="Complete reference for CLIO's slash commands: sessions, providers, files, git, sub-agents, skills, devices, and more.">
     <link rel="canonical" href="https://www.syntheticautonomicmind.org/docs/CLIO/slash-commands.html">
     <meta property="og:title" content="Slash Commands Reference | CLIO">
-    <meta property="og:description" content="Complete reference for CLIO's slash commands">
+    <meta property="og:description" content="Complete reference for CLIO's slash commands: sessions, providers, files, git, sub-agents, skills, devices, and more.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.syntheticautonomicmind.org/docs/CLIO/slash-commands.html">
     <meta property="og:image" content="https://www.syntheticautonomicmind.org/images/clio.png">
-    <link rel="stylesheet" href="../../css/styles.css?v=15">
+    <link rel="stylesheet" href="../../css/styles.css?v=16">
 </head>
 <body>
         <div id="nav-placeholder"></div>
 
     <!-- Documentation Content -->
     <main>
-        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/slash-commands.html" data-prev="docs/CLIO/tools-reference.html|Slash Commands" data-next="docs/CLIO/configuration.html|Configuration">
+        <article class="doc-page" data-product="CLIO" data-doc-path="docs/CLIO/slash-commands.html" data-prev="docs/CLIO/tools-reference.html|Tools Reference" data-next="docs/CLIO/configuration.html|Configuration Guide">
     <div class="doc-container">
         <nav class="doc-breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Documentation</a><span class="breadcrumb-separator">/</span><span>Slash Commands Reference</span></nav>
         
@@ -27,33 +27,57 @@
 <p class="lead">Complete reference for CLIO's slash commands</p>
 
 <h2>Command Overview</h2>
-<p>Slash commands provide direct access to CLIO features and configuration. All commands start with <code>:</code> or <code>/</code>.</p>
+<p>Slash commands give you direct control of CLIO without going through the AI. All commands start with <code>/</code> (a bare <code>?</code> is shorthand for <code>/help</code>). Type <code>/help</code> in the chat for the live list, or <code>/help &lt;command&gt;</code> for details on one command.</p>
 
-<h2>General Commands</h2>
+<h2>Basics</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/help</code></td>
-        <td>Show available commands</td>
+        <td><code>/help</code> aliases: h, ?</td>
+        <td>Display the command list; <code>/help git</code> shows command-specific help</td>
     </tr>
     <tr>
-        <td><code>/clear</code></td>
-        <td>Clear the screen</td>
+        <td><code>/clear</code> aliases: cls</td>
+        <td>Clear and repaint the screen</td>
     </tr>
     <tr>
-        <td><code>/exit</code> or <code>/quit</code></td>
-        <td>Exit CLIO</td>
+        <td><code>/reset</code></td>
+        <td>Reset the terminal and kill stale processes</td>
     </tr>
     <tr>
-        <td><code>/multiline</code> or <code>/ml</code></td>
-        <td>Open editor for multi-line prompts</td>
+        <td><code>/debug</code></td>
+        <td>Toggle debug mode</td>
+    </tr>
+    <tr>
+        <td><code>/color</code></td>
+        <td>Toggle color output</td>
+    </tr>
+    <tr>
+        <td><code>/exit</code> aliases: quit, q</td>
+        <td>Exit the chat</td>
+    </tr>
+    <tr>
+        <td><code>/init</code></td>
+        <td>Initialize CLIO for this project (AI-assisted custom instructions)</td>
+    </tr>
+    <tr>
+        <td><code>/multi-line</code> aliases: multiline, multi, ml</td>
+        <td>Open an editor for multi-line input</td>
+    </tr>
+    <tr>
+        <td><code>/shell</code> aliases: sh</td>
+        <td>Open an interactive shell</td>
+    </tr>
+    <tr>
+        <td><code>/exec &lt;cmd&gt;</code></td>
+        <td>Run a shell command</td>
     </tr>
 </table>
 
-<h2>API & Configuration</h2>
+<h2>API &amp; Configuration</h2>
 <p>Configure AI providers, models, and all CLIO settings.</p>
 <table>
     <tr>
@@ -61,273 +85,223 @@
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/api login</code></td>
-        <td>Authenticate with GitHub Copilot</td>
+        <td><code>/api</code></td>
+        <td>Configure the AI provider, model, and login (<code>/api login</code>, <code>/api logout</code>, <code>/api models</code>, <code>/api set</code>)</td>
     </tr>
     <tr>
-        <td><code>/api set provider NAME</code></td>
-        <td>Set AI provider (openai, anthropic, deepseek, google, etc.)</td>
+        <td><code>/model</code></td>
+        <td>Quick-switch the active AI model</td>
     </tr>
     <tr>
-        <td><code>/api set key VALUE</code></td>
-        <td>Set API key</td>
+        <td><code>/login</code>, <code>/logout</code></td>
+        <td>Shorthand for <code>/api login</code> and <code>/api logout</code></td>
     </tr>
     <tr>
-        <td><code>/api set model NAME</code></td>
-        <td>Set model (run <code>/api models</code> to list available)</td>
+        <td><code>/models</code></td>
+        <td>Shorthand for <code>/api models</code></td>
     </tr>
     <tr>
-        <td><code>/api models</code></td>
-        <td>List available models for current provider</td>
+        <td><code>/config</code></td>
+        <td>Manage configuration settings (<code>/config show</code>, <code>/config set KEY VALUE</code>)</td>
     </tr>
     <tr>
-        <td><code>/api providers</code></td>
-        <td>List all configured providers</td>
+        <td><code>/loglevel</code></td>
+        <td>Get or set the log level</td>
     </tr>
     <tr>
-        <td><code>/api logout</code></td>
-        <td>Clear stored API credentials</td>
+        <td><code>/style</code>, <code>/theme</code>, <code>/preview</code></td>
+        <td>Manage color schemes and output themes, and preview before applying</td>
     </tr>
     <tr>
-        <td><code>/config show</code></td>
-        <td>Display current configuration</td>
-    </tr>
-    <tr>
-        <td><code>/config save</code></td>
-        <td>Save configuration to disk</td>
-    </tr>
-    <tr>
-        <td><code>/config set KEY VALUE</code></td>
-        <td>Set a configuration value</td>
+        <td><code>/billing</code> aliases: bill, usage</td>
+        <td>Show API usage statistics</td>
     </tr>
 </table>
 
-<h2>Session Management</h2>
+<h2>Sessions &amp; Context</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/session list</code></td>
-        <td>List all saved sessions</td>
+        <td><code>/session</code></td>
+        <td>List, switch, name, export, prune, and manage sessions</td>
     </tr>
     <tr>
-        <td><code>/session switch ID</code></td>
-        <td>Switch to a different session</td>
+        <td><code>/switch</code></td>
+        <td>Shorthand for <code>/session switch</code></td>
     </tr>
     <tr>
-        <td><code>/session delete ID</code></td>
-        <td>Delete a session</td>
-    </tr>
-    <tr>
-        <td><code>/session export ID</code></td>
-        <td>Export session to file</td>
-    </tr>
-    <tr>
-        <td><code>/session new [TITLE]</code></td>
-        <td>Create a new session</td>
+        <td><code>/context</code> aliases: ctx</td>
+        <td>Manage context files attached to the session</td>
     </tr>
 </table>
 
-<h2>Memory Commands</h2>
-<p>CLIO persists key-value memory and long-term memory across sessions.</p>
+<h2>File &amp; Git</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/memory store KEY VALUE</code></td>
-        <td>Store key-value pair</td>
+        <td><code>/file</code></td>
+        <td>File operations: read, edit, write, list</td>
     </tr>
     <tr>
-        <td><code>/memory get KEY</code></td>
-        <td>Retrieve stored value</td>
+        <td><code>/read</code>, <code>/edit</code></td>
+        <td>Shorthands for <code>/file read &lt;path&gt;</code> and <code>/file edit &lt;path&gt;</code></td>
     </tr>
     <tr>
-        <td><code>/memory list</code></td>
-        <td>List all memory keys</td>
+        <td><code>/git</code></td>
+        <td>Git operations: status, diff, commit, log, branch, stash, push, pull, merge, blame, worktree</td>
     </tr>
     <tr>
-        <td><code>/memory search QUERY</code></td>
-        <td>Search memory</td>
+        <td><code>/status</code>, <code>/diff</code>, <code>/commit</code>, <code>/gitlog</code></td>
+        <td>Shorthands for the matching <code>/git</code> subcommands</td>
     </tr>
     <tr>
-        <td><code>/memory delete KEY</code></td>
-        <td>Delete memory entry</td>
-    </tr>
-    <tr>
-        <td><code>/memory ltm</code></td>
-        <td>View long-term memory entries</td>
-    </tr>
-    <tr>
-        <td><code>/memory prune</code></td>
-        <td>Clean up old memory entries</td>
+        <td><code>/undo</code></td>
+        <td>Revert AI changes from the last turn</td>
     </tr>
 </table>
 
-<h2>Todo Management</h2>
+<h2>Multi-Agent &amp; Remote</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/todo list</code></td>
-        <td>Show current todo list</td>
+        <td><code>/subagent</code> aliases: agent</td>
+        <td>Spawn and manage sub-agents</td>
     </tr>
     <tr>
-        <td><code>/todo add TITLE</code></td>
-        <td>Add new todo</td>
+        <td><code>/mux</code> aliases: multiplexer</td>
+        <td>Control terminal multiplexer panes</td>
     </tr>
     <tr>
-        <td><code>/todo done ID</code></td>
-        <td>Mark todo as complete</td>
+        <td><code>/device</code> aliases: dev</td>
+        <td>List and manage registered devices</td>
     </tr>
     <tr>
-        <td><code>/todo delete ID</code></td>
-        <td>Delete a todo</td>
-    </tr>
-    <tr>
-        <td><code>/todo clear</code></td>
-        <td>Clear completed todos</td>
+        <td><code>/group</code></td>
+        <td>List and manage device groups for parallel remote execution</td>
     </tr>
 </table>
 
-<h2>Development Commands</h2>
-<p>Code understanding, file operations, and project management.</p>
+<h2>Skills, Prompts &amp; Specs</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/file read PATH</code></td>
-        <td>Read a file from the working directory</td>
-    </tr>
-    <tr>
-        <td><code>/file edit PATH</code></td>
-        <td>Edit a file interactively</td>
-    </tr>
-    <tr>
-        <td><code>/git status</code></td>
-        <td>Show git status</td>
-    </tr>
-    <tr>
-        <td><code>/git diff [FILE]</code></td>
-        <td>Show git diff</td>
-    </tr>
-    <tr>
-        <td><code>/git log [N]</code></td>
-        <td>Show recent commits</td>
-    </tr>
-    <tr>
-        <td><code>/git commit MESSAGE</code></td>
-        <td>Stage and commit changes</td>
-    </tr>
-    <tr>
-        <td><code>/git push [REMOTE] [BRANCH]</code></td>
-        <td>Push changes</td>
-    </tr>
-    <tr>
-        <td><code>/git pull [REMOTE] [BRANCH]</code></td>
-        <td>Pull changes</td>
-    </tr>
-    <tr>
-        <td><code>/log [N]</code></td>
-        <td>Show conversation log</td>
-    </tr>
-    <tr>
-        <td><code>/context</code></td>
-        <td>Show current context stats and length</td>
-    </tr>
-    <tr>
-        <td><code>/mux</code></td>
-        <td>Multiplexer pane management</td>
-    </tr>
-    <tr>
-        <td><code>/stats</code></td>
-        <td>Show token, cost, and conversation statistics</td>
-    </tr>
-    <tr>
-        <td><code>/project init</code></td>
-        <td>Initialize a new project</td>
-    </tr>
-    <tr>
-        <td><code>/project design</code></td>
-        <td>Create a product requirements document</td>
-    </tr>
-    <tr>
-        <td><code>/spec</code></td>
-        <td>List and run spec tests</td>
-    </tr>
-    <tr>
-        <td><code>/skills</code></td>
-        <td>List and manage skills</td>
+        <td><code>/skills</code> aliases: skill</td>
+        <td>List, load, install, enable, disable, and delete skills</td>
     </tr>
     <tr>
         <td><code>/prompt</code></td>
-        <td>List and set prompts</td>
+        <td>Manage system prompts</td>
+    </tr>
+    <tr>
+        <td><code>/spec</code> aliases: specs</td>
+        <td>OpenSpec change management</td>
+    </tr>
+    <tr>
+        <td><code>/design</code></td>
+        <td>Create or update a project PRD</td>
+    </tr>
+</table>
+
+<h2>Memory &amp; Profile</h2>
+<table>
+    <tr>
+        <th>Command</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td><code>/memory</code> aliases: mem, ltm</td>
+        <td>View and manage long-term memory patterns</td>
     </tr>
     <tr>
         <td><code>/profile</code></td>
-        <td>Show or set user profile</td>
+        <td>Build and manage your user profile</td>
     </tr>
     <tr>
-        <td><code>/billing</code></td>
-        <td>Show API usage and billing info</td>
-    </tr>
-    <tr>
-        <td><code>/update</code></td>
-        <td>Check for and apply CLIO updates</td>
+        <td><code>/todo</code></td>
+        <td>View and manage the todo list</td>
     </tr>
 </table>
 
-<h2>AI Commands</h2>
+<h2>Development Shortcuts</h2>
+<p>One-shot prompts that route through the AI:</p>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/ai explain</code></td>
-        <td>Explain selected code</td>
+        <td><code>/explain</code></td>
+        <td>Explain code</td>
     </tr>
     <tr>
-        <td><code>/ai review</code></td>
+        <td><code>/review</code></td>
         <td>Review code for issues</td>
     </tr>
     <tr>
-        <td><code>/ai test</code></td>
-        <td>Generate tests for code</td>
+        <td><code>/test</code></td>
+        <td>Generate tests</td>
+    </tr>
+    <tr>
+        <td><code>/fix</code></td>
+        <td>Propose fixes for problems</td>
+    </tr>
+    <tr>
+        <td><code>/doc</code></td>
+        <td>Generate documentation</td>
     </tr>
 </table>
 
-<h2>Customization</h2>
+<h2>Extensions &amp; Diagnostics</h2>
 <table>
     <tr>
         <th>Command</th>
         <th>Description</th>
     </tr>
     <tr>
-        <td><code>/theme</code></td>
-        <td>Change color theme</td>
+        <td><code>/mcp</code></td>
+        <td>List, add, and manage MCP servers</td>
     </tr>
     <tr>
-        <td><code>/debug</code></td>
-        <td>Toggle debug mode</td>
+        <td><code>/plugin</code></td>
+        <td>List and manage plugins</td>
     </tr>
     <tr>
-        <td><code>/verbose</code></td>
-        <td>Toggle verbose output</td>
+        <td><code>/security</code></td>
+        <td>Manage security grants and prompts</td>
+    </tr>
+    <tr>
+        <td><code>/stats</code></td>
+        <td>Show memory and performance stats</td>
+    </tr>
+    <tr>
+        <td><code>/performance</code> aliases: perf</td>
+        <td>Show system performance stats</td>
+    </tr>
+    <tr>
+        <td><code>/log</code></td>
+        <td>Show recent tool-operation logs</td>
+    </tr>
+    <tr>
+        <td><code>/update</code></td>
+        <td>Check for and install updates</td>
     </tr>
 </table>
 
 <h2>Next Steps</h2>
 <ul>
-    <li><a href="getting-started.html">Getting Started</a> - Learn basic usage</li>
-    <li><a href="workflows.html">Workflows</a> - Common usage patterns</li>
+    <li><a href="tools-reference.html">Tools Reference</a> - What the AI itself can call</li>
     <li><a href="configuration.html">Configuration</a> - Advanced settings</li>
 </ul>
         </div>
@@ -336,7 +310,7 @@
 </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../../js/main.js?v=15"></script>
+    <script src="../../js/main.js?v=16"></script>
     <script src="../../js/include.js"></script>
 </body>
 </html>
